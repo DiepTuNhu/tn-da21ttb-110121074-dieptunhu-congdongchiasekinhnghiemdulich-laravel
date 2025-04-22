@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chi tiết bài đăng</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light px-3">
+  <a class="navbar-brand" href="#">🌍 Logo</a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item"><a class="nav-link" href="#">Trang chủ</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">Khám phá</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">Cộng đồng</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">Nhiệm vụ</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">Xếp hạng</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">Hồ sơ</a></li>
+    </ul>
+    <a class="btn btn-primary me-2" href="#">Đăng nhập</a>
+    <a class="btn btn-outline-primary" href="#">Đăng ký</a>
+  </div>
+</nav>
+
+<!-- Cover & Title -->
+<section class="container mt-4">
+  <h1 class="fw-bold display-5">Chuyến du lịch đáng nhớ tại Đà Lạt</h1>
+  <img src="https://via.placeholder.com/1200x400" alt="Ảnh bìa" class="img-fluid rounded my-3">
+
+  <div class="d-flex justify-content-between align-items-center flex-wrap">
+    <div class="text-muted">
+      <span><strong>Nguyễn Văn A</strong> • 12/04/2025</span> |
+      <span>👁️ 1234 lượt xem</span> |
+      <span>❤️ 256 lượt thích</span> |
+      <span class="badge bg-info text-dark">Địa điểm</span>
+    </div>
+  </div>
+</section>
+
+<!-- Content + Sidebar -->
+<div class="container mt-4">
+  <div class="row">
+    <!-- Main Content -->
+    <div class="col-lg-8">
+      <article class="mb-4">
+        <p>Đà Lạt là một trong những điểm đến tuyệt vời với khí hậu se lạnh và phong cảnh hữu tình.</p>
+        <ul>
+          <li>Tham quan thung lũng tình yêu</li>
+          <li>Thưởng thức bánh tráng nướng</li>
+          <li>Check-in tại quảng trường Lâm Viên</li>
+        </ul>
+        <img src="https://via.placeholder.com/800x300" class="img-fluid rounded my-3" alt="Hình ảnh minh họa">
+        <p>Bạn có thể xem bản đồ bên dưới để biết thêm chi tiết:</p>
+        <iframe src="https://maps.google.com/maps?q=da%20lat&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="300" class="rounded" allowfullscreen loading="lazy"></iframe>
+      </article>
+
+      <!-- Gamification -->
+      <div class="d-flex align-items-center gap-3 mb-4">
+        <button class="btn btn-outline-danger">❤️ Thích</button>
+        <button class="btn btn-outline-secondary">📌 Lưu bài viết</button>
+        <button class="btn btn-outline-warning">🚩 Báo cáo</button>
+        <span class="ms-auto">🏆 120 XP • 🥇 Top 10 bài viết tuần</span>
+      </div>
+
+      <!-- Comments -->
+      <section class="mb-5">
+        <h4>Bình luận</h4>
+        <div class="d-flex align-items-start mb-3">
+          <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="avatar">
+          <div>
+            <strong>Bình Minh</strong>
+            <p>Chuyến đi quá đẹp, mình cũng muốn thử!</p>
+            <a href="#" class="me-2">❤️ Thích</a>
+            <a href="#">💬 Trả lời</a>
+          </div>
+        </div>
+        <div class="mb-3">
+          <textarea class="form-control" placeholder="Viết bình luận..." rows="3"></textarea>
+          <button class="btn btn-primary mt-2">Gửi bình luận</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="col-lg-4">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Tác giả</h5>
+          <div class="d-flex align-items-center">
+            <img src="https://via.placeholder.com/50" class="rounded-circle me-2" alt="avatar">
+            <div>
+              <strong>Nguyễn Văn A</strong><br>
+              <a href="#">Xem hồ sơ</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Bài viết liên quan</h5>
+          <ul class="list-unstyled">
+            <li><a href="#">Khám phá Huế mộng mơ</a></li>
+            <li><a href="#">Ẩm thực Hội An</a></li>
+            <li><a href="#">Trekking ở Sapa</a></li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-light text-center py-4 mt-5">
+  <p>&copy; 2025 Du Lịch Chia Sẻ | <a href="#">Chính sách</a> | <a href="#">Liên hệ</a></p>
+  <div>
+    <a href="#">🌐 Facebook</a> |
+    <a href="#">🌐 Instagram</a>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

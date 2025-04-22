@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trang chủ</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+  <style>
+    .slider {
+      height: 300px;
+      background-color: #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+    }
+    .user-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: #ccc;
+    }
+    .small-box {
+      width: 40px;
+      height: 40px;
+      background-color: #ccc;
+    }
+    .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-img-top {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+  }
+  .card-body {
+    padding: 1.25rem;
+  }
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+  }
+
+    .avatar-wrapper {
+    position: relative;
+    width: 60px;
+    height: 60px;
+  }
+
+  .avatar-wrapper img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .online-indicator {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 14px;
+    height: 14px;
+    background-color: #28a745; /* màu xanh */
+    border: 2px solid #fff;
+    border-radius: 50%;
+  }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light px-3">
+  <a class="navbar-brand" href="#">🌍 Logo</a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+    <!-- <span class="navbar-toggler-icon"></span> -->
+    <!-- <i class="bi bi-list fs-3"></i> -->
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item"><a class="nav-link" href="./trangchu.html">Trang chủ</a></li>
+      <li class="nav-item"><a class="nav-link" href="./khampha.html">Khám phá</a></li>
+      <li class="nav-item"><a class="nav-link" href="./congdong.html">Cộng đồng</a></li>
+      <li class="nav-item"><a class="nav-link" href="./nhiemvu.html">Nhiệm vụ</a></li>
+      <li class="nav-item"><a class="nav-link" href="./xephang.html">Xếp hạng</a></li>
+      <li class="nav-item"><a class="nav-link" href="./hoso.html">Hồ sơ</a></li>
+    </ul>
+    <form class="d-flex me-3">
+      <input class="form-control me-2" type="search" placeholder="Tìm kiếm...">
+      <!-- <a class="btn btn-outline-primary me-2" href="#">Tìm</a> -->
+      <button class="btn btn-outline-primary me-2" type="submit">Tìm</button>
+    </form>
+    <a class="btn btn-primary me-2" href="#">Đăng nhập</a>
+    <a class="btn btn-outline-primary" href="#">Đăng ký</a>
+  </div>
+</nav>
+<!-- Slider -->
+<div class="slider text-center">Slider</div>
+
+<!-- Main Content -->
+<!-- Main Content -->
+<div class="container my-5">
+  <div class="row">
+
+    <!-- Bài viết mới nhất -->
+    <div class="col-md-3">
+      <h5>Bài viết mới nhất</h5>
+
+      <div class="card shadow-sm rounded-4 border-0 mb-4">
+        <img src="./1.png" class="card-img-top rounded-top-4" alt="Địa điểm">
+        <div class="card-body">
+          <h5 class="card-title text-primary mb-2">
+            <i class="bi bi-geo-alt-fill me-1"></i> Địa điểm 1
+          </h5>
+          <p class="card-text text-muted" style="font-size: 0.9rem;">
+            Một mô tả ngắn gọn về địa điểm này có thể hiển thị ở đây. Nơi lý tưởng để tham quan, check-in và trải nghiệm.
+          </p>
+          <a href="./chitietdiadiem.html" class="btn btn-outline-primary btn-sm rounded-pill">Xem chi tiết</a>
+        </div>
+      </div>
+
+      <div class="card shadow-sm rounded-4 border-0 mb-4">
+        <img src="./2.png" class="card-img-top rounded-top-4" alt="Địa điểm">
+        <div class="card-body">
+          <h5 class="card-title text-primary mb-2">
+            <i class="bi bi-geo-alt-fill me-1"></i> Địa điểm 1
+          </h5>
+          <p class="card-text text-muted" style="font-size: 0.9rem;">
+            Một mô tả ngắn gọn về địa điểm này có thể hiển thị ở đây. Nơi lý tưởng để tham quan, check-in và trải nghiệm.
+          </p>
+          <a href="#" class="btn btn-outline-primary btn-sm rounded-pill">Xem chi tiết</a>
+        </div>
+      </div>
+      
+      <div class="card shadow-sm rounded-4 border-0 mb-4">
+        <img src="./1.png" class="card-img-top rounded-top-4" alt="Địa điểm">
+        <div class="card-body">
+          <h5 class="card-title text-primary mb-2">
+            <i class="bi bi-geo-alt-fill me-1"></i> Địa điểm 1
+          </h5>
+          <p class="card-text text-muted" style="font-size: 0.9rem;">
+            Một mô tả ngắn gọn về địa điểm này có thể hiển thị ở đây. Nơi lý tưởng để tham quan, check-in và trải nghiệm.
+          </p>
+          <a href="#" class="btn btn-outline-primary btn-sm rounded-pill">Xem chi tiết</a>
+        </div>
+      </div>
+
+      <h5>Người dùng nổi bật</h5>
+      <div class="d-flex align-items-center mb-3">
+        <img src="./1.png" alt="Avatar" class="rounded-circle me-2" width="60" height="60">
+        <span>Người dùng 1</span>
+      </div>
+      
+      <div class="d-flex align-items-center mb-3">
+        <img src="./1.png" alt="Avatar" class="rounded-circle me-2" width="60" height="60">
+        <span>Người dùng 2</span>
+      </div>
+      <div class="d-flex align-items-center mb-3">
+        <img src="./1.png" alt="Avatar" class="rounded-circle me-2" width="60" height="60">
+        <span>Người dùng 3</span>
+      </div>
+    </div>
+
+    <!-- Các địa điểm du lịch -->
+    <div class="col-md-6">
+      <h5>Các địa điểm du lịch</h5>
+
+      <!-- Dòng 1 -->
+      <div class="row mb-3">
+        <div class="col-md-6 col-lg-6 mb-4">
+          <div class="card shadow-sm rounded-4 border-0 h-100">
+            <img src="./2.png" class="card-img-top rounded-top-4" alt="Địa điểm">
+            <div class="card-body">
+              <h5 class="card-title text-primary mb-2">
+                <i class="bi bi-geo-alt-fill me-1"></i> Địa điểm 1
+              </h5>
+              <p class="card-text text-muted" style="font-size: 0.9rem;">
+                Một mô tả ngắn gọn về địa điểm này có thể hiển thị ở đây. Nơi lý tưởng để tham quan, check-in và trải nghiệm.
+              </p>
+              <a href="#" class="btn btn-outline-primary btn-sm rounded-pill">Xem chi tiết</a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-6 col-lg-6 mb-4">
+          <div class="card shadow-sm rounded-4 border-0 h-100">
+            <img src="./1.png" class="card-img-top rounded-top-4" alt="Địa điểm">
+            <div class="card-body">
+              <h5 class="card-title text-primary mb-2">
+                <i class="bi bi-geo-alt-fill me-1"></i> Địa điểm 1
+              </h5>
+              <p class="card-text text-muted" style="font-size: 0.9rem;">
+                Một mô tả ngắn gọn về địa điểm này có thể hiển thị ở đây. Nơi lý tưởng để tham quan, check-in và trải nghiệm.
+              </p>
+              <a href="#" class="btn btn-outline-primary btn-sm rounded-pill">Xem chi tiết</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dòng 2 -->
+      <div class="row mb-3">
+        <div class="col-md-6 col-lg-6 mb-4">
+          <div class="card shadow-sm rounded-4 border-0 h-100">
+            <img src="./1.png" class="card-img-top rounded-top-4" alt="Địa điểm">
+            <div class="card-body">
+              <h5 class="card-title text-primary mb-2">
+                <i class="bi bi-geo-alt-fill me-1"></i> Địa điểm 1
+              </h5>
+              <p class="card-text text-muted" style="font-size: 0.9rem;">
+                Một mô tả ngắn gọn về địa điểm này có thể hiển thị ở đây. Nơi lý tưởng để tham quan, check-in và trải nghiệm.
+              </p>
+              <a href="#" class="btn btn-outline-primary btn-sm rounded-pill">Xem chi tiết</a>
+            </div>
+          </div>
+        </div>
+        
+        
+        <div class="col-md-6 col-lg-6 mb-4">
+          <div class="card shadow-sm rounded-4 border-0 h-100">
+            <img src="./1.png" class="card-img-top rounded-top-4" alt="Địa điểm">
+            <div class="card-body">
+              <h5 class="card-title text-primary mb-2">
+                <i class="bi bi-geo-alt-fill me-1"></i> Địa điểm 1
+              </h5>
+              <p class="card-text text-muted" style="font-size: 0.9rem;">
+                Một mô tả ngắn gọn về địa điểm này có thể hiển thị ở đây. Nơi lý tưởng để tham quan, check-in và trải nghiệm.
+              </p>
+              <a href="#" class="btn btn-outline-primary btn-sm rounded-pill">Xem chi tiết</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dòng 3 -->
+      <div class="row mb-3">
+        <div class="col-md-6 col-lg-6 mb-4">
+          <div class="card shadow-sm rounded-4 border-0 h-100">
+            <img src="./1.png" class="card-img-top rounded-top-4" alt="Địa điểm">
+            <div class="card-body">
+              <h5 class="card-title text-primary mb-2">
+                <i class="bi bi-geo-alt-fill me-1"></i> Địa điểm 1
+              </h5>
+              <p class="card-text text-muted" style="font-size: 0.9rem;">
+                Một mô tả ngắn gọn về địa điểm này có thể hiển thị ở đây. Nơi lý tưởng để tham quan, check-in và trải nghiệm.
+              </p>
+              <a href="#" class="btn btn-outline-primary btn-sm rounded-pill">Xem chi tiết</a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-6 col-lg-6 mb-4">
+          <div class="card shadow-sm rounded-4 border-0 h-100">
+            <img src="./1.png" class="card-img-top rounded-top-4" alt="Địa điểm">
+            <div class="card-body">
+              <h5 class="card-title text-primary mb-2">
+                <i class="bi bi-geo-alt-fill me-1"></i> Địa điểm 1
+              </h5>
+              <p class="card-text text-muted" style="font-size: 0.9rem;">
+                Một mô tả ngắn gọn về địa điểm này có thể hiển thị ở đây. Nơi lý tưởng để tham quan, check-in và trải nghiệm.
+              </p>
+              <a href="#" class="btn btn-outline-primary btn-sm rounded-pill">Xem chi tiết</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dòng 4 -->
+      <div class="row mb-3">
+        <div class="col-md-6 col-lg-6 mb-4">
+          <div class="card shadow-sm rounded-4 border-0 h-100">
+            <img src="./1.png" class="card-img-top rounded-top-4" alt="Địa điểm">
+            <div class="card-body">
+              <h5 class="card-title text-primary mb-2">
+                <i class="bi bi-geo-alt-fill me-1"></i> Địa điểm 1
+              </h5>
+              <p class="card-text text-muted" style="font-size: 0.9rem;">
+                Một mô tả ngắn gọn về địa điểm này có thể hiển thị ở đây. Nơi lý tưởng để tham quan, check-in và trải nghiệm.
+              </p>
+              <a href="#" class="btn btn-outline-primary btn-sm rounded-pill">Xem chi tiết</a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-6 col-lg-6 mb-4">
+          <div class="card shadow-sm rounded-4 border-0 h-100">
+            <img src="./1.png" class="card-img-top rounded-top-4" alt="Địa điểm">
+            <div class="card-body">
+              <h5 class="card-title text-primary mb-2">
+                <i class="bi bi-geo-alt-fill me-1"></i> Địa điểm 1
+              </h5>
+              <p class="card-text text-muted" style="font-size: 0.9rem;">
+                Một mô tả ngắn gọn về địa điểm này có thể hiển thị ở đây. Nơi lý tưởng để tham quan, check-in và trải nghiệm.
+              </p>
+              <a href="#" class="btn btn-outline-primary btn-sm rounded-pill">Xem chi tiết</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Huy hiệu và điểm -->
+    <div class="col-md-3">
+      <div class="mb-4">
+        <h6>Huy hiệu</h6>
+        <div class="d-flex align-items-center">
+          <div class="user-avatar me-2"></div>
+          <span>Tên huy hiệu</span>
+        </div>
+      </div>
+      <div class="mb-5">
+        <h6>Điểm tích lũy</h6>
+        <div class="d-flex align-items-center">
+          <div class="small-box me-2"></div>
+          <span>Điểm số</span>
+        </div>
+      </div>
+      <h5>Người dùng đang online</h5>
+      <div class="d-flex align-items-center mb-3">
+        <div class="avatar-wrapper me-2">
+          <img src="./1.png" alt="Avatar">
+          <div class="online-indicator"></div>
+        </div>
+        <span>Người dùng 1</span>
+      </div>
+      
+      <div class="d-flex align-items-center mb-3">
+        <div class="avatar-wrapper me-2">
+          <img src="./1.png" alt="Avatar">
+          <div class="online-indicator"></div>
+        </div>
+        <span>Người dùng 2</span>
+      </div>
+      
+      <div class="d-flex align-items-center mb-3">
+        <div class="avatar-wrapper me-2">
+          <img src="./1.png" alt="Avatar">
+          <div class="online-indicator"></div>
+        </div>
+        <span>Người dùng 3</span>
+      </div>
+    </div>
+  </div>
+
+<!-- Footer -->
+<footer class="bg-light text-center py-4">
+  Footer
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

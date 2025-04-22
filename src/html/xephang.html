@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trang xếp hạng</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .star {
+      color: gold;
+    }
+    .ranking-badge {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #fff;
+      background-color: #007bff;
+      width: 40px;
+      height: 40px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+    }
+    .user-card {
+      border: 1px solid #ddd;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light px-3">
+  <a class="navbar-brand" href="#">🌍 Logo</a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item"><a class="nav-link" href="./trangchu.html">Trang chủ</a></li>
+      <li class="nav-item"><a class="nav-link" href="./khampha.html">Khám phá</a></li>
+      <li class="nav-item"><a class="nav-link" href="./congdong.html">Cộng đồng</a></li>
+      <li class="nav-item"><a class="nav-link" href="./nhiemvu.html">Nhiệm vụ</a></li>
+      <li class="nav-item"><a class="nav-link" href="./xephang.html">Xếp hạng</a></li>
+      <li class="nav-item"><a class="nav-link" href="./hoso.html">Hồ sơ</a></li>
+    </ul>
+    <form class="d-flex me-3">
+      <input class="form-control me-2" type="search" placeholder="Tìm kiếm...">
+      <a class="btn btn-outline-primary me-2" href="#">Tìm</a>
+    </form>
+    <a class="btn btn-primary me-2" href="#">Đăng nhập</a>
+    <a class="btn btn-outline-primary" href="#">Đăng ký</a>
+  </div>
+</nav>
+
+<!-- Tiêu đề -->
+<div class="container my-4">
+  <!-- <h3 class="text-center mb-4">Bảng xếp hạng địa điểm du lịch</h3> -->
+
+  <div class="row">
+    <!-- Cột Bài viết nổi bật -->
+    <div class="col-md-6">
+      <h4 class="mb-3">Bài viết nổi bật</h4>
+      <div class="list-group">
+        <!-- Xếp hạng 1 -->
+        <div class="list-group-item d-flex justify-content-between align-items-center">
+          <div class="d-flex align-items-center">
+            <div class="ranking-badge me-3">1</div>
+            <img src="./1.png" alt="Địa điểm" class="rounded me-3" width="80" height="80">
+            <div>
+              <h5 class="mb-1">Chùa Hang</h5>
+              <small>Trà Vinh • 4 ★ (230 đánh giá)</small>
+            </div>
+          </div>
+          <span class="badge bg-success fs-6">Top 1</span>
+        </div>
+
+        <!-- Xếp hạng 2 -->
+        <div class="list-group-item d-flex justify-content-between align-items-center">
+          <div class="d-flex align-items-center">
+            <div class="ranking-badge me-3 bg-secondary">2</div>
+            <img src="./1.png" alt="Địa điểm" class="rounded me-3" width="80" height="80">
+            <div>
+              <h5 class="mb-1">Làng nổi Tân Lập</h5>
+              <small>Long An • 4 ★ (180 đánh giá)</small>
+            </div>
+          </div>
+          <span class="badge bg-secondary fs-6">Top 2</span>
+        </div>
+
+        <!-- Xếp hạng 3 -->
+        <div class="list-group-item d-flex justify-content-between align-items-center">
+          <div class="d-flex align-items-center">
+            <div class="ranking-badge me-3 bg-warning text-dark">3</div>
+            <img src="./1.png" alt="Địa điểm" class="rounded me-3" width="80" height="80">
+            <div>
+              <h5 class="mb-1">Chợ nổi Cái Răng</h5>
+              <small>Cần Thơ • 4 ★ (290 đánh giá)</small>
+            </div>
+          </div>
+          <span class="badge bg-warning text-dark fs-6">Top 3</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cột Người dùng nổi bật -->
+    <!-- Cột Người dùng nổi bật -->
+<div class="col-md-6">
+  <h4 class="mb-3">Người dùng nổi bật</h4>
+  <div class="list-group">
+
+    <!-- Top người dùng đánh giá nhiều nhất -->
+    <div class="list-group-item d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center">
+        <div class="ranking-badge me-3">1</div>
+        <img src="./1.png" alt="Người dùng" class="rounded-circle me-3" width="80" height="80">
+        <div>
+          <h5 class="mb-1">Ngọc Mai</h5>
+          <small>Chủ doanh nghiệp, Trà Vinh</small>
+        </div>
+      </div>
+      <span class="badge bg-success fs-6">Top 1</span>
+    </div>
+
+    <!-- Top người dùng yêu thích nhất -->
+    <div class="list-group-item d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center">
+        <div class="ranking-badge me-3 bg-secondary">2</div>
+        <img src="./1.png" alt="Người dùng" class="rounded-circle me-3" width="80" height="80">
+        <div>
+          <h5 class="mb-1">Minh Tuấn</h5>
+          <small>Du khách, TP. HCM</small>
+        </div>
+      </div>
+      <span class="badge bg-secondary fs-6">Top 2</span>
+    </div>
+
+    <!-- Top người dùng mới tham gia -->
+    <div class="list-group-item d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center">
+        <div class="ranking-badge me-3 bg-warning text-dark">3</div>
+        <img src="./1.png" alt="Người dùng" class="rounded-circle me-3" width="80" height="80">
+        <div>
+          <h5 class="mb-1">Lan Anh</h5>
+          <small>Hướng dẫn viên du lịch, Hà Nội</small>
+        </div>
+      </div>
+      <span class="badge bg-warning text-dark fs-6">Top 3</span>
+    </div>
+
+    <!-- Có thể thêm nhiều top khác -->
+  </div>
+</div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-light text-center py-4 mt-5">
+  Footer
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

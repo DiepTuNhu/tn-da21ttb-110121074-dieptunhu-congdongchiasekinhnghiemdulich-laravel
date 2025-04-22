@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hồ sơ cá nhân</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+  <style>
+    .profile-avatar {
+      width: 150px;
+      height: 150px;
+      background-color: #ccc;
+    }
+    .card-img-placeholder {
+      background-color: #e0e0e0;
+      width: 100%;
+      padding-top: 100%;
+      position: relative;
+    }
+    .card-img-placeholder::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc), 
+                        linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc);
+      background-size: 20px 20px;
+      background-position: 0 0, 10px 10px;
+    }
+
+    .card-img-top {
+    width: 100%;
+    height: 200px; /* Chiều cao cố định */
+    object-fit: cover; /* Cắt hình vừa khung mà không bị méo */
+  }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light px-3">
+  <a class="navbar-brand" href="#">🌍 Logo</a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item"><a class="nav-link" href="./trangchu.html">Trang chủ</a></li>
+      <li class="nav-item"><a class="nav-link" href="./khampha.html">Khám phá</a></li>
+      <li class="nav-item"><a class="nav-link" href="./congdong.html">Cộng đồng</a></li>
+      <li class="nav-item"><a class="nav-link" href="./nhiemvu.html">Nhiệm vụ</a></li>
+      <li class="nav-item"><a class="nav-link" href="./xephang.html">Xếp hạng</a></li>
+      <li class="nav-item"><a class="nav-link" href="./hoso.html">Hồ sơ</a></li>
+    </ul>
+    <form class="d-flex me-3">
+      <input class="form-control me-2" type="search" placeholder="Tìm kiếm...">
+      <a class="btn btn-outline-primary me-2" href="#">Tìm</a>
+    </form>
+    <a class="btn btn-primary me-2" href="#">Đăng nhập</a>
+    <a class="btn btn-outline-primary" href="#">Đăng ký</a>
+  </div>
+</nav>
+
+<!-- Profile Section -->
+<div class="container my-4">
+  <div class="d-flex align-items-center mb-4">
+    <img src="./1.png" class="rounded-circle me-4" alt="Avatar" width="120" height="120">
+    <div>
+      <h4 class="mb-1">Nguyễn Văn A</h4>
+      <p class="text-muted mb-1">Hà Nội · Thành viên từ 02/2024</p>
+      <p class="text-muted mb-1">Huy hiệu</p>
+      <p class="text-muted mb-1">Điểm tích lũy</p>
+      <p class="text-muted mb-1">Caption</p>
+      <!-- <button class="btn btn-outline-success btn-sm">Đang theo dõi</button> -->
+    </div>
+  </div>
+</div>
+
+<!-- Tabs -->
+<div class="container border-top pt-3">
+  <ul class="nav nav-tabs mb-4 " id="profileTabs" role="tablist">
+    <li class="nav-item">
+      <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#posts" type="button">Bài đăng của tôi</button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link" data-bs-toggle="tab" data-bs-target="#entries" type="button">Bài viết đã chia sẻ</button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link" data-bs-toggle="tab" data-bs-target="#challenges" type="button">Nhiệm vụ đã hoàn thành</button>
+    </li>
+  </ul>
+  <!-- Cards Grid -->
+  <div class="tab-content">
+
+    <!-- Bài viết chia sẻ -->
+    <div class="tab-pane fade show active" id="posts">
+      <div class="row">
+        <!-- Bài viết 1 -->
+        <div class="col-md-3 mb-4">
+          <div class="card h-100">
+            <img src="./1.png" class="card-img-top" alt="Post Image">
+            <div class="card-body">
+              <h5 class="card-title">Chia sẻ chuyến đi Đà Lạt</h5>
+              <p class="card-text">Một trải nghiệm nhẹ nhàng với không khí se lạnh và hoa cỏ khắp nơi...</p>
+            </div>
+            <div class="card-footer text-muted small">
+              <i class="bi bi-calendar-event me-1"></i> 10/04/2025 · 
+              <i class="bi bi-heart-fill text-danger me-1 ms-1"></i> 135 lượt thích
+            </div>
+            
+          </div>
+        </div>
+        <!-- Lặp thêm bài viết -->
+        <div class="col-md-3 mb-4">
+          <div class="card h-100">
+            <img src="./2.png" class="card-img-top" alt="Post Image">
+            <div class="card-body">
+              <h5 class="card-title">Chia sẻ chuyến đi Đà Lạt</h5>
+              <p class="card-text">Một trải nghiệm nhẹ nhàng với không khí se lạnh và hoa cỏ khắp nơi...</p>
+            </div>
+            <div class="card-footer text-muted small">
+              <i class="bi bi-calendar-event me-1"></i> 10/04/2025 · 
+              <i class="bi bi-heart-fill text-danger me-1 ms-1"></i> 135 lượt thích
+            </div>
+            
+          </div>
+        </div>
+
+        <div class="col-md-3 mb-4">
+          <div class="card h-100">
+            <img src="./1.png" class="card-img-top" alt="Post Image">
+            <div class="card-body">
+              <h5 class="card-title">Chia sẻ chuyến đi Đà Lạt</h5>
+              <p class="card-text">Một trải nghiệm nhẹ nhàng với không khí se lạnh và hoa cỏ khắp nơi...</p>
+            </div>
+            <div class="card-footer text-muted small">
+              <i class="bi bi-calendar-event me-1"></i> 10/04/2025 · 
+              <i class="bi bi-heart-fill text-danger me-1 ms-1"></i> 135 lượt thích
+            </div>
+            
+          </div>
+        </div>
+
+        <div class="col-md-3 mb-4">
+          <div class="card h-100">
+            <img src="./1.png" class="card-img-top" alt="Post Image">
+            <div class="card-body">
+              <h5 class="card-title">Chia sẻ chuyến đi Đà Lạt</h5>
+              <p class="card-text">Một trải nghiệm nhẹ nhàng với không khí se lạnh và hoa cỏ khắp nơi...</p>
+            </div>
+            <div class="card-footer text-muted small">
+              <i class="bi bi-calendar-event me-1"></i> 10/04/2025 · 
+              <i class="bi bi-heart-fill text-danger me-1 ms-1"></i> 135 lượt thích
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bài đăng -->
+    <div class="tab-pane fade" id="entries">
+      <div class="row">
+        <!-- Bài đăng 1 -->
+        <div class="col-md-4 mb-4">
+          <div class="card h-100">
+            <img src="./1.png" class="card-img-top" alt="Entry Image">
+            <div class="card-body">
+              <h5 class="card-title">Review điểm đến: Bà Nà Hills</h5>
+              <p class="card-text">Khám phá Cầu Vàng, làng Pháp, thời tiết dễ chịu và nhiều điểm check-in sống ảo!</p>
+            </div>
+            <div class="card-footer text-muted small">
+              <i class="bi bi-geo-alt-fill me-1"></i> Đà Nẵng ·
+              <i class="bi bi-calendar-event me-1 ms-1"></i> 10/04/2025 · 
+              <i class="bi bi-heart-fill text-danger me-1 ms-1"></i> 98 lượt thích
+            </div>            
+          </div>
+        </div>
+        <!-- Lặp thêm bài đăng -->
+      </div>
+    </div>
+
+
+    <div class="tab-pane fade" id="challenges">
+      <div class="row">
+        <!-- Nhiệm vụ 1 -->
+        <div class="col-12 mb-3">
+          <div class="card flex-row align-items-center border-success p-2">
+            <img src="./1.png" class="img-fluid rounded" alt="Mission Image" style="width: 100px; height: 100px; object-fit: cover;">
+            <div class="ms-3 flex-grow-1">
+              <h5 class="mb-1 text-success">🎯 Viết bài review địa điểm</h5>
+              <p class="mb-1 small">Hoàn thành bài chia sẻ cảm nhận về Bà Nà Hills với đầy đủ hình ảnh và mô tả chi tiết.</p>
+              <span class="badge bg-primary">+50 điểm</span>
+            </div>
+          </div>
+        </div>
+        
+        
+        <!-- Lặp thêm bài đăng -->
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+<!-- Footer -->
+<footer class="bg-light text-center py-3 mt-5 border-top">
+  Footer
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

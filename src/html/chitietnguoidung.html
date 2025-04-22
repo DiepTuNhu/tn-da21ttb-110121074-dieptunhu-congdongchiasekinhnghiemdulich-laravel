@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Hồ sơ người dùng</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navbar -->
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light px-3">
+    <a class="navbar-brand" href="#">🌍 Logo</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="./trangchu.html">Trang chủ</a></li>
+        <li class="nav-item"><a class="nav-link" href="./khampha.html">Khám phá</a></li>
+        <li class="nav-item"><a class="nav-link" href="./congdong.html">Cộng đồng</a></li>
+        <li class="nav-item"><a class="nav-link" href="./nhiemvu.html">Nhiệm vụ</a></li>
+        <li class="nav-item"><a class="nav-link" href="./xephang.html">Xếp hạng</a></li>
+        <li class="nav-item"><a class="nav-link" href="./hoso.html">Hồ sơ</a></li>
+      </ul>
+      <a class="btn btn-primary me-2" href="#">Đăng nhập</a>
+      <a class="btn btn-outline-primary" href="#">Đăng ký</a>
+    </div>
+  </nav>
+  <!-- Hồ sơ người dùng -->
+  <div class="container py-5">
+    <div class="d-flex align-items-center mb-4">
+      <img src="https://via.placeholder.com/100" class="rounded-circle me-4" alt="Avatar">
+      <div>
+        <h4 class="mb-1">Nguyễn Văn A</h4>
+        <p class="text-muted mb-1">Hà Nội · Thành viên từ 02/2024</p>
+        <button class="btn btn-outline-success btn-sm">Đang theo dõi</button>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <ul class="nav nav-tabs mb-4" id="profileTabs" role="tablist">
+      <li class="nav-item">
+        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#posts" type="button">Bài viết chia sẻ</button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#entries" type="button">Bài đăng</button>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+
+      <!-- Bài viết chia sẻ -->
+      <div class="tab-pane fade show active" id="posts">
+        <div class="row">
+          <!-- Bài viết 1 -->
+          <div class="col-md-4 mb-4">
+            <div class="card h-100">
+              <img src="./1.png" class="card-img-top" alt="Post Image">
+              <div class="card-body">
+                <h5 class="card-title">Chia sẻ chuyến đi Đà Lạt</h5>
+                <p class="card-text">Một trải nghiệm nhẹ nhàng với không khí se lạnh và hoa cỏ khắp nơi...</p>
+              </div>
+              <div class="card-footer text-muted small">
+                10/04/2025 · 135 lượt thích
+              </div>
+            </div>
+          </div>
+          <!-- Lặp thêm bài viết -->
+        </div>
+      </div>
+
+      <!-- Bài đăng -->
+      <div class="tab-pane fade" id="entries">
+        <div class="row">
+          <!-- Bài đăng 1 -->
+          <div class="col-md-4 mb-4">
+            <div class="card h-100">
+              <img src="./1.png" class="card-img-top" alt="Entry Image">
+              <div class="card-body">
+                <h5 class="card-title">Review điểm đến: Bà Nà Hills</h5>
+                <p class="card-text">Khám phá Cầu Vàng, làng Pháp, thời tiết dễ chịu và nhiều điểm check-in sống ảo!</p>
+              </div>
+              <div class="card-footer text-muted small">
+                Địa điểm: Đà Nẵng · 98 lượt thích
+              </div>
+            </div>
+          </div>
+          <!-- Lặp thêm bài đăng -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-light py-3 text-center">
+    <p class="mb-0">© 2025 Travel Community</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

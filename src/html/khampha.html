@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Khám phá địa điểm</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .card-img-top {
+        height: 200px; /* Bạn có thể chỉnh chiều cao tuỳ ý */
+        object-fit: cover;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light px-3">
+      <a class="navbar-brand" href="#">🌍 Logo</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="./trangchu.html">Trang chủ</a></li>
+          <li class="nav-item"><a class="nav-link" href="./khampha.html">Khám phá</a></li>
+          <li class="nav-item"><a class="nav-link" href="./congdong.html">Cộng đồng</a></li>
+          <li class="nav-item"><a class="nav-link" href="./nhiemvu.html">Nhiệm vụ</a></li>
+          <li class="nav-item"><a class="nav-link" href="./xephang.html">Xếp hạng</a></li>
+          <li class="nav-item"><a class="nav-link" href="./hoso.html">Hồ sơ</a></li>
+        </ul>
+        <form class="d-flex me-3">
+          <input class="form-control me-2" type="search" placeholder="Tìm kiếm...">
+          <a class="btn btn-outline-primary me-2" href="#">Tìm</a>
+        </form>
+        <a class="btn btn-primary me-2" href="#">Đăng nhập</a>
+        <a class="btn btn-outline-primary" href="#">Đăng ký</a>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container my-4">
+      <div class="row">
+        <!-- Bộ lọc -->
+        <div class="col-md-2">
+          <h5>Bộ lọc</h5>
+          <div class="mb-3">
+            <label for="dropdownTinh" class="form-label">Vùng miền</label>
+            <select class="form-select" id="dropdownTinh">
+              <option selected>Tất cả</option>
+              <option>Miền Bắc</option>
+              <option>Miền Trung</option>
+              <option>Miền Nam  </option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="dropdownTinh" class="form-label">Tỉnh</label>
+            <select class="form-select" id="dropdownTinh">
+              <option selected>Tất cả</option>
+              <option>Trà Vinh</option>
+              <option>Cần Thơ</option>
+              <option>Bến Tre</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="dropdownLoaiHinh" class="form-label">Loại hình</label>
+            <select class="form-select" id="dropdownLoaiHinh">
+              <option selected>Tất cả</option>
+              <option>Ẩm thực</option>
+              <option>Tham quan</option>
+              <option>Văn hóa</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Danh sách trải nghiệm -->
+        <div class="col-md-10">
+          <h5 class="mb-4">Khám phá các địa điểm du lịch</h5>
+          <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            <!-- Card trải nghiệm -->
+            <div class="col">
+              <div class="card h-100">
+                <img src="./1.png" class="card-img-top" alt="..." />
+                <div class="card-body">
+                  <h5 class="card-title text-primary mb-2">
+                    <i class="bi bi-geo-alt-fill me-1"></i> Địa điểm 1
+                  </h5>
+                  <p class="card-text text-muted" style="font-size: 0.9rem;">
+                    Một mô tả ngắn gọn về địa điểm này có thể hiển thị ở đây. Nơi lý tưởng để tham quan, check-in và trải nghiệm.
+                  </p>
+                  <a href="#" class="btn btn-outline-primary btn-sm rounded-pill">Xem chi tiết</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Thêm nhiều card tương tự -->
+            <div class="col">
+              <div class="card h-100">
+                <img src="./2.png" class="card-img-top" alt="..." />
+                <div class="card-body">
+                  <h5 class="card-title text-primary mb-2">
+                    <i class="bi bi-geo-alt-fill me-1"></i> Địa điểm 1
+                  </h5>
+                  <p class="card-text text-muted" style="font-size: 0.9rem;">
+                    Một mô tả ngắn gọn về địa điểm này có thể hiển thị ở đây. Nơi lý tưởng để tham quan, check-in và trải nghiệm.
+                  </p>
+                  <a href="#" class="btn btn-outline-primary btn-sm rounded-pill">Xem chi tiết</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="card h-100">
+                <img src="./1.png" class="card-img-top" alt="..." />
+                <div class="card-body">
+                  <h5 class="card-title text-primary mb-2">
+                    <i class="bi bi-geo-alt-fill me-1"></i> Địa điểm 1
+                  </h5>
+                  <p class="card-text text-muted" style="font-size: 0.9rem;">
+                    Một mô tả ngắn gọn về địa điểm này có thể hiển thị ở đây. Nơi lý tưởng để tham quan, check-in và trải nghiệm.
+                  </p>
+                  <a href="#" class="btn btn-outline-primary btn-sm rounded-pill">Xem chi tiết</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="card h-100">
+                <img src="./1.png" class="card-img-top" alt="..." />
+                <div class="card-body">
+              <h5 class="card-title text-primary mb-2">
+                <i class="bi bi-geo-alt-fill me-1"></i> Địa điểm 1
+              </h5>
+              <p class="card-text text-muted" style="font-size: 0.9rem;">
+                Một mô tả ngắn gọn về địa điểm này có thể hiển thị ở đây. Nơi lý tưởng để tham quan, check-in và trải nghiệm.
+              </p>
+              <a href="#" class="btn btn-outline-primary btn-sm rounded-pill">Xem chi tiết</a>
+            </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-100">
+                <img src="./1.png" class="card-img-top" alt="..." />
+                <div class="card-body">
+                  <h5 class="card-title text-primary mb-2">
+                    <i class="bi bi-geo-alt-fill me-1"></i> Địa điểm 1
+                  </h5>
+                  <p class="card-text text-muted" style="font-size: 0.9rem;">
+                    Một mô tả ngắn gọn về địa điểm này có thể hiển thị ở đây. Nơi lý tưởng để tham quan, check-in và trải nghiệm.
+                  </p>
+                  <a href="#" class="btn btn-outline-primary btn-sm rounded-pill">Xem chi tiết</a>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-100">
+                <img src="./1.png" class="card-img-top" alt="..." />
+                <div class="card-body">
+                  <h5 class="card-title text-primary mb-2">
+                    <i class="bi bi-geo-alt-fill me-1"></i> Địa điểm 1
+                  </h5>
+                  <p class="card-text text-muted" style="font-size: 0.9rem;">
+                    Một mô tả ngắn gọn về địa điểm này có thể hiển thị ở đây. Nơi lý tưởng để tham quan, check-in và trải nghiệm.
+                  </p>
+                  <a href="#" class="btn btn-outline-primary btn-sm rounded-pill">Xem chi tiết</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Thêm bao nhiêu tùy bạn -->
+          </div>
+        </div>
+
+        
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-light text-center py-4 mt-5">Footer</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
