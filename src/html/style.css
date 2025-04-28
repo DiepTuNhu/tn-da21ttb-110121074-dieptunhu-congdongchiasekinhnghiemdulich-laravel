@@ -1,0 +1,198 @@
+/* TRANG CHỦ==================================================================================================================================== */
+:root {
+  --primary-color: #00a8cc; /* Xanh ngọc biển */
+  --background-color: #f0fafa; /* Xanh nhạt siêu nhẹ */
+  --card-background: #ffffff; /* Trắng tinh */
+  --highlight-color: #ffc300; /* Vàng cát nhạt */
+  --text-main: #023047; /* Xanh đậm xám */
+  --text-secondary: #6c757d; /* Xám nhạt */
+}
+
+body {
+  background-color: var(--background-color);
+  font-family: Arial, sans-serif;
+  color: var(--text-main);
+}
+
+/* Navbar */
+.navbar {
+  background-color: var(--primary-color);
+}
+
+.navbar .nav-link {
+  color: #ffffff;
+}
+
+.navbar .nav-link:hover {
+  color: var(--highlight-color);
+}
+
+.navbar-brand {
+  color: #ffffff;
+}
+
+.navbar-toggler {
+  color: #ffffff;
+}
+.slider {
+  height: 300px;
+  background-color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: #ffffff;
+}
+
+.card {
+  background-color: var(--card-background);
+  border: none;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.card-img-top {
+  height: 200px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.card-body {
+  padding: 1.25rem;
+}
+
+.card-text {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+.user-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #ccc;
+}
+.small-box {
+  width: 40px;
+  height: 40px;
+  background-color: #ccc;
+}
+
+.btn-outline-primary {
+  color: var(--highlight-color);
+  border-color: var(--highlight-color);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--highlight-color);
+  color: var(--card-background);
+  border-color: var(--highlight-color);
+}
+
+.btn-primary {
+  background-color: var(--highlight-color);
+  border-color: var(--highlight-color);
+}
+
+.btn-primary:hover {
+  background-color: #e0a900;
+  border-color: #e0a900;
+}
+
+.avatar-wrapper {
+  position: relative;
+  width: 60px;
+  height: 60px;
+}
+
+.avatar-wrapper img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.online-indicator {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 14px;
+  height: 14px;
+  background-color: #28a745; /* Xanh lá */
+  border: 2px solid #fff;
+  border-radius: 50%;
+}
+
+footer {
+  background-color: var(--primary-color);
+}
+/* END TRANG CHỦ================================================================================================================================ */
+
+/* NHIỆM VỤ===================================================================================================================================== */
+/* .task-avatar {
+  width: 80px;
+  height: 80px;
+  background-color: #ccc;
+}
+
+.task-info {
+  flex: 1;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+.task-button {
+  width: 60px;
+  height: 40px;
+  background-color: #eee;
+} */
+/* END NHIỆM VỤ================================================================================================================================ */
+
+/* HỒ SƠ======================================================================================================================================= */
+/* .profile-avatar {
+  width: 150px;
+  height: 150px;
+  background-color: #ccc;
+}
+.card-img-placeholder {
+  background-color: #e0e0e0;
+  width: 100%;
+  padding-top: 100%;
+  position: relative;
+}
+.card-img-placeholder::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc), 
+                    linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+} */
+/* END HỒ SƠ==================================================================================================================================== */
+
+/* XẾP HẠNG==================================================================================================================================== */
+.ranking-badge {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #007bff;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+/* END XẾP HẠNG==================================================================================================================================== */

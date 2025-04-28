@@ -6,85 +6,13 @@
   <title>Trang chủ</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-
-  <style>
-    .slider {
-      height: 300px;
-      background-color: #ddd;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-    }
-    .user-avatar {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background-color: #ccc;
-    }
-    .small-box {
-      width: 40px;
-      height: 40px;
-      background-color: #ccc;
-    }
-    .card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  .card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  }
-  
-  .card-img-top {
-    height: 200px;
-    width: 100%;
-    object-fit: cover;
-  }
-  .card-body {
-    padding: 1.25rem;
-  }
-  .card-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-  }
-  .btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-  }
-  .btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
-  }
-
-    .avatar-wrapper {
-    position: relative;
-    width: 60px;
-    height: 60px;
-  }
-
-  .avatar-wrapper img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-
-  .online-indicator {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 14px;
-    height: 14px;
-    background-color: #28a745; /* màu xanh */
-    border: 2px solid #fff;
-    border-radius: 50%;
-  }
-  </style>
+  <link rel="stylesheet" href="./style.css">
+    
 </head>
 <body>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light px-3">
+<nav class="navbar navbar-expand-lg px-3">
   <a class="navbar-brand" href="#">🌍 Logo</a>
   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
     <!-- <span class="navbar-toggler-icon"></span> -->
@@ -104,7 +32,7 @@
       <!-- <a class="btn btn-outline-primary me-2" href="#">Tìm</a> -->
       <button class="btn btn-outline-primary me-2" type="submit">Tìm</button>
     </form>
-    <a class="btn btn-primary me-2" href="#">Đăng nhập</a>
+    <a class="btn btn-primary me-2" href="#z">Đăng nhập</a>
     <a class="btn btn-outline-primary" href="#">Đăng ký</a>
   </div>
 </nav>
@@ -120,42 +48,45 @@
     <div class="col-md-3">
       <h5>Bài viết mới nhất</h5>
 
-      <div class="card shadow-sm rounded-4 border-0 mb-4">
-        <img src="./1.png" class="card-img-top rounded-top-4" alt="Địa điểm">
-        <div class="card-body">
-          <h5 class="card-title text-primary mb-2">
-            <i class="bi bi-geo-alt-fill me-1"></i> Địa điểm 1
-          </h5>
-          <p class="card-text text-muted" style="font-size: 0.9rem;">
-            Một mô tả ngắn gọn về địa điểm này có thể hiển thị ở đây. Nơi lý tưởng để tham quan, check-in và trải nghiệm.
-          </p>
-          <a href="./chitietdiadiem.html" class="btn btn-outline-primary btn-sm rounded-pill">Xem chi tiết</a>
-        </div>
+      <div class="mb-4">
+        <a href="./chitiet_post.html" class="card h-100">
+          <img src="./1.png" class="card-img-top" alt="Post Image">
+          <div class="card-body">
+            <h5 class="card-title">Chia sẻ chuyến đi Đà Lạt</h5>
+            <p class="card-text">Một trải nghiệm nhẹ nhàng với không khí se lạnh và hoa cỏ khắp nơi...</p>
+          </div>
+          <div class="card-footer text-muted small">
+            <i class="bi bi-calendar-event me-1"></i> 10/04/2025 · 
+            <i class="bi bi-heart-fill text-danger me-1 ms-1"></i> 135 lượt thích
+          </div>
+        </a>
       </div>
 
-      <div class="card shadow-sm rounded-4 border-0 mb-4">
-        <img src="./2.png" class="card-img-top rounded-top-4" alt="Địa điểm">
-        <div class="card-body">
-          <h5 class="card-title text-primary mb-2">
-            <i class="bi bi-geo-alt-fill me-1"></i> Địa điểm 1
-          </h5>
-          <p class="card-text text-muted" style="font-size: 0.9rem;">
-            Một mô tả ngắn gọn về địa điểm này có thể hiển thị ở đây. Nơi lý tưởng để tham quan, check-in và trải nghiệm.
-          </p>
-          <a href="#" class="btn btn-outline-primary btn-sm rounded-pill">Xem chi tiết</a>
+      <div class="mb-4">
+        <div class="card h-100">
+          <img src="./1.png" class="card-img-top" alt="Post Image">
+          <div class="card-body">
+            <h5 class="card-title">Chia sẻ chuyến đi Đà Lạt</h5>
+            <p class="card-text">Một trải nghiệm nhẹ nhàng với không khí se lạnh và hoa cỏ khắp nơi...</p>
+          </div>
+          <div class="card-footer text-muted small">
+            <i class="bi bi-calendar-event me-1"></i> 10/04/2025 · 
+            <i class="bi bi-heart-fill text-danger me-1 ms-1"></i> 135 lượt thích
+          </div>
         </div>
       </div>
       
-      <div class="card shadow-sm rounded-4 border-0 mb-4">
-        <img src="./1.png" class="card-img-top rounded-top-4" alt="Địa điểm">
-        <div class="card-body">
-          <h5 class="card-title text-primary mb-2">
-            <i class="bi bi-geo-alt-fill me-1"></i> Địa điểm 1
-          </h5>
-          <p class="card-text text-muted" style="font-size: 0.9rem;">
-            Một mô tả ngắn gọn về địa điểm này có thể hiển thị ở đây. Nơi lý tưởng để tham quan, check-in và trải nghiệm.
-          </p>
-          <a href="#" class="btn btn-outline-primary btn-sm rounded-pill">Xem chi tiết</a>
+      <div class="mb-4">
+        <div class="card h-100">
+          <img src="./1.png" class="card-img-top" alt="Post Image">
+          <div class="card-body">
+            <h5 class="card-title">Chia sẻ chuyến đi Đà Lạt</h5>
+            <p class="card-text">Một trải nghiệm nhẹ nhàng với không khí se lạnh và hoa cỏ khắp nơi...</p>
+          </div>
+          <div class="card-footer text-muted small">
+            <i class="bi bi-calendar-event me-1"></i> 10/04/2025 · 
+            <i class="bi bi-heart-fill text-danger me-1 ms-1"></i> 135 lượt thích
+          </div>
         </div>
       </div>
 
@@ -182,32 +113,64 @@
       <!-- Dòng 1 -->
       <div class="row mb-3">
         <div class="col-md-6 col-lg-6 mb-4">
-          <div class="card shadow-sm rounded-4 border-0 h-100">
-            <img src="./2.png" class="card-img-top rounded-top-4" alt="Địa điểm">
-            <div class="card-body">
-              <h5 class="card-title text-primary mb-2">
-                <i class="bi bi-geo-alt-fill me-1"></i> Địa điểm 1
-              </h5>
-              <p class="card-text text-muted" style="font-size: 0.9rem;">
-                Một mô tả ngắn gọn về địa điểm này có thể hiển thị ở đây. Nơi lý tưởng để tham quan, check-in và trải nghiệm.
-              </p>
-              <a href="#" class="btn btn-outline-primary btn-sm rounded-pill">Xem chi tiết</a>
-            </div>
-          </div>
-        </div>
+          <a href="./chitietdiadiem.html" class="card border-0 shadow-sm rounded-4 hover-shadow overflow-hidden">
         
-        <div class="col-md-6 col-lg-6 mb-4">
-          <div class="card shadow-sm rounded-4 border-0 h-100">
-            <img src="./1.png" class="card-img-top rounded-top-4" alt="Địa điểm">
+            <div class="position-relative">
+              <img src="./1.png" class="card-img-top" alt="Địa điểm">
+              <span class="position-absolute top-0 start-0 bg-primary text-white px-3 py-1 small rounded-end">#ĐàLạt</span>
+            </div>
+        
             <div class="card-body">
               <h5 class="card-title text-primary mb-2">
-                <i class="bi bi-geo-alt-fill me-1"></i> Địa điểm 1
+                <i class="bi bi-geo-alt-fill me-1"></i> Đồi chè Cầu Đất
               </h5>
-              <p class="card-text text-muted" style="font-size: 0.9rem;">
-                Một mô tả ngắn gọn về địa điểm này có thể hiển thị ở đây. Nơi lý tưởng để tham quan, check-in và trải nghiệm.
+              <p class="card-text text-muted" style="font-size: 0.94rem;">
+                Nơi lý tưởng để hòa mình vào thiên nhiên, tận hưởng không khí trong lành và ghi lại những bức hình tuyệt đẹp giữa đồi chè xanh ngát.
               </p>
-              <a href="#" class="btn btn-outline-primary btn-sm rounded-pill">Xem chi tiết</a>
+        
+              <div class="d-grid text-muted small mt-3 gap-1">
+                <div><i class="bi bi-geo me-1"></i> Xã Xuân Trường, TP. Đà Lạt</div>
+                <div><i class="bi bi-currency-dollar me-1"></i> Miễn phí</div>
+              </div>
+              
             </div>
+        
+            <div class="card-footer bg-white border-0 d-flex justify-content-between text-muted small">
+              <div><i class="bi bi-calendar-event me-1"></i> Cập nhật: 10/04/2025</div>
+              <div><i class="bi bi-heart-fill text-danger me-1"></i> 135</div>
+            </div>
+        
+          </a>
+        </div>
+
+        <div class="col-md-6 col-lg-6 mb-4">
+          <div class="card border-0 shadow-sm rounded-4 hover-shadow overflow-hidden">
+        
+            <div class="position-relative">
+              <img src="./1.png" class="card-img-top" alt="Địa điểm">
+              <span class="position-absolute top-0 start-0 bg-primary text-white px-3 py-1 small rounded-end">#ĐàLạt</span>
+            </div>
+        
+            <div class="card-body">
+              <h5 class="card-title text-primary mb-2">
+                <i class="bi bi-geo-alt-fill me-1"></i> Đồi chè Cầu Đất
+              </h5>
+              <p class="card-text text-muted" style="font-size: 0.94rem;">
+                Nơi lý tưởng để hòa mình vào thiên nhiên, tận hưởng không khí trong lành và ghi lại những bức hình tuyệt đẹp giữa đồi chè xanh ngát.
+              </p>
+        
+              <div class="d-grid text-muted small mt-3 gap-1">
+                <div><i class="bi bi-geo me-1"></i> Xã Xuân Trường, TP. Đà Lạt</div>
+                <div><i class="bi bi-currency-dollar me-1"></i> Miễn phí</div>
+              </div>
+              
+            </div>
+        
+            <div class="card-footer bg-white border-0 d-flex justify-content-between text-muted small">
+              <div><i class="bi bi-calendar-event me-1"></i> Cập nhật: 10/04/2025</div>
+              <div><i class="bi bi-heart-fill text-danger me-1"></i> 135</div>
+            </div>
+        
           </div>
         </div>
       </div>
@@ -215,33 +178,62 @@
       <!-- Dòng 2 -->
       <div class="row mb-3">
         <div class="col-md-6 col-lg-6 mb-4">
-          <div class="card shadow-sm rounded-4 border-0 h-100">
-            <img src="./1.png" class="card-img-top rounded-top-4" alt="Địa điểm">
+          <div class="card border-0 shadow-sm rounded-4 hover-shadow overflow-hidden">
+        
+            <div class="position-relative">
+              <img src="./1.png" class="card-img-top" alt="Địa điểm">
+              <span class="position-absolute top-0 start-0 bg-primary text-white px-3 py-1 small rounded-end">#ĐàLạt</span>
+            </div>
+        
             <div class="card-body">
               <h5 class="card-title text-primary mb-2">
-                <i class="bi bi-geo-alt-fill me-1"></i> Địa điểm 1
+                <i class="bi bi-geo-alt-fill me-1"></i> Đồi chè Cầu Đất
               </h5>
-              <p class="card-text text-muted" style="font-size: 0.9rem;">
-                Một mô tả ngắn gọn về địa điểm này có thể hiển thị ở đây. Nơi lý tưởng để tham quan, check-in và trải nghiệm.
+              <p class="card-text text-muted" style="font-size: 0.94rem;">
+                Nơi lý tưởng để hòa mình vào thiên nhiên, tận hưởng không khí trong lành và ghi lại những bức hình tuyệt đẹp giữa đồi chè xanh ngát.
               </p>
-              <a href="#" class="btn btn-outline-primary btn-sm rounded-pill">Xem chi tiết</a>
+        
+              <div class="d-flex flex-wrap text-muted small mt-3 gap-3">
+                <div><i class="bi bi-geo me-1"></i> Xã Xuân Trường, TP. Đà Lạt</div>
+                <div><i class="bi bi-currency-dollar me-1"></i> Miễn phí</div>
+              </div>
             </div>
+        
+            <div class="card-footer bg-white border-0 d-flex justify-content-between text-muted small">
+              <div><i class="bi bi-calendar-event me-1"></i> Cập nhật: 10/04/2025</div>
+              <div><i class="bi bi-heart-fill text-danger me-1"></i> 135</div>
+            </div>
+        
           </div>
         </div>
-        
-        
+               
         <div class="col-md-6 col-lg-6 mb-4">
-          <div class="card shadow-sm rounded-4 border-0 h-100">
-            <img src="./1.png" class="card-img-top rounded-top-4" alt="Địa điểm">
+          <div class="card border-0 shadow-sm rounded-4 hover-shadow overflow-hidden">
+        
+            <div class="position-relative">
+              <img src="./1.png" class="card-img-top" alt="Địa điểm">
+              <span class="position-absolute top-0 start-0 bg-primary text-white px-3 py-1 small rounded-end">#ĐàLạt</span>
+            </div>
+        
             <div class="card-body">
               <h5 class="card-title text-primary mb-2">
-                <i class="bi bi-geo-alt-fill me-1"></i> Địa điểm 1
+                <i class="bi bi-geo-alt-fill me-1"></i> Đồi chè Cầu Đất
               </h5>
-              <p class="card-text text-muted" style="font-size: 0.9rem;">
-                Một mô tả ngắn gọn về địa điểm này có thể hiển thị ở đây. Nơi lý tưởng để tham quan, check-in và trải nghiệm.
+              <p class="card-text text-muted" style="font-size: 0.94rem;">
+                Nơi lý tưởng để hòa mình vào thiên nhiên, tận hưởng không khí trong lành và ghi lại những bức hình tuyệt đẹp giữa đồi chè xanh ngát.
               </p>
-              <a href="#" class="btn btn-outline-primary btn-sm rounded-pill">Xem chi tiết</a>
+        
+              <div class="d-flex flex-wrap text-muted small mt-3 gap-3">
+                <div><i class="bi bi-geo me-1"></i> Xã Xuân Trường, TP. Đà Lạt</div>
+                <div><i class="bi bi-currency-dollar me-1"></i> Miễn phí</div>
+              </div>
             </div>
+        
+            <div class="card-footer bg-white border-0 d-flex justify-content-between text-muted small">
+              <div><i class="bi bi-calendar-event me-1"></i> Cập nhật: 10/04/2025</div>
+              <div><i class="bi bi-heart-fill text-danger me-1"></i> 135</div>
+            </div>
+        
           </div>
         </div>
       </div>
@@ -249,32 +241,62 @@
       <!-- Dòng 3 -->
       <div class="row mb-3">
         <div class="col-md-6 col-lg-6 mb-4">
-          <div class="card shadow-sm rounded-4 border-0 h-100">
-            <img src="./1.png" class="card-img-top rounded-top-4" alt="Địa điểm">
+          <div class="card border-0 shadow-sm rounded-4 hover-shadow overflow-hidden">
+        
+            <div class="position-relative">
+              <img src="./1.png" class="card-img-top" alt="Địa điểm">
+              <span class="position-absolute top-0 start-0 bg-primary text-white px-3 py-1 small rounded-end">#ĐàLạt</span>
+            </div>
+        
             <div class="card-body">
               <h5 class="card-title text-primary mb-2">
-                <i class="bi bi-geo-alt-fill me-1"></i> Địa điểm 1
+                <i class="bi bi-geo-alt-fill me-1"></i> Đồi chè Cầu Đất
               </h5>
-              <p class="card-text text-muted" style="font-size: 0.9rem;">
-                Một mô tả ngắn gọn về địa điểm này có thể hiển thị ở đây. Nơi lý tưởng để tham quan, check-in và trải nghiệm.
+              <p class="card-text text-muted" style="font-size: 0.94rem;">
+                Nơi lý tưởng để hòa mình vào thiên nhiên, tận hưởng không khí trong lành và ghi lại những bức hình tuyệt đẹp giữa đồi chè xanh ngát.
               </p>
-              <a href="#" class="btn btn-outline-primary btn-sm rounded-pill">Xem chi tiết</a>
+        
+              <div class="d-flex flex-wrap text-muted small mt-3 gap-3">
+                <div><i class="bi bi-geo me-1"></i> Xã Xuân Trường, TP. Đà Lạt</div>
+                <div><i class="bi bi-currency-dollar me-1"></i> Miễn phí</div>
+              </div>
             </div>
+        
+            <div class="card-footer bg-white border-0 d-flex justify-content-between text-muted small">
+              <div><i class="bi bi-calendar-event me-1"></i> Cập nhật: 10/04/2025</div>
+              <div><i class="bi bi-heart-fill text-danger me-1"></i> 135</div>
+            </div>
+        
           </div>
         </div>
         
         <div class="col-md-6 col-lg-6 mb-4">
-          <div class="card shadow-sm rounded-4 border-0 h-100">
-            <img src="./1.png" class="card-img-top rounded-top-4" alt="Địa điểm">
+          <div class="card border-0 shadow-sm rounded-4 hover-shadow overflow-hidden">
+        
+            <div class="position-relative">
+              <img src="./1.png" class="card-img-top" alt="Địa điểm">
+              <span class="position-absolute top-0 start-0 bg-primary text-white px-3 py-1 small rounded-end">#ĐàLạt</span>
+            </div>
+        
             <div class="card-body">
               <h5 class="card-title text-primary mb-2">
-                <i class="bi bi-geo-alt-fill me-1"></i> Địa điểm 1
+                <i class="bi bi-geo-alt-fill me-1"></i> Đồi chè Cầu Đất
               </h5>
-              <p class="card-text text-muted" style="font-size: 0.9rem;">
-                Một mô tả ngắn gọn về địa điểm này có thể hiển thị ở đây. Nơi lý tưởng để tham quan, check-in và trải nghiệm.
+              <p class="card-text text-muted" style="font-size: 0.94rem;">
+                Nơi lý tưởng để hòa mình vào thiên nhiên, tận hưởng không khí trong lành và ghi lại những bức hình tuyệt đẹp giữa đồi chè xanh ngát.
               </p>
-              <a href="#" class="btn btn-outline-primary btn-sm rounded-pill">Xem chi tiết</a>
+        
+              <div class="d-flex flex-wrap text-muted small mt-3 gap-3">
+                <div><i class="bi bi-geo me-1"></i> Xã Xuân Trường, TP. Đà Lạt</div>
+                <div><i class="bi bi-currency-dollar me-1"></i> Miễn phí</div>
+              </div>
             </div>
+        
+            <div class="card-footer bg-white border-0 d-flex justify-content-between text-muted small">
+              <div><i class="bi bi-calendar-event me-1"></i> Cập nhật: 10/04/2025</div>
+              <div><i class="bi bi-heart-fill text-danger me-1"></i> 135</div>
+            </div>
+        
           </div>
         </div>
       </div>
@@ -282,32 +304,62 @@
       <!-- Dòng 4 -->
       <div class="row mb-3">
         <div class="col-md-6 col-lg-6 mb-4">
-          <div class="card shadow-sm rounded-4 border-0 h-100">
-            <img src="./1.png" class="card-img-top rounded-top-4" alt="Địa điểm">
+          <div class="card border-0 shadow-sm rounded-4 hover-shadow overflow-hidden">
+        
+            <div class="position-relative">
+              <img src="./1.png" class="card-img-top" alt="Địa điểm">
+              <span class="position-absolute top-0 start-0 bg-primary text-white px-3 py-1 small rounded-end">#ĐàLạt</span>
+            </div>
+        
             <div class="card-body">
               <h5 class="card-title text-primary mb-2">
-                <i class="bi bi-geo-alt-fill me-1"></i> Địa điểm 1
+                <i class="bi bi-geo-alt-fill me-1"></i> Đồi chè Cầu Đất
               </h5>
-              <p class="card-text text-muted" style="font-size: 0.9rem;">
-                Một mô tả ngắn gọn về địa điểm này có thể hiển thị ở đây. Nơi lý tưởng để tham quan, check-in và trải nghiệm.
+              <p class="card-text text-muted" style="font-size: 0.94rem;">
+                Nơi lý tưởng để hòa mình vào thiên nhiên, tận hưởng không khí trong lành và ghi lại những bức hình tuyệt đẹp giữa đồi chè xanh ngát.
               </p>
-              <a href="#" class="btn btn-outline-primary btn-sm rounded-pill">Xem chi tiết</a>
+        
+              <div class="d-flex flex-wrap text-muted small mt-3 gap-3">
+                <div><i class="bi bi-geo me-1"></i> Xã Xuân Trường, TP. Đà Lạt</div>
+                <div><i class="bi bi-currency-dollar me-1"></i> Miễn phí</div>
+              </div>
             </div>
+        
+            <div class="card-footer bg-white border-0 d-flex justify-content-between text-muted small">
+              <div><i class="bi bi-calendar-event me-1"></i> Cập nhật: 10/04/2025</div>
+              <div><i class="bi bi-heart-fill text-danger me-1"></i> 135</div>
+            </div>
+        
           </div>
         </div>
         
         <div class="col-md-6 col-lg-6 mb-4">
-          <div class="card shadow-sm rounded-4 border-0 h-100">
-            <img src="./1.png" class="card-img-top rounded-top-4" alt="Địa điểm">
+          <div class="card border-0 shadow-sm rounded-4 hover-shadow overflow-hidden">
+        
+            <div class="position-relative">
+              <img src="./1.png" class="card-img-top" alt="Địa điểm">
+              <span class="position-absolute top-0 start-0 bg-primary text-white px-3 py-1 small rounded-end">#ĐàLạt</span>
+            </div>
+        
             <div class="card-body">
               <h5 class="card-title text-primary mb-2">
-                <i class="bi bi-geo-alt-fill me-1"></i> Địa điểm 1
+                <i class="bi bi-geo-alt-fill me-1"></i> Đồi chè Cầu Đất
               </h5>
-              <p class="card-text text-muted" style="font-size: 0.9rem;">
-                Một mô tả ngắn gọn về địa điểm này có thể hiển thị ở đây. Nơi lý tưởng để tham quan, check-in và trải nghiệm.
+              <p class="card-text text-muted" style="font-size: 0.94rem;">
+                Nơi lý tưởng để hòa mình vào thiên nhiên, tận hưởng không khí trong lành và ghi lại những bức hình tuyệt đẹp giữa đồi chè xanh ngát.
               </p>
-              <a href="#" class="btn btn-outline-primary btn-sm rounded-pill">Xem chi tiết</a>
+        
+              <div class="d-flex flex-wrap text-muted small mt-3 gap-3">
+                <div><i class="bi bi-geo me-1"></i> Xã Xuân Trường, TP. Đà Lạt</div>
+                <div><i class="bi bi-currency-dollar me-1"></i> Miễn phí</div>
+              </div>
             </div>
+        
+            <div class="card-footer bg-white border-0 d-flex justify-content-between text-muted small">
+              <div><i class="bi bi-calendar-event me-1"></i> Cập nhật: 10/04/2025</div>
+              <div><i class="bi bi-heart-fill text-danger me-1"></i> 135</div>
+            </div>
+        
           </div>
         </div>
       </div>
@@ -330,13 +382,13 @@
         </div>
       </div>
       <h5>Người dùng đang online</h5>
-      <div class="d-flex align-items-center mb-3">
+      <a href="./chitietnguoidung.html" class="d-flex align-items-center mb-3">
         <div class="avatar-wrapper me-2">
           <img src="./1.png" alt="Avatar">
           <div class="online-indicator"></div>
         </div>
         <span>Người dùng 1</span>
-      </div>
+      </a>
       
       <div class="d-flex align-items-center mb-3">
         <div class="avatar-wrapper me-2">
@@ -355,11 +407,56 @@
       </div>
     </div>
   </div>
-
+</div>
 <!-- Footer -->
-<footer class="bg-light text-center py-4">
-  Footer
+<footer class="pt-5 pb-4 mt-5">
+  <div class="container">
+    <div class="row">
+
+      <!-- Logo + Mô tả -->
+      <div class="col-md-4 mb-4">
+        <h5 class="text-uppercase fw-bold mb-3">TravelViet</h5>
+        <p class="small text-muted">
+          TravelViet giúp bạn khám phá những điểm đến tuyệt đẹp trên khắp Việt Nam. Chia sẻ trải nghiệm, lưu giữ hành trình.
+        </p>
+        <div class="d-flex gap-3 mt-3">
+          <a href="#" class="text-light"><i class="bi bi-facebook fs-5"></i></a>
+          <a href="#" class="text-light"><i class="bi bi-instagram fs-5"></i></a>
+          <a href="#" class="text-light"><i class="bi bi-youtube fs-5"></i></a>
+        </div>
+      </div>
+
+      <!-- Liên kết nhanh -->
+      <div class="col-md-4 mb-4">
+        <h6 class="text-uppercase fw-bold mb-3">Liên kết</h6>
+        <ul class="list-unstyled small">
+          <li><a href="#" class="text-light text-decoration-none">Trang chủ</a></li>
+          <li><a href="#" class="text-light text-decoration-none">Địa điểm nổi bật</a></li>
+          <li><a href="#" class="text-light text-decoration-none">Bài viết</a></li>
+          <li><a href="#" class="text-light text-decoration-none">Liên hệ</a></li>
+        </ul>
+      </div>
+
+      <!-- Thông tin liên hệ -->
+      <div class="col-md-4 mb-4">
+        <h6 class="text-uppercase fw-bold mb-3">Liên hệ</h6>
+        <ul class="list-unstyled small">
+          <li><i class="bi bi-geo-alt-fill me-2"></i> Trà Vinh, Việt Nam</li>
+          <li><i class="bi bi-envelope-fill me-2"></i> contact@travelviet.vn</li>
+          <li><i class="bi bi-phone-fill me-2"></i> +84 123 456 789</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Copyright -->
+    <hr class="border-top border-light">
+    <div class="text-center small mt-3 text-muted">
+      © 2025 TravelViet. All rights reserved.
+    </div>
+  </div>
 </footer>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
