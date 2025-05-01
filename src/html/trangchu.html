@@ -44,8 +44,8 @@
           <input type="text" placeholder="🔍 Tìm bài viết, địa điểm..." />
         </div>
         <div class="right-group">
-          <a href="#" class="login-btn">Đăng nhập</a>
-          <a href="#" class="signup-btn">Đăng ký</a>
+          <a href="./dangnhap.html" class="login-btn">Đăng nhập</a>
+          <a href="./dangky.html" class="signup-btn">Đăng ký</a>
         </div>
       </div>
     </nav>
@@ -420,5 +420,13 @@
   });
 </script>
 <!-- Ẩn thanh tìm kiếm khi đang ở trang chủ -->
-content
 
+<script>
+  // Kiểm tra nếu đang ở trang chủ
+  const isHomepage = window.location.pathname.endsWith("trangchu.html") || window.location.pathname === "/";
+  const navbarSearch = document.getElementById("navbarSearch");
+
+  if (isHomepage && navbarSearch) {
+    navbarSearch.classList.add("hidden");
+  }
+</script>

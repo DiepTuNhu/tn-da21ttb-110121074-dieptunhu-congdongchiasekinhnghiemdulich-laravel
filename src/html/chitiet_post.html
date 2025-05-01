@@ -1,265 +1,444 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chi tiết bài viết</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f5f5f5;
-      margin: 0;
-      color: #333;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chi tiết bài viết</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background: #f5f5f5;
+        margin: 0;
+        color: #333;
+        padding-top: 75px;
+      }
 
-    .container {
-      max-width: 1000px;
-      margin: 40px auto;
-      display: flex;
-      gap: 30px;
-      padding: 0 20px;
-    }
+      .container {
+        max-width: 1000px;
+        margin: 40px auto;
+        display: flex;
+        gap: 30px;
+        padding: 0 20px;
+      }
 
-    .main {
-      flex: 3;
-      background: white;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
-    }
+      .main {
+        flex: 3;
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+      }
 
-    .sidebar {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
+      .sidebar {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
 
-    h1 {
-      font-size: 26px;
-      color: #1a1a1a;
-      margin-bottom: 10px;
-    }
+      h1 {
+        font-size: 26px;
+        color: #1a1a1a;
+        margin-bottom: 10px;
+      }
 
-    .meta {
-      font-size: 14px;
-      color: #777;
-      margin-bottom: 20px;
-    }
+      .meta {
+        font-size: 14px;
+        color: #777;
+        margin-bottom: 20px;
+      }
 
-    .meta span {
-      margin-right: 12px;
-    }
+      .meta span {
+        margin-right: 12px;
+      }
 
-    .meta .badge {
-      background: #e0f7fa;
-      color: #00796b;
-      padding: 2px 8px;
-      border-radius: 6px;
-      font-size: 12px;
-    }
+      .meta .badge {
+        background: #e0f7fa;
+        color: #00796b;
+        padding: 2px 8px;
+        border-radius: 6px;
+        font-size: 12px;
+      }
+      .user-meta {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
+        font-size: 14px;
+        color: #555;
+        flex-wrap: wrap;
+      }
 
-    .main img {
-      max-width: 100%;
-      border-radius: 8px;
-      margin: 20px 0;
-    }
+      .author-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+      }
 
-    .main ul {
-      margin: 10px 0 20px;
-      padding-left: 20px;
-    }
+      .user-info {
+        display: flex;
+        flex-direction: column;
+      }
 
-    .actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 20px;
-    }
+      .author-name {
+        font-weight: bold;
+        font-size: 15px;
+        color: #333;
+      }
 
-    .actions button {
-      padding: 8px 16px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 14px;
-    }
+      .meta-details {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+        font-size: 13px;
+        color: #666;
+      }
 
-    .like { background: #ffcdd2; color: #c62828; }
-    .save { background: #ffe0b2; color: #e65100; }
-    .report { background: #fff3cd; color: #b58900; }
+      .meta-details i {
+        margin-right: 4px;
+        color: #ff5722;
+      }
 
-    .tags {
-      font-size: 14px;
-      margin-top: 10px;
-      color: #777;
-    }
+      .badge {
+        background: #e0f7fa;
+        color: #00796b;
+        padding: 3px 10px;
+        border-radius: 12px;
+        font-size: 12px;
+      }
 
-    .tags span {
-      margin-right: 10px;
-    }
+      .main img {
+        max-width: 100%;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
 
-    .author-box, .related-box {
-      background: white;
-      border-radius: 12px;
-      padding: 16px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
+      .main ul {
+        margin: 10px 0 20px;
+        padding-left: 20px;
+      }
 
-    .author-box img {
-      width: 40px;
-      border-radius: 50%;
-      vertical-align: middle;
-      margin-right: 8px;
-    }
+      .post-interact {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 16px;
+        margin: 20px 0;
+      }
 
-    .related-box a {
-      display: block;
-      color: #1e88e5;
-      text-decoration: none;
-      margin-bottom: 6px;
-    }
+      .post-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
 
-    .comment-section {
-      margin-top: 40px;
-    }
+      .btn {
+        padding: 8px 14px;
+        border: none;
+        border-radius: 5px;
+        font-size: 14px;
+        cursor: pointer;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: 0.3s ease;
+      }
 
-    .comment {
-      margin-top: 20px;
-      display: flex;
-      gap: 10px;
-    }
+      .like {
+        background: #ffcdd2;
+        color: #c62828;
+      }
 
-    .comment img {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-    }
+      .save {
+        background: #ffe0b2;
+        color: #e65100;
+      }
 
-    .comment-body {
-      background: #f1f1f1;
-      padding: 10px 14px;
-      border-radius: 8px;
-    }
+      .report {
+        background: #fff3cd;
+        color: #b58900;
+      }
 
-    .comment-body strong {
-      color: #333;
-      display: block;
-      margin-bottom: 4px;
-    }
+      .post-badges {
+        display: flex;
+        gap: 16px;
+        font-size: 14px;
+        color: #555;
+        flex-wrap: wrap;
+      }
 
-    .comment-actions {
-      font-size: 13px;
-      margin-top: 4px;
-      color: #007aff;
-      cursor: pointer;
-    }
+      .post-badges i {
+        margin-right: 6px;
+        color: #fbc02d;
+      }
 
-    textarea {
-      width: 100%;
-      padding: 10px 14px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      resize: vertical;
-      margin-top: 20px;
-    }
+      .like {
+        background: #ffcdd2;
+        color: #c62828;
+      }
+      .save {
+        background: #ffe0b2;
+        color: #e65100;
+      }
+      .report {
+        background: #fff3cd;
+        color: #b58900;
+      }
 
-    .comment-form button {
-      margin-top: 10px;
-      padding: 10px 16px;
-      background: #ff7043;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
+      .author-box,
+      .related-box {
+        background: white;
+        border-radius: 12px;
+        padding: 16px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
 
-    iframe {
-      width: 100%;
-      border: 0;
-      border-radius: 8px;
-      margin: 20px 0;
-      height: 300px;
-    }
-  </style>
-</head>
-<body>
+      .author-box img {
+        width: 40px;
+        border-radius: 50%;
+        vertical-align: middle;
+        margin-right: 8px;
+      }
 
-<div class="container">
-  <div class="main">
-    <h1>Chuyến du lịch đáng nhớ tại Đà Lạt</h1>
-    <div class="meta">
-      <span><img src="https://i.pravatar.cc/32?img=1" alt="avatar"> Nguyễn Văn A</span>
-      <span>12/04/2025</span>
-      <span>📊 1234 lượt xem</span>
-      <span>❤️ 256 lượt thích</span>
-      <span class="badge">Địa điểm</span>
-    </div>
+      .related-box a {
+        display: block;
+        color: #1e88e5;
+        text-decoration: none;
+        margin-bottom: 6px;
+      }
 
-    <p>Đà Lạt là một trong những điểm đến tuyệt vời với khí hậu se lạnh và phong cảnh hữu tình.</p>
+      .comment-section {
+        margin-top: 40px;
+      }
 
-    <ul>
-      <li>Tham quan những tiệm lung linh yêu</li>
-      <li>Thưởng thức bánh tráng nướng</li>
-      <li>Check-in tại quảng trường Lâm Viên</li>
-    </ul>
+      .comment {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+      }
 
-    <img src="../demo.jpg" alt="ảnh minh họa">
+      .comment img {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+      }
 
-    <p>Bạn có thể xem bản đồ bên dưới để biết thêm chi tiết:</p>
+      .comment-body {
+        background: #f1f1f1;
+        padding: 10px 14px;
+        border-radius: 8px;
+      }
 
-    <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.506541968824!2d108.44541667509518!3d11.975545288290027!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317113e828f0e6d9%3A0x100b4048d5e6afcd!2zRGFsYXQsIExhbSDEk25nLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1680491032671"
-      allowfullscreen=""
-      loading="lazy">
-    </iframe>
+      .comment-body strong {
+        color: #333;
+        display: block;
+        margin-bottom: 4px;
+      }
 
-    <div class="actions">
-      <button class="like"><i class="fas fa-heart"></i> Thích</button>
-      <button class="save"><i class="fas fa-bookmark"></i> Lưu bài viết</button>
-      <button class="report"><i class="fas fa-flag"></i> Báo cáo</button>
-    </div>
+      .comment-actions {
+        font-size: 13px;
+        margin-top: 4px;
+        color: #007aff;
+        cursor: pointer;
+      }
 
-    <div class="tags">
-      <span>⭐ 120 XP</span>
-      <span>🥇 Top 10 bài viết tuần</span>
-    </div>
+      textarea {
+        width: 100%;
+        padding: 10px 14px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        resize: vertical;
+        margin-top: 20px;
+      }
 
-    <!-- Bình luận -->
-    <div class="comment-section">
-      <h3>Bình luận</h3>
+      .comment-form button {
+        margin-top: 10px;
+        padding: 10px 16px;
+        background: #ff7043;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
 
-      <div class="comment">
-        <img src="https://i.pravatar.cc/36?img=2" alt="avatar">
-        <div class="comment-body">
-          <strong>Bình Minh</strong>
-          Chuyến đi quá đẹp, mình cũng muốn thử!
-          <div class="comment-actions">👍 Thích · 💬 Trả lời</div>
+      iframe {
+        width: 100%;
+        border: 0;
+        border-radius: 8px;
+        margin: 20px 0;
+        height: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="navbar-container">
+        <div class="left-group">
+          <div class="menu-toggle" id="menu-toggle">
+            <i class="fas fa-bars"></i>
+          </div>
+
+          <div class="logo">
+            <img src="./logo.png" alt="" />
+            <!-- <a href="./logo.png">TravelShare 🌍</a> -->
+          </div>
+
+          <ul class="nav-links" id="nav-links">
+            <li><a href="#">Trang Chủ</a></li>
+            <li><a href="./khampha.html">Khám phá</a></li>
+            <li><a href="#category">Cộng đồng</a></li>
+            <li><a href="#topuser">Nhiệm vụ</a></li>
+            <li><a href="#latestposts">Xếp hạng</a></li>
+            <li><a href="#thamgia">Hồ sơ</a></li>
+          </ul>
+        </div>
+
+        <div class="right-group">
+          <a href="#" class="login-btn">Đăng nhập</a>
+          <a href="#" class="signup-btn">Đăng ký</a>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="main">
+        <h1>Chuyến du lịch đáng nhớ tại Đà Lạt</h1>
+        <div class="meta user-meta">
+          <img class="author-avatar" src="https://i.pravatar.cc/40?img=1" alt="avatar" />
+          <div class="user-info">
+            <span class="author-name">Nguyễn Văn A</span>
+            <span class="meta-details">
+              <i class="fas fa-calendar-alt"></i> 12/04/2025 <i class="fas fa-chart-bar"></i> 1234
+              lượt xem <i class="fas fa-heart"></i> 256 lượt thích
+              <span class="badge">Địa điểm</span>
+            </span>
+          </div>
+        </div>
+
+        <p>
+          Đà Lạt là một trong những điểm đến tuyệt vời với khí hậu se lạnh và phong cảnh hữu tình.
+        </p>
+
+        <ul>
+          <li>Tham quan những tiệm lung linh yêu</li>
+          <li>Thưởng thức bánh tráng nướng</li>
+          <li>Check-in tại quảng trường Lâm Viên</li>
+        </ul>
+
+        <img src="../demo.jpg" alt="ảnh minh họa" />
+
+        <p>Bạn có thể xem bản đồ bên dưới để biết thêm chi tiết:</p>
+
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.506541968824!2d108.44541667509518!3d11.975545288290027!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317113e828f0e6d9%3A0x100b4048d5e6afcd!2zRGFsYXQsIExhbSDEk25nLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1680491032671"
+          allowfullscreen=""
+          loading="lazy"
+        >
+        </iframe>
+
+        <div class="post-interact">
+          <div class="post-actions">
+            <button class="btn like"><i class="fas fa-heart"></i> Thích</button>
+            <button class="btn save"><i class="fas fa-bookmark"></i> Lưu bài viết</button>
+            <button class="btn report"><i class="fas fa-flag"></i> Báo cáo</button>
+          </div>
+
+          <div class="post-badges">
+            <span><i class="fas fa-star"></i> 120 XP</span>
+            <span><i class="fas fa-medal"></i> Top 10 bài viết tuần</span>
+          </div>
+        </div>
+
+        <!-- Bình luận -->
+        <div class="comment-section">
+          <h3>Bình luận</h3>
+
+          <div class="comment">
+            <img src="https://i.pravatar.cc/36?img=2" alt="avatar" />
+            <div class="comment-body">
+              <strong>Bình Minh</strong>
+              Chuyến đi quá đẹp, mình cũng muốn thử!
+              <div class="comment-actions">👍 Thích · 💬 Trả lời</div>
+            </div>
+          </div>
+
+          <form class="comment-form">
+            <textarea rows="3" placeholder="Viết bình luận..."></textarea>
+            <button type="submit">Gửi bình luận</button>
+          </form>
         </div>
       </div>
 
-      <form class="comment-form">
-        <textarea rows="3" placeholder="Viết bình luận..."></textarea>
-        <button type="submit">Gửi bình luận</button>
-      </form>
-    </div>
-  </div>
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <div class="author-box">
+          <p><img src="https://i.pravatar.cc/40?img=1" alt="" /> <strong>Nguyễn Văn A</strong></p>
+          <a href="#">Xem hồ sơ</a>
+        </div>
 
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <div class="author-box">
-      <p><img src="https://i.pravatar.cc/40?img=1" alt=""> <strong>Nguyễn Văn A</strong></p>
-      <a href="#">Xem hồ sơ</a>
+        <div class="related-box">
+          <strong>Bài viết liên quan</strong>
+          <a href="#">Khám phá Huế mộng mơ</a>
+          <a href="#">Ẩm thực Hội An</a>
+          <a href="#">Trekking ở Sapa</a>
+        </div>
+      </div>
     </div>
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-grid">
+          <!-- Logo & mô tả -->
+          <div class="footer-column">
+            <!-- <h5 class="footer-title">TravelViet</h5> -->
+            <img
+              src="./vietnam_travel_logo_white_transparent.png"
+              alt=""
+              width="300px"
+              height="150px"
+            />
+            <p class="footer-text">
+              TravelViet giúp bạn khám phá những điểm đến tuyệt đẹp trên khắp Việt Nam. Chia sẻ trải
+              nghiệm, lưu giữ hành trình.
+            </p>
+            <div class="social-icons">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+          </div>
 
-    <div class="related-box">
-      <strong>Bài viết liên quan</strong>
-      <a href="#">Khám phá Huế mộng mơ</a>
-      <a href="#">Ẩm thực Hội An</a>
-      <a href="#">Trekking ở Sapa</a>
-    </div>
-  </div>
-</div>
+          <!-- Liên kết -->
+          <div class="footer-column">
+            <h6 class="footer-title">Liên kết</h6>
+            <ul class="footer-links">
+              <li><a href="#">Trang chủ</a></li>
+              <li><a href="#">Địa điểm nổi bật</a></li>
+              <li><a href="#">Bài viết</a></li>
+              <li><a href="#">Liên hệ</a></li>
+            </ul>
+          </div>
 
-</body>
+          <!-- Liên hệ -->
+          <div class="footer-column">
+            <h6 class="footer-title">Liên hệ</h6>
+            <ul class="footer-contact">
+              <li><i class="fas fa-map-marker-alt"></i> Trà Vinh, Việt Nam</li>
+              <li><i class="fas fa-envelope"></i> contact@travelviet.vn</li>
+              <li><i class="fas fa-phone"></i> +84 123 456 789</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Bản quyền -->
+        <div class="footer-bottom">© 2025 VietNamTravel. All rights reserved.</div>
+      </div>
+    </footer>
+  </body>
 </html>
