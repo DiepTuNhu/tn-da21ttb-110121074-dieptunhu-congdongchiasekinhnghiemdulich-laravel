@@ -2,183 +2,264 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Chi tiết bài đăng</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="./style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chi tiết bài viết</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      color: #333;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      display: flex;
+      gap: 30px;
+      padding: 0 20px;
+    }
+
+    .main {
+      flex: 3;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+    }
+
+    .sidebar {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    h1 {
+      font-size: 26px;
+      color: #1a1a1a;
+      margin-bottom: 10px;
+    }
+
+    .meta {
+      font-size: 14px;
+      color: #777;
+      margin-bottom: 20px;
+    }
+
+    .meta span {
+      margin-right: 12px;
+    }
+
+    .meta .badge {
+      background: #e0f7fa;
+      color: #00796b;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+    }
+
+    .main img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+
+    .main ul {
+      margin: 10px 0 20px;
+      padding-left: 20px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .actions button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .like { background: #ffcdd2; color: #c62828; }
+    .save { background: #ffe0b2; color: #e65100; }
+    .report { background: #fff3cd; color: #b58900; }
+
+    .tags {
+      font-size: 14px;
+      margin-top: 10px;
+      color: #777;
+    }
+
+    .tags span {
+      margin-right: 10px;
+    }
+
+    .author-box, .related-box {
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .author-box img {
+      width: 40px;
+      border-radius: 50%;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+
+    .related-box a {
+      display: block;
+      color: #1e88e5;
+      text-decoration: none;
+      margin-bottom: 6px;
+    }
+
+    .comment-section {
+      margin-top: 40px;
+    }
+
+    .comment {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .comment img {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+    }
+
+    .comment-body {
+      background: #f1f1f1;
+      padding: 10px 14px;
+      border-radius: 8px;
+    }
+
+    .comment-body strong {
+      color: #333;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .comment-actions {
+      font-size: 13px;
+      margin-top: 4px;
+      color: #007aff;
+      cursor: pointer;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      resize: vertical;
+      margin-top: 20px;
+    }
+
+    .comment-form button {
+      margin-top: 10px;
+      padding: 10px 16px;
+      background: #ff7043;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    iframe {
+      width: 100%;
+      border: 0;
+      border-radius: 8px;
+      margin: 20px 0;
+      height: 300px;
+    }
+  </style>
 </head>
 <body>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg px-3">
-  <a class="navbar-brand" href="#">🌍 Logo</a>
-  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-    <!-- <span class="navbar-toggler-icon"></span> -->
-    <!-- <i class="bi bi-list fs-3"></i> -->
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      <li class="nav-item"><a class="nav-link" href="./trangchu.html">Trang chủ</a></li>
-      <li class="nav-item"><a class="nav-link" href="./khampha.html">Khám phá</a></li>
-      <li class="nav-item"><a class="nav-link" href="./congdong.html">Cộng đồng</a></li>
-      <li class="nav-item"><a class="nav-link" href="./nhiemvu.html">Nhiệm vụ</a></li>
-      <li class="nav-item"><a class="nav-link" href="./xephang.html">Xếp hạng</a></li>
-      <li class="nav-item"><a class="nav-link" href="./hoso.html">Hồ sơ</a></li>
+<div class="container">
+  <div class="main">
+    <h1>Chuyến du lịch đáng nhớ tại Đà Lạt</h1>
+    <div class="meta">
+      <span><img src="https://i.pravatar.cc/32?img=1" alt="avatar"> Nguyễn Văn A</span>
+      <span>12/04/2025</span>
+      <span>📊 1234 lượt xem</span>
+      <span>❤️ 256 lượt thích</span>
+      <span class="badge">Địa điểm</span>
+    </div>
+
+    <p>Đà Lạt là một trong những điểm đến tuyệt vời với khí hậu se lạnh và phong cảnh hữu tình.</p>
+
+    <ul>
+      <li>Tham quan những tiệm lung linh yêu</li>
+      <li>Thưởng thức bánh tráng nướng</li>
+      <li>Check-in tại quảng trường Lâm Viên</li>
     </ul>
-    <form class="d-flex me-3">
-      <input class="form-control me-2" type="search" placeholder="Tìm kiếm...">
-      <!-- <a class="btn btn-outline-primary me-2" href="#">Tìm</a> -->
-      <button class="btn btn-outline-primary me-2" type="submit">Tìm</button>
-    </form>
-    <a class="btn btn-primary me-2" href="#z">Đăng nhập</a>
-    <a class="btn btn-outline-primary" href="#">Đăng ký</a>
-  </div>
-</nav>
 
-<!-- Cover & Title -->
-<section class="container mt-4">
-  <h1 class="fw-bold display-5">Chuyến du lịch đáng nhớ tại Đà Lạt</h1>
-  <img src="https://via.placeholder.com/1200x400" alt="Ảnh bìa" class="img-fluid rounded my-3">
+    <img src="../demo.jpg" alt="ảnh minh họa">
 
-  <div class="d-flex justify-content-between align-items-center flex-wrap">
-    <div class="text-muted">
-      <span><strong>Nguyễn Văn A</strong> • 12/04/2025</span> |
-      <span>👁️ 1234 lượt xem</span> |
-      <span>❤️ 256 lượt thích</span> |
-      <span class="badge bg-info text-dark">Địa điểm</span>
-    </div>
-  </div>
-</section>
+    <p>Bạn có thể xem bản đồ bên dưới để biết thêm chi tiết:</p>
 
-<!-- Content + Sidebar -->
-<div class="container mt-4">
-  <div class="row">
-    <!-- Main Content -->
-    <div class="col-lg-8">
-      <article class="mb-4">
-        <p>Đà Lạt là một trong những điểm đến tuyệt vời với khí hậu se lạnh và phong cảnh hữu tình.</p>
-        <ul>
-          <li>Tham quan thung lũng tình yêu</li>
-          <li>Thưởng thức bánh tráng nướng</li>
-          <li>Check-in tại quảng trường Lâm Viên</li>
-        </ul>
-        <img src="https://via.placeholder.com/800x300" class="img-fluid rounded my-3" alt="Hình ảnh minh họa">
-        <p>Bạn có thể xem bản đồ bên dưới để biết thêm chi tiết:</p>
-        <iframe src="https://maps.google.com/maps?q=da%20lat&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="300" class="rounded" allowfullscreen loading="lazy"></iframe>
-      </article>
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.506541968824!2d108.44541667509518!3d11.975545288290027!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317113e828f0e6d9%3A0x100b4048d5e6afcd!2zRGFsYXQsIExhbSDEk25nLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1680491032671"
+      allowfullscreen=""
+      loading="lazy">
+    </iframe>
 
-      <!-- Gamification -->
-      <div class="d-flex align-items-center gap-3 mb-4">
-        <button class="btn btn-outline-danger">❤️ Thích</button>
-        <button class="btn btn-outline-secondary">📌 Lưu bài viết</button>
-        <button class="btn btn-outline-warning">🚩 Báo cáo</button>
-        <span class="ms-auto">🏆 120 XP • 🥇 Top 10 bài viết tuần</span>
-      </div>
-
-      <!-- Comments -->
-      <section class="mb-5">
-        <h4>Bình luận</h4>
-        <div class="d-flex align-items-start mb-3">
-          <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="avatar">
-          <div>
-            <strong>Bình Minh</strong>
-            <p>Chuyến đi quá đẹp, mình cũng muốn thử!</p>
-            <a href="#" class="me-2">❤️ Thích</a>
-            <a href="#">💬 Trả lời</a>
-          </div>
-        </div>
-        <div class="mb-3">
-          <textarea class="form-control" placeholder="Viết bình luận..." rows="3"></textarea>
-          <button class="btn btn-primary mt-2">Gửi bình luận</button>
-        </div>
-      </section>
+    <div class="actions">
+      <button class="like"><i class="fas fa-heart"></i> Thích</button>
+      <button class="save"><i class="fas fa-bookmark"></i> Lưu bài viết</button>
+      <button class="report"><i class="fas fa-flag"></i> Báo cáo</button>
     </div>
 
-    <!-- Sidebar -->
-    <aside class="col-lg-4">
-      <div class="card mb-3">
-        <div class="card-body">
-          <h5 class="card-title">Tác giả</h5>
-          <div class="d-flex align-items-center">
-            <img src="https://via.placeholder.com/50" class="rounded-circle me-2" alt="avatar">
-            <div>
-              <strong>Nguyễn Văn A</strong><br>
-              <a href="#">Xem hồ sơ</a>
-            </div>
-          </div>
+    <div class="tags">
+      <span>⭐ 120 XP</span>
+      <span>🥇 Top 10 bài viết tuần</span>
+    </div>
+
+    <!-- Bình luận -->
+    <div class="comment-section">
+      <h3>Bình luận</h3>
+
+      <div class="comment">
+        <img src="https://i.pravatar.cc/36?img=2" alt="avatar">
+        <div class="comment-body">
+          <strong>Bình Minh</strong>
+          Chuyến đi quá đẹp, mình cũng muốn thử!
+          <div class="comment-actions">👍 Thích · 💬 Trả lời</div>
         </div>
       </div>
 
-      <div class="card mb-3">
-        <div class="card-body">
-          <h5 class="card-title">Bài viết liên quan</h5>
-          <ul class="list-unstyled">
-            <li><a href="#">Khám phá Huế mộng mơ</a></li>
-            <li><a href="#">Ẩm thực Hội An</a></li>
-            <li><a href="#">Trekking ở Sapa</a></li>
-          </ul>
-        </div>
-      </div>
-    </aside>
+      <form class="comment-form">
+        <textarea rows="3" placeholder="Viết bình luận..."></textarea>
+        <button type="submit">Gửi bình luận</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="author-box">
+      <p><img src="https://i.pravatar.cc/40?img=1" alt=""> <strong>Nguyễn Văn A</strong></p>
+      <a href="#">Xem hồ sơ</a>
+    </div>
+
+    <div class="related-box">
+      <strong>Bài viết liên quan</strong>
+      <a href="#">Khám phá Huế mộng mơ</a>
+      <a href="#">Ẩm thực Hội An</a>
+      <a href="#">Trekking ở Sapa</a>
+    </div>
   </div>
 </div>
 
-<!-- Footer -->
-<!-- <footer class="bg-light text-center py-4 mt-5">
-  <p>&copy; 2025 Du Lịch Chia Sẻ | <a href="#">Chính sách</a> | <a href="#">Liên hệ</a></p>
-  <div>
-    <a href="#">🌐 Facebook</a> |
-    <a href="#">🌐 Instagram</a>
-  </div>
-</footer> -->
-
-<footer class="pt-5 pb-4 mt-5">
-  <div class="container">
-    <div class="row">
-
-      <!-- Logo + Mô tả -->
-      <div class="col-md-4 mb-4">
-        <h5 class="text-uppercase fw-bold mb-3">TravelViet</h5>
-        <p class="small text-muted">
-          TravelViet giúp bạn khám phá những điểm đến tuyệt đẹp trên khắp Việt Nam. Chia sẻ trải nghiệm, lưu giữ hành trình.
-        </p>
-        <div class="d-flex gap-3 mt-3">
-          <a href="#" class="text-light"><i class="bi bi-facebook fs-5"></i></a>
-          <a href="#" class="text-light"><i class="bi bi-instagram fs-5"></i></a>
-          <a href="#" class="text-light"><i class="bi bi-youtube fs-5"></i></a>
-        </div>
-      </div>
-
-      <!-- Liên kết nhanh -->
-      <div class="col-md-4 mb-4">
-        <h6 class="text-uppercase fw-bold mb-3">Liên kết</h6>
-        <ul class="list-unstyled small">
-          <li><a href="#" class="text-light text-decoration-none">Trang chủ</a></li>
-          <li><a href="#" class="text-light text-decoration-none">Địa điểm nổi bật</a></li>
-          <li><a href="#" class="text-light text-decoration-none">Bài viết</a></li>
-          <li><a href="#" class="text-light text-decoration-none">Liên hệ</a></li>
-        </ul>
-      </div>
-
-      <!-- Thông tin liên hệ -->
-      <div class="col-md-4 mb-4">
-        <h6 class="text-uppercase fw-bold mb-3">Liên hệ</h6>
-        <ul class="list-unstyled small">
-          <li><i class="bi bi-geo-alt-fill me-2"></i> Trà Vinh, Việt Nam</li>
-          <li><i class="bi bi-envelope-fill me-2"></i> contact@travelviet.vn</li>
-          <li><i class="bi bi-phone-fill me-2"></i> +84 123 456 789</li>
-        </ul>
-      </div>
-
-    </div>
-
-    <!-- Copyright -->
-    <hr class="border-top border-light">
-    <div class="text-center small mt-3 text-muted">
-      © 2025 TravelViet. All rights reserved.
-    </div>
-  </div>
-</footer>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

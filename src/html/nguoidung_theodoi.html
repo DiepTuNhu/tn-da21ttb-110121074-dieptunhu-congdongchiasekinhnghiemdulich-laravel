@@ -13,16 +13,107 @@
       body {
         font-family: "Segoe UI", sans-serif;
         margin: 0;
+        padding-top: 75px;
         background: #f7f7f7;
         color: #333;
-        padding-top: 75px ;
       }
 
       header {
         background: linear-gradient(to right, #ff7043, #ff9800);
         color: white;
         text-align: center;
-        padding: 60px 20px 30px;
+        padding: 50px 20px 30px;
+      }
+
+      .profile-info-follow img {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        margin-right: 20px;
+      }
+
+      .profile-info-follow h2 {
+        margin: 0 0 6px;
+      }
+
+      .profile-tab:hover {
+        background: #ddd;
+      }
+
+      .profile-tab.active {
+        background: #ff5722;
+        color: white;
+      }
+
+      .profile-tab-content {
+        display: none;
+      }
+
+      .profile-tab-content.active {
+        display: block;
+      }
+
+      .profile-card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 20px;
+      }
+
+      .profile-card-item {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .profile-card-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+      }
+
+      .profile-card-img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        display: block;
+      }
+
+      .profile-card-content {
+        padding: 14px;
+      }
+
+      .profile-card-content h4 {
+        margin: 0 0 6px;
+        font-size: 16px;
+        color: #333;
+      }
+
+      .profile-card-content p {
+        font-size: 13px;
+        color: #666;
+      }
+
+      .profile-status {
+        font-weight: bold;
+        color: green;
+      }
+
+      @media (max-width: 768px) {
+        .profile-info-follow {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 20px;
+        }
+
+        .profile-details {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .profile-tabs {
+          flex-direction: column;
+        }
       }
     </style>
   </head>
@@ -57,41 +148,42 @@
     </nav>
     <header>
       <h1>👤 Hồ sơ người dùng</h1>
-      <p>Quản lý bài viết, nhiệm vụ và tương tác của bạn</p>
+      <p>Thông tin và bài viết của thành viên bạn đang theo dõi</p>
     </header>
 
     <div class="profile-container">
-      <!-- Thông tin cá nhân -->
-      <div class="profile-info">
-        <img
-          src="https://img.tripi.vn/cdn-cgi/image/width=700,height=700/https://gcs.tripi.vn/public-tripi/tripi-feed/img/482883xvq/anh-mo-ta.png"
-          alt="avatar"
-        />
-        <div>
-          <h2>Nguyễn Văn A <span class="profile-badge">🥇 Nhà chinh phục</span></h2>
-
-          <div class="profile-meta">
-            <p><i class="fas fa-map-marker-alt"></i> Quê quán: Hà Nội</p>
-            <p><i class="fas fa-calendar-alt"></i> Tham gia từ: 12/03/2024</p>
-            <p><i class="fas fa-star"></i> Điểm tích lũy: <strong>1.240</strong></p>
-          </div>
-
-          <div class="profile-stats">
-            <span><i class="fas fa-file-alt"></i> 12 bài viết</span>
-            <span><i class="fas fa-heart"></i> 856 lượt thích</span>
-            <span><i class="fas fa-check-circle"></i> 6 nhiệm vụ</span>
+      <!-- Thông tin người dùng -->
+      <div class="profile-info-follow">
+        <div class="profile-details">
+          <img src="https://i.pravatar.cc/90?img=12" alt="avatar" />
+          <div>
+            <h2>
+              Ngọc Hii
+              <span
+                style="
+                  font-size: 14px;
+                  background: #ffeb3b;
+                  color: #333;
+                  padding: 2px 8px;
+                  border-radius: 6px;
+                "
+                >🥇 Nhà khám phá</span
+              >
+            </h2>
+            <div class="profile-stats">
+              <span><i class="fas fa-file-alt"></i> 28 bài viết</span>
+              <span><i class="fas fa-heart"></i> 1.240 lượt thích</span>
+              <span><i class="fas fa-star"></i> 2.200 điểm</span>
+            </div>
           </div>
         </div>
+        <button class="follow-btn following">Đang theo dõi</button>
       </div>
 
       <!-- Tabs -->
       <div class="profile-tabs">
         <div class="profile-tab active" data-tab="posts">📄 Bài viết</div>
-        <div class="profile-tab" data-tab="missions">🎯 Nhiệm vụ</div>
-        <div class="profile-tab" data-tab="likes">❤️ Đã thích</div>
         <div class="profile-tab" data-tab="shared">📢 Đã chia sẻ</div>
-        <div class="profile-tab" data-tab="followers">👥 Người theo dõi</div>
-        <div class="profile-tab" data-tab="following">🔍 Đang theo dõi</div>
       </div>
 
       <!-- Nội dung: Bài viết -->
@@ -128,44 +220,6 @@
         </div>
       </div>
 
-      <!-- Nội dung: Nhiệm vụ -->
-      <div class="profile-tab-content" id="missions">
-        <div class="profile-card-grid">
-          <div class="profile-card-item">
-            <div class="profile-card-content">
-              <h4>📝 Đăng bài đầu tiên</h4>
-              <p class="profile-status">Đã hoàn thành</p>
-            </div>
-          </div>
-          <div class="profile-card-item">
-            <div class="profile-card-content">
-              <h4>💬 Viết 3 bình luận</h4>
-              <p class="profile-status">Đã hoàn thành</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Nội dung: Đã thích -->
-      <div class="profile-tab-content" id="likes">
-        <div class="profile-card-grid">
-          <div class="profile-card-item">
-            <img class="profile-card-img" src="../3.png" alt="" />
-            <div class="profile-card-content">
-              <h4>Hội An về đêm</h4>
-              <p>❤️ 150 lượt thích · 30 bình luận</p>
-            </div>
-          </div>
-          <div class="profile-card-item">
-            <img class="profile-card-img" src="../4.png" alt="" />
-            <div class="profile-card-content">
-              <h4>Đà Nẵng - Cầu Rồng</h4>
-              <p>❤️ 132 lượt thích · 20 bình luận</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <!-- Nội dung: Đã chia sẻ -->
       <div class="profile-tab-content" id="shared">
         <div class="profile-card-grid">
@@ -185,53 +239,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Nội dung: Người theo dõi -->
-      <div class="profile-tab-content" id="followers">
-        <div class="follower-list">
-          <div class="follower-item">
-            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="" />
-            <div class="follower-info">
-              <h4>Trần Thị B</h4>
-              <p>Đã theo dõi bạn từ 15/03/2024</p>
-            </div>
-          </div>
-          <div class="follower-item">
-            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="" />
-            <div class="follower-info">
-              <h4>Lê Văn C</h4>
-              <p>Đã theo dõi bạn từ 28/03/2024</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-
-<!-- Nội dung: Đang theo dõi -->
-<div class="profile-tab-content" id="following">
-  <div class="follower-list">
-    <div class="follower-item">
-      <img src="https://randomuser.me/api/portraits/women/55.jpg" alt="" />
-      <div class="follower-info">
-        <h4>Nguyễn Thị D</h4>
-        <p>Bạn theo dõi từ 05/04/2024</p>
-      </div>
-      <button class="unfollow-btn">Hủy theo dõi</button>
-    </div>
-    
-    <div class="follower-item">
-      <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="" />
-      <div class="follower-info">
-        <h4>Phạm Văn E</h4>
-        <p>Bạn theo dõi từ 20/04/2024</p>
-      </div>
-      <button class="unfollow-btn">Hủy theo dõi</button>
-    </div>
-    
-  </div>
-</div>
-
-
     </div>
     <footer class="footer">
       <div class="footer-container">
@@ -282,6 +289,16 @@
         <div class="footer-bottom">© 2025 VietNamTravel. All rights reserved.</div>
       </div>
     </footer>
+    <script>
+      // Toggle theo dõi
+      const followBtn = document.querySelector(".follow-btn");
+      followBtn.addEventListener("click", () => {
+        followBtn.classList.toggle("following");
+        followBtn.textContent = followBtn.classList.contains("following")
+          ? "Đang theo dõi"
+          : "Theo dõi";
+      });
+    </script>
     <script>
       const tabs = document.querySelectorAll(".profile-tab");
       const contents = document.querySelectorAll(".profile-tab-content");

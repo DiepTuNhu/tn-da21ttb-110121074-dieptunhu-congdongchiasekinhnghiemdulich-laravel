@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Địa phương: Sa Pa</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      margin: 0;
+      background: #f7f7f7;
+      color: #333;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .location-header {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .main-preview {
+      flex: 2;
+    }
+
+    .main-preview .image-preview {
+      background: #ddd;
+      height: 300px;
+      border-radius: 12px;
+    }
+
+    .thumbnail-carousel {
+      display: flex;
+      overflow-x: auto;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .thumbnail-carousel img {
+      width: 80px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .map-preview {
+      flex: 1;
+    }
+
+    iframe {
+      width: 100%;
+      height: 300px;
+      border: 0;
+      border-radius: 12px;
+    }
+
+    .location-info h2 {
+      font-size: 24px;
+      margin-bottom: 6px;
+    }
+
+    .location-info p {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 6px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      margin: 40px 0 20px;
+      color: #ff5722;
+      border-left: 5px solid #ff5722;
+      padding-left: 10px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .info-card {
+      background: white;
+      padding: 16px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      font-size: 14px;
+    }
+
+    .utility-nav {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    .utility-nav a {
+      color: #00796b;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .utility-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .utility-card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .utility-card img {
+      width: 100%;
+      height: 130px;
+      object-fit: cover;
+    }
+
+    .utility-card .content {
+      padding: 12px;
+    }
+
+    .utility-card .content h4 {
+      margin: 0 0 6px;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .utility-card .content p {
+      font-size: 13px;
+      color: #666;
+      margin: 0;
+    }
+
+    @media (max-width: 768px) {
+      .location-header {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="location-header">
+    <div class="main-preview">
+      <div class="image-preview">
+        <!-- Ảnh chính -->
+      </div>
+      <div class="thumbnail-carousel">
+        <img src="../thumb1.jpg" alt="">
+        <img src="../thumb2.jpg" alt="">
+        <img src="../thumb3.jpg" alt="">
+        <img src="../thumb4.jpg" alt="">
+      </div>
+    </div>
+    <div class="map-preview">
+      <div class="location-info">
+        <h2>Địa phương: Sa Pa, Lào Cai</h2>
+        <p><strong>Vị trí:</strong> Thị xã Sa Pa, Lào Cai</p>
+        <p><strong>Đặc điểm:</strong> Vùng núi nổi tiếng với ruộng bậc thang, bản làng dân tộc thiểu số, khí hậu lạnh quanh năm.</p>
+        <p><strong>Bản đồ:</strong></p>
+      </div>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d119037.26431664552!2d103.78564726294498!3d22.348232803110127!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x314d84908a1b93a3%3A0x60db47d2392d2c95!2sSa%20Pa%2C%20L%C3%A0o%20Cai!5e0!3m2!1svi!2s!4v1680500000000"
+        loading="lazy">
+      </iframe>
+    </div>
+  </div>
+
+  <!-- Thông tin mô tả -->
+  <div>
+    <h3 class="section-title">Thông tin mô tả</h3>
+    <div class="info-grid">
+      <div class="info-card">
+        <strong>Đặc điểm nổi bật</strong>
+        <p>Khu vực có phong cảnh tự nhiên đặc sắc, khí hậu mát mẻ quanh năm và nhiều điểm tham quan hấp dẫn.</p>
+      </div>
+      <div class="info-card">
+        <strong>Hoạt động du lịch</strong>
+        <p>Du khách có thể tham gia các tour khám phá, trải nghiệm văn hóa bản địa và thưởng thức ẩm thực đặc sản.</p>
+      </div>
+      <div class="info-card">
+        <strong>Thời điểm lý tưởng</strong>
+        <p>Thời gian từ tháng 9 đến tháng 4 thường được xem là đẹp nhất để khám phá Sapa.</p>
+      </div>
+      <div class="info-card">
+        <strong>Phương tiện di chuyển</strong>
+        <p>Có thể đến bằng xe khách, tàu hỏa hoặc thuê xe từ Hà Nội và các tỉnh lân cận.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tiện ích xung quanh -->
+  <div>
+    <h3 class="section-title">Tiện ích xung quanh</h3>
+    <div class="utility-nav">
+      <a href="#">Ẩm thực gần đó</a>
+      <a href="#">Lưu trú gợi ý</a>
+    </div>
+
+    <div class="utility-grid">
+      <div class="utility-card">
+        <img src="../thangco.jpg" alt="Thắng cố">
+        <div class="content">
+          <h4>Thắng cố</h4>
+          <p>Món ăn truyền thống của người Mông</p>
+        </div>
+      </div>
+      <div class="utility-card">
+        <img src="../pho.jpg" alt="Phở">
+        <div class="content">
+          <h4>Phở</h4>
+          <p>Món ăn sáng phổ biến khắp Việt Nam</p>
+        </div>
+      </div>
+      <div class="utility-card">
+        <img src="../bancuon.jpg" alt="Bánh cuốn">
+        <div class="content">
+          <h4>Bánh cuốn</h4>
+          <p>Món ăn mềm thơm, dễ ăn</p>
+        </div>
+      </div>
+      <div class="utility-card">
+        <img src="../nemran.jpg" alt="Nem rán">
+        <div class="content">
+          <h4>Nem rán</h4>
+          <p>Món ăn quen thuộc của người Việt</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

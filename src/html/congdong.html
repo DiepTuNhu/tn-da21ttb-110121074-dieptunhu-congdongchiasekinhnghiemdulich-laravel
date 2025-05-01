@@ -1,233 +1,374 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Góc hỏi đáp</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Khám Phá Địa Điểm</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
 
-  <link rel="stylesheet" href="./style.css">
-</head>
-<body>
+    <nav class="navbar">
+      <div class="navbar-container">
+        <div class="left-group">
+          <div class="menu-toggle" id="menu-toggle">
+            <i class="fas fa-bars"></i>
+          </div>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg px-3">
-  <a class="navbar-brand" href="#">🌍 Logo</a>
-  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      <li class="nav-item"><a class="nav-link" href="./trangchu.html">Trang chủ</a></li>
-      <li class="nav-item"><a class="nav-link" href="./khampha.html">Khám phá</a></li>
-      <li class="nav-item"><a class="nav-link" href="./congdong.html">Cộng đồng</a></li>
-      <li class="nav-item"><a class="nav-link" href="./nhiemvu.html">Nhiệm vụ</a></li>
-      <li class="nav-item"><a class="nav-link" href="./xephang.html">Xếp hạng</a></li>
-      <li class="nav-item"><a class="nav-link" href="./hoso.html">Hồ sơ</a></li>
-    </ul>
-    <form class="d-flex me-3">
-      <input class="form-control me-2" type="search" placeholder="Tìm kiếm...">
-      <a class="btn btn-outline-primary me-2" href="#">Tìm</a>
-    </form>
-    <a class="btn btn-primary me-2" href="#">Đăng nhập</a>
-    <a class="btn btn-outline-primary" href="#">Đăng ký</a>
-  </div>
-</nav>
+          <div class="logo">
+            <img src="./logo.png" alt="" />
+            <!-- <a href="./logo.png">TravelShare 🌍</a> -->
+          </div>
 
-<!-- Main Content -->
-<!-- <div class="container mt-4"> -->
-  <h4 class="text-center mb-4">Góc chia sẻ</h4>
-
-  <!-- Post Input -->
-  <div class="container">
-    <div class="input-group mb-4">
-      <input type="text" class="form-control" placeholder="Bạn đang nghĩ gì ?">
-      <button class="btn btn-primary" type="button">Đăng</button>
-    </div>
-  </div>
-
-  <!-- Post List -->
-  <div class="container my-4">
-    <div class="row">
-      <!-- Bộ lọc -->
-      <div class="col-md-2">
-        <h5>Bộ lọc</h5>
-        <div class="mb-3">
-          <label for="dropdownTinh" class="form-label">Vùng miền</label>
-          <select class="form-select" id="dropdownTinh">
-            <option selected>Tất cả</option>
-            <option>Miền Bắc</option>
-            <option>Miền Trung</option>
-            <option>Miền Nam  </option>
-          </select>
+          <ul class="nav-links" id="nav-links">
+            <li><a href="#">Trang Chủ</a></li>
+            <li><a href="./khampha.html">Khám phá</a></li>
+            <li><a href="#category">Cộng đồng</a></li>
+            <li><a href="#topuser">Nhiệm vụ</a></li>
+            <li><a href="#latestposts">Xếp hạng</a></li>
+            <li><a href="#thamgia">Hồ sơ</a></li>
+          </ul>
         </div>
-        <div class="mb-3">
-          <label for="dropdownTinh" class="form-label">Tỉnh</label>
-          <select class="form-select" id="dropdownTinh">
-            <option selected>Tất cả</option>
-            <option>Trà Vinh</option>
-            <option>Cần Thơ</option>
-            <option>Bến Tre</option>
-          </select>
-        </div>
-        <div class="mb-3">
-          <label for="dropdownLoaiHinh" class="form-label">Loại hình</label>
-          <select class="form-select" id="dropdownLoaiHinh">
-            <option selected>Tất cả</option>
-            <option>Ẩm thực</option>
-            <option>Tham quan</option>
-            <option>Văn hóa</option>
-          </select>
+
+        <div class="right-group">
+          <a href="#" class="login-btn">Đăng nhập</a>
+          <a href="#" class="signup-btn">Đăng ký</a>
         </div>
       </div>
+    </nav>
+    <header class="explore-header">
+      <h1>Góc chia sẻ</h1>
+      <p>Khám phá những bài chia sẻ về địa điểm du lịch khác nhau trên khắp Việt Nam!</p>
+    </header>
 
-      <!-- Danh sách trải nghiệm -->
-      <div class="col-md-10">
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-          <!-- Card trải nghiệm -->
-          <div class="col">
-            <div class="card h-100">
-              <img src="./1.png" class="card-img-top" alt="Post Image">
-              <div class="card-body">
-                <h5 class="card-title">Chia sẻ chuyến đi Đà Lạt</h5>
-                <p class="card-text">Một trải nghiệm nhẹ nhàng với không khí se lạnh và hoa cỏ khắp nơi...</p>
-              </div>
-              <div class="card-footer text-muted small">
-                <i class="bi bi-calendar-event me-1"></i> 10/04/2025 · 
-                <i class="bi bi-heart-fill text-danger me-1 ms-1"></i> 135 lượt thích
-              </div>
-            </div>
-          </div>
-          <!-- Thêm nhiều card tương tự -->
-          <div class="col">
-            <div class="card h-100">
-              <img src="./1.png" class="card-img-top" alt="Post Image">
-              <div class="card-body">
-                <h5 class="card-title">Chia sẻ chuyến đi Đà Lạt</h5>
-                <p class="card-text">Một trải nghiệm nhẹ nhàng với không khí se lạnh và hoa cỏ khắp nơi...</p>
-              </div>
-              <div class="card-footer text-muted small">
-                <i class="bi bi-calendar-event me-1"></i> 10/04/2025 · 
-                <i class="bi bi-heart-fill text-danger me-1 ms-1"></i> 135 lượt thích
-              </div>
-            </div>
-          </div>
-
-          <div class="col">
-            <div class="card h-100">
-              <img src="./1.png" class="card-img-top" alt="Post Image">
-              <div class="card-body">
-                <h5 class="card-title">Chia sẻ chuyến đi Đà Lạt</h5>
-                <p class="card-text">Một trải nghiệm nhẹ nhàng với không khí se lạnh và hoa cỏ khắp nơi...</p>
-              </div>
-              <div class="card-footer text-muted small">
-                <i class="bi bi-calendar-event me-1"></i> 10/04/2025 · 
-                <i class="bi bi-heart-fill text-danger me-1 ms-1"></i> 135 lượt thích
-              </div>
-            </div>
-          </div>
-
-          <div class="col">
-            <div class="card h-100">
-              <img src="./1.png" class="card-img-top" alt="Post Image">
-              <div class="card-body">
-                <h5 class="card-title">Chia sẻ chuyến đi Đà Lạt</h5>
-                <p class="card-text">Một trải nghiệm nhẹ nhàng với không khí se lạnh và hoa cỏ khắp nơi...</p>
-              </div>
-              <div class="card-footer text-muted small">
-                <i class="bi bi-calendar-event me-1"></i> 10/04/2025 · 
-                <i class="bi bi-heart-fill text-danger me-1 ms-1"></i> 135 lượt thích
-              </div>
-            </div>
-          </div>
-
-          <div class="col">
-            <div class="card h-100">
-              <img src="./1.png" class="card-img-top" alt="Post Image">
-              <div class="card-body">
-                <h5 class="card-title">Chia sẻ chuyến đi Đà Lạt</h5>
-                <p class="card-text">Một trải nghiệm nhẹ nhàng với không khí se lạnh và hoa cỏ khắp nơi...</p>
-              </div>
-              <div class="card-footer text-muted small">
-                <i class="bi bi-calendar-event me-1"></i> 10/04/2025 · 
-                <i class="bi bi-heart-fill text-danger me-1 ms-1"></i> 135 lượt thích
-              </div>
-            </div>
-          </div>
-
-          <div class="col">
-            <div class="card h-100">
-              <img src="./1.png" class="card-img-top" alt="Post Image">
-              <div class="card-body">
-                <h5 class="card-title">Chia sẻ chuyến đi Đà Lạt</h5>
-                <p class="card-text">Một trải nghiệm nhẹ nhàng với không khí se lạnh và hoa cỏ khắp nơi...</p>
-              </div>
-              <div class="card-footer text-muted small">
-                <i class="bi bi-calendar-event me-1"></i> 10/04/2025 · 
-                <i class="bi bi-heart-fill text-danger me-1 ms-1"></i> 135 lượt thích
-              </div>
-            </div>
-          </div>
-
-          
-          <!-- Thêm bao nhiêu tùy bạn -->
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Footer -->
-<!-- Footer -->
-<footer class="pt-5 pb-4 mt-5">
-  <div class="container">
-    <div class="row">
-
-      <!-- Logo + Mô tả -->
-      <div class="col-md-4 mb-4">
-        <h5 class="text-uppercase fw-bold mb-3">TravelViet</h5>
-        <p class="small text-muted">
-          TravelViet giúp bạn khám phá những điểm đến tuyệt đẹp trên khắp Việt Nam. Chia sẻ trải nghiệm, lưu giữ hành trình.
-        </p>
-        <div class="d-flex gap-3 mt-3">
-          <a href="#" class="text-light"><i class="bi bi-facebook fs-5"></i></a>
-          <a href="#" class="text-light"><i class="bi bi-instagram fs-5"></i></a>
-          <a href="#" class="text-light"><i class="bi bi-youtube fs-5"></i></a>
-        </div>
-      </div>
-
-      <!-- Liên kết nhanh -->
-      <div class="col-md-4 mb-4">
-        <h6 class="text-uppercase fw-bold mb-3">Liên kết</h6>
-        <ul class="list-unstyled small">
-          <li><a href="#" class="text-light text-decoration-none">Trang chủ</a></li>
-          <li><a href="#" class="text-light text-decoration-none">Địa điểm nổi bật</a></li>
-          <li><a href="#" class="text-light text-decoration-none">Bài viết</a></li>
-          <li><a href="#" class="text-light text-decoration-none">Liên hệ</a></li>
-        </ul>
-      </div>
-
-      <!-- Thông tin liên hệ -->
-      <div class="col-md-4 mb-4">
-        <h6 class="text-uppercase fw-bold mb-3">Liên hệ</h6>
-        <ul class="list-unstyled small">
-          <li><i class="bi bi-geo-alt-fill me-2"></i> Trà Vinh, Việt Nam</li>
-          <li><i class="bi bi-envelope-fill me-2"></i> contact@travelviet.vn</li>
-          <li><i class="bi bi-phone-fill me-2"></i> +84 123 456 789</li>
-        </ul>
-      </div>
-
+    <div class="filters">
+      <select>
+        <option>Vùng miền</option>
+        <option>Hà Nội</option>
+        <option>Đà Nẵng</option>
+        <option>TP. HCM</option>
+      </select>
+      <select>
+        <option>Tỉnh / Thành</option>
+        <option>Quận 1</option>
+        <option>Quận 2</option>
+      </select>
+      <select>
+        <option>Loại hình du lịch</option>
+        <option>Phường A</option>
+        <option>Phường B</option>
+      </select>
+      <input type="text" class="search-input" placeholder="🔍 Tìm địa điểm, bài viết..." />
+      <button id="toggle-form-btn" class="toggle-submit-btn">✍️ Đăng bài chia sẻ</button>
     </div>
 
-    <!-- Copyright -->
-    <hr class="border-top border-light">
-    <div class="text-center small mt-3 text-muted">
-      © 2025 TravelViet. All rights reserved.
-    </div>
-  </div>
-</footer>
+    <section class="submit-section" id="submit-section" style="display: none">
+      <h2>📝 Đăng bài chia sẻ của bạn</h2>
+      <form class="submit-form">
+        <input type="text" placeholder="Tiêu đề bài viết" required />
+        <textarea placeholder="Nội dung bài viết ngắn gọn..." rows="4" required></textarea>
+        <input type="text" placeholder="Địa điểm (ví dụ: TP. Đà Lạt)" required />
+        <input type="text" placeholder="Chi phí (ví dụ: Miễn phí, 1-3 triệu...)" />
+        <input type="date" placeholder="Ngày đi" />
+        <input type="url" placeholder="Link ảnh (hoặc để trống nếu chưa có)" />
+        <button type="submit">Đăng bài</button>
+      </form>
+    </section>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+    <div class="explore-grid">
+      <div class="post-card-explore">
+        <img src="../1.png" alt="Nui" />
+        <div class="post-content-explore">
+          <h4>10 điểm check-in biển đẹp nhất Việt Nam</h4>
+          <p class="post-excerpt">
+            Đây là danh sách những bãi biển đẹp mê hồn mà bạn nhất định phải ghé qua khi đến Việt
+            Nam. Từ nước biển trong xanh đến bãi cát trắng mịn màng, mỗi nơi đều có vẻ đẹp riêng
+            biệt...
+          </p>
+
+          <div class="post-info-block">
+            <div class="info-row">
+              <i class="fas fa-location-dot"></i>
+              <span>Xã Xuân Trường, TP. Đà Lạt</span>
+            </div>
+            <div class="info-row">
+              <i class="fas fa-dollar-sign"></i>
+              <span>Miễn phí</span>
+            </div>
+
+            <hr class="info-divider" />
+
+            <div class="info-footer">
+              <span><i class="fas fa-calendar-alt"></i> 10/04/2025</span>
+              <span><i class="fas fa-heart" style="color: #e74c3c"></i> 135 lượt thích</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="post-card-explore">
+        <img src="../1.png" alt="Nui" />
+        <div class="post-content-explore">
+          <h4>10 điểm check-in biển đẹp nhất Việt Nam</h4>
+          <p class="post-excerpt">
+            Đây là danh sách những bãi biển đẹp mê hồn mà bạn nhất định phải ghé qua khi đến Việt
+            Nam. Từ nước biển trong xanh đến bãi cát trắng mịn màng, mỗi nơi đều có vẻ đẹp riêng
+            biệt...
+          </p>
+
+          <div class="post-info-block">
+            <div class="info-row">
+              <i class="fas fa-location-dot"></i>
+              <span>Xã Xuân Trường, TP. Đà Lạt</span>
+            </div>
+            <div class="info-row">
+              <i class="fas fa-dollar-sign"></i>
+              <span>Miễn phí</span>
+            </div>
+
+            <hr class="info-divider" />
+
+            <div class="info-footer">
+              <span><i class="fas fa-calendar-alt"></i> 10/04/2025</span>
+              <span><i class="fas fa-heart" style="color: #e74c3c"></i> 135 lượt thích</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="post-card-explore">
+        <img src="../1.png" alt="Nui" />
+        <div class="post-content-explore">
+          <h4>10 điểm check-in biển đẹp nhất Việt Nam</h4>
+          <p class="post-excerpt">
+            Đây là danh sách những bãi biển đẹp mê hồn mà bạn nhất định phải ghé qua khi đến Việt
+            Nam. Từ nước biển trong xanh đến bãi cát trắng mịn màng, mỗi nơi đều có vẻ đẹp riêng
+            biệt...
+          </p>
+
+          <div class="post-info-block">
+            <div class="info-row">
+              <i class="fas fa-location-dot"></i>
+              <span>Xã Xuân Trường, TP. Đà Lạt</span>
+            </div>
+            <div class="info-row">
+              <i class="fas fa-dollar-sign"></i>
+              <span>Miễn phí</span>
+            </div>
+
+            <hr class="info-divider" />
+
+            <div class="info-footer">
+              <span><i class="fas fa-calendar-alt"></i> 10/04/2025</span>
+              <span><i class="fas fa-heart" style="color: #e74c3c"></i> 135 lượt thích</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="post-card-explore">
+        <img src="../1.png" alt="Nui" />
+        <div class="post-content-explore">
+          <h4>10 điểm check-in biển đẹp nhất Việt Nam</h4>
+          <p class="post-excerpt">
+            Đây là danh sách những bãi biển đẹp mê hồn mà bạn nhất định phải ghé qua khi đến Việt
+            Nam. Từ nước biển trong xanh đến bãi cát trắng mịn màng, mỗi nơi đều có vẻ đẹp riêng
+            biệt...
+          </p>
+
+          <div class="post-info-block">
+            <div class="info-row">
+              <i class="fas fa-location-dot"></i>
+              <span>Xã Xuân Trường, TP. Đà Lạt</span>
+            </div>
+            <div class="info-row">
+              <i class="fas fa-dollar-sign"></i>
+              <span>Miễn phí</span>
+            </div>
+
+            <hr class="info-divider" />
+
+            <div class="info-footer">
+              <span><i class="fas fa-calendar-alt"></i> 10/04/2025</span>
+              <span><i class="fas fa-heart" style="color: #e74c3c"></i> 135 lượt thích</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="post-card-explore">
+        <img src="../1.png" alt="Nui" />
+        <div class="post-content-explore">
+          <h4>10 điểm check-in biển đẹp nhất Việt Nam</h4>
+          <p class="post-excerpt">
+            Đây là danh sách những bãi biển đẹp mê hồn mà bạn nhất định phải ghé qua khi đến Việt
+            Nam. Từ nước biển trong xanh đến bãi cát trắng mịn màng, mỗi nơi đều có vẻ đẹp riêng
+            biệt...
+          </p>
+
+          <div class="post-info-block">
+            <div class="info-row">
+              <i class="fas fa-location-dot"></i>
+              <span>Xã Xuân Trường, TP. Đà Lạt</span>
+            </div>
+            <div class="info-row">
+              <i class="fas fa-dollar-sign"></i>
+              <span>Miễn phí</span>
+            </div>
+
+            <hr class="info-divider" />
+
+            <div class="info-footer">
+              <span><i class="fas fa-calendar-alt"></i> 10/04/2025</span>
+              <span><i class="fas fa-heart" style="color: #e74c3c"></i> 135 lượt thích</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="post-card-explore">
+        <img src="../1.png" alt="Nui" />
+        <div class="post-content-explore">
+          <h4>10 điểm check-in biển đẹp nhất Việt Nam</h4>
+          <p class="post-excerpt">
+            Đây là danh sách những bãi biển đẹp mê hồn mà bạn nhất định phải ghé qua khi đến Việt
+            Nam. Từ nước biển trong xanh đến bãi cát trắng mịn màng, mỗi nơi đều có vẻ đẹp riêng
+            biệt...
+          </p>
+
+          <div class="post-info-block">
+            <div class="info-row">
+              <i class="fas fa-location-dot"></i>
+              <span>Xã Xuân Trường, TP. Đà Lạt</span>
+            </div>
+            <div class="info-row">
+              <i class="fas fa-dollar-sign"></i>
+              <span>Miễn phí</span>
+            </div>
+
+            <hr class="info-divider" />
+
+            <div class="info-footer">
+              <span><i class="fas fa-calendar-alt"></i> 10/04/2025</span>
+              <span><i class="fas fa-heart" style="color: #e74c3c"></i> 135 lượt thích</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="post-card-explore">
+        <img src="../1.png" alt="Nui" />
+        <div class="post-content-explore">
+          <h4>10 điểm check-in biển đẹp nhất Việt Nam</h4>
+          <p class="post-excerpt">
+            Đây là danh sách những bãi biển đẹp mê hồn mà bạn nhất định phải ghé qua khi đến Việt
+            Nam. Từ nước biển trong xanh đến bãi cát trắng mịn màng, mỗi nơi đều có vẻ đẹp riêng
+            biệt...
+          </p>
+
+          <div class="post-info-block">
+            <div class="info-row">
+              <i class="fas fa-location-dot"></i>
+              <span>Xã Xuân Trường, TP. Đà Lạt</span>
+            </div>
+            <div class="info-row">
+              <i class="fas fa-dollar-sign"></i>
+              <span>Miễn phí</span>
+            </div>
+
+            <hr class="info-divider" />
+
+            <div class="info-footer">
+              <span><i class="fas fa-calendar-alt"></i> 10/04/2025</span>
+              <span><i class="fas fa-heart" style="color: #e74c3c"></i> 135 lượt thích</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="post-card-explore">
+        <img src="https://source.unsplash.com/400x300/?mountain" alt="Nui" />
+        <div class="post-content-explore">
+          <h3>Fansipan Hùng Vị</h3>
+          <p>Chinh phục nóc nhà Đông Dương - trải nghiệm đợi tuyết và săn mây!</p>
+        </div>
+      </div>
+      <div class="post-card-explore">
+        <img src="https://source.unsplash.com/400x300/?mountain" alt="Nui" />
+        <div class="post-content-explore">
+          <h3>Fansipan Hùng Vị</h3>
+          <p>Chinh phục nóc nhà Đông Dương - trải nghiệm đợi tuyết và săn mây!</p>
+        </div>
+      </div>
+      <div class="post-card-explore">
+        <img src="https://source.unsplash.com/400x300/?mountain" alt="Nui" />
+        <div class="post-content-explore">
+          <h3>Fansipan Hùng Vị</h3>
+          <p>Chinh phục nóc nhà Đông Dương - trải nghiệm đợi tuyết và săn mây!</p>
+        </div>
+      </div>
+      <div class="post-card-explore">
+        <img src="https://source.unsplash.com/400x300/?mountain" alt="Nui" />
+        <div class="post-content-explore">
+          <h3>Fansipan Hùng Vị</h3>
+          <p>Chinh phục nóc nhà Đông Dương - trải nghiệm đợi tuyết và săn mây!</p>
+        </div>
+      </div>
+      <!-- Thêm nhiều post-card tự động hoặc từ server -->
+    </div>
+
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-grid">
+          <!-- Logo & mô tả -->
+          <div class="footer-column">
+            <!-- <h5 class="footer-title">TravelViet</h5> -->
+            <img src="./vietnam_travel_logo_white_transparent.png" alt="" width="300px" height="150px">
+            <p class="footer-text">
+              TravelViet giúp bạn khám phá những điểm đến tuyệt đẹp trên khắp Việt Nam. Chia sẻ trải
+              nghiệm, lưu giữ hành trình.
+            </p>
+            <div class="social-icons">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+          </div>
+
+          <!-- Liên kết -->
+          <div class="footer-column">
+            <h6 class="footer-title">Liên kết</h6>
+            <ul class="footer-links">
+              <li><a href="#">Trang chủ</a></li>
+              <li><a href="#">Địa điểm nổi bật</a></li>
+              <li><a href="#">Bài viết</a></li>
+              <li><a href="#">Liên hệ</a></li>
+            </ul>
+          </div>
+
+          <!-- Liên hệ -->
+          <div class="footer-column">
+            <h6 class="footer-title">Liên hệ</h6>
+            <ul class="footer-contact">
+              <li><i class="fas fa-map-marker-alt"></i> Trà Vinh, Việt Nam</li>
+              <li><i class="fas fa-envelope"></i> contact@travelviet.vn</li>
+              <li><i class="fas fa-phone"></i> +84 123 456 789</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Bản quyền -->
+        <div class="footer-bottom">© 2025 VietNamTravel. All rights reserved.</div>
+      </div>
+    </footer>
+  </body>
 </html>
+<script>
+  const toggleBtn = document.getElementById("toggle-form-btn");
+  const submitSection = document.getElementById("submit-section");
+
+  toggleBtn.addEventListener("click", () => {
+    const isVisible = submitSection.style.display === "block";
+    submitSection.style.display = isVisible ? "none" : "block";
+    toggleBtn.textContent = isVisible ? "✍️ Đăng bài chia sẻ" : "✖️ Đóng lại";
+  });
+</script>

@@ -1,191 +1,237 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Trang xếp hạng</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="./style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bảng Xếp Hạng</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        margin: 0;
+        padding-top: 75px;
+        background: #f7f7f7;
+        color: #333;
+      }
+      header {
+        background: linear-gradient(to right, #ff7043, #ff9800);
+        color: white;
+        text-align: center;
+        padding: 60px 20px 30px;
+      }
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg px-3">
-  <a class="navbar-brand" href="#">🌍 Logo</a>
-  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      <li class="nav-item"><a class="nav-link" href="./trangchu.html">Trang chủ</a></li>
-      <li class="nav-item"><a class="nav-link" href="./khampha.html">Khám phá</a></li>
-      <li class="nav-item"><a class="nav-link" href="./congdong.html">Cộng đồng</a></li>
-      <li class="nav-item"><a class="nav-link" href="./nhiemvu.html">Nhiệm vụ</a></li>
-      <li class="nav-item"><a class="nav-link" href="./xephang.html">Xếp hạng</a></li>
-      <li class="nav-item"><a class="nav-link" href="./hoso.html">Hồ sơ</a></li>
-    </ul>
-    <form class="d-flex me-3">
-      <input class="form-control me-2" type="search" placeholder="Tìm kiếm...">
-      <a class="btn btn-outline-primary me-2" href="#">Tìm</a>
-    </form>
-    <a class="btn btn-primary me-2" href="#">Đăng nhập</a>
-    <a class="btn btn-outline-primary" href="#">Đăng ký</a>
-  </div>
-</nav>
+      header h1 {
+        font-size: 32px;
+        margin-bottom: 10px;
+      }
 
-<!-- Tiêu đề -->
-<div class="container my-4">
-  <!-- <h3 class="text-center mb-4">Bảng xếp hạng địa điểm du lịch</h3> -->
+      header p {
+        font-size: 16px;
+        opacity: 0.95;
+      }
 
-  <div class="row">
-    <!-- Cột Bài viết nổi bật -->
-    <div class="col-md-6">
-      <h4 class="mb-3">Bài viết nổi bật</h4>
-      <div class="list-group">
-        <!-- Xếp hạng 1 -->
-        <div class="list-group-item d-flex justify-content-between align-items-center">
-          <div class="d-flex align-items-center">
-            <div class="ranking-badge me-3">1</div>
-            <img src="./1.png" alt="Địa điểm" class="rounded me-3" width="80" height="80">
-            <div>
-              <h5 class="mb-1">Chùa Hang</h5>
-              <small>Trà Vinh • 4 ★ (230 đánh giá)</small>
+      section {
+        max-width: 1000px;
+        margin: 40px auto;
+        padding: 0 20px;
+      }
+
+      h2 {
+        color: #ff5722;
+        font-size: 22px;
+        border-left: 5px solid #ff5722;
+        padding-left: 10px;
+        margin-bottom: 16px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        margin-bottom: 40px;
+      }
+
+      thead {
+        background: #ff7043;
+        color: white;
+      }
+
+      th,
+      td {
+        padding: 14px;
+        text-align: center;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="navbar-container">
+        <div class="left-group">
+          <div class="menu-toggle" id="menu-toggle">
+            <i class="fas fa-bars"></i>
+          </div>
+
+          <div class="logo">
+            <img src="./logo.png" alt="" />
+            <!-- <a href="./logo.png">TravelShare 🌍</a> -->
+          </div>
+
+          <ul class="nav-links" id="nav-links">
+            <li><a href="#">Trang Chủ</a></li>
+            <li><a href="./khampha.html">Khám phá</a></li>
+            <li><a href="#category">Cộng đồng</a></li>
+            <li><a href="#topuser">Nhiệm vụ</a></li>
+            <li><a href="#latestposts">Xếp hạng</a></li>
+            <li><a href="#thamgia">Hồ sơ</a></li>
+          </ul>
+        </div>
+
+        <div class="right-group">
+          <a href="#" class="login-btn">Đăng nhập</a>
+          <a href="#" class="signup-btn">Đăng ký</a>
+        </div>
+      </div>
+    </nav>
+    <header>
+      <h1>🏆 Bảng Xếp Hạng</h1>
+      <p>Khám phá người dùng và bài viết nổi bật nhất trong cộng đồng!</p>
+    </header>
+
+    <section>
+      <h2>📋 Top Người Dùng</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Hạng</th>
+            <th>Người dùng</th>
+            <th>Điểm</th>
+            <th>Bài viết</th>
+            <th>Lượt thích</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><i class="fas fa-crown rank-icon rank-1"></i> 1</td>
+            <td><img src="https://i.pravatar.cc/36?img=1" class="avatar" /> Hưng Phạm</td>
+            <td>1250</td>
+            <td>25</td>
+            <td>980</td>
+          </tr>
+          <tr>
+            <td><i class="fas fa-crown rank-icon rank-2"></i> 2</td>
+            <td><img src="https://i.pravatar.cc/36?img=2" class="avatar" /> Linh Lê</td>
+            <td>1120</td>
+            <td>22</td>
+            <td>870</td>
+          </tr>
+          <tr>
+            <td><i class="fas fa-crown rank-icon rank-3"></i> 3</td>
+            <td><img src="https://i.pravatar.cc/36?img=3" class="avatar" /> Trường Vũ</td>
+            <td>1050</td>
+            <td>20</td>
+            <td>820</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>📝 Top Bài Viết</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Hạng</th>
+            <th>Bài viết</th>
+            <th>Tác giả</th>
+            <th>Lượt thích</th>
+            <th>Bình luận</th>
+            <th>Ngày</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>🥇 1</td>
+            <td><img src="../1.png" class="thumb" /> 10 bãi biển đẹp nhất VN</td>
+            <td><img src="https://i.pravatar.cc/36?img=1" class="avatar" /> Hưng Phạm</td>
+            <td>135</td>
+            <td>24</td>
+            <td>10/04/2025</td>
+          </tr>
+          <tr>
+            <td>🥈 2</td>
+            <td><img src="../2.png" class="thumb" /> Du lịch Hội An cổ kính</td>
+            <td><img src="https://i.pravatar.cc/36?img=2" class="avatar" /> Linh Lê</td>
+            <td>120</td>
+            <td>18</td>
+            <td>09/04/2025</td>
+          </tr>
+          <tr>
+            <td>🥉 3</td>
+            <td><img src="../3.png" class="thumb" /> Trekking Tà Năng – Phan Dũng</td>
+            <td><img src="https://i.pravatar.cc/36?img=3" class="avatar" /> Vũ Trường</td>
+            <td>110</td>
+            <td>15</td>
+            <td>08/04/2025</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-grid">
+          <!-- Logo & mô tả -->
+          <div class="footer-column">
+            <!-- <h5 class="footer-title">TravelViet</h5> -->
+            <img
+              src="./vietnam_travel_logo_white_transparent.png"
+              alt=""
+              width="300px"
+              height="150px"
+            />
+            <p class="footer-text">
+              TravelViet giúp bạn khám phá những điểm đến tuyệt đẹp trên khắp Việt Nam. Chia sẻ trải
+              nghiệm, lưu giữ hành trình.
+            </p>
+            <div class="social-icons">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-youtube"></i></a>
             </div>
           </div>
-          <span class="badge bg-success fs-6">Top 1</span>
-        </div>
 
-        <!-- Xếp hạng 2 -->
-        <div class="list-group-item d-flex justify-content-between align-items-center">
-          <div class="d-flex align-items-center">
-            <div class="ranking-badge me-3 bg-secondary">2</div>
-            <img src="./1.png" alt="Địa điểm" class="rounded me-3" width="80" height="80">
-            <div>
-              <h5 class="mb-1">Làng nổi Tân Lập</h5>
-              <small>Long An • 4 ★ (180 đánh giá)</small>
-            </div>
+          <!-- Liên kết -->
+          <div class="footer-column">
+            <h6 class="footer-title">Liên kết</h6>
+            <ul class="footer-links">
+              <li><a href="#">Trang chủ</a></li>
+              <li><a href="#">Địa điểm nổi bật</a></li>
+              <li><a href="#">Bài viết</a></li>
+              <li><a href="#">Liên hệ</a></li>
+            </ul>
           </div>
-          <span class="badge bg-secondary fs-6">Top 2</span>
-        </div>
 
-        <!-- Xếp hạng 3 -->
-        <div class="list-group-item d-flex justify-content-between align-items-center">
-          <div class="d-flex align-items-center">
-            <div class="ranking-badge me-3 bg-warning text-dark">3</div>
-            <img src="./1.png" alt="Địa điểm" class="rounded me-3" width="80" height="80">
-            <div>
-              <h5 class="mb-1">Chợ nổi Cái Răng</h5>
-              <small>Cần Thơ • 4 ★ (290 đánh giá)</small>
-            </div>
+          <!-- Liên hệ -->
+          <div class="footer-column">
+            <h6 class="footer-title">Liên hệ</h6>
+            <ul class="footer-contact">
+              <li><i class="fas fa-map-marker-alt"></i> Trà Vinh, Việt Nam</li>
+              <li><i class="fas fa-envelope"></i> contact@travelviet.vn</li>
+              <li><i class="fas fa-phone"></i> +84 123 456 789</li>
+            </ul>
           </div>
-          <span class="badge bg-warning text-dark fs-6">Top 3</span>
         </div>
+
+        <!-- Bản quyền -->
+        <div class="footer-bottom">© 2025 VietNamTravel. All rights reserved.</div>
       </div>
-    </div>
-
-    <!-- Cột Người dùng nổi bật -->
-    <!-- Cột Người dùng nổi bật -->
-<div class="col-md-6">
-  <h4 class="mb-3">Người dùng nổi bật</h4>
-  <div class="list-group">
-
-    <!-- Top người dùng đánh giá nhiều nhất -->
-    <div class="list-group-item d-flex justify-content-between align-items-center">
-      <div class="d-flex align-items-center">
-        <div class="ranking-badge me-3">1</div>
-        <img src="./1.png" alt="Người dùng" class="rounded-circle me-3" width="80" height="80">
-        <div>
-          <h5 class="mb-1">Ngọc Mai</h5>
-          <small>Chủ doanh nghiệp, Trà Vinh</small>
-        </div>
-      </div>
-      <span class="badge bg-success fs-6">Top 1</span>
-    </div>
-
-    <!-- Top người dùng yêu thích nhất -->
-    <div class="list-group-item d-flex justify-content-between align-items-center">
-      <div class="d-flex align-items-center">
-        <div class="ranking-badge me-3 bg-secondary">2</div>
-        <img src="./1.png" alt="Người dùng" class="rounded-circle me-3" width="80" height="80">
-        <div>
-          <h5 class="mb-1">Minh Tuấn</h5>
-          <small>Du khách, TP. HCM</small>
-        </div>
-      </div>
-      <span class="badge bg-secondary fs-6">Top 2</span>
-    </div>
-
-    <!-- Top người dùng mới tham gia -->
-    <div class="list-group-item d-flex justify-content-between align-items-center">
-      <div class="d-flex align-items-center">
-        <div class="ranking-badge me-3 bg-warning text-dark">3</div>
-        <img src="./1.png" alt="Người dùng" class="rounded-circle me-3" width="80" height="80">
-        <div>
-          <h5 class="mb-1">Lan Anh</h5>
-          <small>Hướng dẫn viên du lịch, Hà Nội</small>
-        </div>
-      </div>
-      <span class="badge bg-warning text-dark fs-6">Top 3</span>
-    </div>
-
-    <!-- Có thể thêm nhiều top khác -->
-  </div>
-</div>
-
-    </div>
-  </div>
-</div>
-
-<!-- Footer -->
-<!-- Footer -->
-<footer class="pt-5 pb-4 mt-5">
-  <div class="container">
-    <div class="row">
-
-      <!-- Logo + Mô tả -->
-      <div class="col-md-4 mb-4">
-        <h5 class="text-uppercase fw-bold mb-3">TravelViet</h5>
-        <p class="small text-muted">
-          TravelViet giúp bạn khám phá những điểm đến tuyệt đẹp trên khắp Việt Nam. Chia sẻ trải nghiệm, lưu giữ hành trình.
-        </p>
-        <div class="d-flex gap-3 mt-3">
-          <a href="#" class="text-light"><i class="bi bi-facebook fs-5"></i></a>
-          <a href="#" class="text-light"><i class="bi bi-instagram fs-5"></i></a>
-          <a href="#" class="text-light"><i class="bi bi-youtube fs-5"></i></a>
-        </div>
-      </div>
-
-      <!-- Liên kết nhanh -->
-      <div class="col-md-4 mb-4">
-        <h6 class="text-uppercase fw-bold mb-3">Liên kết</h6>
-        <ul class="list-unstyled small">
-          <li><a href="#" class="text-light text-decoration-none">Trang chủ</a></li>
-          <li><a href="#" class="text-light text-decoration-none">Địa điểm nổi bật</a></li>
-          <li><a href="#" class="text-light text-decoration-none">Bài viết</a></li>
-          <li><a href="#" class="text-light text-decoration-none">Liên hệ</a></li>
-        </ul>
-      </div>
-
-      <!-- Thông tin liên hệ -->
-      <div class="col-md-4 mb-4">
-        <h6 class="text-uppercase fw-bold mb-3">Liên hệ</h6>
-        <ul class="list-unstyled small">
-          <li><i class="bi bi-geo-alt-fill me-2"></i> Trà Vinh, Việt Nam</li>
-          <li><i class="bi bi-envelope-fill me-2"></i> contact@travelviet.vn</li>
-          <li><i class="bi bi-phone-fill me-2"></i> +84 123 456 789</li>
-        </ul>
-      </div>
-
-    </div>
-
-    <!-- Copyright -->
-    <hr class="border-top border-light">
-    <div class="text-center small mt-3 text-muted">
-      © 2025 TravelViet. All rights reserved.
-    </div>
-  </div>
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+    </footer>
+  </body>
 </html>
