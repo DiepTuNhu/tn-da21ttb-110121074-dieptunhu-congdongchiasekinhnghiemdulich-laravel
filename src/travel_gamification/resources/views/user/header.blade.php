@@ -23,7 +23,7 @@
       <input type="text" placeholder="🔍 Tìm bài viết, địa điểm..." />
     </div>
     <div class="right-group">
-      {{-- <a href="{{ route('login') }}" class="login-btn">Đăng nhập</a> --}}
+      <a href="{{ route('login') }}" class="login-btn">Đăng nhập</a>
       <a href="{{ route('register') }}" class="signup-btn">Đăng ký</a>
     </div>
   </div>

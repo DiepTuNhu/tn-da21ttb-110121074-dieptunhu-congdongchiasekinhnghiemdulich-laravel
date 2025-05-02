@@ -176,20 +176,28 @@
 <body>
   <div class="login-wrapper">
     <div class="login-left">
-      <img src="./logo_trang_full.png" alt="logo" />
+      <img src="logo/logo_trang_full.png" alt="logo" />
     </div>
     <div class="login-right">
       <h2>Đăng nhập</h2>
-      <form id="loginForm">
+      @include('user.components.alert')
+      <form id="loginForm" action="{{route('login.store')}}" method="POST">
+        @csrf
+        @if(Session::has('flag'))
+        <div class="alert alert-{{Session::get('flag')}}">{{Session::get('message')}}</div>
+        @endif
+
         <div class="form-group">
           <i class="fa fa-envelope"></i>
-          <input type="email" id="email" placeholder="Email" required />
+          <input type="email" id="email" name="email" placeholder="Email" required />
         </div>
+
         <div class="form-group">
           <i class="fa fa-lock"></i>
-          <input type="password" id="password" placeholder="Mật khẩu" required />
+          <input type="password" id="password" name="password" placeholder="Mật khẩu" required />
           <i class="fa fa-eye toggle-password" toggle="#password"></i>
         </div>
+
         <div class="form-actions">
           <label>
             <input type="checkbox" id="remember" /> Ghi nhớ
@@ -206,7 +214,7 @@
       </div>
 
       <div class="extra-links">
-        Chưa có tài khoản? <a href="dangky.html">Đăng ký</a>
+        Chưa có tài khoản? <a href="{{ route('register') }}">Đăng ký</a>
       </div>
     </div>
   </div>
@@ -224,34 +232,34 @@
     });
 
     // Xử lý đăng nhập đơn giản
-    document.getElementById("loginForm").addEventListener("submit", function (e) {
-      e.preventDefault();
+    // document.getElementById("loginForm").addEventListener("submit", function (e) {
+    //   e.preventDefault();
 
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value.trim();
-      const error = document.getElementById("loginError");
+    //   const email = document.getElementById("email").value.trim();
+    //   const password = document.getElementById("password").value.trim();
+    //   const error = document.getElementById("loginError");
 
-      if (!email || !password) {
-        error.textContent = "Vui lòng nhập đầy đủ thông tin.";
-        return;
-      }
+    //   if (!email || !password) {
+    //     error.textContent = "Vui lòng nhập đầy đủ thông tin.";
+    //     return;
+    //   }
 
-      if (email === "test@example.com" && password === "123456") {
-        alert("Đăng nhập thành công!");
-        error.textContent = "";
+    //   if (email === "test@example.com" && password === "123456") {
+    //     alert("Đăng nhập thành công!");
+    //     error.textContent = "";
 
-        // Xử lý "Ghi nhớ đăng nhập"
-        if (document.getElementById("remember").checked) {
-          localStorage.setItem("rememberedEmail", email);
-        } else {
-          localStorage.removeItem("rememberedEmail");
-        }
+    //     // Xử lý "Ghi nhớ đăng nhập"
+    //     if (document.getElementById("remember").checked) {
+    //       localStorage.setItem("rememberedEmail", email);
+    //     } else {
+    //       localStorage.removeItem("rememberedEmail");
+    //     }
 
-        // window.location.href = "/trangchu.html";
-      } else {
-        error.textContent = "Email hoặc mật khẩu không đúng.";
-      }
-    });
+    //     // window.location.href = "/trangchu.html";
+    //   } else {
+    //     error.textContent = "Email hoặc mật khẩu không đúng.";
+    //   }
+    // });
 
     // Tự động điền email nếu đã nhớ
     window.onload = () => {

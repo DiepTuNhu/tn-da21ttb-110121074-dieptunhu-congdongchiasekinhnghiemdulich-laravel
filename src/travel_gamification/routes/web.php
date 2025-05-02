@@ -24,12 +24,12 @@ use App\Http\Controllers\User\AuthController;
 Route::get('/', [PageController::class, 'index'])->name('page.index');
 
 //LOGIN
-// Route::get('/login',[LoginController::class,'index'])->name('login');
-// Route::post('/login/store',[LoginController::class,'store'])->name('login.store');
+Route::get('/login',[LoginController::class,'index'])->name('login');
+Route::post('/login/store',[LoginController::class,'store'])->name('login.store');
 
 //REGISTER
-Route::get('register',[RegisterController::class,'index'])->name('register');
-Route::post('xulydangky',[RegisterController::class,'postSignup'])->name('postSignup');
+Route::get('/register',[RegisterController::class,'index'])->name('register');
+Route::post('/xulydangky',[RegisterController::class,'postSignup'])->name('postSignup');
 
 //LOGOUT
 // Route::post('/page/logout', [AuthController::class, 'logout'])->name('page.logout');

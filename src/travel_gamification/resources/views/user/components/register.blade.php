@@ -183,7 +183,7 @@
           <button type="submit" class="register-btn">Tạo tài khoản</button>
         </form>
         <div class="extra-links">
-          Chưa có tài khoản? <a href="dangky.html">Đăng nhập</a>
+          Chưa có tài khoản? <a href="{{ route('login') }}">Đăng nhập</a>
         </div>
       </div>
     </div>
