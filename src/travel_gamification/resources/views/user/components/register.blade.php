@@ -145,30 +145,41 @@
   <body>
     <div class="register-wrapper">
       <div class="register-left">
-        <img src="./logo_trang_full.png" alt="logo" />
+        <img src="logo/logo_trang_full.png" alt="logo" />
       </div>
       <div class="register-right">
         <h2>Đăng ký tài khoản</h2>
-        <form id="registerForm">
+        @include('user.components.alert')
+
+        <form id="registerForm" action="{{route('postSignup')}}" method="POST" enctype="multipart/form-data">
+          @csrf
+          @if(Session::has('flag'))
+            <div class="alert alert-{{Session::get('flag')}}">{{Session::get('message')}}</div>
+          @endif
+
           <div class="form-group">
             <i class="fa fa-user"></i>
-            <input type="text" id="username" placeholder="Tên người dùng" required />
+            <input type="text" id="username" name="username" placeholder="Tên người dùng" required />
           </div>
+
           <div class="form-group">
             <i class="fa fa-envelope"></i>
-            <input type="email" id="email" placeholder="Email" required />
+            <input type="email" id="email" name="email" placeholder="Email" required />
           </div>
+
           <div class="form-group">
             <i class="fa fa-lock"></i>
-            <input type="password" id="password" placeholder="Mật khẩu" required minlength="6" />
+            <input type="password" id="password" name="password" placeholder="Mật khẩu" required />
             <i class="fa fa-eye toggle-password" toggle="#password"></i>
           </div>
+
           <div class="form-group">
             <i class="fa fa-lock"></i>
-            <input type="password" id="confirmPassword" placeholder="Nhập lại mật khẩu" required />
+            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Nhập lại mật khẩu" required />
             <i class="fa fa-eye toggle-password" toggle="#confirmPassword"></i>
             <div id="passwordError" class="error"></div>
           </div>
+
           <button type="submit" class="register-btn">Tạo tài khoản</button>
         </form>
         <div class="extra-links">
