@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class TravelType extends Model
 {
     use HasFactory;
+
+    protected $table = 'travel_types'; // Đặt tên bảng chính xác
 }
