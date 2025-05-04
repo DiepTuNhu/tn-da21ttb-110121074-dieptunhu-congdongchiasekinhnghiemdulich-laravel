@@ -12,7 +12,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SlideController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ProvinceController;
-// use App\Http\Controllers\Admin\DistrictsController;
+use App\Http\Controllers\Admin\DistrictsController;
 // use App\Http\Controllers\Admin\WardsController;
 
 /*
@@ -99,13 +99,13 @@ Route::prefix('admin')->group(function () {
   Route::post('/provinces/{id}',[ProvinceController::class,'update'])->name('provinces.update');
   Route::get('/provinces/{id}',[ProvinceController::class,'destroy'])->name('provinces.destroy');
 
-  // //DISTRICT------------------------------------------------------------------------------------------
-  // Route::get('/users',[UserController::class,'index'])->name('users.index');
-  // Route::get('/users/create',[UserController::class,'create'])->name('users.create');
-  // Route::post('/users',[UserController::class,'store'])->name('users.store');
-  // Route::get('/users/{id}/edit',[UserController::class,'edit'])->name('users.edit');
-  // Route::post('/users/{id}',[UserController::class,'update'])->name('users.update');
-  // Route::get('/users/{id}',[UserController::class,'destroy'])->name('users.destroy');
+  //DISTRICT------------------------------------------------------------------------------------------
+  Route::get('/districts',[DistrictsController::class,'index'])->name('districts.index');
+  Route::get('/districts/create',[DistrictsController::class,'create'])->name('districts.create');
+  Route::post('/districts',[DistrictsController::class,'store'])->name('districts.store');
+  Route::get('/districts/{id}/edit',[DistrictsController::class,'edit'])->name('districts.edit');
+  Route::post('/districts/{id}',[DistrictsController::class,'update'])->name('districts.update');
+  Route::get('/districts/{id}',[DistrictsController::class,'destroy'])->name('districts.destroy');
 
   // //WARD------------------------------------------------------------------------------------------
   // Route::get('/users',[UserController::class,'index'])->name('users.index');

@@ -1,6 +1,7 @@
 @extends('admin.index')
 @section('title_name')
-    Thêm tỉnh / thành phố
+    Thêm quận / huyện
+@endsection
 
 @section('content')
 <section class="content">
@@ -15,21 +16,21 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form id="quickForm" action="{{route('provinces.store')}}" method = "post">
+            <form id="quickForm" action="{{route('districts.store')}}" method = "post">
                 @csrf
                 <div class="card-body">
                   <div class="form-group">
-                    <label for="provinceCode">Mã tỉnh</label>
-                    <input type="text" name="code" class="form-control" id="provinceCode" placeholder="Nhập mã tỉnh">
+                    <label for="districtCode">Mã huyện</label>
+                    <input type="text" name="code" class="form-control" id="districtCode" placeholder="Nhập mã huyện">
                   </div>
                 </div>
                 <div class="card-body">
                   <div class="form-group">
-                    <label for="provinceName">Tên tỉnh</label>
-                    <input type="text" name="name" class="form-control" id="provinceName" placeholder="Nhập tên tỉnh">
+                    <label for="districtName">Tên huyện</label>
+                    <input type="text" name="name" class="form-control" id="districtName" placeholder="Nhập tên huyện">
                   </div>
                 </div>
-                <div class="card-body">
+                {{-- <div class="card-body">
                   <div class="form-group">
                     <label for="region">Vùng miền</label>
                     <select name="region" class="form-control" id="region">
@@ -39,7 +40,7 @@
                       <option value="Miền Nam">Miền Nam</option>
                     </select>
                   </div>
-                </div>
+                </div> --}}
               <!-- /.card-body -->
               <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Thêm</button>

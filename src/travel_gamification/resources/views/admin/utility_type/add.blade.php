@@ -2,9 +2,6 @@
 @section('title_name')
     Thêm loại tiện ích
 @endsection
-@section('path')
-    Thêm loại tiện ích
-@endsection
 
 @section('content')
 <section class="content">

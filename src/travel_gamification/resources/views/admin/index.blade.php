@@ -75,8 +75,8 @@
           </a>
           <ul class="nav flex-column px-3 collapse" id="locationDropdown2">
             <li class="nav-item"><a class="nav-link" href="{{ route('provinces.index') }}">Tỉnh</a></li>
-            {{-- <li class="nav-item"><a class="nav-link" href="{{ route('districts.index') }}">Huyện</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ route('wards.index') }}">Xã</a></li> --}}
+            <li class="nav-item"><a class="nav-link" href="{{ route('districts.index') }}">Huyện</a></li>
+            {{-- <li class="nav-item"><a class="nav-link" href="{{ route('wards.index') }}">Xã</a></li> --}}
           </ul>
         </li>
         

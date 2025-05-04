@@ -2,9 +2,6 @@
 @section('title_name')
     Thêm slide
 @endsection
-@section('path')
-    Thêm slide
-@endsection
 
 @section('content')
 <section class="content">

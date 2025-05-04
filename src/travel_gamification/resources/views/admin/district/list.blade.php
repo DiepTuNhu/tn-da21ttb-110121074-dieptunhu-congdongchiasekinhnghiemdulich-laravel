@@ -1,6 +1,6 @@
 @extends('admin.index')
 @section('title_name')
-    Tỉnh / Thành phố
+    Quận / Huyện
 @endsection
 
 @section('content')
@@ -16,21 +16,21 @@
                     <th>ID</th>
                     <th>Mã tỉnh</th>
                     <th>Tên tỉnh</th>
-                    <th>Vùng miền</th>
+                    {{-- <th>Vùng miền</th> --}}
                     <th width="105px" class="text-center">Thao tác</th>
                 </tr>
                 </thead>
-                <a href="{{ route('provinces.create') }}" class="btn btn-primary mb-3">Thêm mới</a><br>
+                <a href="{{ route('districts.create') }}" class="btn btn-primary mb-3">Thêm mới</a><br>
                 <tbody>
-                    @foreach ($provinces as $province)
+                    @foreach ($districts as $district)
                     <tr>   
-                        <td>{{ $province->id }}</td>
-                        <td>{{ $province->code }}</td>
-                        <td>{{ $province->name }}</td>
-                        <td>{{ $province->region }}</td>
+                        <td>{{ $district->id }}</td>
+                        <td>{{ $district->code }}</td>
+                        <td>{{ $district->name }}</td>
+                        {{-- <td>{{ $district->region }}</td> --}}
                         <td class="text-center">
-                            <a class="btn btn-primary" href="{{ route('provinces.edit', ['id' => $province->id]) }}">Sửa</a>
-                            <a onclick="return confirm('Bạn có thật sự muốn xóa không?')" class="btn btn-danger" href="{{ route('provinces.destroy', ['id' => $province->id]) }}">Xóa</a>
+                            <a class="btn btn-primary" href="{{ route('districts.edit', ['id' => $district->id]) }}">Sửa</a>
+                            <a onclick="return confirm('Bạn có thật sự muốn xóa không?')" class="btn btn-danger" href="{{ route('districts.destroy', ['id' => $district->id]) }}">Xóa</a>
                         </td>
                     </tr>
                   @endforeach

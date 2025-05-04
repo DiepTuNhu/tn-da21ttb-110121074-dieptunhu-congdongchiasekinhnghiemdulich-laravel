@@ -1,6 +1,6 @@
 @extends('admin.index')
 @section('title_name')
-    Sửa tỉnh / thành phố
+    Sửa loại hình du lịch
 @endsection
 
 @section('content')
@@ -16,23 +16,23 @@
            </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form id="quickForm" action="{{ route('provinces.update', ['id' => $province->id]) }}" method="post">
+            <form id="quickForm" action="{{ route('districts.update', ['id' => $district->id]) }}" method="post">
                 @csrf
                 {{-- @method('PUT') <!-- Sử dụng PUT để cập nhật --> --}}
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="provinceId">ID</label>
-                        <input type="text" name="id" class="form-control" value="{{ $province->id }}" id="provinceId" readonly>
+                        <label for="districtId">ID</label>
+                        <input type="text" name="id" class="form-control" value="{{ $district->id }}" id="districtId" readonly>
                     </div>
                     <div class="form-group">
-                        <label for="provinceCode">Mã tỉnh</label>
-                        <input type="text" name="code" class="form-control" value="{{ $province->code }}" id="provinceCode">
+                        <label for="districtCode">Mã huyện</label>
+                        <input type="text" name="code" class="form-control" value="{{ $district->code }}" id="districtCode">
                     </div>
                     <div class="form-group">
-                        <label for="provinceName">Tên tỉnh</label>
-                        <input type="text" name="name" class="form-control" value="{{ $province->name }}" id="provinceName">
+                        <label for="districtName">Tên huyện</label>
+                        <input type="text" name="name" class="form-control" value="{{ $district->name }}" id="districtName">
                     </div>
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label for="region">Vùng miền</label>
                         <select name="region" class="form-control" id="region">
                             <option value="">Chọn vùng miền</option>
@@ -40,7 +40,7 @@
                             <option value="Miền Trung" {{ $province->region == 'Miền Trung' ? 'selected' : '' }}>Miền Trung</option>
                             <option value="Miền Nam" {{ $province->region == 'Miền Nam' ? 'selected' : '' }}>Miền Nam</option>
                         </select>
-                    </div>
+                    </div> --}}
                     {{-- <div class="form-group">
                         <label for="status">Trạng thái</label>
                         <select name="status" class="form-control" id="status">

@@ -3,10 +3,6 @@
     Loại tiện ích
 @endsection
 
-@section('path')
-    Loại tiện ích
-@endsection
-
 @section('content')
 <section class="content">
     <div class="container-fluid">

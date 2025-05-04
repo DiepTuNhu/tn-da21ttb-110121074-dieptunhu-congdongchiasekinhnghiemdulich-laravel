@@ -2,9 +2,6 @@
 @section('title_name')
     Sửa slide
 @endsection
-@section('path')
-    Sửa slide
-@endsection
 
 @section('content')
 <section class="content">
@@ -15,7 +12,7 @@
           <!-- jquery validation -->
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title"></h3>
+              @include('admin.alert')
             </div>
             <!-- /.card-header -->
             <!-- form start -->

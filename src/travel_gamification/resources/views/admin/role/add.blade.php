@@ -2,9 +2,6 @@
 @section('title_name')
     Thêm phân quyền
 @endsection
-@section('path')
-    Thêm phân quyền
-@endsection
 
 @section('content')
 <section class="content">

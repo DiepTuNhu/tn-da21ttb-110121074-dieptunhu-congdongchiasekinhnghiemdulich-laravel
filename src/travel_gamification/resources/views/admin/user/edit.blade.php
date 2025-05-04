@@ -15,7 +15,7 @@
           <!-- jquery validation -->
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title"></h3>
+              @include('admin.alert')
             </div>
             <!-- /.card-header -->
             <!-- form start -->
