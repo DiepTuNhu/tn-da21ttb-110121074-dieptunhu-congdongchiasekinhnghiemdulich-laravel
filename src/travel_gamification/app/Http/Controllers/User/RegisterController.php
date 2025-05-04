@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Role;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 
@@ -46,8 +47,11 @@ class RegisterController extends Controller
         $user->username = $request->username;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
-        $user->role_id = 2;
-        $user->status = 0; 
+        // Lấy id của vai trò "người dùng"
+        $role = Role::where('name', 'người dùng')->first();
+        $user->role_id = $role ? $role->id : null; // Gán role_id nếu tìm thấy, nếu không thì null
+
+        $user->status = 0;
 
         // Xử lý ảnh người dùng (nếu có)
         // if ($request->hasFile('avatar')) {

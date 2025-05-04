@@ -19,6 +19,7 @@
                     <th width="105px" class="text-center">Thao tác</th>
                   </tr>
                 </thead>
+                <a href = "{{route('roles.create')}}" class="btn btn-primary mb-3">Thêm mới</a><br>
                 <tbody>
                   @foreach ($roles as $role)
                   <tr>

@@ -49,10 +49,22 @@ class LoginController extends Controller
             // dd(session()->all());
 
             // Điều hướng tùy theo vai trò
-            if ($user->role_id == 1) {
+            // if ($user->role_id == 1) {
+            //     // Nếu là admin, chuyển đến trang quản trị
+            //     return redirect()->route('travel_types.index')->with(['flag' => 'success', 'message' => 'Đăng nhập thành công']);
+            // } elseif ($user->role_id == 2) {
+            //     // Nếu là người dùng thường, chuyển đến trang người dùng
+            //     return redirect()->route('page.index')->with(['flag' => 'success', 'message' => 'Đăng nhập thành công']);
+            // } else {
+            //     // Nếu không có vai trò hợp lệ
+            //     return redirect()->route('login')->with(['flag' => 'danger', 'message' => 'Vai trò không hợp lệ']);
+            // }
+
+            // Điều hướng tùy theo vai trò
+            if (strtolower($user->role->name) == 'quản trị') {
                 // Nếu là admin, chuyển đến trang quản trị
                 return redirect()->route('travel_types.index')->with(['flag' => 'success', 'message' => 'Đăng nhập thành công']);
-            } elseif ($user->role_id == 2) {
+            } elseif (strtolower($user->role->name) == 'người dùng') {
                 // Nếu là người dùng thường, chuyển đến trang người dùng
                 return redirect()->route('page.index')->with(['flag' => 'success', 'message' => 'Đăng nhập thành công']);
             } else {

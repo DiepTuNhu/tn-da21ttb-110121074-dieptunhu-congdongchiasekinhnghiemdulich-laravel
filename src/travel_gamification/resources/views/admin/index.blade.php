@@ -43,15 +43,17 @@
 
       <!-- <h5 class="text-center">Admin Panel</h5> -->
       <ul class="nav flex-column px-3">
-        <li class="nav-item"><a class="nav-link" href="#">Tổng quan</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{route('roles.index')}}">Phân quyền</a></li>
+        {{-- <li class="nav-item"><a class="nav-link" href="#">Tổng quan</a></li> --}}
         <li class="nav-item"><a class="nav-link" href="{{route('travel_types.index')}}">Loại hình du lịch</a></li>
         <li class="nav-item"><a class="nav-link" href="{{route('utility_types.index')}}">Loại tiện ích</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Quản lý bài viết</a></li>
+        {{-- <li class="nav-item"><a class="nav-link" href="#">Quản lý bài viết</a></li>
         <li class="nav-item"><a class="nav-link" href="#">Quản lý địa điểm</a></li>
         <li class="nav-item"><a class="nav-link" href="#">Quản lý tiện ích</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Quản lý nhiệm vụ</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Báo cáo & Đánh giá</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Quản lý nhiệm vụ</a></li> --}}
+        <li class="nav-item"><a class="nav-link" href="{{route('roles.index')}}">Phân quyền</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{route('users.index')}}">Người dùng</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{route('slides.index')}}">Trình chiếu</a></li>
+        {{-- <li class="nav-item"><a class="nav-link" href="#">Báo cáo & Đánh giá</a></li> --}}
         <li class="nav-item"><a class="nav-link text-danger" href="#">Đăng xuất</a></li>
       </ul>
     </div>
