@@ -15,6 +15,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('code', 5)->nullable();
             $table->string('name', 100)->nullable();
+            $table->string('slug', 100)->nullable();
             $table->unsignedInteger('district_id')->nullable();
             $table->foreign('district_id')->references('id')->on('districts')->onDelete('cascade')->onUpdate('cascade');
 

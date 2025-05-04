@@ -46,12 +46,26 @@ class ImportAddress extends Command
             $wardCount = 0;
 
             foreach ($data as $province) {
+                // Chuẩn hóa tên tỉnh từ JSON
+                $provinceName = mb_strtolower(trim(str_replace(['Thành phố', 'Tỉnh'], '', $province['Name'])));
+
+                // Xác định vùng miền dựa trên tên tỉnh
+                $region = null;
+                foreach ($regionMapping as $regionName => $provincesInRegion) {
+                    // Chuẩn hóa tên trong regionMapping
+                    $normalizedProvinces = array_map(fn($name) => mb_strtolower(trim($name)), $provincesInRegion);
+                    if (in_array($provinceName, $normalizedProvinces)) {
+                        $region = $regionName;
+                        break;
+                    }
+                }
+
                 // Insert province
                 DB::table('provinces')->insert([
                     'code' => $province['Id'],
                     'name' => $province['Name'],
                     'slug' => Str::slug($province['Name']),
-                    'region' => $province['Region'] ?? null,
+                    'region' => $region, // Gán vùng miền
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);

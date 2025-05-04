@@ -15,6 +15,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('code', 5)->nullable();
             $table->string('name', 100)->nullable();
+            $table->string('slug', 100)->nullable();
             $table->string('region', 20)->nullable();
             $table->timestamps();
         });

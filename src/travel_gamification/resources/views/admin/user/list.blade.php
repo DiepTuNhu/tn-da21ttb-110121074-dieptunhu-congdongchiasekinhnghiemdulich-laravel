@@ -57,19 +57,7 @@
                     </tr>
                   @endforeach
                 </tbody>
-                <tfoot>
-                <tr>
-                    <th>Id</th>
-                    <th>Tên đăng nhập</th>
-                    <th>Email</th>
-                    {{-- <th>Địa chỉ</th> --}}
-                    {{-- <th>Mật khẩu</th> --}}
-                    <th>Hình ảnh</th>
-                    <th>Phân quyền</th>
-                    <th>Trạng thái</th>
-                    <th width="105px">Thao tác</th>               
-                </tr>
-                </tfoot>
+
               </table>
             </div>
             <!-- /.card-body -->

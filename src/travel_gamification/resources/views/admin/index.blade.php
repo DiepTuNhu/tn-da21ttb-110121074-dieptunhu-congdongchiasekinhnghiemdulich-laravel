@@ -30,6 +30,19 @@
         margin-left: 260px;
         padding: 20px;
       }
+
+      .nav .collapse {
+        display: none; /* Ẩn danh sách con mặc định */
+      }
+
+      .nav .collapse.show {
+        display: block; /* Hiển thị danh sách con khi được kích hoạt */
+      }
+
+      .nav .nav-item {
+        margin-bottom: 5px; /* Khoảng cách giữa các mục */
+      }
+
     </style>
   </head>
   <body>
@@ -44,12 +57,29 @@
       <!-- <h5 class="text-center">Admin Panel</h5> -->
       <ul class="nav flex-column px-3">
         {{-- <li class="nav-item"><a class="nav-link" href="#">Tổng quan</a></li> --}}
-        <li class="nav-item"><a class="nav-link" href="{{route('travel_types.index')}}">Loại hình du lịch</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{route('utility_types.index')}}">Loại tiện ích</a></li>
-        {{-- <li class="nav-item"><a class="nav-link" href="#">Quản lý bài viết</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Quản lý địa điểm</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Quản lý tiện ích</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Quản lý nhiệm vụ</a></li> --}}
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link" href="#" onclick="toggleDropdown(event, 'locationDropdown1')">
+            Quản lý địa điểm
+          </a>
+          <ul class="nav flex-column px-3 collapse" id="locationDropdown1">
+            <li class="nav-item"><a class="nav-link" href="{{route('travel_types.index')}}">Loại hình du lịch</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{route('utility_types.index')}}">Loại tiện ích</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" onclick="toggleDropdown(event, 'locationDropdown2')">
+            Đơn vị hành chính
+          </a>
+          <ul class="nav flex-column px-3 collapse" id="locationDropdown2">
+            <li class="nav-item"><a class="nav-link" href="{{ route('provinces.index') }}">Tỉnh</a></li>
+            {{-- <li class="nav-item"><a class="nav-link" href="{{ route('districts.index') }}">Huyện</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('wards.index') }}">Xã</a></li> --}}
+          </ul>
+        </li>
+        
         <li class="nav-item"><a class="nav-link" href="{{route('roles.index')}}">Phân quyền</a></li>
         <li class="nav-item"><a class="nav-link" href="{{route('users.index')}}">Người dùng</a></li>
         <li class="nav-item"><a class="nav-link" href="{{route('slides.index')}}">Trình chiếu</a></li>
@@ -95,6 +125,15 @@
           },
         });
       });    
+    </script>
+
+    {{-- Drop tỉnh/ huyện/ xã --}}
+    <script>
+      function toggleDropdown(event, dropdownId) {
+        event.preventDefault(); // Ngăn chặn hành vi mặc định của liên kết
+        const dropdown = document.getElementById(dropdownId);
+        dropdown.classList.toggle('show'); // Thêm hoặc xóa lớp 'show' để hiển thị/ẩn danh sách con
+      }
     </script>
   </body>
 </html>

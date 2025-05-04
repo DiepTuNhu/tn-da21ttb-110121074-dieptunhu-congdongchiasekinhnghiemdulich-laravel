@@ -2,9 +2,6 @@
 @section('title_name')
     Thêm loại hình du lịch
 @endsection
-@section('path')
-    Thêm loại hình du lịch
-@endsection
 
 @section('content')
 <section class="content">

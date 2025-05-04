@@ -11,6 +11,9 @@ use App\Http\Controllers\Admin\UtilityTypeController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SlideController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\ProvinceController;
+// use App\Http\Controllers\Admin\DistrictsController;
+// use App\Http\Controllers\Admin\WardsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,4 +91,27 @@ Route::prefix('admin')->group(function () {
   Route::post('/users/{id}',[UserController::class,'update'])->name('users.update');
   Route::get('/users/{id}',[UserController::class,'destroy'])->name('users.destroy');
 
+  //PROVINCE------------------------------------------------------------------------------------------
+  Route::get('/provinces',[ProvinceController::class,'index'])->name('provinces.index');
+  Route::get('/provinces/create',[ProvinceController::class,'create'])->name('provinces.create');
+  Route::post('/provinces',[ProvinceController::class,'store'])->name('provinces.store');
+  Route::get('/provinces/{id}/edit',[ProvinceController::class,'edit'])->name('provinces.edit');
+  Route::post('/provinces/{id}',[ProvinceController::class,'update'])->name('provinces.update');
+  Route::get('/provinces/{id}',[ProvinceController::class,'destroy'])->name('provinces.destroy');
+
+  // //DISTRICT------------------------------------------------------------------------------------------
+  // Route::get('/users',[UserController::class,'index'])->name('users.index');
+  // Route::get('/users/create',[UserController::class,'create'])->name('users.create');
+  // Route::post('/users',[UserController::class,'store'])->name('users.store');
+  // Route::get('/users/{id}/edit',[UserController::class,'edit'])->name('users.edit');
+  // Route::post('/users/{id}',[UserController::class,'update'])->name('users.update');
+  // Route::get('/users/{id}',[UserController::class,'destroy'])->name('users.destroy');
+
+  // //WARD------------------------------------------------------------------------------------------
+  // Route::get('/users',[UserController::class,'index'])->name('users.index');
+  // Route::get('/users/create',[UserController::class,'create'])->name('users.create');
+  // Route::post('/users',[UserController::class,'store'])->name('users.store');
+  // Route::get('/users/{id}/edit',[UserController::class,'edit'])->name('users.edit');
+  // Route::post('/users/{id}',[UserController::class,'update'])->name('users.update');
+  // Route::get('/users/{id}',[UserController::class,'destroy'])->name('users.destroy');
 });
