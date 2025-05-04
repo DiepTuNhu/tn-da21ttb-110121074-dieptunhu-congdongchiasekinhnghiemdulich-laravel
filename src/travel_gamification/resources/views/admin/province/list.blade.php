@@ -14,8 +14,8 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Mã tỉnh</th>
-                    <th>Tên tỉnh</th>
+                    <th>Mã tỉnh / thành phố</th>
+                    <th>Tên tỉnh / thành phố</th>
                     <th>Vùng miền</th>
                     <th width="105px" class="text-center">Thao tác</th>
                 </tr>

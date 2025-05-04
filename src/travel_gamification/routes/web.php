@@ -13,7 +13,7 @@ use App\Http\Controllers\Admin\SlideController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ProvinceController;
 use App\Http\Controllers\Admin\DistrictsController;
-// use App\Http\Controllers\Admin\WardsController;
+use App\Http\Controllers\Admin\WardsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -107,11 +107,11 @@ Route::prefix('admin')->group(function () {
   Route::post('/districts/{id}',[DistrictsController::class,'update'])->name('districts.update');
   Route::get('/districts/{id}',[DistrictsController::class,'destroy'])->name('districts.destroy');
 
-  // //WARD------------------------------------------------------------------------------------------
-  // Route::get('/users',[UserController::class,'index'])->name('users.index');
-  // Route::get('/users/create',[UserController::class,'create'])->name('users.create');
-  // Route::post('/users',[UserController::class,'store'])->name('users.store');
-  // Route::get('/users/{id}/edit',[UserController::class,'edit'])->name('users.edit');
-  // Route::post('/users/{id}',[UserController::class,'update'])->name('users.update');
-  // Route::get('/users/{id}',[UserController::class,'destroy'])->name('users.destroy');
+  //WARD------------------------------------------------------------------------------------------
+  Route::get('/wards',[WardsController::class,'index'])->name('wards.index');
+  Route::get('/wards/create',[WardsController::class,'create'])->name('wards.create');
+  Route::post('/wards',[WardsController::class,'store'])->name('wards.store');
+  Route::get('/wards/{id}/edit',[WardsController::class,'edit'])->name('wards.edit');
+  Route::post('/wards/{id}',[WardsController::class,'update'])->name('wards.update');
+  Route::get('/wards/{id}',[WardsController::class,'destroy'])->name('wards.destroy');
 });

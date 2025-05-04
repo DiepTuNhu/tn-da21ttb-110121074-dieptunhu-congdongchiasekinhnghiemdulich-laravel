@@ -15,7 +15,7 @@
                 <thead>
                   <tr>
                     <th>ID</th>
-                    <th>Phân quyền</th>
+                    <th>Hình ảnh</th>
                     <th width="105px" class="text-center">Thao tác</th>
                   </tr>
                 </thead>

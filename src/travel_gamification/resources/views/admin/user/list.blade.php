@@ -23,7 +23,7 @@
                     <th>Hình ảnh</th>
                     <th>Phân quyền</th>
                     <th>Trạng thái</th>
-                    <th width="105px">Thao tác</th>
+                    <th width="150px">Thao tác</th>
                 </tr>
                 </thead>
                 <a href = "{{route('users.create')}}" class="btn btn-primary mb-3">Thêm mới</a><br>

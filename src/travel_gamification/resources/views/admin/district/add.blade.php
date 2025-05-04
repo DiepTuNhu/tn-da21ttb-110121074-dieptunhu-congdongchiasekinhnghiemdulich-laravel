@@ -1,6 +1,6 @@
 @extends('admin.index')
 @section('title_name')
-    Thêm quận / huyện
+    Thêm huyện / quận
 @endsection
 
 @section('content')
@@ -20,14 +20,14 @@
                 @csrf
                 <div class="card-body">
                   <div class="form-group">
-                    <label for="districtCode">Mã huyện</label>
-                    <input type="text" name="code" class="form-control" id="districtCode" placeholder="Nhập mã huyện">
+                    <label for="districtCode">Mã huyện / quận</label>
+                    <input type="text" name="code" class="form-control" id="districtCode" placeholder="Nhập mã huyện / quận">
                   </div>
                 </div>
                 <div class="card-body">
                   <div class="form-group">
-                    <label for="districtName">Tên huyện</label>
-                    <input type="text" name="name" class="form-control" id="districtName" placeholder="Nhập tên huyện">
+                    <label for="districtName">Tên huyện / quận</label>
+                    <input type="text" name="name" class="form-control" id="districtName" placeholder="Nhập tên huyện / quận">
                   </div>
                 </div>
                 {{-- <div class="card-body">

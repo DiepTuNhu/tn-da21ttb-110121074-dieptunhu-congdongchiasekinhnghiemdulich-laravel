@@ -1,6 +1,7 @@
 @extends('admin.index')
 @section('title_name')
-    Thêm tỉnh / thành phố
+    Thêm xã / phường
+@endsection
 
 @section('content')
 <section class="content">
@@ -15,21 +16,21 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form id="quickForm" action="{{route('provinces.store')}}" method = "post">
+            <form id="quickForm" action="{{route('wards.store')}}" method = "post">
                 @csrf
                 <div class="card-body">
                   <div class="form-group">
-                    <label for="provinceCode">Mã tỉnh / thành phố</label>
-                    <input type="text" name="code" class="form-control" id="provinceCode" placeholder="Nhập mã tỉnh / thành phố">
+                    <label for="wardCode">Mã xã / phường</label>
+                    <input type="text" name="code" class="form-control" id="wardCode" placeholder="Nhập mã xã / phường">
                   </div>
                 </div>
                 <div class="card-body">
                   <div class="form-group">
-                    <label for="provinceName">Tên tỉnh / thành phố</label>
-                    <input type="text" name="name" class="form-control" id="provinceName" placeholder="Nhập tên tỉnh / thành phố">
+                    <label for="wardName">Tên xã / phường</label>
+                    <input type="text" name="name" class="form-control" id="wardName" placeholder="Nhập tên xã / phường">
                   </div>
                 </div>
-                <div class="card-body">
+                {{-- <div class="card-body">
                   <div class="form-group">
                     <label for="region">Vùng miền</label>
                     <select name="region" class="form-control" id="region">
@@ -39,7 +40,7 @@
                       <option value="Miền Nam">Miền Nam</option>
                     </select>
                   </div>
-                </div>
+                </div> --}}
               <!-- /.card-body -->
               <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Thêm</button>

@@ -25,11 +25,11 @@
                         <input type="text" name="id" class="form-control" value="{{ $province->id }}" id="provinceId" readonly>
                     </div>
                     <div class="form-group">
-                        <label for="provinceCode">Mã tỉnh</label>
+                        <label for="provinceCode">Mã tỉnh / thành phố</label>
                         <input type="text" name="code" class="form-control" value="{{ $province->code }}" id="provinceCode">
                     </div>
                     <div class="form-group">
-                        <label for="provinceName">Tên tỉnh</label>
+                        <label for="provinceName">Tên tỉnh / thành phố</label>
                         <input type="text" name="name" class="form-control" value="{{ $province->name }}" id="provinceName">
                     </div>
                     <div class="form-group">

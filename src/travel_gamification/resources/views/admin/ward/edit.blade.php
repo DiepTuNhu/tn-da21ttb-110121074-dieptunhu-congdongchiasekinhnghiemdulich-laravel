@@ -1,6 +1,6 @@
 @extends('admin.index')
 @section('title_name')
-    Sửa huyện / quận
+    Sửa loại hình du lịch
 @endsection
 
 @section('content')
@@ -16,21 +16,21 @@
            </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form id="quickForm" action="{{ route('districts.update', ['id' => $district->id]) }}" method="post">
+            <form id="quickForm" action="{{ route('wards.update', ['id' => $ward->id]) }}" method="post">
                 @csrf
                 {{-- @method('PUT') <!-- Sử dụng PUT để cập nhật --> --}}
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="districtId">ID</label>
-                        <input type="text" name="id" class="form-control" value="{{ $district->id }}" id="districtId" readonly>
+                        <label for="wardId">ID</label>
+                        <input type="text" name="id" class="form-control" value="{{ $ward->id }}" id="wardId" readonly>
                     </div>
                     <div class="form-group">
-                        <label for="districtCode">Mã huyện / quận</label>
-                        <input type="text" name="code" class="form-control" value="{{ $district->code }}" id="districtCode">
+                        <label for="wardCode">Mã huyện</label>
+                        <input type="text" name="code" class="form-control" value="{{ $ward->code }}" id="wardCode">
                     </div>
                     <div class="form-group">
-                        <label for="districtName">Tên huyện / quận</label>
-                        <input type="text" name="name" class="form-control" value="{{ $district->name }}" id="districtName">
+                        <label for="wardName">Tên huyện</label>
+                        <input type="text" name="name" class="form-control" value="{{ $ward->name }}" id="wardName">
                     </div>
                     {{-- <div class="form-group">
                         <label for="region">Vùng miền</label>
