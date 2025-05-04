@@ -66,9 +66,9 @@ class UserController extends Controller
             $avatarName = 'default.jpg'; // Tên file mặc định
             if (!Storage::exists('public/avatars/' . $avatarName)) {
                 Storage::copy($defaultAvatarPath, 'public/avatars/' . $avatarName);
+                }
+            $user->avatar = $avatarName; // Gán tên ảnh mặc định
         }
-    $user->avatar = $avatarName; // Gán tên ảnh mặc định
-}
 
         // Lưu người dùng vào cơ sở dữ liệu
         $user->save();

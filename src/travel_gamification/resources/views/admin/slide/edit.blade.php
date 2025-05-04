@@ -36,11 +36,11 @@
                   <div id="currentImage" style="margin-top: 10px;">
                       <img src="{{ asset('storage/slide_image/' . $slide->image) }}" alt="Ảnh hiện tại" width="150">
                   </div>
-              @else
-                  <p>Không có ảnh hiện tại.</p>
-              @endif
+                  @else
+                      <p>Không có ảnh hiện tại.</p>
+                  @endif
               
-              </div>
+                </div>
                 <!-- Hiển thị ảnh xem trước -->
                 <div class="form-group">
                     <label for="imagePreview1">Ảnh xem trước:</label>

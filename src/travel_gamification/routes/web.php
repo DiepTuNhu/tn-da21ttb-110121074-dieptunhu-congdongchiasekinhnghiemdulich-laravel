@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ProvinceController;
 use App\Http\Controllers\Admin\DistrictsController;
 use App\Http\Controllers\Admin\WardsController;
+use App\Http\Controllers\Admin\BadgesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -114,4 +115,12 @@ Route::prefix('admin')->group(function () {
   Route::get('/wards/{id}/edit',[WardsController::class,'edit'])->name('wards.edit');
   Route::post('/wards/{id}',[WardsController::class,'update'])->name('wards.update');
   Route::get('/wards/{id}',[WardsController::class,'destroy'])->name('wards.destroy');
+
+  //BADGE------------------------------------------------------------------------------------------
+  Route::get('/badges',[BadgesController::class,'index'])->name('badges.index');
+  Route::get('/badges/create',[BadgesController::class,'create'])->name('badges.create');
+  Route::post('/badges',[BadgesController::class,'store'])->name('badges.store');
+  Route::get('/badges/{id}/edit',[BadgesController::class,'edit'])->name('badges.edit');
+  Route::post('/badges/{id}',[BadgesController::class,'update'])->name('badges.update');
+  Route::get('/badges/{id}',[BadgesController::class,'destroy'])->name('badges.destroy');
 });

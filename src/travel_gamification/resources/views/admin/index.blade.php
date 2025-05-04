@@ -80,6 +80,7 @@
           </ul>
         </li>
         
+        <li class="nav-item"><a class="nav-link" href="{{route('badges.index')}}">Huy hiệu</a></li>
         <li class="nav-item"><a class="nav-link" href="{{route('roles.index')}}">Phân quyền</a></li>
         <li class="nav-item"><a class="nav-link" href="{{route('users.index')}}">Người dùng</a></li>
         <li class="nav-item"><a class="nav-link" href="{{route('slides.index')}}">Trình chiếu</a></li>
@@ -133,6 +134,27 @@
         event.preventDefault(); // Ngăn chặn hành vi mặc định của liên kết
         const dropdown = document.getElementById(dropdownId);
         dropdown.classList.toggle('show'); // Thêm hoặc xóa lớp 'show' để hiển thị/ẩn danh sách con
+      }
+    </script>
+    {{-- Xem trước ảnh --}}
+    <script>
+      function previewImage(inputId) {
+        const fileInput = document.getElementById(`image${inputId}`);
+        const previewContainer = document.getElementById(`imagePreview${inputId}`);
+        previewContainer.innerHTML = ''; // Xóa nội dung cũ
+
+        if (fileInput.files && fileInput.files[0]) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.alt = 'Ảnh xem trước';
+            img.style.maxWidth = '200px';
+            img.style.maxHeight = '200px';
+            previewContainer.appendChild(img);
+          };
+          reader.readAsDataURL(fileInput.files[0]);
+        }
       }
     </script>
   </body>
