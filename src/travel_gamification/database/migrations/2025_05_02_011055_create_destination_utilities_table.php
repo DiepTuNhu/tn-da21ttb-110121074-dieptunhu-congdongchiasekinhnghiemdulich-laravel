@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedInteger('utility_id');
             $table->string('status', 100)->nullable();
             $table->integer('quality')->nullable();
+            $table->double('distance')->nullable();
             $table->foreign('destination_id')->references('id')->on('destinations')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('utility_id')->references('id')->on('utilities')->onDelete('cascade')->onUpdate('cascade');
 

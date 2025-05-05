@@ -67,6 +67,7 @@
           <ul class="nav flex-column px-3 collapse" id="locationDropdown1">
             <li class="nav-item"><a class="nav-link" href="{{route('travel_types.index')}}">Loại hình du lịch</a></li>
             <li class="nav-item"><a class="nav-link" href="{{route('utility_types.index')}}">Loại tiện ích</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{route('utilities.index')}}">Tiện ích</a></li>
           </ul>
         </li>
         <li class="nav-item">
@@ -81,6 +82,7 @@
         </li>
         
         <li class="nav-item"><a class="nav-link" href="{{route('badges.index')}}">Huy hiệu</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{route('missions.index')}}">Nhiệm vụ</a></li>
         <li class="nav-item"><a class="nav-link" href="{{route('roles.index')}}">Phân quyền</a></li>
         <li class="nav-item"><a class="nav-link" href="{{route('users.index')}}">Người dùng</a></li>
         <li class="nav-item"><a class="nav-link" href="{{route('slides.index')}}">Trình chiếu</a></li>
@@ -114,7 +116,7 @@
       <!-- /.content -->
     {{-- </div> --}}
     <!-- Main Content -->
-    
+    {{-- <script src="https://cdn.ckeditor.com/4.20.2/standard/ckeditor.js"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
       $(document).ready(function () {

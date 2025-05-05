@@ -5,6 +5,7 @@ use App\Http\Controllers\Page\PageController;
 use App\Http\Controllers\User\LoginController;
 use App\Http\Controllers\User\RegisterController;
 use App\Http\Controllers\User\AuthController;
+use App\Http\Controllers\User\CKEditorController;
 
 use App\Http\Controllers\Admin\TravelTypeController;
 use App\Http\Controllers\Admin\UtilityTypeController;
@@ -15,6 +16,8 @@ use App\Http\Controllers\Admin\ProvinceController;
 use App\Http\Controllers\Admin\DistrictsController;
 use App\Http\Controllers\Admin\WardsController;
 use App\Http\Controllers\Admin\BadgesController;
+use App\Http\Controllers\Admin\MissionsController;
+use App\Http\Controllers\Admin\UtilitiesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,8 +50,7 @@ Route::post('/xulydangky',[RegisterController::class,'postSignup'])->name('postS
 
 
 // ADMIN=======================================================================================================================================
-
-
+Route::post('/ckeditor/upload', [CKEditorController::class, 'upload'])->name('ckeditor.upload');
 Route::prefix('admin')->group(function () {
 
 //TYPE LOCATION------------------------------------------------------------------------------------------
@@ -123,4 +125,22 @@ Route::prefix('admin')->group(function () {
   Route::get('/badges/{id}/edit',[BadgesController::class,'edit'])->name('badges.edit');
   Route::post('/badges/{id}',[BadgesController::class,'update'])->name('badges.update');
   Route::get('/badges/{id}',[BadgesController::class,'destroy'])->name('badges.destroy');
+
+  //MISSION------------------------------------------------------------------------------------------
+  Route::get('/missions',[MissionsController::class,'index'])->name('missions.index');
+  Route::get('/missions/create',[MissionsController::class,'create'])->name('missions.create');
+  Route::post('/missions',[MissionsController::class,'store'])->name('missions.store');
+  Route::get('/missions/{id}/edit',[MissionsController::class,'edit'])->name('missions.edit');
+  Route::post('/missions/{id}',[MissionsController::class,'update'])->name('missions.update');
+  Route::get('/missions/{id}',[MissionsController::class,'destroy'])->name('missions.destroy');
+
+  //UTILITY------------------------------------------------------------------------------------------
+  Route::get('/utilities',[UtilitiesController::class,'index'])->name('utilities.index');
+  Route::get('/utilities/create',[UtilitiesController::class,'create'])->name('utilities.create');
+  Route::post('/utilities',[UtilitiesController::class,'store'])->name('utilities.store');
+  Route::get('/utilities/{id}/edit',[UtilitiesController::class,'edit'])->name('utilities.edit');
+  Route::post('/utilities/{id}',[UtilitiesController::class,'update'])->name('utilities.update');
+  Route::get('/utilities/{id}',[UtilitiesController::class,'destroy'])->name('utilities.destroy');
+
 });
+

@@ -12,7 +12,8 @@
         <div class="col-12">
             <!-- /.card-header -->
             <div class="card-body">
-              <table id="example1" class="table table-bordered table-striped">
+              {{-- <table id="example1" class="table table-bordered table-striped"> --}}
+                <table id="logTable" class="table table-striped mt-3">
                 <thead>
                 <tr>
                     <th>ID</th>
