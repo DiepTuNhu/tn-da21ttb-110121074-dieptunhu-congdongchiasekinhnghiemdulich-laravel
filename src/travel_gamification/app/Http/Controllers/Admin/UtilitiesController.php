@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Utility;
 use App\Models\UtilityType;
-use App\Models\Destination;
+// use App\Models\Destination;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
 
@@ -26,96 +26,110 @@ class UtilitiesController extends Controller
         return view('admin.utility.add', compact('utility_types'));
     }
 
-        public function store(Request $request)
-        {
-            // Validate dữ liệu từ form
-            $request->validate([
-                'name' => 'required|max:100',
-                'id_typeofutility' => 'nullable|exists:utility_types,id',
-                'tinh' => 'required|numeric',
-                'quan' => 'required|numeric',
-                'phuong' => 'required|numeric',
-                'price' => 'nullable|string',
-                'time' => 'nullable|string',
-                'description' => 'nullable|string',
-                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            ]);
+    
+    public function store(Request $request)
+    {
+        // Validate dữ liệu từ form
+        $request->validate([
+            'name' => 'required|max:100|unique:utilities,name',
+            'id_typeofutility' => 'nullable|exists:utility_types,id',
+            'tinh' => 'required|numeric',
+            'quan' => 'required|numeric',
+            'phuong' => 'required|numeric',
+            'price' => 'nullable|string',
+            'time' => 'nullable|string',
+            'description' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
 
-            function getNameFromEsgoo($level, $parentId, $targetId) {
-                $response = Http::get("https://esgoo.net/api-tinhthanh/{$level}/{$parentId}.htm");
-                $data = $response->json()['data'] ?? [];
-            
-                foreach ($data as $item) {
-                    if ((int)$item['id'] === (int)$targetId) {
-                        return $item['full_name'];
-                    }
-                }
-            
-                return null;
-            }
-            
-            // Lấy tên tỉnh, huyện, xã bằng cách tìm theo ID
-            $province = getNameFromEsgoo(1, 0, $request->tinh);
-            $district = getNameFromEsgoo(2, $request->tinh, $request->quan);
-            $ward = getNameFromEsgoo(3, $request->quan, $request->phuong);
-            
-            // Nối địa chỉ theo thứ tự xã, huyện, tỉnh
-            $address = trim("{$ward}, {$district}, {$province}");
-
-            // Nối tên tiện ích với địa chỉ
-            $fullAddress = trim("{$request->name}, {$address}");
-
-            // Lấy tọa độ từ Google Maps API
-            $apiKey = config('services.google_maps.api_key'); // Thay bằng API key của bạn
-            // dd($apiKey, $fullAddress);
-            $response = Http::get("https://maps.googleapis.com/maps/api/geocode/json", [
-                'address' => $fullAddress,
-                'key' => $apiKey,
-            ]);
+        function getNameFromEsgoo($level, $parentId, $targetId) {
+            $response = Http::get("https://esgoo.net/api-tinhthanh/{$level}/{$parentId}.htm");
+            $data = $response->json()['data'] ?? [];
         
-            // Ghi log toàn bộ kết quả trả về để kiểm tra nếu có lỗi
-            logger()->info('📍 Địa chỉ gửi lên Google Maps: ' . $fullAddress);
-            logger()->info('📦 Google Maps API response: ', $response->json());
-
-            // Kiểm tra nếu không tìm thấy kết quả
-            if (empty($response->json()['results'])) {
-                logger()->error('❌ Không tìm thấy tọa độ cho địa chỉ: ' . $fullAddress);
+            foreach ($data as $item) {
+                if ((int)$item['id'] === (int)$targetId) {
+                    return $item['full_name'];
+                }
             }
+        
+            return null;
+        }
+        
+        // Lấy tên tỉnh, huyện, xã bằng cách tìm theo ID
+        $province = getNameFromEsgoo(1, 0, $request->tinh);
+        $district = getNameFromEsgoo(2, $request->tinh, $request->quan);
+        $ward = getNameFromEsgoo(3, $request->quan, $request->phuong);
+        
+        // Nối địa chỉ theo thứ tự xã, huyện, tỉnh
+        $address = trim("{$ward}, {$district}, {$province}");
 
-            $location = $response->json()['results'][0]['geometry']['location'] ?? null;
+        // Nối tên tiện ích với địa chỉ
+        $fullAddress = trim("{$request->name}, {$address}");
 
-            // Tạo mới một tiện ích
-            $utility = new Utility();
-            $utility->name = $request->name;
-            $utility->utility_type_id = $request->id_typeofutility;
-            $utility->address = $address; // Lưu địa chỉ đã nối
-            $utility->latitude = $location['lat'] ?? null; // Lưu tọa độ latitude
-            $utility->longitude = $location['lng'] ?? null; // Lưu tọa độ longitude
-            $utility->price = $request->price;
-            $utility->time = $request->time;
-            $utility->description = $request->description;
+        // Lấy tọa độ từ OpenCage Geocoding API
+        $apiKey = env('OPENCAGE_API_KEY'); // Lấy API Key từ file config
+        $response = Http::get("https://api.opencagedata.com/geocode/v1/json", [
+            'q' => $fullAddress, // Địa chỉ đầy đủ
+            'key' => $apiKey,
+            'language' => 'vi', // Ngôn ngữ (vi: tiếng Việt)
+            'pretty' => 1, // Tùy chọn để dễ đọc (không bắt buộc)
+        ]);
 
-            // Xử lý upload hình ảnh nếu có
-            if ($request->hasFile('image')) {
-                $imageName = time() . '.' . $request->file('image')->extension();
-                $request->file('image')->storeAs('public/utility_image', $imageName);
-                $utility->image = $imageName;
-            }
+        // Ghi log toàn bộ kết quả trả về để kiểm tra nếu có lỗi
+        logger()->info('📍 Địa chỉ gửi lên OpenCage: ' . $fullAddress);
+        logger()->info('📦 OpenCage API response: ', $response->json());
 
-            // Lưu tiện ích vào cơ sở dữ liệu
-            $utility->save();
-
-            // Chuyển hướng về trang danh sách tiện ích với thông báo thành công
-            return redirect()->route('utilities.index')->with('success', 'Tiện ích đã được thêm thành công!');
+        // Kiểm tra nếu không tìm thấy kết quả
+        if (empty($response->json()['results'])) {
+            logger()->error('❌ Không tìm thấy tọa độ cho địa chỉ: ' . $fullAddress);
+            $location = null;
+        } else {
+            $location = $response->json()['results'][0]['geometry'] ?? null;
         }
 
-    public function edit(string $id)
-    {       
-        $utility = Utility::find($id);
-        $utility_type = UtilityType::all(); // Lấy danh sách các loại hình
-        $locations = Destination::all(); // Lấy danh sách các tỉnh
+        // Tạo mới một tiện ích
+        $utility = new Utility();
+        $utility->name = $request->name;
+        $utility->utility_type_id = $request->id_typeofutility;
+        $utility->address = $address; // Lưu địa chỉ đã nối
+        $utility->latitude = $location['lat'] ?? null; // Lưu tọa độ latitude
+        $utility->longitude = $location['lng'] ?? null; // Lưu tọa độ longitude
+        $utility->price = $request->price;
+        $utility->time = $request->time;
+        $utility->description = $request->description;
+        $utility->status = 0;  // Gán status là 0
+        
+        // Xử lý upload hình ảnh nếu có
+        if ($request->hasFile('image')) {
+            $imageName = time() . '.' . $request->file('image')->extension();
+            $request->file('image')->storeAs('public/utility_image', $imageName);
+            $utility->image = $imageName;
+        }
 
-        return view('admin.utility.edit', compact('utility','utility_types', 'locations'));
+        // Lưu tiện ích vào cơ sở dữ liệu
+        $utility->save();
+
+        // Chuyển hướng về trang danh sách tiện ích với thông báo thành công
+        return redirect()->route('utilities.index')->with('success', 'Tiện ích đã được thêm thành công!');
+    }
+
+    public function edit(string $id)
+    {
+        $utility = Utility::find($id);
+    
+        if (!$utility) {
+            return redirect()->route('utilities.index')->with('error', 'Utility not found!');
+        }
+    
+        // Tách địa chỉ thành xã, huyện, tỉnh
+        $addressParts = explode(', ', $utility->address);
+        $phuong = $addressParts[0] ?? ''; // Xã
+        $quan = $addressParts[1] ?? '';   // Huyện
+        $tinh = $addressParts[2] ?? '';   // Tỉnh
+    
+        $utility_types = UtilityType::all();
+    
+        return view('admin.utility.edit', compact('utility', 'utility_types', 'tinh', 'quan', 'phuong'));
     }
 
     /**
@@ -123,46 +137,81 @@ class UtilitiesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // Tìm location theo ID
+        $request->validate([
+            'tinh' => 'required|string',
+            'quan' => 'required|string',
+            'phuong' => 'required|string',
+            // 'name' => 'required|max:100',
+            'name' => 'required|max:100|unique:utilities,name,' . $id,
+            'price' => 'nullable|string',
+            'latitude' => 'nullable|numeric',
+            'longitude' => 'nullable|numeric',
+            'distance' => 'nullable|numeric|min:0',
+            'time' => 'nullable|string',
+            'description' => 'nullable|string',
+            'utility_type_id' => 'nullable|exists:utility_types,id',
+            'status' => 'nullable|string|max:100',
+            'image1' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
         $utility = Utility::find($id);
 
-        // Nếu không tìm thấy utility, trả về lỗi hoặc thông báo
         if (!$utility) {
-            return redirect()->route('utilities.index')->with('error', 'Location not found!');
+            return redirect()->route('utilities.index')->with('error', 'Utility not found!');
+        }
+        // Tạo địa chỉ đầy đủ từ request
+        $address = $request->phuong_text . ', ' . $request->quan_text . ', ' . $request->tinh_text;
+        $fullAddress = trim("{$request->name}, {$address}");
+
+        // Gọi OpenCage Geocoding API để lấy tọa độ
+        $apiKey = env('OPENCAGE_API_KEY'); // Lấy API Key từ file .env
+        $response = Http::get("https://api.opencagedata.com/geocode/v1/json", [
+            'q' => $fullAddress, // Địa chỉ đầy đủ
+            'key' => $apiKey,
+            'language' => 'vi', // Ngôn ngữ (vi: tiếng Việt)
+            'pretty' => 1, // Tùy chọn để dễ đọc (không bắt buộc)
+        ]);
+
+        // Ghi log toàn bộ kết quả trả về để kiểm tra nếu có lỗi
+        logger()->info('📍 Địa chỉ gửi lên OpenCage: ' . $fullAddress);
+        logger()->info('📦 OpenCage API response: ', $response->json());
+
+        // Kiểm tra nếu không tìm thấy kết quả
+        if (empty($response->json()['results'])) {
+            logger()->error('❌ Không tìm thấy tọa độ cho địa chỉ: ' . $fullAddress);
+            $location = null;
+        } else {
+            $location = $response->json()['results'][0]['geometry'] ?? null;
         }
 
         // Kiểm tra và xóa ảnh cũ nếu có
         if ($utility->image && $request->hasFile('image1') && $utility->image !== 'default.jpg') {
-            // Xóa ảnh cũ nếu có và có ảnh mới được tải lên
             Storage::delete('public/utility_image/' . $utility->image);
         }
-
-        // Cập nhật các trường thông tin từ request
+        
+        $utility->address = $address;
         $utility->name = $request->name;
         $utility->price = $request->price;
-        $utility->address = $request->address;
-        $utility->phonenumber = $request->phone;
-        $utility->time = $request->time;
-        $utility->rank = $request->rank;
+        // $utility->latitude = $request->latitude;
+        // $utility->longitude = $request->longitude;
+        $utility->latitude = $location['lat'] ?? null; // Lưu tọa độ latitude từ API
+        $utility->longitude = $location['lng'] ?? null;
         $utility->distance = $request->distance;
+        $utility->time = $request->time;
         $utility->description = $request->description;
-        $utility->id_typeofutility = $request->id_typeofutility;
-        $utility->id_location = $request->id_location;
-        $utility->status = $request->status; // Cập nhật trạng thái
+        $utility->utility_type_id = $request->utility_type_id;
+        $utility->status = $request->status;
 
         // Xử lý tải lên hình ảnh mới nếu có
         if ($request->hasFile('image1')) {
-            $imageName = time() . '.' . $request->file('image1')->extension();  
-            // Lưu ảnh vào thư mục public/images
+            $imageName = time() . '.' . $request->file('image1')->extension();
             $request->file('image1')->storeAs('public/utility_image', $imageName);
-            // Cập nhật tên ảnh trong cơ sở dữ liệu
             $utility->image = $imageName;
         }
-        // Lưu lại các thay đổi
+
         $utility->save();
 
-        // Chuyển hướng về trang danh sách locations với thông báo thành công
-        return redirect()->route('utilities.index')->with('success', 'Location updated successfully!');
+        return redirect()->route('utilities.index')->with('success', 'Utility updated successfully!');
     }
 
     /**
