@@ -13,6 +13,12 @@ class RoleController extends Controller
     {
         $roles = Role::all();
        
+        if (request()->ajax()) {
+            // Nếu là request AJAX, chỉ trả phần nội dung @section('content')
+            return view('admin.role.list',compact('roles'))->render();
+        }
+
+        // Nếu là request bình thường, trả toàn bộ layout
         return view('admin.role.list',compact('roles'));
     }
 

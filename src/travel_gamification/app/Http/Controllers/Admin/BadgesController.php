@@ -13,6 +13,12 @@ class BadgesController extends Controller
     public function index()
     {
         $badges = Badge::all(); // Lấy tất cả các tỉnh
+        if (request()->ajax()) {
+            // Nếu là request AJAX, chỉ trả phần nội dung @section('content')
+            return view('admin.badge.list', compact('badges'))->render();
+        }
+    
+        // Nếu là request bình thường, trả toàn bộ layout
         return view('admin.badge.list', compact('badges'));
     }
 

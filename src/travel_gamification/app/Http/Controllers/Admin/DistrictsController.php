@@ -12,7 +12,15 @@ class DistrictsController extends Controller
     public function index()
     {
         $districts = District::all(); // Lấy tất cả các tỉnh
+
+        if (request()->ajax()) {
+            // Nếu là request AJAX, chỉ trả phần nội dung @section('content')
+            return view('admin.district.list', compact('districts'))->render();
+        }
+
+        // Nếu là request bình thường, trả toàn bộ layout
         return view('admin.district.list', compact('districts'));
+
     }
 
     /**

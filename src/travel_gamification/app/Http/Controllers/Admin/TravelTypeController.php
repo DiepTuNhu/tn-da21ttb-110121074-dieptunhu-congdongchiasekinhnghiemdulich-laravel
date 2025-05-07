@@ -12,7 +12,14 @@ class TravelTypeController extends Controller
     public function index()
     {
         $types = TravelType::all();
-        return view('admin.travel_type.list', compact('types')); // Sử dụng 'types' thay vì 'travel_types'
+      
+        if (request()->ajax()) {
+            // Nếu là request AJAX, chỉ trả phần nội dung @section('content')
+            return view('admin.travel_type.list', compact('types'))->render();
+        }
+
+        // Nếu là request bình thường, trả toàn bộ layout
+        return view('admin.travel_type.list', compact('types'));
     }
 
     /**

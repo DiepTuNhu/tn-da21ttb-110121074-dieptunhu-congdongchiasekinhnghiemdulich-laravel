@@ -87,8 +87,7 @@
                     <label for="transportation">Phương tiện di chuyển</label>
                     <textarea name="transportation" id="transportation" class="form-control">{{ old('transportation', $destination->transportation) }}</textarea>
                 </div>
-
-                </div>  
+ 
                 <div class="form-group">
                   <label for="status">Trạng thái</label>
                   <select name="status" class="form-control" id="status">
@@ -105,6 +104,7 @@
               </div>
             </form>
           </div>
+
           <!-- /.card -->
           </div>
         <!--/.col (left) -->

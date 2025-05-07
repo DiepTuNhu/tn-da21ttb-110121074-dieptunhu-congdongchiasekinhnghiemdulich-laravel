@@ -13,6 +13,13 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
+        
+        if (request()->ajax()) {
+            // Nếu là request AJAX, chỉ trả phần nội dung @section('content')
+            return view('admin.user.list',compact('users'))->render();
+        }
+
+        // Nếu là request bình thường, trả toàn bộ layout
         return view('admin.user.list',compact('users'));
     }
 

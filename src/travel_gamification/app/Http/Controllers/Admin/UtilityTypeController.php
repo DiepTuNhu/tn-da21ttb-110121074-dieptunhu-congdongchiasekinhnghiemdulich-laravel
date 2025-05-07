@@ -12,6 +12,12 @@ class UtilityTypeController extends Controller
     {
         $utility_types = UtilityType::all();
        
+        if (request()->ajax()) {
+            // Nếu là request AJAX, chỉ trả phần nội dung @section('content')
+            return view('admin.utility_type.list',compact('utility_types'))->render();
+        }
+
+        // Nếu là request bình thường, trả toàn bộ layout
         return view('admin.utility_type.list',compact('utility_types'));
     }
 

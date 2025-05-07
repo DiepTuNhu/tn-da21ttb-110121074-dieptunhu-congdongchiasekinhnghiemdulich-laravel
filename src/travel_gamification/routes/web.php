@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\BadgesController;
 use App\Http\Controllers\Admin\MissionsController;
 use App\Http\Controllers\Admin\UtilitiesController;
 use App\Http\Controllers\Admin\DestinationsController;
+use App\Http\Controllers\Admin\DestinationImagesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -143,7 +144,7 @@ Route::prefix('admin')->group(function () {
   Route::post('/utilities/{id}',[UtilitiesController::class,'update'])->name('utilities.update');
   Route::get('/utilities/{id}',[UtilitiesController::class,'destroy'])->name('utilities.destroy');
 
-  //UTILITY------------------------------------------------------------------------------------------
+  //DESTINATION------------------------------------------------------------------------------------------
   Route::get('/destinations',[DestinationsController::class,'index'])->name('destinations.index');
   Route::get('/destinations/create',[DestinationsController::class,'create'])->name('destinations.create');
   Route::post('/destinations',[DestinationsController::class,'store'])->name('destinations.store');
@@ -151,5 +152,13 @@ Route::prefix('admin')->group(function () {
   Route::post('/destinations/{id}',[DestinationsController::class,'update'])->name('destinations.update');
   Route::get('/destinations/{id}',[DestinationsController::class,'destroy'])->name('destinations.destroy');
 
+  //DESTINATION IMAGE------------------------------------------------------------------------------------------
+  Route::get('/destinations_images',[DestinationImagesController::class,'index'])->name('destinations_images.index');
+  Route::get('/destinations_images/create',[DestinationImagesController::class,'create'])->name('destinations_images.create');
+  Route::post('/destinations_images',[DestinationImagesController::class,'store'])->name('destinations_images.store');
+  Route::get('/destinations_images/{id}/edit',[DestinationImagesController::class,'edit'])->name('destinations_images.edit');
+  Route::post('/destinations_images/{id}',[DestinationImagesController::class,'update'])->name('destinations_images.update');
+  Route::get('/destinations_images/{id}',[DestinationImagesController::class,'destroy'])->name('destinations_images.destroy');
+  
 });
 

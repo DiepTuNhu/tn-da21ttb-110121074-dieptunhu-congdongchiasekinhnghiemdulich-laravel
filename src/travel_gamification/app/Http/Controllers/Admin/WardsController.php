@@ -12,6 +12,13 @@ class WardsController extends Controller
     public function index()
     {
         $wards = Ward::all(); // Lấy tất cả các tỉnh
+        
+        if (request()->ajax()) {
+            // Nếu là request AJAX, chỉ trả phần nội dung @section('content')
+            return view('admin.ward.list', compact('wards'))->render();
+        }
+
+        // Nếu là request bình thường, trả toàn bộ layout
         return view('admin.ward.list', compact('wards'));
     }
 

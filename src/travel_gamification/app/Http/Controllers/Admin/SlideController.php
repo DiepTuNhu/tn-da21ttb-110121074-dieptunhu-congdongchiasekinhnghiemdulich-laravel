@@ -12,7 +12,13 @@ class SlideController extends Controller
     public function index()
     {
         $slides = Slide::all();
-       
+       ;
+        if (request()->ajax()) {
+            // Nếu là request AJAX, chỉ trả phần nội dung @section('content')
+            return view('admin.slide.list',compact('slides'))->render();
+        }
+
+        // Nếu là request bình thường, trả toàn bộ layout
         return view('admin.slide.list',compact('slides'));
     }
 

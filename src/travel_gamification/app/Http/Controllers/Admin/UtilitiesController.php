@@ -16,6 +16,13 @@ class UtilitiesController extends Controller
     {
         
         $utilities = Utility::all();
+        
+        if (request()->ajax()) {
+            // Nếu là request AJAX, chỉ trả phần nội dung @section('content')
+            return view('admin.utility.list',compact('utilities'))->render();
+        }
+
+        // Nếu là request bình thường, trả toàn bộ layout
         return view('admin.utility.list',compact('utilities'));
     }
 

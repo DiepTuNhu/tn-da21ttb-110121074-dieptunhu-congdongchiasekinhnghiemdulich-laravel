@@ -15,6 +15,13 @@ class MissionsController extends Controller
     public function index()
     {
         $missions = Mission::all(); // Lấy tất cả các tỉnh
+       
+        if (request()->ajax()) {
+            // Nếu là request AJAX, chỉ trả phần nội dung @section('content')
+            return view('admin.mission.list', compact('missions'))->render();
+        }
+
+        // Nếu là request bình thường, trả toàn bộ layout
         return view('admin.mission.list', compact('missions'));
     }
 

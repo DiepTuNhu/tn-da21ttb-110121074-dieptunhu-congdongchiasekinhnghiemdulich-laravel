@@ -12,7 +12,7 @@
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <!-- DataTables JS -->
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    {{-- <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script> --}}
     
 
     <style>
@@ -23,8 +23,11 @@
         height: 100vh;
         position: fixed;
         width: 250px;
-        background-color: #f8f9fa;
+        background-color: oklch(92.3% 0.003 48.717);
         padding-top: 20px;
+      }
+      .nav-link {
+        color: #000
       }
       .main-content {
         margin-left: 260px;
@@ -65,10 +68,10 @@
             Quản lý địa điểm
           </a>
           <ul class="nav flex-column px-3 collapse" id="locationDropdown1">
-            <li class="nav-item"><a class="nav-link" href="{{route('travel_types.index')}}">Loại hình du lịch</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{route('destinations.index')}}">Địa điểm du lịch</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{route('utility_types.index')}}">Loại tiện ích</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{route('utilities.index')}}">Tiện ích</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{route('travel_types.index')}}" onclick="loadPage(event, this)">Loại hình du lịch</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{route('destinations.index')}}" onclick="loadPage(event, this)">Địa điểm du lịch</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{route('utility_types.index')}}" onclick="loadPage(event, this)">Loại tiện ích</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{route('utilities.index')}}" onclick="loadPage(event, this)">Tiện ích</a></li>
           </ul>
         </li>
         <li class="nav-item">
@@ -76,89 +79,130 @@
             Đơn vị hành chính
           </a>
           <ul class="nav flex-column px-3 collapse" id="locationDropdown2">
-            <li class="nav-item"><a class="nav-link" href="{{ route('provinces.index') }}">Tỉnh</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ route('districts.index') }}">Huyện</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ route('wards.index') }}">Xã</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('provinces.index') }}" onclick="loadPage(event, this)">Tỉnh</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('districts.index') }}" onclick="loadPage(event, this)">Huyện</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('wards.index') }}" onclick="loadPage(event, this)">Xã</a></li>
           </ul>
         </li>
         
-        <li class="nav-item"><a class="nav-link" href="{{route('badges.index')}}">Huy hiệu</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{route('missions.index')}}">Nhiệm vụ</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{route('roles.index')}}">Phân quyền</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{route('users.index')}}">Người dùng</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{route('slides.index')}}">Trình chiếu</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{route('badges.index')}}" onclick="loadPage(event, this)">Huy hiệu</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{route('missions.index')}}" onclick="loadPage(event, this)">Nhiệm vụ</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{route('roles.index')}}" onclick="loadPage(event, this)">Phân quyền</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{route('users.index')}}" onclick="loadPage(event, this)">Người dùng</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{route('slides.index')}}" onclick="loadPage(event, this)">Trình chiếu</a></li>
         {{-- <li class="nav-item"><a class="nav-link" href="#">Báo cáo & Đánh giá</a></li> --}}
         <li class="nav-item"><a class="nav-link text-danger" href="#">Đăng xuất</a></li>
       </ul>
     </div>
-    <div class="main-content">
-    <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
-      <section class="content-header">
-        <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-sm-6">
-              <h2 class="mx-3">@yield('title_name')</h2>
+    <div class="main-content" id="main-content">
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h2 class="mx-3">@yield('title_name')</h2>
+              </div>
+              {{-- <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item">Trang chủ</li>
+                  <li class="breadcrumb-item active">@yield('path')</li>
+                </ol>
+              </div> --}}
             </div>
-            {{-- <div class="col-sm-6">
-              <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item">Trang chủ</li>
-                <li class="breadcrumb-item active">@yield('path')</li>
-              </ol>
-            </div> --}}
-          </div>
-        </div><!-- /.container-fluid -->
-      </section>
+          </div><!-- /.container-fluid -->
+        </section>
   
       <!-- Main content -->
       
-     @yield('content')
-  
-      <!-- /.content -->
-    {{-- </div> --}}
-    <!-- Main Content -->
-    {{-- <script src="https://cdn.ckeditor.com/4.20.2/standard/ckeditor.js"></script> --}}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-      $(document).ready(function () {
-        $("#logTable").DataTable({
-          order: [[0, "desc"]],
-          responsive: true,
-          language: {
-            url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/vi.json",
-          },
-        });
-      });    
-    </script>
+        @yield('content')
+        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+        <!-- /.content -->
+      </div>
+      <!-- Main Content -->
+      {{-- <script src="https://cdn.ckeditor.com/4.20.2/standard/ckeditor.js"></script> --}}
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+      <script>
+        $(document).ready(function () {
+          $("#logTable").DataTable({
+            order: [[0, "desc"]],
+            responsive: true,
+            language: {
+              url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/vi.json",
+            },
+          });
+        });    
+      </script>
 
-    {{-- Drop tỉnh/ huyện/ xã --}}
-    <script>
-      function toggleDropdown(event, dropdownId) {
-        event.preventDefault(); // Ngăn chặn hành vi mặc định của liên kết
-        const dropdown = document.getElementById(dropdownId);
-        dropdown.classList.toggle('show'); // Thêm hoặc xóa lớp 'show' để hiển thị/ẩn danh sách con
-      }
-    </script>
-    {{-- Xem trước ảnh --}}
-    <script>
-      function previewImage(inputId) {
-        const fileInput = document.getElementById(`image${inputId}`);
-        const previewContainer = document.getElementById(`imagePreview${inputId}`);
-        previewContainer.innerHTML = ''; // Xóa nội dung cũ
-
-        if (fileInput.files && fileInput.files[0]) {
-          const reader = new FileReader();
-          reader.onload = function (e) {
-            const img = document.createElement('img');
-            img.src = e.target.result;
-            img.alt = 'Ảnh xem trước';
-            img.style.maxWidth = '200px';
-            img.style.maxHeight = '200px';
-            previewContainer.appendChild(img);
-          };
-          reader.readAsDataURL(fileInput.files[0]);
+      {{-- Drop tỉnh/ huyện/ xã --}}
+      <script>
+        function toggleDropdown(event, dropdownId) {
+          event.preventDefault(); // Ngăn chặn hành vi mặc định của liên kết
+          const dropdown = document.getElementById(dropdownId);
+          dropdown.classList.toggle('show'); // Thêm hoặc xóa lớp 'show' để hiển thị/ẩn danh sách con
         }
-      }
+      </script>
+      {{-- Xem trước ảnh --}}
+      <script>
+        function previewImage(inputId) {
+          const fileInput = document.getElementById(`image${inputId}`);
+          const previewContainer = document.getElementById(`imagePreview${inputId}`);
+          previewContainer.innerHTML = ''; // Xóa nội dung cũ
+
+          if (fileInput.files && fileInput.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              const img = document.createElement('img');
+              img.src = e.target.result;
+              img.alt = 'Ảnh xem trước';
+              img.style.maxWidth = '200px';
+              img.style.maxHeight = '200px';
+              previewContainer.appendChild(img);
+            };
+            reader.readAsDataURL(fileInput.files[0]);
+          }
+        }
+      </script>
+
+  <script>
+    function loadPage(event, link) {
+        event.preventDefault();
+        const url = link.getAttribute('href');
+    
+        fetch(url, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.text())
+        .then(data => {
+            // Cắt phần nội dung chính nếu server trả về toàn bộ HTML
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(data, 'text/html');
+            const newContent = htmlDoc.querySelector('#main-content');
+            if (newContent) {
+                document.getElementById('main-content').innerHTML = newContent.innerHTML;
+            } else {
+                document.getElementById('main-content').innerHTML = data;
+            }
+    
+            window.history.pushState(null, '', url); // Thay đổi URL trên trình duyệt
+
+            // Khởi tạo lại DataTables sau khi nội dung mới được tải
+            if ($.fn.DataTable) {
+                $('#logTable').DataTable({
+                    order: [[0, "desc"]],
+                    responsive: true,
+                    language: {
+                        url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/vi.json",
+                    },
+                });
+            }
+        })
+        .catch(err => console.error('Lỗi khi tải trang:', err));
+    }
     </script>
+    </div>
+  
   </body>
 </html>

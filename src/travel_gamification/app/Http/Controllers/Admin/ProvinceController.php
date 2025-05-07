@@ -11,6 +11,13 @@ class ProvinceController extends Controller
     public function index()
     {
         $provinces = Province::all(); // Lấy tất cả các tỉnh
+        
+        if (request()->ajax()) {
+            // Nếu là request AJAX, chỉ trả phần nội dung @section('content')
+            return view('admin.province.list', compact('provinces'))->render();
+        }
+
+        // Nếu là request bình thường, trả toàn bộ layout
         return view('admin.province.list', compact('provinces'));
     }
 

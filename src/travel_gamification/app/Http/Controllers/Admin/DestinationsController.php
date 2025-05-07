@@ -14,7 +14,15 @@ class DestinationsController extends Controller
     public function index()
     {
         $destinations = Destination::all();
-        return view('admin.destination.list',compact('destinations'));
+        // return view('admin.destination.list',compact('destinations'));
+
+        if (request()->ajax()) {
+            // Nếu là request AJAX, chỉ trả phần nội dung @section('content')
+            return view('admin.destination.list', compact('destinations'))->render();
+        }
+    
+        // Nếu là request bình thường, trả toàn bộ layout
+        return view('admin.destination.list', compact('destinations'));
     
     }
 
