@@ -10,60 +10,47 @@
         <div class="col-12">
             <!-- /.card-header -->
             <div class="card-body">
-              <table id="example1" class="table table-bordered table-striped">
+              <table id="logTable" class="table table-striped mt-3">
                 <thead>
                 <tr>
                     <th>ID</th>
                     <th>Hình ảnh</th>
                     <th>Đường dẫn</th>
-                    <th>Tiêu đề</th>
                     <th>Địa điểm</th>
                     <th>Trạng thái</th>
                     <th width="105px">Thao tác</th>
                 </tr>
                 </thead>
-                {{-- <a href = "{{route('photos.create')}}" class="btn btn-primary mb-3">Thêm mới</a><br> --}}
+                {{-- <a href = "{{route('destination_images.create')}}" class="btn btn-primary mb-3">Thêm mới</a><br> --}}
                 <tbody>
-                  @foreach ($photos as $photo)
+                  @foreach ($destination_images as $destination_image)
                   <tr>   
-                      <td>{{$photo->id}}</td>
+                      <td>{{$destination_image->id}}</td>
                       <td>
-                        @if($photo->name) <!-- Kiểm tra xem có tên ảnh trong cột name không -->
-                            <img src="{{ asset('storage/location_image/' . $photo->name) }}" alt="Ảnh của {{$photo->name}}" width="100">
+                        @if($destination_image->name) <!-- Kiểm tra xem có tên ảnh trong cột name không -->
+                            <img src="{{ asset('storage/destination_image/' . $destination_image->name) }}" alt="Ảnh của {{$destination_image->name}}" width="100">
                         @else
                             <span>Chưa có ảnh</span>
                         @endif
                       </td>       
-                      <td>{{$photo->url}}</td>  <!-- Chắc chắn rằng bạn đang lấy đúng trường url -->
-                      <td>{{ $photo->caption }}</td>  <!-- Đảm bảo caption được gọi đúng -->
-                      <td>{{$photo->location->name ?? 'Chưa xác định' }}</td>  <!-- Sửa 'Locations' thành 'location' -->
+                      <td>{{$destination_image->image_url}}</td> 
+                      <td>{{$destination_image->destination->name ?? 'Chưa xác định' }}</td>  <!-- Sửa 'destinations' thành 'destination' -->
                       <td>
-                          @if($photo->status == 2)  <!-- Sửa $location thành $photo -->
+                          @if($destination_image->status == 2)  <!-- Sửa $destination thành $destination_image -->
                               <span class="text-success">Chính</span>
-                          @elseif($photo->status == 0)
+                          @elseif($destination_image->status == 0)
                               <span class="text-success">Phụ</span>
-                          @elseif($photo->status == 1)
+                          @elseif($destination_image->status == 1)
                               <span class="text-danger">Ẩn</span>
                           @endif
                       </td>
                       <td>
-                          <a class="btn btn-primary" href="{{ route('photos.edit', ['id' => $photo->id]) }}">Sửa</a>
-                          <a onclick="return confirm('Bạn có thật sự muốn xóa không?')" class="btn btn-danger" href="{{ route('photos.destroy', ['id' => $photo->id]) }}">Xóa</a>
+                          <a class="btn btn-primary" href="{{ route('destination_images.edit', ['id' => $destination_image->id]) }}">Sửa</a>
+                          <a onclick="return confirm('Bạn có thật sự muốn xóa không?')" class="btn btn-danger" href="{{ route('destination_images.destroy', ['id' => $destination_image->id]) }}">Xóa</a>
                       </td>
                     </tr>
                   @endforeach
                 </tbody>
-                <tfoot>
-                <tr>
-                  <th>Id</th>
-                    <th>Hình ảnh</th>
-                    <th>URL</th>
-                    <th>Caption</th>
-                    <th>Địa điểm</th>
-                    <th>Trạng thái</th>
-                    <th width="105px">Thao tác</th>          
-                </tr>
-                </tfoot>
               </table>
             </div>
             <!-- /.card-body -->

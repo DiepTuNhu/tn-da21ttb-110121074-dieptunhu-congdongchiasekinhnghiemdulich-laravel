@@ -45,8 +45,8 @@
                         @endif
                       </td>
                       <td>
-                        <a class="btn btn-info" style="margin-bottom: 5px; width: 105px" href="{{ route('destinations_images.create', ['id_destination' => $destination->id]) }}">Thêm ảnh</a>
-                        <a class="btn btn-success" style="margin-bottom: 5px; width: 105px" href="{{ route('destinations_images.index', ['id' => $destination->id]) }}">Xem ảnh</a>
+                        <a class="btn btn-info" style="margin-bottom: 5px; width: 105px" href="{{ route('destination_images.create', ['destination_id' => $destination->id]) }}">Thêm ảnh</a>
+                        <a class="btn btn-success" style="margin-bottom: 5px; width: 105px" href="{{ route('destination_images.index', ['id' => $destination->id]) }}">Xem ảnh</a>
                         <a class="btn btn-primary" href="{{ route('destinations.edit', ['id' => $destination->id]) }}">Sửa</a>
                         <a onclick="return confirm('Bạn có thật sự muốn xóa không?')" class="btn btn-danger" href="{{ route('destinations.destroy', ['id' => $destination->id]) }}">Xóa</a>
                       </td>

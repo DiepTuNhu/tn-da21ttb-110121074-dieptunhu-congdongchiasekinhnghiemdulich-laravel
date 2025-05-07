@@ -153,12 +153,12 @@ Route::prefix('admin')->group(function () {
   Route::get('/destinations/{id}',[DestinationsController::class,'destroy'])->name('destinations.destroy');
 
   //DESTINATION IMAGE------------------------------------------------------------------------------------------
-  Route::get('/destinations_images',[DestinationImagesController::class,'index'])->name('destinations_images.index');
-  Route::get('/destinations_images/create',[DestinationImagesController::class,'create'])->name('destinations_images.create');
-  Route::post('/destinations_images',[DestinationImagesController::class,'store'])->name('destinations_images.store');
-  Route::get('/destinations_images/{id}/edit',[DestinationImagesController::class,'edit'])->name('destinations_images.edit');
-  Route::post('/destinations_images/{id}',[DestinationImagesController::class,'update'])->name('destinations_images.update');
-  Route::get('/destinations_images/{id}',[DestinationImagesController::class,'destroy'])->name('destinations_images.destroy');
+  Route::get('/destination_images',[DestinationImagesController::class,'index'])->name('destination_images.index');
+  Route::get('/destination_images/create',[DestinationImagesController::class,'create'])->name('destination_images.create');
+  Route::post('/destination_images',[DestinationImagesController::class,'store'])->name('destination_images.store');
+  Route::get('/destination_images/{id}/edit',[DestinationImagesController::class,'edit'])->name('destination_images.edit');
+  Route::post('/destination_images/{id}',[DestinationImagesController::class,'update'])->name('destination_images.update');
+  Route::get('/destination_images/{id}',[DestinationImagesController::class,'destroy'])->name('destination_images.destroy');
   
 });
 

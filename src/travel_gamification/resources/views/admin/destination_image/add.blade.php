@@ -2,9 +2,6 @@
 @section('title_name')
     Thêm hình ảnh 
 @endsection
-@section('path')
-    Thêm hình ảnh
-@endsection
 
 @section('content')
 <section class="content">
@@ -19,25 +16,17 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form id="quickForm" action="{{ route('photos.store') }}" method="post" enctype="multipart/form-data">
+            <form id="quickForm" action="{{ route('destination_images.store') }}" method="post" enctype="multipart/form-data">
               @csrf
-              <input type="hidden" name="id_location" value="{{ $locationId }}">
+              <input type="hidden" name="destination_id" value="{{ $destinationId }}">
 
                   <!-- Hiển thị tên địa điểm -->
                   
                   <div class="card-body">
                 <div class="form-group">
-                  <label for="location_name">Tên địa điểm</label>
-                  <input type="text" class="form-control" id="location_name" value="{{ $locationName }}" readonly>
+                  <label for="destination_name">Tên địa điểm</label>
+                  <input type="text" class="form-control" id="destination_name" value="{{ $destinationName }}" readonly>
                 </div>
-                <!-- Khung 1: Chọn 1 ảnh, status = 2 -->
-                {{-- <div class="form-group">
-                  <label for="image1" class="form-label">Chọn ảnh (Ảnh chính)</label>
-                  <div class="custom-file">
-                      <input type="file" class="custom-file-input" id="image1" name="image1" accept="image/*" onchange="previewImage(1)">
-                      <label class="custom-file-label" for="image1">Chọn tệp...</label>
-                  </div>
-                </div> --}}
 
                 <div class="form-group">
                   <label for="image1" class="form-label">Chọn ảnh (Ảnh chính)</label>
@@ -48,7 +37,7 @@
                   </div>
                 </div>             
 
-                <!-- Khung 2: Chọn tối đa 4 ảnh, status = 0 -->
+                <!-- Khung 2: Chọn ảnh phụ -->
                 <div class="form-group">
                   <label for="image2" class="form-label">Chọn ảnh (không giới hạn số lượng)</label>
                   <div class="custom-file">
@@ -60,9 +49,7 @@
                              multiple 
                              onchange="previewImages(2)">
                       <label class="custom-file-label" for="image2">Chọn tệp...</label>
-                  </div>
-              {{-- </div> --}}
-              
+                  </div>              
                 
                   <!-- Hiển thị lỗi liên quan đến việc upload ảnh -->
                   @if ($errors->has('images'))
@@ -80,24 +67,9 @@
                   <label for="imagePreview2">Ảnh xem trước (Ảnh phụ):</label>
                   <div id="imagePreview2" style="margin-top: 10px;"></div>
                 </div>
-                <div class="form-group">
-                    <label for="caption">Caption</label>
-                    <input type="text" name="caption" class="form-control" id="caption" placeholder="Nhập địa chỉ">
-                </div>
-                <div class="form-group">
-                    <label for="url">URL</label>
-                    <input type="text" name="url" class="form-control" id="url" placeholder="Nhập địa chỉ">
-                </div>     
-              
-                {{-- <div class="form-group">
-                  <label for="location">Địa điểm</label>
-                  <select name="id_location" class="form-control" id="location">
-                      <option value="">Chọn tỉnh/thành phố</option>
-                      @foreach($locations as $location)
-                          <option value="{{ $location->id }}">{{ $location->name }}</option>
-                      @endforeach
-                  </select>
-                </div>                  --}}
+                <div class="form-group">    
+
+                </div>               
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
@@ -131,17 +103,43 @@
           image1Input.closest('.custom-file').querySelector('label').innerText = 'Ảnh chính đã được chọn';
       @endif
 
-      // Kiểm tra ảnh phụ (tối đa 4 ảnh phụ)
-      var image2Input = document.getElementById('image2');
-      
-      @if(isset($existingPhotosCount) && $existingPhotosCount >= 4)
-          // Vô hiệu hóa ô nhập ảnh phụ nếu đã đủ 4 ảnh
-          image2Input.disabled = true;
-          image2Input.closest('.custom-file').querySelector('label').innerText = 'Đã đủ 4 ảnh phụ';
-      @else
-          // Nếu chưa đủ 4 ảnh phụ thì cho phép chọn ảnh
-          image2Input.disabled = false;
-      @endif
+      // Hiển thị xem trước ảnh chính
+      window.previewImage = function(index) {
+          const input = document.getElementById(`image${index}`);
+          const preview = document.getElementById(`imagePreview${index}`);
+          preview.innerHTML = '';
+          if (input.files && input.files[0]) {
+              const reader = new FileReader();
+              reader.onload = function(e) {
+                  const img = document.createElement('img');
+                  img.src = e.target.result;
+                  img.style.maxWidth = '200px';
+                  img.style.marginRight = '10px';
+                  preview.appendChild(img);
+              };
+              reader.readAsDataURL(input.files[0]);
+          }
+      };
+
+      // Hiển thị xem trước ảnh phụ
+      window.previewImages = function(index) {
+          const input = document.getElementById(`image${index}`);
+          const preview = document.getElementById(`imagePreview${index}`);
+          preview.innerHTML = '';
+          if (input.files) {
+              Array.from(input.files).forEach(file => {
+                  const reader = new FileReader();
+                  reader.onload = function(e) {
+                      const img = document.createElement('img');
+                      img.src = e.target.result;
+                      img.style.maxWidth = '200px';
+                      img.style.marginRight = '10px';
+                      preview.appendChild(img);
+                  };
+                  reader.readAsDataURL(file);
+              });
+          }
+      };
   });
 </script>
 

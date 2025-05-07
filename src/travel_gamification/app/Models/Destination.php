@@ -35,4 +35,9 @@ class Destination extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function destinationImages()
+    {
+        return $this->hasMany(DestinationImage::class, 'destination_id');
+    }
 }

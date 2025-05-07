@@ -2,9 +2,6 @@
 @section('title_name')
     Sửa hình ảnh
 @endsection
-@section('path')
-    Sửa hình ảnh
-@endsection
 
 @section('content')
 <section class="content">
@@ -19,12 +16,12 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form id="quickForm" action="{{route('photos.update',['id'=>$photo->id])}}" method="post" enctype="multipart/form-data">
+            <form id="quickForm" action="{{route('destination_images.update',['id'=>$destination_image->id])}}" method="post" enctype="multipart/form-data">
                 @csrf
               <div class="card-body">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Id</label>
-                  <input type="text" name="name" class="form-control" value="{{$photo->id}}"id="name" readonly>
+                  <input type="text" name="name" class="form-control" value="{{$destination_image->id}}"id="name" readonly>
                 </div>
 
                 <div class="form-group">
@@ -38,9 +35,9 @@
               <!-- Hiển thị ảnh hiện tại -->
               <div class="form-group">
                   <label for="currentImage">Ảnh hiện tại:</label>
-                  @if($photo->id)
+                  @if($destination_image->id)
                       <div id="currentImage" style="margin-top: 10px;">
-                          <img src="{{ asset('storage/location_image/' . $photo->name) }}" alt="Ảnh hiện tại" width="150">
+                          <img src="{{ asset('storage/destination_image/' . $destination_image->name) }}" alt="Ảnh hiện tại" width="150">
                       </div>
                   @else
                       <p>Không có ảnh hiện tại.</p>
@@ -52,25 +49,15 @@
                   <label for="imagePreview1">Ảnh xem trước:</label>
                   <div id="imagePreview1" style="margin-top: 10px;"></div>
               </div>
-
-              <div class="form-group">
-                <label for="caption">Caption</label>
-                <input type="text" name="caption" class="form-control" id="caption" placeholder="Nhập chú thích" value="{{ $photo->caption }}">
-              </div>
-                <!-- Hiển thị URL -->
-              <div class="form-group">
-                <label for="url">URL</label>
-                <input type="text" name="url" class="form-control" id="url" placeholder="Nhập URL" value="{{ $photo->url }}">
-              </div>
             
               <!-- Hiển thị Địa điểm -->
               <div class="form-group">
-                  <label for="location">Địa điểm</label>
-                  <select name="id_location" class="form-control" id="location">
+                  <label for="destination_image">Địa điểm</label>
+                  <select name="destination_id" class="form-control" id="destination">
                       <option value="">Chọn địa điểm</option>
-                      @foreach($locations as $location)
-                          <option value="{{ $location->id }}" {{ $photo->id_location == $location->id ? 'selected' : '' }}>
-                              {{ $location->name }}
+                      @foreach($destinations as $destination)
+                          <option value="{{ $destination->id }}" {{ $destination_image->destination_id == $destination->id ? 'selected' : '' }}>
+                              {{ $destination->name }}
                           </option>
                       @endforeach
                   </select>
@@ -80,9 +67,9 @@
               <div class="form-group">
                   <label for="status">Trạng thái</label>
                   <select name="status" class="form-control" id="status">
-                      <option value="0" {{ $photo->status == 0 ? 'selected' : '' }}>Phụ</option>
-                      <option value="1" {{ $photo->status == 1 ? 'selected' : '' }}>Ẩn</option>
-                      <option value="2" {{ $photo->status == 2 ? 'selected' : '' }}>Chính</option>
+                      <option value="0" {{ $destination_image->status == 0 ? 'selected' : '' }}>Phụ</option>
+                      <option value="1" {{ $destination_image->status == 1 ? 'selected' : '' }}>Ẩn</option>
+                      <option value="2" {{ $destination_image->status == 2 ? 'selected' : '' }}>Chính</option>
                   </select>
               </div>
                 

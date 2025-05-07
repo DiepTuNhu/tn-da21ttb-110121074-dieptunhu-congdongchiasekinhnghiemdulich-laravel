@@ -90,7 +90,7 @@
           <!-- /.card -->
           </div>
         <!--/.col (left) -->
-        <
+        
       </div>
       <script src="https://esgoo.net/scripts/jquery.js"></script>
       <script>
