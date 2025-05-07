@@ -66,6 +66,7 @@
           </a>
           <ul class="nav flex-column px-3 collapse" id="locationDropdown1">
             <li class="nav-item"><a class="nav-link" href="{{route('travel_types.index')}}">Loại hình du lịch</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{route('destinations.index')}}">Địa điểm du lịch</a></li>
             <li class="nav-item"><a class="nav-link" href="{{route('utility_types.index')}}">Loại tiện ích</a></li>
             <li class="nav-item"><a class="nav-link" href="{{route('utilities.index')}}">Tiện ích</a></li>
           </ul>

@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\WardsController;
 use App\Http\Controllers\Admin\BadgesController;
 use App\Http\Controllers\Admin\MissionsController;
 use App\Http\Controllers\Admin\UtilitiesController;
+use App\Http\Controllers\Admin\DestinationsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -141,6 +142,14 @@ Route::prefix('admin')->group(function () {
   Route::get('/utilities/{id}/edit',[UtilitiesController::class,'edit'])->name('utilities.edit');
   Route::post('/utilities/{id}',[UtilitiesController::class,'update'])->name('utilities.update');
   Route::get('/utilities/{id}',[UtilitiesController::class,'destroy'])->name('utilities.destroy');
+
+  //UTILITY------------------------------------------------------------------------------------------
+  Route::get('/destinations',[DestinationsController::class,'index'])->name('destinations.index');
+  Route::get('/destinations/create',[DestinationsController::class,'create'])->name('destinations.create');
+  Route::post('/destinations',[DestinationsController::class,'store'])->name('destinations.store');
+  Route::get('/destinations/{id}/edit',[DestinationsController::class,'edit'])->name('destinations.edit');
+  Route::post('/destinations/{id}',[DestinationsController::class,'update'])->name('destinations.update');
+  Route::get('/destinations/{id}',[DestinationsController::class,'destroy'])->name('destinations.destroy');
 
 });
 

@@ -82,10 +82,10 @@
                     <input type="hidden" name="quan_text" id="quan_text">
                     <input type="hidden" name="phuong_text" id="phuong_text">
 
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label for="distance">Khoảng cách</label>
                         <input type="number" name="distance" class="form-control" id="distance" value="{{ $utility->distance }}" min="0">
-                    </div>
+                    </div> --}}
 
                     <div class="form-group">
                         <label for="time">Giờ phục vụ</label>
