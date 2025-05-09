@@ -52,9 +52,13 @@
     <!-- Sidebar -->
     <div class="sidebar">
       <div class="text-center mb-4">
-        <img src="./1.png" alt="Avatar" class="rounded-circle mb-2" width="80" height="80" />
-        <h6 class="mb-0">Nguyễn Văn A</h6>
-        <small class="text-muted">Quản trị viên</small>
+        <img src="{{ Auth::user()->avatar ? asset('storage/avatars/' . Auth::user()->avatar) : asset('default-avatar.png') }}" 
+             alt="Avatar" 
+             class="rounded-circle mb-2" 
+             width="80" 
+             height="80" />
+        <h6 class="mb-0">{{ Auth::user()->username }}</h6>
+        <small class="text-muted">{{ Auth::user()->role->name ?? 'Quản trị viên' }}</small>
       </div>
 
       <!-- <h5 class="text-center">Admin Panel</h5> -->

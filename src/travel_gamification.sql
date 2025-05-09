@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: May 04, 2025 at 05:06 AM
--- Server version: 8.0.30
--- PHP Version: 8.1.10
+-- Máy chủ: localhost:3306
+-- Thời gian đã tạo: Th5 09, 2025 lúc 02:57 PM
+-- Phiên bản máy phục vụ: 8.0.30
+-- Phiên bản PHP: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `travel_gamification`
+-- Cơ sở dữ liệu: `travel_gamification`
 --
 CREATE DATABASE IF NOT EXISTS `travel_gamification` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 USE `travel_gamification`;
@@ -26,7 +26,7 @@ USE `travel_gamification`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `badges`
+-- Cấu trúc bảng cho bảng `badges`
 --
 
 CREATE TABLE `badges` (
@@ -39,10 +39,18 @@ CREATE TABLE `badges` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `badges`
+--
+
+INSERT INTO `badges` (`id`, `name`, `description`, `icon_url`, `status`, `created_at`, `updated_at`) VALUES
+(7, 'Nhà khám phá', 'Viết nhiều bài chia sẻ về các địa điểm du lịch', '/storage/badges/1746355299_avatar-anh-meo-cute-58.jpg', '0', '2025-05-04 10:41:39', '2025-05-04 10:41:39'),
+(8, 'Nhà chia sẻ', 'Like và cmt \r\nnhiều bài viết', '/storage/badges/1746355356_d21f84811e130f2766c20f7cf0d145cf.jpg', '0', '2025-05-04 10:42:36', '2025-05-04 10:42:36');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `comments`
+-- Cấu trúc bảng cho bảng `comments`
 --
 
 CREATE TABLE `comments` (
@@ -59,7 +67,7 @@ CREATE TABLE `comments` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `destinations`
+-- Cấu trúc bảng cho bảng `destinations`
 --
 
 CREATE TABLE `destinations` (
@@ -81,10 +89,20 @@ CREATE TABLE `destinations` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `destinations`
+--
+
+INSERT INTO `destinations` (`id`, `name`, `price`, `highlights`, `best_time`, `local_cuisine`, `transportation`, `address`, `latitude`, `longitude`, `status`, `user_id`, `travel_type_id`, `province_id`, `created_at`, `updated_at`) VALUES
+(5, 'Làng nổi Tân Lập', 'Có rất nhiều hoạt động khác nhau nên giá dao động từ 20.000đ đến 340.000đ', '<p>Các bạn đừng hiểu lầm <a href=\"https://thamhiemmekong.com/thong-tin-du-lich-mien-tay/long-an/lang-noi-tan-lap-diem-du-lich-noi-tieng-tai-long.html\">làng nổi Tân Lập</a> bên trong có một ngôi làng nhé, nơi đây là một khu rừng tràm nguyên sinh rộng lớn và những con đường bí ẩn dẫn vào rừng. Đây được xem là địa điểm phù hợp dành cho những ai thích tìm về với thiên nhiên hoang dã, khám phá nét văn hoá sông nước miền Tây Nam Bộ.</p><p>Sở dĩ có cái tên Làng nổi Tân Lập là do trước kia khi chưa được quy hoạch, vào mùa nước nổi khoảng tháng 7 âm lịch hàng năm người dân ở đây thường nâng cao sàn nhà theo con nước lên, nhìn từ xa giống như một làng nổi trên mặt nước mênh mông. Do đó, khi quy hoạch khu du lịch này, tên gọi làng nổi gắn với địa danh xã Tân Lập đã được đặt cho khu du lịch.</p><p>Đến khu du lịch sinh thái làng nổi Tân Lập, du khách có thể tản bộ trên con đường xuyên rừng tràm, đi thuyền xuôi theo rạch Rừng,&nbsp;thả mình vào thiên nhiên trên quãng đường dài hơn 3km xung quanh rừng tràm bằng thuyền cáp kéo.</p><p>Sau khi mua vé, du khách sẽ bắt đầu len lỏi theo những con rạch bằng xuồng nhỏ&nbsp;giữa rừng tràm. Con rạch chính dẫn vào khu trung tâm Làng nổi Tân Lập có tên là Rạch Rừng.&nbsp;Sẽ thật bình yên khi du khách ngồi trên xuồng lênh đênh trên rạch rừng, ngửi hương tràm, ngắm những vạt sen, súng rực nở một góc sông, nhìn những cánh chim chao liệng trên bầu trời xanh ngắt, thỉnh thoảng lại nghiêng mình theo con nước.</p>', '<p>Làng nổi là một khu du lịch sinh thái với cảnh quan thay đổi lớn theo mùa. Nếu bạn thắc mắc làng nổi Tân Lập vào thời điểm nào đẹp nhất?&nbsp;thì câu trả lời chính là <a href=\"https://thamhiemmekong.com/thong-tin-du-lich-mien-tay/dia-diem-du-lich-mien-tay-sieu-dep-nhat-dinh-phai-den.html\">du lịch miền Tây</a> vào mùa nước nổi tức là từ tháng 8 tới tháng 11 âm lịch hàng năm. Vào mùa nước nổi, nếu bạn đứng từ trên cao nhìn xuống sẽ thấy làng nổi Tân lập giống như một hòn đảo xanh thẳm giữa biển nước mênh mông. Tất cả tạo nên một bức tranh thiên nhiên vô cùng sống động.</p>', '<p>Khu du lịch Làng Nổi Tân Lập nổi tiếng với nhiều món ăn đặc sản miền Tây rất hấp dẫn. Dưới đây là một số món ăn đặc sắc bạn không nên bỏ lỡ khi đến tham quan và khám phá khu du lịch này:</p><p>1. Ốc Nướng Tiêu Xanh</p><p>Ốc nướng tiêu xanh là một trong những món ăn đặc trưng và hấp dẫn nhất của Làng Nổi Tân Lập. Món ăn được chế biến từ ốc bươu ướp với tiêu xanh và một số gia vị truyền thống. Sau khi ướp đều, ốc được nướng trên lửa than hoa với độ nhiệt vừa phải, tạo ra một màu vàng óng ánh, thơm phức và cay nồng đặc trưng.&nbsp; Ốc nướng tiêu xanh thường được ăn kèm với rau sống, chanh và muối ớt, tạo nên một hương vị độc đáo, khiến thực khách không thể nào quên được.</p><p>2. Cá Kho Tộ</p><p>Cá kho tộ của Làng Nổi Tân Lập được làm từ cá rô, cá hú, cá bông lau,... ướp với nước mắm, đường, tỏi và ớt, sau đó kho thật chín. Cá kho tộ được nấu trong nồi đất, trên lò củi, tạo ra một hương vị đặc biệt. Cá kho tộ có thịt ngọt, thơm, mềm và không bị khô, khi ăn kèm với cơm trắng nóng và rau sống, tạo nên một bữa ăn ngon miệng và đầy dinh dưỡng. Nếu bạn đến Làng Nổi Tân Lập, đừng quên thử món cá kho tộ tuyệt vời này!</p><p>3. Lẩu Ếch Tân Lập</p><p>Lẩu ếch là một món ăn đặc sản của Làng Nổi Tân Lập. Đây là một món ăn có vị cay nồng, được chế biến từ thịt ếch tươi ngon, cùng với nhiều loại rau và gia vị tự nhiên như lá chanh, ớt, tiêu, hành, tỏi, gừng. Nước lẩu được chế biến từ nước dùng ếch cùng các loại gia vị, mang lại hương vị đậm đà, thơm ngon và đầy hấp dẫn. Ăn lẩu ếch ở Làng Nổi Tân Lập cũng có thể được kết hợp với uống bia để có hương vị chuẩn nhất.</p><p>4. Cá Lóc Nướng Trui&nbsp;</p><p>Cá lóc nướng trui là món bạn nhất định phải thử khi đến Làng nổi Tân Lập. Được chọn từ những con cá tươi ngon, sau đó được làm sạch, rửa qua nước muối và phơi khô trong nắng cho đến khi khô ráo và có mùi thơm đặc trưng. Sau đó,cá lóc được nướng trên than hoa, với lửa nhỏ vừa để cá chín đều và giữ được độ giòn của thịt. Món ăn thường được ăn kèm với rau sống, bánh tráng và nước mắm chua ngọt.</p><p>5. Lẩu Mắm Long An</p><p>Lẩu mắm là món ăn đặc trưng của miền Tây Việt Nam và cũng là một trong những món ăn được yêu thích ở Làng Nổi Tân Lập. Để nấu món lẩu mắm, người ta sử dụng nồi đất hoặc nồi gang đặt trên bếp than để tạo ra hương vị đặc biệt. Món lẩu mắm có mùi vị đậm đà, thơm ngon, đặc biệt hấp dẫn vào những ngày mưa. Nếu bạn có dịp ghé thăm Làng Nổi Tân Lập, đừng quên thử món lẩu mắm miền Tây này.</p>', '<p>Để đến được Làng Nổi Tân Lập từ Thành phố Hồ Chí Minh, bạn có thể đi theo một trong những hướng dẫn sau đây:</p><p>Cách 1: Từ TPHCM đi qua QL1A đến Bến Lức - Long An, rẽ trái qua đường Hùng Vương, sau đó rẽ phải tiếp đến đường Lê Thị Hồng Gấm, đi thêm khoảng 500m sẽ đến khu du lịch rừng nổi Tân Lập.</p><p>Cách 2: Từ TPHCM đi đến cầu Rạch Miễu, tiếp tục rẽ phải vào đường Trần Hưng Đạo, đi thêm khoảng 17km nữa để đến khu du lịch.</p><p>Cách 3: Từ TPHCM bạn đi đến KCN Hiệp Phước, rẽ phải vào đường Nguyễn Hữu Thọ, đi tiếp thêm khoảng 22km đến khu du lịch Làng nổi Tân Lập.</p>', 'Xã Tân Lập, Huyện Mộc Hóa, Tỉnh Long An', 10.75166000, 106.01729000, '0', 4, 6, NULL, '2025-05-08 11:47:25', '2025-05-08 11:47:25'),
+(6, 'Nhà Trăm Cột', 'Miễn phí', '<p>Nhà trăm cột nằm ở tả ngạn sông Vàm Cỏ Đông, thuộc xã Long Hựu Đông, huyện Cần Đước, tỉnh Long An. Ngôi nhà này do ông Trần Văn Hoa lúc ấy là Hương Sư làng Long Hựu, tổng Lộc Thành Hạ ,tỉnh Chợ Lớn xây dựng. Dù gọi là nhà trăm cột những sự thực, ngôi nhà có đến 120 cột, trong đó 68 cột chính và 52 cột vuông nhỏ phụ trợ.</p><p>Nhà trăm cột có kiểu chữ “Quốc”, 3 gian, 2 chái đôi với diện tích 822m2&nbsp;trong một khu vườn rộng 4.886m2. Ngôi nhà này được khởi công vào năm 1901, đến năm 1903 thì hoàn thành và năm 1904 thì xong phần chạm khắc trang trí do nhóm 15 thợ từ làng Mỹ Xuyên – làng chạm khắc mộc nổi tiếng của Thừa Thiên – Huế thực hiện bằng chất liệu chủ yếu là các loại gỗ quý như cẩm lai, mun… mái lợp ngói âm dương, nền nhà bằng đá tảng cao 0,9m, mặt nền lát gạch Tàu lục giác.</p><p>Nhà gồm có hai phần: phần trước là phần nội tự – ngoại khách, phần sau là phần để ở và sinh hoạt. Lẫm lúa ở sau cùng đã tháo dở (1952), nay chỉ còn nền móng. Mặt chính nhà quay về hướng Tây Bắc, quanh nhà có sân rộng dùng để phơi lúa, bột. Hành lang, hiên và nền nhà được lát gạch Tàu, không gian rộng rãi hướng ra khu vườn rộng nên luôn mát mẻ. Cửa chính và các cửa sổ có song hình con tiện, bản gỗ.</p>', NULL, NULL, '<p>Đối với những du khách sinh sống tại TP. Hồ Chí Minh hoặc các tỉnh lân cận, thì có thể chọn xe khách để đi lại tiết kiệm hơn. Hiện nay có một số hãng xe cung cấp chuyến xe đi Long An như: An Hòa Hiệp, Thiên Bảo,... với mức giá vé xe khoảng 150.000 VND - 200.000 VND.</p><p>Nếu bạn là người yêu thích tốc độ và muốn chinh phục cung đường đến <strong>nhà trăm cột</strong>, thì có thể chọn xe máy hoặc xe ô tô di chuyển. Theo đó, du khách có thể di chuyển theo cung đường như sau:</p><p>Xuất phát từ Trường Chinh, Âu Cơ, QL50 và QL50 đến Tân Lân -&gt; Đường 19/5 -&gt; ĐT23/ĐT826B tại Phước Đông -&gt; Rẽ trái vào Thế Ngọc NET -&gt; rẽ phải vào đường 19/5 -&gt; rẽ trái vào phía tạp hóa Cô Trinh vào ĐT23 /DT826B và đi thắng để đến điểm du lịch.</p>', 'Xã Long Hựu Đông, Huyện Cần Đước, Tỉnh Long An', 10.48266270, 106.69141700, '0', 4, 4, NULL, '2025-05-08 14:09:21', '2025-05-08 14:09:21'),
+(7, 'Làng cổ Phước Lộc Thọ', '40.000 VND/ người', '<p>Một điều khiến du khách ấn tượng khi bước qua cổng là bộ tượng Phước Lộc Thọ bằng đá cẩm thạch. Bộ tượng được điêu khắc tỉ mỉ và khá sống động, đây là biểu tượng đúng như cái tên Phước Lộc Thọ.</p><p>Khám phá khuôn viên làng cổ, bạn sẽ lần lượt chiêm ngưỡng 22 ngôi nhà gỗ cổ được phục dựng mang nét văn hoá của cả 3 miền Bắc, Trung, Nam và nhà sàn Tây Nguyên. Đặc biệt, nơi đây trưng bày hàng trăm món đồ sưu tầm, cổ vật quý từ vật dụng sinh hoạt hàng ngày của vua chúa, quan quân, địa chủ, người dân đến các vật tâm linh văn hóa của người Việt. Mỗi vật dụng sẽ được bày trí trong một gian nhà khác nhau, đây cũng là những thứ thu hút du khách nhất.</p><p>Tiếp theo bạn sẽ khám phá những ngôi nhà đặc sắc nổi tiếng nhất trong làng cổ:</p><ul><li>Ngôi nhà chữ “Công”. Với tuổi đời trên 100, bao gồm 104 cột đồ sộ, thiết kế của ngôi nhà dựa trên kiến trúc xưa miền Bắc. Tại các cột nhà sẽ được điêu khắc tứ linh (Long - Lân - Quy - Phụng) và tứ hữu (mai - lan - cúc - trúc) thể hiện sự nguy nga, tráng lệ và uy nghi.</li><li>Ngôi nhà rường 5 gian 2 chái với cổng tam quan phía trước; trong nhà có đến 74 cột, tổng thể ngôi nhà rất sự uy nghi. Bên trong ngôi nhà trang trí nhiều vật dụng quý hiếm như bộ bàn rồng, ngà voi, tủ cổ khảm xà cừ 7 màu…</li><li>Những ngôi nhà phong cách nhà rường Huế thì nét đặc trưng là sự điêu khắc tinh xảo. Các ngôi nhà rường Huế tại làng cổ mang phong cách cung đình với chất liệu sơn son thếp vàng và được chạm trổ rồng phượng rất tinh xảo và tỉ mỉ từng chi tiết nhỏ. Đây là kiểu nhà phổ biến của quan lại và giới thượng lưu xứ kinh kỳ thời phong kiến. Bên trong lưu giữ nhiều cổ vật quý bằng đá, gỗ, kim loại, gốm sứ… thuộc các niên đại khác nhau.</li><li>&nbsp;Với 6 căn nhà sàn của các dân tộc khu vực Đông Nam Bộ và Tây Nguyên. Bạn sẽ được chiêm ngưỡng những kỷ vật như cồng, chiêng, những bức tượng gỗ và dụng cụ lao động của đồng bào dân tộc.</li><li>Ngoài ra, tại đây còn có nhà sàn Khmer, nhà sàn dân tộc Thái, nhà tiểu lâu tứ giác bát dần, chùa một cột …</li></ul>', '<p>Khí hậu tại Long An được ưu ái với thời tiết thuận lợi, mát mẻ, vì thế du khách có thể đến đây vào bất cứ thời gian nào. Để thuận lợi cho việc di chuyển, bạn nên đến tham quan làng cổ vào mùa khô (từ tháng 12 đến tháng 4 năm sau). Nếu đến vào mùa mưa bạn cũng có thể trải nghiệm được những nét văn hoá mùa nước nổi tại đây.</p>', NULL, '<p>Chỉ cách Sài Gòn khoảng 50km nên việc di chuyển đến Long An khá dễ dàng. Du khách có thể lựa chọn di chuyển bằng xe máy, ô tô hoặc với khoảng thời gian chỉ hơn 1 giờ.</p><p>Việc di chuyển đến làng cổ khá dễ dàng, nếu đi bằng xe máy bạn cứ chạy thẳng theo đường Bà Hom, đến tỉnh lộ 10 chạy tiếp và rẽ trái vào đường tỉnh 824 tại ngã ba Đức Hòa (Long An, tiếp tục chạy thêm khoảng 10 phút nữa là thấy Làng cổ Phước Lộc Thọ bên tay phải.</p><p>Bạn cũng có thể đi xe buýt chuyến 627 (Chợ Lớn - Đức Huệ) hoặc 626 (Chợ Lớn - Hậu Nghĩa), giá vé xe buýt là 22.000 VND/ lượt. Bạn sẽ ghé trạm tại ngã ba Đức Hòa, sau đó đi xe ôm vào làng cổ.</p>', 'Xã Hựu Thạnh, Huyện Đức Hòa, Tỉnh Long An', 51.50000000, 10.50000000, '0', 4, 4, NULL, '2025-05-08 14:19:59', '2025-05-08 14:19:59'),
+(8, 'Khu du lịch cánh đồng bất tận', 'Dao động từ 220.000đ đến 1.200.000đ', '<p>Cánh đồng bất tận tọa lạc tại khu phố 3, thị trấn Bình Phong Thạnh, huyện Mộc Hóa, tỉnh Long An và thuộc sở hữu của Trung tâm Nghiên cứu bảo tồn và phát triển dược liệu Đồng Tháp Mười. Tại đây chứa có hơn 1000 ha rừng tràm gió nguyên sinh có tuổi thọ lên đến trăm tuổi. Không những vậy đây còn là điểm sinh trưởng và bảo tồn của hơn 80 loại gen của những loại thảo dược quý hiếm. Chính vì thế nơi đây còn được biết đến là “rừng thuốc”.</p><p>Nơi đây không quá ồn ào như nhiều khu du lịch ở miền Tây Nam Bộ, cũng chẳng mang vẻ đẹp đượm màu xưa cũ của du lịch miền Bắc, Trung. Đến với cánh đồng bất tận Long An du khách sẽ không khỏi ngỡ ngàng bởi vẻ đẹp quá đỗi bình yên của sông nước hiền hoà, của sự trong lành và yên ả của những cảnh đồng, cánh rừng mang đến.</p><p>Khám phá khu du lịch cánh đồng bất tận du khách sẽ chẳng thiếu những trải nghiệm tuyệt vời, đặc biệt cũng chẳng thiếu những góc check-in độc đáo. Vào mùa hoa súng, hoa sen nở rộ tạo nên khung cảnh đầy nên thơ sẽ làm nức lòng những tín đồ yêu thích check-in sống ảo.</p><p>Hay những buổi sớm mai và chiều tà, những cánh cò trắng bay và kiếm ăn nơi ruộng đồng cũng làm nên một quan cảnh bình yên khó tả. Ghé thăm nơi đây du khách tưởng chừng sẽ thoát khỏi chốn xô bồ náo nhiệt thường trực mà hào cùng thiên nhiên đầy nắng gió.</p>', '<p>Tại đây cây cối xanh tốt bốn mùa tạo nên một khung cảnh tràn đầy sức sống, nên du khách đến vào mùa tạo cũng sẽ cảm nhận được thiên nhiên tươi mới. Tuy mỗi mùa đều có những dấu ấn riêng biệt nhưng để có thể khám phá trọn vẹn nhất có thể du khách có thể chọn lựa các khoảng thời gian như sau:</p><ul><li>Rằm tháng giêng: Thời điểm này tại đây tổ chức Lễ Giỗ tổ Đại y tôn Hải Thượng Lãn Ông và người được mệnh danh là Đức Thánh y Tuệ Tĩnh nhằm tôn vinh cũng như nhớ về truyền thống y đức. Vào ngày này thường có các trò chơi, hát cải lương,... mọi người có thể hòa cùng không khí náo nhiệt của lễ hội.</li><li>Tháng 9 đến tháng 11: Đây là thời điểm Long An cũng như các tỉnh miền Tây bước vào mùa đặc trưng “mùa nước nổi\". Các thảm thực vật tươi tốt phủ xanh cả vùng trời. Đặc biệt là hoa sen, hoa súng nở rộ ở <strong>khu du lịch cánh đồng bất tận </strong>du khách tha hồ check-in cảnh đẹp nơi đây.</li><li>Tháng 11 đến tháng 12: Đây là thời điểm chuyển giao mùa, không khí mát mẻ, mùa nước nổi đi qua những đàn cò bay về cánh đồng gần cạn nước bắt tôm cá. Những đàn cò trắng hoà cũng màu của đất tạo nên khung cảnh bình dị nhưng lại thân thuộc đến lạ kỳ.</li></ul>', NULL, '<p>Cách thành phố Hồ Chí Minh hơn 80km nên việc di chuyển bằng xe máy sẽ là chuyện nhỏ với nhiều người, đặc biệt là những bạn trẻ đam mê phượt. Đường đi khá dễ mọi người chỉ cần theo hướng thành phố Tân An sau đó rẽ về quốc lộ 62 theo hướng Mộc Hoá - Long An hướng. Hoặc đơn giản hơn đi theo chỉ dẫn của google map định vị là sẽ đến được <strong>khu du lịch cánh đồng bất tận.</strong></p><p><strong>Đối với những du khách ở xa thì máy bay là phương tiện thuận lợi nhất trong hành trình di chuyển đến khu du lịch cánh đồng bất tận. Và tất nhiên nên chọn đáp sân bay gần Long An nhất là Tân Sơn Nhất của TP. Hồ Chí Minh.</strong></p>', 'Thị trấn Bình Phong Thạnh, Huyện Mộc Hóa, Tỉnh Long An', NULL, NULL, '0', 4, 6, NULL, '2025-05-08 14:54:25', '2025-05-08 14:54:25');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `destination_images`
+-- Cấu trúc bảng cho bảng `destination_images`
 --
 
 CREATE TABLE `destination_images` (
@@ -97,23 +115,55 @@ CREATE TABLE `destination_images` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `destination_images`
+--
+
+INSERT INTO `destination_images` (`id`, `name`, `image_url`, `status`, `destination_id`, `created_at`, `updated_at`) VALUES
+(48, '1746705000-langnoitanlap01.jpg', '/storage/destination_image/1746705000-langnoitanlap01.jpg', '2', 5, '2025-05-08 11:50:01', '2025-05-08 11:50:01'),
+(49, '1746705001-langnoitanlap-1.jpg', '/storage/destination_image/1746705001-langnoitanlap-1.jpg', '0', 5, '2025-05-08 11:50:01', '2025-05-08 11:50:01'),
+(50, '1746705001-langnoitanlap04.jpg', '/storage/destination_image/1746705001-langnoitanlap04.jpg', '0', 5, '2025-05-08 11:50:01', '2025-05-08 11:50:01'),
+(51, '1746705001-langnoitanlap-9.jpg', '/storage/destination_image/1746705001-langnoitanlap-9.jpg', '0', 5, '2025-05-08 11:50:01', '2025-05-08 11:50:01'),
+(52, '1746705001-langnoitanlaplongan01.jpg', '/storage/destination_image/1746705001-langnoitanlaplongan01.jpg', '0', 5, '2025-05-08 11:50:01', '2025-05-08 11:50:01'),
+(53, '1746714043-nha-tram-cot-7-1024x768.webp', '/storage/destination_image/1746714043-nha-tram-cot-7-1024x768.webp', '2', 6, '2025-05-08 14:20:43', '2025-05-08 14:20:43'),
+(54, '1746714043-nha-tram-cot-1.webp', '/storage/destination_image/1746714043-nha-tram-cot-1.webp', '0', 6, '2025-05-08 14:20:43', '2025-05-08 14:20:43'),
+(55, '1746714043-nha-tram-cot-2.webp', '/storage/destination_image/1746714043-nha-tram-cot-2.webp', '0', 6, '2025-05-08 14:20:43', '2025-05-08 14:20:43'),
+(56, '1746714043-nha-tram-cot-6-1024x768.webp', '/storage/destination_image/1746714043-nha-tram-cot-6-1024x768.webp', '0', 6, '2025-05-08 14:20:43', '2025-05-08 14:20:43'),
+(57, '1746714043-nha-tram-cot-8-1024x768.webp', '/storage/destination_image/1746714043-nha-tram-cot-8-1024x768.webp', '0', 6, '2025-05-08 14:20:43', '2025-05-08 14:20:43'),
+(58, '1746714043-nha-tram-cot-9-1024x768.webp', '/storage/destination_image/1746714043-nha-tram-cot-9-1024x768.webp', '0', 6, '2025-05-08 14:20:43', '2025-05-08 14:20:43'),
+(59, '1746714107-lang-co-phuoc-loc-tho-01-1696516109.jpg', '/storage/destination_image/1746714107-lang-co-phuoc-loc-tho-01-1696516109.jpg', '2', 7, '2025-05-08 14:21:47', '2025-05-08 14:21:47'),
+(60, '1746714107-lang-co-phuoc-loc-tho-02-1696516109.jpg', '/storage/destination_image/1746714107-lang-co-phuoc-loc-tho-02-1696516109.jpg', '0', 7, '2025-05-08 14:21:47', '2025-05-08 14:21:47'),
+(61, '1746714107-lang-co-phuoc-loc-tho-03-1696516109.jpg', '/storage/destination_image/1746714107-lang-co-phuoc-loc-tho-03-1696516109.jpg', '0', 7, '2025-05-08 14:21:47', '2025-05-08 14:21:47'),
+(62, '1746714107-lang-co-phuoc-loc-tho-04-1696516109.jpg', '/storage/destination_image/1746714107-lang-co-phuoc-loc-tho-04-1696516109.jpg', '0', 7, '2025-05-08 14:21:47', '2025-05-08 14:21:47'),
+(63, '1746714107-lang-co-phuoc-loc-tho-05-1696516109.jpg', '/storage/destination_image/1746714107-lang-co-phuoc-loc-tho-05-1696516109.jpg', '0', 7, '2025-05-08 14:21:47', '2025-05-08 14:21:47'),
+(64, '1746714107-lang-co-phuoc-loc-tho-08-1696516170.jpg', '/storage/destination_image/1746714107-lang-co-phuoc-loc-tho-08-1696516170.jpg', '0', 7, '2025-05-08 14:21:47', '2025-05-08 14:21:47'),
+(65, '1746714107-lang-co-phuoc-loc-tho-09-1696516170.jpg', '/storage/destination_image/1746714107-lang-co-phuoc-loc-tho-09-1696516170.jpg', '0', 7, '2025-05-08 14:21:47', '2025-05-08 14:21:47'),
+(66, '1746716225-khu-du-lich-canh-dong-bat-tan-1-1024x683.webp', '/storage/destination_image/1746716225-khu-du-lich-canh-dong-bat-tan-1-1024x683.webp', '2', 8, '2025-05-08 14:57:06', '2025-05-08 14:57:06'),
+(67, '1746716226-canhdongbattan-1.jpg', '/storage/destination_image/1746716226-canhdongbattan-1.jpg', '0', 8, '2025-05-08 14:57:06', '2025-05-08 14:57:06'),
+(68, '1746716226-canhdongbattanlongan-2.jpg', '/storage/destination_image/1746716226-canhdongbattanlongan-2.jpg', '0', 8, '2025-05-08 14:57:06', '2025-05-08 14:57:06'),
+(69, '1746716226-canhdongbattanlongan03.jpg', '/storage/destination_image/1746716226-canhdongbattanlongan03.jpg', '0', 8, '2025-05-08 14:57:06', '2025-05-08 14:57:06'),
+(70, '1746716226-khu-du-lich-canh-dong-bat-tan-6-1024x614.webp', '/storage/destination_image/1746716226-khu-du-lich-canh-dong-bat-tan-6-1024x614.webp', '0', 8, '2025-05-08 14:57:06', '2025-05-08 14:57:06'),
+(71, '1746716226-khu-du-lich-canh-dong-bat-tan-7-1024x768.webp', '/storage/destination_image/1746716226-khu-du-lich-canh-dong-bat-tan-7-1024x768.webp', '0', 8, '2025-05-08 14:57:06', '2025-05-08 14:57:06'),
+(72, '1746716226-khu-du-lich-canh-dong-bat-tan-8-1024x678.webp', '/storage/destination_image/1746716226-khu-du-lich-canh-dong-bat-tan-8-1024x678.webp', '0', 8, '2025-05-08 14:57:06', '2025-05-08 14:57:06');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `destination_utilities`
+-- Cấu trúc bảng cho bảng `destination_utilities`
 --
 
 CREATE TABLE `destination_utilities` (
   `destination_id` int UNSIGNED NOT NULL,
   `utility_id` int UNSIGNED NOT NULL,
   `status` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `quality` int DEFAULT NULL
+  `quality` int DEFAULT NULL,
+  `distance` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `districts`
+-- Cấu trúc bảng cho bảng `districts`
 --
 
 CREATE TABLE `districts` (
@@ -127,7 +177,7 @@ CREATE TABLE `districts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `districts`
+-- Đang đổ dữ liệu cho bảng `districts`
 --
 
 INSERT INTO `districts` (`id`, `code`, `name`, `province_id`, `created_at`, `updated_at`, `slug`) VALUES
@@ -843,7 +893,7 @@ INSERT INTO `districts` (`id`, `code`, `name`, `province_id`, `created_at`, `upd
 -- --------------------------------------------------------
 
 --
--- Table structure for table `failed_jobs`
+-- Cấu trúc bảng cho bảng `failed_jobs`
 --
 
 CREATE TABLE `failed_jobs` (
@@ -859,7 +909,7 @@ CREATE TABLE `failed_jobs` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `follows`
+-- Cấu trúc bảng cho bảng `follows`
 --
 
 CREATE TABLE `follows` (
@@ -873,7 +923,7 @@ CREATE TABLE `follows` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `likes`
+-- Cấu trúc bảng cho bảng `likes`
 --
 
 CREATE TABLE `likes` (
@@ -888,7 +938,7 @@ CREATE TABLE `likes` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `migrations`
+-- Cấu trúc bảng cho bảng `migrations`
 --
 
 CREATE TABLE `migrations` (
@@ -898,7 +948,7 @@ CREATE TABLE `migrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `migrations`
+-- Đang đổ dữ liệu cho bảng `migrations`
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
@@ -932,7 +982,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `missions`
+-- Cấu trúc bảng cho bảng `missions`
 --
 
 CREATE TABLE `missions` (
@@ -947,10 +997,18 @@ CREATE TABLE `missions` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `missions`
+--
+
+INSERT INTO `missions` (`id`, `name`, `description`, `points_reward`, `condition_type`, `condition_value`, `badge_id`, `created_at`, `updated_at`) VALUES
+(3, 'nhi sdfsdf êf', 'ấdf sdfgsdf sdfs', 12, 'like', 521, 7, '2025-05-04 13:25:01', '2025-05-04 13:37:56'),
+(4, 'sdsdf', 'dsfsdf', 2321, 'comment', 5, 7, '2025-05-04 13:35:15', '2025-05-04 13:35:15');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `notifications`
+-- Cấu trúc bảng cho bảng `notifications`
 --
 
 CREATE TABLE `notifications` (
@@ -966,7 +1024,7 @@ CREATE TABLE `notifications` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `password_reset_tokens`
+-- Cấu trúc bảng cho bảng `password_reset_tokens`
 --
 
 CREATE TABLE `password_reset_tokens` (
@@ -978,7 +1036,7 @@ CREATE TABLE `password_reset_tokens` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `personal_access_tokens`
+-- Cấu trúc bảng cho bảng `personal_access_tokens`
 --
 
 CREATE TABLE `personal_access_tokens` (
@@ -997,7 +1055,7 @@ CREATE TABLE `personal_access_tokens` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `posts`
+-- Cấu trúc bảng cho bảng `posts`
 --
 
 CREATE TABLE `posts` (
@@ -1016,7 +1074,7 @@ CREATE TABLE `posts` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `provinces`
+-- Cấu trúc bảng cho bảng `provinces`
 --
 
 CREATE TABLE `provinces` (
@@ -1030,7 +1088,7 @@ CREATE TABLE `provinces` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `provinces`
+-- Đang đổ dữ liệu cho bảng `provinces`
 --
 
 INSERT INTO `provinces` (`id`, `code`, `name`, `region`, `created_at`, `updated_at`, `slug`) VALUES
@@ -1101,7 +1159,7 @@ INSERT INTO `provinces` (`id`, `code`, `name`, `region`, `created_at`, `updated_
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ratings`
+-- Cấu trúc bảng cho bảng `ratings`
 --
 
 CREATE TABLE `ratings` (
@@ -1116,7 +1174,7 @@ CREATE TABLE `ratings` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `reports`
+-- Cấu trúc bảng cho bảng `reports`
 --
 
 CREATE TABLE `reports` (
@@ -1131,7 +1189,7 @@ CREATE TABLE `reports` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `roles`
+-- Cấu trúc bảng cho bảng `roles`
 --
 
 CREATE TABLE `roles` (
@@ -1142,7 +1200,7 @@ CREATE TABLE `roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `roles`
+-- Đang đổ dữ liệu cho bảng `roles`
 --
 
 INSERT INTO `roles` (`id`, `name`, `created_at`, `updated_at`) VALUES
@@ -1152,7 +1210,7 @@ INSERT INTO `roles` (`id`, `name`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shares`
+-- Cấu trúc bảng cho bảng `shares`
 --
 
 CREATE TABLE `shares` (
@@ -1168,7 +1226,7 @@ CREATE TABLE `shares` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `slides`
+-- Cấu trúc bảng cho bảng `slides`
 --
 
 CREATE TABLE `slides` (
@@ -1180,7 +1238,7 @@ CREATE TABLE `slides` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `slides`
+-- Đang đổ dữ liệu cho bảng `slides`
 --
 
 INSERT INTO `slides` (`id`, `image`, `status`, `created_at`, `updated_at`) VALUES
@@ -1190,7 +1248,7 @@ INSERT INTO `slides` (`id`, `image`, `status`, `created_at`, `updated_at`) VALUE
 -- --------------------------------------------------------
 
 --
--- Table structure for table `travel_types`
+-- Cấu trúc bảng cho bảng `travel_types`
 --
 
 CREATE TABLE `travel_types` (
@@ -1202,18 +1260,20 @@ CREATE TABLE `travel_types` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `travel_types`
+-- Đang đổ dữ liệu cho bảng `travel_types`
 --
 
 INSERT INTO `travel_types` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES
-(2, 'Du lịch khám phá', '0', '2025-05-04 01:03:20', '2025-05-04 01:03:20'),
+(2, 'Du lịch làng nghề truyền thống', '0', '2025-05-04 01:03:20', '2025-05-08 10:53:59'),
 (3, 'Du lịch nghỉ dưỡng', '0', '2025-05-04 01:03:33', '2025-05-04 01:03:33'),
-(4, 'Du lịch văn hóa', '0', '2025-05-04 04:32:25', '2025-05-04 04:32:25');
+(4, 'Du lịch văn hóa', '0', '2025-05-04 04:32:25', '2025-05-04 04:32:25'),
+(6, 'Du lịch sinh thái', '0', '2025-05-08 10:53:26', '2025-05-08 10:53:26'),
+(7, 'Du lịch tâm linh', '0', '2025-05-08 10:53:35', '2025-05-08 10:53:35');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Cấu trúc bảng cho bảng `users`
 --
 
 CREATE TABLE `users` (
@@ -1231,17 +1291,17 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `users`
+-- Đang đổ dữ liệu cho bảng `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `avatar`, `description`, `user_rank`, `status`, `role_id`, `created_at`, `updated_at`) VALUES
-(3, 'nhudiep', 'nhudiep@gmail.com', '$2y$12$nQMyNPNqN87cY.6aI/jSXuEtVYpAljlpr5wuWJgQVo1qOVhKs0Tne', NULL, NULL, 0, '0', 3, '2025-05-04 01:41:29', '2025-05-04 01:41:29'),
-(4, 'admin', 'admin@gmail.com', '$2y$12$MyKYKCyx9ZJ8tnj4NNQzW.fnCoX1xneuUPPjlob9VN5afgtpkXaCa', NULL, NULL, 0, '0', 2, '2025-05-04 01:42:35', '2025-05-04 01:42:35');
+(3, 'nhudiep', 'nhudiep@gmail.com', '$2y$12$nQMyNPNqN87cY.6aI/jSXuEtVYpAljlpr5wuWJgQVo1qOVhKs0Tne', '1746716932.jpg', NULL, 0, '0', 3, '2025-05-04 01:41:29', '2025-05-08 15:08:52'),
+(4, 'admin', 'admin@gmail.com', '$2y$12$MyKYKCyx9ZJ8tnj4NNQzW.fnCoX1xneuUPPjlob9VN5afgtpkXaCa', '1746716717.jpg', NULL, 0, '0', 2, '2025-05-04 01:42:35', '2025-05-08 15:05:17');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_missions`
+-- Cấu trúc bảng cho bảng `user_missions`
 --
 
 CREATE TABLE `user_missions` (
@@ -1253,7 +1313,7 @@ CREATE TABLE `user_missions` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `utilities`
+-- Cấu trúc bảng cho bảng `utilities`
 --
 
 CREATE TABLE `utilities` (
@@ -1273,10 +1333,20 @@ CREATE TABLE `utilities` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `utilities`
+--
+
+INSERT INTO `utilities` (`id`, `name`, `price`, `address`, `latitude`, `longitude`, `distance`, `time`, `image`, `status`, `description`, `utility_type_id`, `created_at`, `updated_at`) VALUES
+(27, 'Khách Sạn Làng Nổi Tân Lập', 'Trung bình mỗi đêm khoảng 560.000đ/phòng', 'Xã Tân Lập, Huyện Mộc Hóa, Tỉnh Long An', NULL, NULL, NULL, '24/7', '1746705831.webp', '0', '<p>Khách Sạn Làng Nổi Tân Lập cao 8 tầng với 32 phòng, được đặt tại vị trí ấn tượng trên một hòn đảo ven sông Rạch Rừng, nằm bên trong khu du lịch. Nếu bạn thích ngắm cảnh của rừng nổi Tân Lập vào mỗi thời khắc trong ngày thì đây sẽ là lựa chọn lý tưởng nhất.&nbsp;</p>', 13, '2025-05-08 12:01:49', '2025-05-08 12:03:51'),
+(28, 'Phú Thắng Grand Hotel', 'Có nhiều loại phòng giá dao động từ 230.000đ đến 2.700.000đ', 'Xã Đức Hòa Hạ, Huyện Đức Hòa, Tỉnh Long An', 51.50000000, 10.50000000, NULL, '24/7', '1746706640.webp', '0', '<p>Khách Sạn Phú Thắng Grand là một khách sạn sang trọng và hiện đại, nằm ở khu công nghiệp Tân Đức - Long An, cách Làng Nổi Tân Lập chỉ 30,5km nên rất thuận tiện cho việc du chuyển. Khách sạn có 3 hạng phòng tốt nhất là Grand Deluxe, Grand Premier và Grand Executive vô cùng sang trọng cho bạn tự do lựa chọn cùng một số tiện ích hấp dẫn kèm theo.</p>', 13, '2025-05-08 12:17:20', '2025-05-08 12:17:20'),
+(29, 'The Island Lodge Thoi Son', 'Có nhiều loại phòng giá dao động từ 4.000.000đ đến 6.000.000đ', 'Xã Thới Sơn, Thành phố Mỹ Tho, Tỉnh Tiền Giang', NULL, NULL, NULL, '24/7', '1746707083.webp', '0', '<p>The Island Lodge Mỹ Tho là một khách sạn nằm ở Tiền Giang, cách Làng Nổi Tân Lập 26,3km. Với thiết kế theo phong cách kiến trúc cổ điển, khách sạn tạo ra một không gian yên tĩnh, gần gũi với thiên nhiên. Khách sạn có phòng nghỉ sang trọng, được trang bị đầy đủ tiện nghi hiện đại, cùng với một số hoạt động giải trí và dịch vụ như hồ bơi, spa, nhà hàng và bar.</p>', 13, '2025-05-08 12:24:43', '2025-05-08 13:16:48'),
+(30, 'Khách sạn Ruby', 'Dao động từ 300.000đ đến 1.300.000đ', 'Thị trấn Bến Lức, Huyện Bến Lức, Tỉnh Long An', 10.63987920, 106.49937440, NULL, '24/7', '1746714353.jpg', '0', '<p>Khách sạn Ruby&nbsp;là một nhà nghỉ khách sạn được thiết kế với 32&nbsp;phòng có kích cỡ khác nhau phù hợp với nhiều nhu cầu của khách hàng. Hệ thống thiết bị hiện đại, điều hòa, tivi, bàn ghế được làm từ gỗ, sóng wifi và các các dịch vụ đưa đón khách tham quan các điểm du lịch. Được thiết kế và trang trí theo phong cách cổ điển nhưng không kém phần&nbsp;sang trọng và quý phái. Các trang thiết bị và phòng ốc của nhà nghỉ - khách sạn rất tiện nghi và hiện đại nhằm mang lại sự hài lòng và thoải mái cho khách hàng trong suốt thời gian lưu trú tại phòng khách sạn. Với vị trí thuận lợi, RuBy là nơi khách hàng lựa chọn dừng chân và nghỉ dưỡng lý tưởng nhất&nbsp;tại Long An</p>', 13, '2025-05-08 14:25:53', '2025-05-08 14:25:53');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `utility_types`
+-- Cấu trúc bảng cho bảng `utility_types`
 --
 
 CREATE TABLE `utility_types` (
@@ -1288,23 +1358,17 @@ CREATE TABLE `utility_types` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `utility_types`
+-- Đang đổ dữ liệu cho bảng `utility_types`
 --
 
 INSERT INTO `utility_types` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES
-(2, 'fgdf', NULL, NULL, NULL),
-(3, 'rtert', NULL, NULL, NULL),
-(4, 'ưqrewr', '0', '2025-05-04 01:12:15', '2025-05-04 01:12:15'),
-(5, 'qẻwqw', '0', '2025-05-04 01:12:18', '2025-05-04 01:12:18'),
-(6, 'èdadsfq', '0', '2025-05-04 01:12:22', '2025-05-04 01:12:22'),
-(7, 'qưeqwd', '0', '2025-05-04 01:12:27', '2025-05-04 01:12:27'),
-(8, 'sdfsdfesf', '0', '2025-05-04 04:32:32', '2025-05-04 04:32:32'),
-(9, 'ưqeqwdasda', '0', '2025-05-04 04:32:36', '2025-05-04 04:32:36');
+(13, 'Lưu trú', '0', '2025-05-08 10:55:29', '2025-05-08 10:55:29'),
+(14, 'Ẩm thực', '0', '2025-05-08 10:55:50', '2025-05-08 10:55:50');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `wards`
+-- Cấu trúc bảng cho bảng `wards`
 --
 
 CREATE TABLE `wards` (
@@ -1318,7 +1382,7 @@ CREATE TABLE `wards` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `wards`
+-- Đang đổ dữ liệu cho bảng `wards`
 --
 
 INSERT INTO `wards` (`id`, `code`, `name`, `district_id`, `created_at`, `updated_at`, `slug`) VALUES
@@ -11958,17 +12022,17 @@ INSERT INTO `wards` (`id`, `code`, `name`, `district_id`, `created_at`, `updated
 (53065, '32248', 'Xã Đất Mũi', 3535, '2025-05-04 04:32:08', '2025-05-04 04:32:08', 'xa-dat-mui');
 
 --
--- Indexes for dumped tables
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `badges`
+-- Chỉ mục cho bảng `badges`
 --
 ALTER TABLE `badges`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `comments`
+-- Chỉ mục cho bảng `comments`
 --
 ALTER TABLE `comments`
   ADD PRIMARY KEY (`id`),
@@ -11977,7 +12041,7 @@ ALTER TABLE `comments`
   ADD KEY `comments_parent_comment_id_foreign` (`parent_comment_id`);
 
 --
--- Indexes for table `destinations`
+-- Chỉ mục cho bảng `destinations`
 --
 ALTER TABLE `destinations`
   ADD PRIMARY KEY (`id`),
@@ -11986,35 +12050,35 @@ ALTER TABLE `destinations`
   ADD KEY `destinations_province_id_foreign` (`province_id`);
 
 --
--- Indexes for table `destination_images`
+-- Chỉ mục cho bảng `destination_images`
 --
 ALTER TABLE `destination_images`
   ADD PRIMARY KEY (`id`),
   ADD KEY `destination_images_destination_id_foreign` (`destination_id`);
 
 --
--- Indexes for table `destination_utilities`
+-- Chỉ mục cho bảng `destination_utilities`
 --
 ALTER TABLE `destination_utilities`
   ADD PRIMARY KEY (`destination_id`,`utility_id`),
   ADD KEY `destination_utilities_utility_id_foreign` (`utility_id`);
 
 --
--- Indexes for table `districts`
+-- Chỉ mục cho bảng `districts`
 --
 ALTER TABLE `districts`
   ADD PRIMARY KEY (`id`),
   ADD KEY `districts_province_id_foreign` (`province_id`);
 
 --
--- Indexes for table `failed_jobs`
+-- Chỉ mục cho bảng `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
 
 --
--- Indexes for table `follows`
+-- Chỉ mục cho bảng `follows`
 --
 ALTER TABLE `follows`
   ADD PRIMARY KEY (`id`),
@@ -12022,7 +12086,7 @@ ALTER TABLE `follows`
   ADD KEY `follows_following_id_foreign` (`following_id`);
 
 --
--- Indexes for table `likes`
+-- Chỉ mục cho bảng `likes`
 --
 ALTER TABLE `likes`
   ADD PRIMARY KEY (`id`),
@@ -12031,33 +12095,33 @@ ALTER TABLE `likes`
   ADD KEY `likes_comment_id_foreign` (`comment_id`);
 
 --
--- Indexes for table `migrations`
+-- Chỉ mục cho bảng `migrations`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `missions`
+-- Chỉ mục cho bảng `missions`
 --
 ALTER TABLE `missions`
   ADD PRIMARY KEY (`id`),
   ADD KEY `missions_badge_id_foreign` (`badge_id`);
 
 --
--- Indexes for table `notifications`
+-- Chỉ mục cho bảng `notifications`
 --
 ALTER TABLE `notifications`
   ADD PRIMARY KEY (`id`),
   ADD KEY `notifications_user_id_foreign` (`user_id`);
 
 --
--- Indexes for table `password_reset_tokens`
+-- Chỉ mục cho bảng `password_reset_tokens`
 --
 ALTER TABLE `password_reset_tokens`
   ADD PRIMARY KEY (`email`);
 
 --
--- Indexes for table `personal_access_tokens`
+-- Chỉ mục cho bảng `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
   ADD PRIMARY KEY (`id`),
@@ -12065,7 +12129,7 @@ ALTER TABLE `personal_access_tokens`
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
 
 --
--- Indexes for table `posts`
+-- Chỉ mục cho bảng `posts`
 --
 ALTER TABLE `posts`
   ADD PRIMARY KEY (`id`),
@@ -12073,13 +12137,13 @@ ALTER TABLE `posts`
   ADD KEY `posts_destination_id_foreign` (`destination_id`);
 
 --
--- Indexes for table `provinces`
+-- Chỉ mục cho bảng `provinces`
 --
 ALTER TABLE `provinces`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `ratings`
+-- Chỉ mục cho bảng `ratings`
 --
 ALTER TABLE `ratings`
   ADD PRIMARY KEY (`id`),
@@ -12087,7 +12151,7 @@ ALTER TABLE `ratings`
   ADD KEY `ratings_post_id_foreign` (`post_id`);
 
 --
--- Indexes for table `reports`
+-- Chỉ mục cho bảng `reports`
 --
 ALTER TABLE `reports`
   ADD PRIMARY KEY (`id`),
@@ -12095,14 +12159,14 @@ ALTER TABLE `reports`
   ADD KEY `reports_post_id_foreign` (`post_id`);
 
 --
--- Indexes for table `roles`
+-- Chỉ mục cho bảng `roles`
 --
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `roles_name_unique` (`name`);
 
 --
--- Indexes for table `shares`
+-- Chỉ mục cho bảng `shares`
 --
 ALTER TABLE `shares`
   ADD PRIMARY KEY (`id`),
@@ -12110,205 +12174,205 @@ ALTER TABLE `shares`
   ADD KEY `shares_post_id_foreign` (`post_id`);
 
 --
--- Indexes for table `slides`
+-- Chỉ mục cho bảng `slides`
 --
 ALTER TABLE `slides`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `travel_types`
+-- Chỉ mục cho bảng `travel_types`
 --
 ALTER TABLE `travel_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `users`
+-- Chỉ mục cho bảng `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD KEY `users_role_id_foreign` (`role_id`);
 
 --
--- Indexes for table `user_missions`
+-- Chỉ mục cho bảng `user_missions`
 --
 ALTER TABLE `user_missions`
   ADD PRIMARY KEY (`user_id`,`mission_id`),
   ADD KEY `user_missions_mission_id_foreign` (`mission_id`);
 
 --
--- Indexes for table `utilities`
+-- Chỉ mục cho bảng `utilities`
 --
 ALTER TABLE `utilities`
   ADD PRIMARY KEY (`id`),
   ADD KEY `utilities_utility_type_id_foreign` (`utility_type_id`);
 
 --
--- Indexes for table `utility_types`
+-- Chỉ mục cho bảng `utility_types`
 --
 ALTER TABLE `utility_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `wards`
+-- Chỉ mục cho bảng `wards`
 --
 ALTER TABLE `wards`
   ADD PRIMARY KEY (`id`),
   ADD KEY `wards_district_id_foreign` (`district_id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `badges`
+-- AUTO_INCREMENT cho bảng `badges`
 --
 ALTER TABLE `badges`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `comments`
+-- AUTO_INCREMENT cho bảng `comments`
 --
 ALTER TABLE `comments`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `destinations`
+-- AUTO_INCREMENT cho bảng `destinations`
 --
 ALTER TABLE `destinations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `destination_images`
+-- AUTO_INCREMENT cho bảng `destination_images`
 --
 ALTER TABLE `destination_images`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
--- AUTO_INCREMENT for table `districts`
+-- AUTO_INCREMENT cho bảng `districts`
 --
 ALTER TABLE `districts`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3536;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3538;
 
 --
--- AUTO_INCREMENT for table `failed_jobs`
+-- AUTO_INCREMENT cho bảng `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `follows`
+-- AUTO_INCREMENT cho bảng `follows`
 --
 ALTER TABLE `follows`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `likes`
+-- AUTO_INCREMENT cho bảng `likes`
 --
 ALTER TABLE `likes`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `migrations`
+-- AUTO_INCREMENT cho bảng `migrations`
 --
 ALTER TABLE `migrations`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
--- AUTO_INCREMENT for table `missions`
+-- AUTO_INCREMENT cho bảng `missions`
 --
 ALTER TABLE `missions`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `notifications`
+-- AUTO_INCREMENT cho bảng `notifications`
 --
 ALTER TABLE `notifications`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `personal_access_tokens`
+-- AUTO_INCREMENT cho bảng `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `posts`
+-- AUTO_INCREMENT cho bảng `posts`
 --
 ALTER TABLE `posts`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `provinces`
+-- AUTO_INCREMENT cho bảng `provinces`
 --
 ALTER TABLE `provinces`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=317;
 
 --
--- AUTO_INCREMENT for table `ratings`
+-- AUTO_INCREMENT cho bảng `ratings`
 --
 ALTER TABLE `ratings`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `reports`
+-- AUTO_INCREMENT cho bảng `reports`
 --
 ALTER TABLE `reports`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `roles`
+-- AUTO_INCREMENT cho bảng `roles`
 --
 ALTER TABLE `roles`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `shares`
+-- AUTO_INCREMENT cho bảng `shares`
 --
 ALTER TABLE `shares`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `slides`
+-- AUTO_INCREMENT cho bảng `slides`
 --
 ALTER TABLE `slides`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `travel_types`
---
-ALTER TABLE `travel_types`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT cho bảng `travel_types`
+--
+ALTER TABLE `travel_types`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `utilities`
+-- AUTO_INCREMENT cho bảng `utilities`
 --
 ALTER TABLE `utilities`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
--- AUTO_INCREMENT for table `utility_types`
+-- AUTO_INCREMENT cho bảng `utility_types`
 --
 ALTER TABLE `utility_types`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- AUTO_INCREMENT for table `wards`
+-- AUTO_INCREMENT cho bảng `wards`
 --
 ALTER TABLE `wards`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53066;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53067;
 
 --
--- Constraints for dumped tables
+-- Các ràng buộc cho các bảng đã đổ
 --
 
 --
--- Constraints for table `comments`
+-- Các ràng buộc cho bảng `comments`
 --
 ALTER TABLE `comments`
   ADD CONSTRAINT `comments_parent_comment_id_foreign` FOREIGN KEY (`parent_comment_id`) REFERENCES `comments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -12316,7 +12380,7 @@ ALTER TABLE `comments`
   ADD CONSTRAINT `comments_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `destinations`
+-- Các ràng buộc cho bảng `destinations`
 --
 ALTER TABLE `destinations`
   ADD CONSTRAINT `destinations_province_id_foreign` FOREIGN KEY (`province_id`) REFERENCES `provinces` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -12324,33 +12388,33 @@ ALTER TABLE `destinations`
   ADD CONSTRAINT `destinations_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `destination_images`
+-- Các ràng buộc cho bảng `destination_images`
 --
 ALTER TABLE `destination_images`
   ADD CONSTRAINT `destination_images_destination_id_foreign` FOREIGN KEY (`destination_id`) REFERENCES `destinations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `destination_utilities`
+-- Các ràng buộc cho bảng `destination_utilities`
 --
 ALTER TABLE `destination_utilities`
   ADD CONSTRAINT `destination_utilities_destination_id_foreign` FOREIGN KEY (`destination_id`) REFERENCES `destinations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `destination_utilities_utility_id_foreign` FOREIGN KEY (`utility_id`) REFERENCES `utilities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `districts`
+-- Các ràng buộc cho bảng `districts`
 --
 ALTER TABLE `districts`
   ADD CONSTRAINT `districts_province_id_foreign` FOREIGN KEY (`province_id`) REFERENCES `provinces` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `follows`
+-- Các ràng buộc cho bảng `follows`
 --
 ALTER TABLE `follows`
   ADD CONSTRAINT `follows_follower_id_foreign` FOREIGN KEY (`follower_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `follows_following_id_foreign` FOREIGN KEY (`following_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `likes`
+-- Các ràng buộc cho bảng `likes`
 --
 ALTER TABLE `likes`
   ADD CONSTRAINT `likes_comment_id_foreign` FOREIGN KEY (`comment_id`) REFERENCES `comments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -12358,66 +12422,66 @@ ALTER TABLE `likes`
   ADD CONSTRAINT `likes_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `missions`
+-- Các ràng buộc cho bảng `missions`
 --
 ALTER TABLE `missions`
   ADD CONSTRAINT `missions_badge_id_foreign` FOREIGN KEY (`badge_id`) REFERENCES `badges` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `notifications`
+-- Các ràng buộc cho bảng `notifications`
 --
 ALTER TABLE `notifications`
   ADD CONSTRAINT `notifications_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `posts`
+-- Các ràng buộc cho bảng `posts`
 --
 ALTER TABLE `posts`
   ADD CONSTRAINT `posts_destination_id_foreign` FOREIGN KEY (`destination_id`) REFERENCES `destinations` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `posts_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `ratings`
+-- Các ràng buộc cho bảng `ratings`
 --
 ALTER TABLE `ratings`
   ADD CONSTRAINT `ratings_post_id_foreign` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `ratings_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `reports`
+-- Các ràng buộc cho bảng `reports`
 --
 ALTER TABLE `reports`
   ADD CONSTRAINT `reports_post_id_foreign` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `reports_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `shares`
+-- Các ràng buộc cho bảng `shares`
 --
 ALTER TABLE `shares`
   ADD CONSTRAINT `shares_post_id_foreign` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `shares_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `users`
+-- Các ràng buộc cho bảng `users`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `users_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `user_missions`
+-- Các ràng buộc cho bảng `user_missions`
 --
 ALTER TABLE `user_missions`
   ADD CONSTRAINT `user_missions_mission_id_foreign` FOREIGN KEY (`mission_id`) REFERENCES `missions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `user_missions_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `utilities`
+-- Các ràng buộc cho bảng `utilities`
 --
 ALTER TABLE `utilities`
   ADD CONSTRAINT `utilities_utility_type_id_foreign` FOREIGN KEY (`utility_type_id`) REFERENCES `utility_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `wards`
+-- Các ràng buộc cho bảng `wards`
 --
 ALTER TABLE `wards`
   ADD CONSTRAINT `wards_district_id_foreign` FOREIGN KEY (`district_id`) REFERENCES `districts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;

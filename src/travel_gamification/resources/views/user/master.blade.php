@@ -72,3 +72,18 @@
     navbarSearch.classList.add("hidden");
   }
 </script>
+<script>
+  function toggleDropdown() {
+      const dropdown = document.getElementById('user-dropdown');
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+  }
+
+  // Đóng dropdown khi nhấp ra ngoài
+  document.addEventListener('click', function (event) {
+      const dropdown = document.getElementById('user-dropdown');
+      const toggle = document.querySelector('.user-dropdown-toggle');
+      if (!toggle.contains(event.target) && !dropdown.contains(event.target)) {
+          dropdown.style.display = 'none';
+      }
+  });
+</script>

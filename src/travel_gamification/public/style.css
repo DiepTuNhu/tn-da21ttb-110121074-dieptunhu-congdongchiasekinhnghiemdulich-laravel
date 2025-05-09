@@ -28,6 +28,17 @@ html {
   padding: 0;
   font-family: "Segoe UI", sans-serif;
 }
+.nav-links li a.active {
+  color: var(--primary-color); /* Màu chữ khi active */
+  font-weight: bold; /* Tùy chọn: làm chữ đậm */
+  border-bottom: 2px solid var(--primary-color); /* Tùy chọn: thêm gạch chân */
+}
+
+/* Màu khi hover
+.nav-links li a:hover {
+  color: var(--primary-color);
+} */
+
 .navbar-search input {
   padding: 8px 12px;
   border-radius: 8px;
@@ -399,12 +410,27 @@ html {
   display: flex;
   align-items: center;
   gap: 8px;
+
+  align-items: flex-start; /* Giúp icon nằm trên cùng */
+  /* margin-bottom: 10px; */
+  min-height: 40px;
 }
 
 .info-row i {
   min-width: 18px;
   color: var(--text-light);
+
+  margin-top: 3px; /* Dịch xuống nhẹ để thẳng hàng với chữ */
+  flex-shrink: 0;
+
 }
+
+.info-row span {
+  flex: 1;
+  line-height: 1.4;
+  text-align: left;
+}
+
 .info-divider {
   border: none;
   border-top: 1px solid #eee;
@@ -464,12 +490,7 @@ html {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.navbar-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  /* padding: 15px 30px; */
-}
+
 
 .logo {
   margin: -25px 0; /* Bù lại phần padding */

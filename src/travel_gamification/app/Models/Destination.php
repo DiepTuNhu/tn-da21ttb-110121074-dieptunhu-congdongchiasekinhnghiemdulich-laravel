@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Destination extends Model
 {
     use HasFactory;
-
+    protected $table = 'destinations'; // Tên bảng
     protected $fillable = [
         'name',
         'price',

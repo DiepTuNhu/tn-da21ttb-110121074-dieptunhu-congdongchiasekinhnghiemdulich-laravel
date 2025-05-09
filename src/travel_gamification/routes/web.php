@@ -38,6 +38,8 @@ use App\Http\Controllers\Admin\DestinationImagesController;
 
 Route::get('/', [PageController::class, 'index'])->name('page.index');
 
+Route::get('/community', [PageController::class, 'getCommunity'])->name('page.community');
+
 //LOGIN
 Route::get('/login',[LoginController::class,'index'])->name('login');
 Route::post('/login/store',[LoginController::class,'store'])->name('login.store');
@@ -48,6 +50,8 @@ Route::post('/xulydangky',[RegisterController::class,'postSignup'])->name('postS
 
 //LOGOUT
 // Route::post('/page/logout', [AuthController::class, 'logout'])->name('page.logout');
+Route::post('/logout',[LoginController::class,'logout'])->name('logout');
+
 
 
 

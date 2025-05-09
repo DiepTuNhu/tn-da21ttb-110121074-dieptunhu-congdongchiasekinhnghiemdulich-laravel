@@ -46,7 +46,7 @@ class UtilitiesController extends Controller
             'price' => 'nullable|string',
             'time' => 'nullable|string',
             'description' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
         ]);
 
         function getNameFromEsgoo($level, $parentId, $targetId) {
@@ -158,7 +158,7 @@ class UtilitiesController extends Controller
             'description' => 'nullable|string',
             'utility_type_id' => 'nullable|exists:utility_types,id',
             'status' => 'nullable|string|max:100',
-            'image1' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image1' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
         ]);
 
         $utility = Utility::find($id);

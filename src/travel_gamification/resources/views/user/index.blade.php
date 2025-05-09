@@ -73,13 +73,13 @@
 </section>
 
 <section class="category-section">
-  <h3>Khám phá theo chủ đề</h3>
+  <h3>Khám phá theo loại hình du lịch</h3>
   <div class="categories">
-    <div class="category-card">Ẩm thực địa phương 🍜</div>
-    <div class="category-card">Check-in sống ảo 📸</div>
-    <div class="category-card">Phượt bụi ✈️</div>
-    <div class="category-card">Du lịch gia đình 👨‍👩‍👧‍👦</div>
-    <div class="category-card">Kinh nghiệm săn vé ✈️</div>
+    @foreach ($travelTypes as $type)
+      <div class="category-card">
+        {{ $type->name }}
+      </div>
+    @endforeach
   </div>
 </section>
 
@@ -218,38 +218,51 @@
     <!-- ... -->
   </div>
 
-  <div class="section-heading">Bài viết từ Admin</div>
+  <div class="section-heading">Thông tin địa điểm du lịch</div>
   <div class="posts">
     <!-- Các post từ admin -->
+{{-- filepath: d:\laragon\www\travel_gamification\resources\views\user\index.blade.php --}}
+{{-- filepath: d:\laragon\www\travel_gamification\resources\views\user\index.blade.php --}}
+<div class="posts">
+  @foreach ($destinations as $destination)
     <div class="post-card admin-post">
-      <img src="../1.png" alt="Post 1" />
+      {{-- Kiểm tra nếu có hình ảnh --}}
+      @if ($destination->destinationImages && $destination->destinationImages->isNotEmpty())
+        <img src="{{ $destination->destinationImages->first()->image_url }}" alt="{{ $destination->name }}" />
+      @else
+        <img src="default-image.png" alt="Default Image" />
+      @endif
 
-      <h4>10 điểm check-in biển đẹp nhất Việt Nam</h4>
+      {{-- Hiển thị tên địa điểm --}}
+      <h4 style="text-align: center">{{ $destination->name }}</h4>
 
-      <p class="post-excerpt">
-        Đây là danh sách những bãi biển đẹp mê hồn mà bạn nhất định phải ghé qua khi đến Việt
-        Nam. Từ nước biển trong xanh đến bãi cát trắng mịn màng, mỗi nơi đều có vẻ đẹp riêng
-        biệt...
+      {{-- Hiển thị đặc điểm nổi bật --}}
+      <p class="post-excerpt" style="text-align: justify">
+        {{ strip_tags($destination->highlights) }}
       </p>
 
+      {{-- Hiển thị địa chỉ và giá --}}
       <div class="post-info-block">
         <div class="info-row">
           <i class="fas fa-location-dot"></i>
-          <span>Xã Xuân Trường, TP. Đà Lạt</span>
+          <span>{{ $destination->address }}</span>
         </div>
         <div class="info-row">
           <i class="fas fa-dollar-sign"></i>
-          <span>Miễn phí</span>
+          <span>{{ $destination->price }}</span>
         </div>
 
         <hr class="info-divider" />
 
+        {{-- Footer thông tin --}}
         <div class="info-footer">
-          <span><i class="fas fa-calendar-alt"></i> 10/04/2025</span>
+          <span><i class="fas fa-calendar-alt"></i> {{ $destination->updated_at->format('d/m/Y') }}</span>
           <span><i class="fas fa-heart" style="color: #e74c3c"></i> 135 lượt thích</span>
         </div>
       </div>
     </div>
+  @endforeach
+</div>
 
     <div class="post-card admin-post">
       <img src="../2.png" alt="Post admin" />

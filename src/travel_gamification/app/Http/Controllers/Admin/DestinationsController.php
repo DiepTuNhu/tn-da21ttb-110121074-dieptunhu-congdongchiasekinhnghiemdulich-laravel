@@ -104,27 +104,27 @@ class DestinationsController extends Controller
         logger()->info('📦 OpenCage API response: ', $response->json());
 
         // Kiểm tra nếu không tìm thấy kết quả
-        $location = $response->json()['results'][0]['geometry'] ?? null;
-        if (!$location) {
+        if (empty($response->json()['results'])) {
             logger()->error('❌ Không tìm thấy tọa độ cho địa chỉ: ' . $fullAddress);
-            return redirect()->back()->withErrors(['error' => 'Không thể lấy tọa độ từ OpenCage API.']);
+            $location = null;
+        } else {
+            $location = $response->json()['results'][0]['geometry'] ?? null;
         }
 
         // Tạo mới Destination
         $destination = new Destination();
         $destination->name = $request->name;
         $destination->price = $request->price;
-        $destination->travel_type_id = $request->id_type; // Lưu ID của loại hình
-        $destination->address = $address; // Lưu địa chỉ
-        $destination->latitude = $location['lat']; // Lưu vĩ độ
-        $destination->longitude = $location['lng']; // Lưu kinh độ
+        $destination->travel_type_id = $request->id_type;
+        $destination->address = $address;
+        $destination->latitude = $location['lat'] ?? null; // Lưu tọa độ latitude từ API
+        $destination->longitude = $location['lng'] ?? null; // Lưu tọa độ longitude từ API
         $destination->status = 0;
         $destination->highlights = $request->highlights;
         $destination->best_time = $request->best_time;
         $destination->local_cuisine = $request->local_cuisine;
         $destination->transportation = $request->transportation;
-        // Lưu user_id của người dùng hiện tại
-        $destination->user_id = auth()->id(); // Hoặc Auth::id()
+        $destination->user_id = auth()->id();
         $destination->save();
 
         return redirect()->route('destinations.index')->with('success', 'Địa điểm đã được thêm thành công.');
@@ -158,77 +158,76 @@ class DestinationsController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-{
-    $request->validate([
-        'name' => 'required|string|max:255|unique:destinations,name',
-        'price' => 'required|string|max:255',
-        'id_type' => 'required|exists:travel_types,id', // Kiểm tra id có tồn tại trong bảng types
-        'highlights' => 'nullable|string',
-        'best_time' => 'nullable|string',
-        'local_cuisine' => 'nullable|string',
-        'transportation' => 'nullable|string',
-    ], [
-        'name.required' => 'Bạn chưa nhập tên.',
-        'name.unique' => 'Tên địa điểm đã tồn tại.',
-        'price.required' => 'Bạn chưa nhập giá.',
-        'id_type.required' => 'Bạn chưa chọn loại hình.',
+    {
+        $request->validate([
+            'name' => 'required|string|max:255|unique:destinations,name',
+            'price' => 'required|string|max:255',
+            'id_type' => 'required|exists:travel_types,id', // Kiểm tra id có tồn tại trong bảng types
+            'highlights' => 'nullable|string',
+            'best_time' => 'nullable|string',
+            'local_cuisine' => 'nullable|string',
+            'transportation' => 'nullable|string',
+        ], [
+            'name.required' => 'Bạn chưa nhập tên.',
+            'name.unique' => 'Tên địa điểm đã tồn tại.',
+            'price.required' => 'Bạn chưa nhập giá.',
+            'id_type.required' => 'Bạn chưa chọn loại hình.',
 
-    ]);
+        ]);
 
-    $destination = Destination::find($id);
+        $destination = Destination::find($id);
 
-    if (!$destination) {
-        return redirect()->route('utilities.index')->with('error', 'destination not found!');
+        if (!$destination) {
+            return redirect()->route('utilities.index')->with('error', 'destination not found!');
+        }
+
+        // Tạo địa chỉ đầy đủ từ request
+        $address = trim(($request->phuong_text ?? '') . ', ' . ($request->quan_text ?? '') . ', ' . ($request->tinh_text ?? ''));
+        $fullAddress = trim(($request->name ?? '') . ', ' . $address);
+
+        // Gọi OpenCage Geocoding API để lấy tọa độ
+        $apiKey = env('OPENCAGE_API_KEY'); // Lấy API Key từ file .env
+        $response = Http::get("https://api.opencagedata.com/geocode/v1/json", [
+            'q' => $fullAddress, // Địa chỉ đầy đủ
+            'key' => $apiKey,
+            'language' => 'vi', // Ngôn ngữ (vi: tiếng Việt)
+            'pretty' => 1, // Tùy chọn để dễ đọc (không bắt buộc)
+        ]);
+
+        // Ghi log toàn bộ kết quả trả về để kiểm tra nếu có lỗi
+        logger()->info('📍 Địa chỉ gửi lên OpenCage: ' . $fullAddress);
+        logger()->info('📦 OpenCage API response: ', $response->json());
+
+        // Kiểm tra nếu không tìm thấy kết quả
+        if (empty($response->json()['results'])) {
+            logger()->error('❌ Không tìm thấy tọa độ cho địa chỉ: ' . $fullAddress);
+            $location = null;
+        } else {
+            $location = $response->json()['results'][0]['geometry'] ?? null;
+        }
+
+        // Kiểm tra và xóa ảnh cũ nếu có
+        if ($destination->image && $request->hasFile('image1') && $destination->image !== 'default.jpg') {
+            Storage::delete('public/destination_image/' . $destination->image);
+        }
+
+        // Cập nhật thông tin địa điểm
+        $destination->address = $address ?: null; // Nếu địa chỉ rỗng, gán null
+        $destination->name = $request->name ?: null; // Nếu tên rỗng, gán null
+        $destination->price = $request->price ?: null; // Nếu giá rỗng, gán null
+        $destination->latitude = $location['lat'] ?? null; // Lưu tọa độ latitude từ API
+        $destination->longitude = $location['lng'] ?? null; // Lưu tọa độ longitude từ API
+        $destination->highlights = $request->highlights ?: null;
+        $destination->best_time = $request->best_time ?: null;
+        $destination->local_cuisine = $request->local_cuisine ?: null;
+        $destination->transportation = $request->transportation ?: null;
+        $destination->travel_type_id = $request->id_type ?: null;
+        $destination->status = $request->status ?: null;
+
+        $destination->save();
+
+        return redirect()->route('destinations.index')->with('success', 'Địa điểm đã được cập nhật thành công!');
     }
-    // Tạo địa chỉ đầy đủ từ request
-    $address = $request->phuong_text . ', ' . $request->quan_text . ', ' . $request->tinh_text;
-    $fullAddress = trim("{$request->name}, {$address}");
-
-    // Gọi OpenCage Geocoding API để lấy tọa độ
-    $apiKey = env('OPENCAGE_API_KEY'); // Lấy API Key từ file .env
-    $response = Http::get("https://api.opencagedata.com/geocode/v1/json", [
-        'q' => $fullAddress, // Địa chỉ đầy đủ
-        'key' => $apiKey,
-        'language' => 'vi', // Ngôn ngữ (vi: tiếng Việt)
-        'pretty' => 1, // Tùy chọn để dễ đọc (không bắt buộc)
-    ]);
-
-    // Ghi log toàn bộ kết quả trả về để kiểm tra nếu có lỗi
-    logger()->info('📍 Địa chỉ gửi lên OpenCage: ' . $fullAddress);
-    logger()->info('📦 OpenCage API response: ', $response->json());
-
-    // Kiểm tra nếu không tìm thấy kết quả
-    if (empty($response->json()['results'])) {
-        logger()->error('❌ Không tìm thấy tọa độ cho địa chỉ: ' . $fullAddress);
-        $location = null;
-    } else {
-        $location = $response->json()['results'][0]['geometry'] ?? null;
-    }
-
-    // Kiểm tra và xóa ảnh cũ nếu có
-    if ($destination->image && $request->hasFile('image1') && $destination->image !== 'default.jpg') {
-        Storage::delete('public/destination_image/' . $destination->image);
-    }
-    
-    $destination->address = $address;
-    $destination->name = $request->name;
-    $destination->price = $request->price;
-    $destination->latitude = $location['lat'] ?? null; // Lưu tọa độ latitude từ API
-    $destination->longitude = $location['lng'] ?? null;
-    $destination->highlights = $request->highlights;
-    $destination->best_time = $request->best_time;
-    $destination->local_cuisine = $request->local_cuisine;
-    $destination->transportation = $request->transportation;
-    $destination->travel_type_id = $request->id_type; 
-    $destination->status = $request->status;
-
-
-
-
-    $destination->save();
-
-    return redirect()->route('destinations.index')->with('success', 'destination updated successfully!');
-}
 
     /**
      * Remove the specified resource from storage.
