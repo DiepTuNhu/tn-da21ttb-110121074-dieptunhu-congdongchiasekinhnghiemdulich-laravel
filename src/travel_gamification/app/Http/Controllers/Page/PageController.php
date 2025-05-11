@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\TravelType;
 use App\Models\Destination;
+use Illuminate\Support\Facades\Http;
 
 
 class PageController extends Controller
@@ -30,45 +31,35 @@ class PageController extends Controller
     }
 
     public function getCommunity(Request $request)
-{
+    {
+        // Lấy danh sách loại hình du lịch
+        $travelTypes = TravelType::where('status', 0)->get();
 
-    // Lấy danh sách loại hình du lịch có status = 0
-    // $types = Type::where('status', 0)->get();
+        // Lấy bộ lọc từ request
+        $travelTypeId = $request->get('type'); // Lọc theo loại hình
 
-    // Lấy bộ lọc từ request (province hoặc type)
-    // $typeId = $request->get('type');        // Lọc theo loại hình
-    // $provinceId = $request->get('province'); // Lọc theo địa phương
+        // Lọc các địa điểm
+        $query = Destination::where('status', '!=', 1);
 
-    // Lọc các địa điểm
-    $query = Destination::where('status', '!=', 1);
+        if ($travelTypeId) {
+            $query->where('travel_type_id', $travelTypeId); // Sử dụng travel_type_id
+        }
 
-    // if ($typeId) {
-    //     $query->where('id_type', $typeId);
-    // }
+        $destinations = $query->get();
 
-    // if ($provinceId) {
-    //     $query->where('id_province', $provinceId);
-    // }
+        // Gắn hình ảnh chính cho các địa điểm
+        foreach ($destinations as $destination) {
+            $destination->mainImage = $destination->destinationImages()->where('status', 2)->first();
+        }
 
-    $destinations = $query->get();
+        // Trả về dữ liệu nếu yêu cầu là AJAX
+        if ($request->wantsJson()) {
+            return response()->json([
+                'destinations' => $destinations,
+            ]);
+        }
 
-    // Gắn hình ảnh chính cho các địa điểm
-    foreach ($destinations as $destination) {
-        $destination->mainImage = $destination->destinationImages()->where('status', 2)->first();
+        // Trả về view nếu không phải AJAX
+        return view('user.layout.community', compact('destinations', 'travelTypes'));
     }
-
-    // Trả về dữ liệu nếu yêu cầu là AJAX
-    if ($request->wantsJson()) {
-        return response()->json([
-            // 'provinces' => $provinces,
-            // 'types' => $types,
-            'destinations' => $destination,
-            // 'activeProvince' => $provinceId,
-            // 'activeType' => $typeId
-        ]);
-    }
-
-    // Trả về view nếu không phải AJAX
-    return view('user.layout.community', compact('destinations'));
-}
 }

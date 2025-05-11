@@ -219,72 +219,49 @@
   </div>
 
   <div class="section-heading">Thông tin địa điểm du lịch</div>
-  <div class="posts">
-    <!-- Các post từ admin -->
-{{-- filepath: d:\laragon\www\travel_gamification\resources\views\user\index.blade.php --}}
-{{-- filepath: d:\laragon\www\travel_gamification\resources\views\user\index.blade.php --}}
-<div class="posts">
-  @foreach ($destinations as $destination)
-    <div class="post-card admin-post">
-      {{-- Kiểm tra nếu có hình ảnh --}}
-      @if ($destination->destinationImages && $destination->destinationImages->isNotEmpty())
-        <img src="{{ $destination->destinationImages->first()->image_url }}" alt="{{ $destination->name }}" />
-      @else
-        <img src="default-image.png" alt="Default Image" />
-      @endif
 
-      {{-- Hiển thị tên địa điểm --}}
-      <h4 style="text-align: center">{{ $destination->name }}</h4>
+    <div class="posts">
+      @foreach ($destinations as $destination)
+        <div class="post-card admin-post">
+          {{-- Kiểm tra nếu có hình ảnh --}}
+          @if ($destination->destinationImages && $destination->destinationImages->isNotEmpty())
+            <img src="{{ $destination->destinationImages->first()->image_url }}" alt="{{ $destination->name }}" />
+          @else
+            <img src="default-image.png" alt="Default Image" />
+          @endif
 
-      {{-- Hiển thị đặc điểm nổi bật --}}
-      <p class="post-excerpt" style="text-align: justify">
-        {{ strip_tags($destination->highlights) }}
-      </p>
+          {{-- Hiển thị tên địa điểm --}}
+          <h3 style="text-align: center">{{ $destination->name }}</h3>
 
-      {{-- Hiển thị địa chỉ và giá --}}
-      <div class="post-info-block">
-        <div class="info-row">
-          <i class="fas fa-location-dot"></i>
-          <span>{{ $destination->address }}</span>
+          {{-- Hiển thị đặc điểm nổi bật --}}
+          <p class="post-excerpt" style="text-align: justify">
+            {{ strip_tags($destination->highlights) }}
+          </p>
+
+          {{-- Hiển thị địa chỉ và giá --}}
+          <div class="post-info-block">
+            <div class="info-row">
+              <i class="fas fa-location-dot"></i>
+              <span>{{ $destination->address }}</span>
+            </div>
+            <div class="info-row">
+              <i class="fas fa-dollar-sign"></i>
+              <span>{{ $destination->price }}</span>
+            </div>
+
+            <hr class="info-divider" />
+
+            {{-- Footer thông tin --}}
+            <div class="info-footer">
+              <span><i class="fas fa-calendar-alt"></i> {{ $destination->updated_at->format('d/m/Y') }}</span>
+              <span><i class="fas fa-heart" style="color: #e74c3c"></i> 135 lượt thích</span>
+            </div>
+          </div>
         </div>
-        <div class="info-row">
-          <i class="fas fa-dollar-sign"></i>
-          <span>{{ $destination->price }}</span>
-        </div>
-
-        <hr class="info-divider" />
-
-        {{-- Footer thông tin --}}
-        <div class="info-footer">
-          <span><i class="fas fa-calendar-alt"></i> {{ $destination->updated_at->format('d/m/Y') }}</span>
-          <span><i class="fas fa-heart" style="color: #e74c3c"></i> 135 lượt thích</span>
-        </div>
-      </div>
-    </div>
-  @endforeach
-</div>
-
-    <div class="post-card admin-post">
-      <img src="../2.png" alt="Post admin" />
-      <h4>Gợi ý 5 địa điểm du lịch tránh nóng hè này</h4>
-      <p>Admin • Hôm nay</p>
-    </div>
-    <div class="post-card admin-post">
-      <img src="..." alt="Post admin" />
-      <h4>Gợi ý 5 địa điểm du lịch tránh nóng hè này</h4>
-      <p>Admin • Hôm nay</p>
-    </div>
-    <div class="post-card admin-post">
-      <img src="..." alt="Post admin" />
-      <h4>Gợi ý 5 địa điểm du lịch tránh nóng hè này</h4>
-      <p>Admin • Hôm nay</p>
-    </div>
-    <div class="post-card admin-post">
-      <img src="..." alt="Post admin" />
-      <h4>Gợi ý 5 địa điểm du lịch tránh nóng hè này</h4>
-      <p>Admin • Hôm nay</p>
+      @endforeach
     </div>
 
+    
     <!-- ... -->
   </div>
 </section>
