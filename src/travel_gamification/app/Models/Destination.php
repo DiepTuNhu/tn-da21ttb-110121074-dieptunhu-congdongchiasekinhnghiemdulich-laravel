@@ -38,6 +38,6 @@ class Destination extends Model
 
     public function destinationImages()
     {
-        return $this->hasMany(DestinationImage::class, 'destination_id');
+        return $this->hasMany(DestinationImage::class, 'destination_id', 'id');
     }
 }

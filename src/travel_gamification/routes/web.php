@@ -100,29 +100,29 @@ Route::prefix('admin')->group(function () {
   Route::post('/users/{id}',[UserController::class,'update'])->name('users.update');
   Route::get('/users/{id}',[UserController::class,'destroy'])->name('users.destroy');
 
-  //PROVINCE------------------------------------------------------------------------------------------
-  Route::get('/provinces',[ProvinceController::class,'index'])->name('provinces.index');
-  Route::get('/provinces/create',[ProvinceController::class,'create'])->name('provinces.create');
-  Route::post('/provinces',[ProvinceController::class,'store'])->name('provinces.store');
-  Route::get('/provinces/{id}/edit',[ProvinceController::class,'edit'])->name('provinces.edit');
-  Route::post('/provinces/{id}',[ProvinceController::class,'update'])->name('provinces.update');
-  Route::get('/provinces/{id}',[ProvinceController::class,'destroy'])->name('provinces.destroy');
+  // //PROVINCE------------------------------------------------------------------------------------------
+  // Route::get('/provinces',[ProvinceController::class,'index'])->name('provinces.index');
+  // Route::get('/provinces/create',[ProvinceController::class,'create'])->name('provinces.create');
+  // Route::post('/provinces',[ProvinceController::class,'store'])->name('provinces.store');
+  // Route::get('/provinces/{id}/edit',[ProvinceController::class,'edit'])->name('provinces.edit');
+  // Route::post('/provinces/{id}',[ProvinceController::class,'update'])->name('provinces.update');
+  // Route::get('/provinces/{id}',[ProvinceController::class,'destroy'])->name('provinces.destroy');
 
-  //DISTRICT------------------------------------------------------------------------------------------
-  Route::get('/districts',[DistrictsController::class,'index'])->name('districts.index');
-  Route::get('/districts/create',[DistrictsController::class,'create'])->name('districts.create');
-  Route::post('/districts',[DistrictsController::class,'store'])->name('districts.store');
-  Route::get('/districts/{id}/edit',[DistrictsController::class,'edit'])->name('districts.edit');
-  Route::post('/districts/{id}',[DistrictsController::class,'update'])->name('districts.update');
-  Route::get('/districts/{id}',[DistrictsController::class,'destroy'])->name('districts.destroy');
+  // //DISTRICT------------------------------------------------------------------------------------------
+  // Route::get('/districts',[DistrictsController::class,'index'])->name('districts.index');
+  // Route::get('/districts/create',[DistrictsController::class,'create'])->name('districts.create');
+  // Route::post('/districts',[DistrictsController::class,'store'])->name('districts.store');
+  // Route::get('/districts/{id}/edit',[DistrictsController::class,'edit'])->name('districts.edit');
+  // Route::post('/districts/{id}',[DistrictsController::class,'update'])->name('districts.update');
+  // Route::get('/districts/{id}',[DistrictsController::class,'destroy'])->name('districts.destroy');
 
-  //WARD------------------------------------------------------------------------------------------
-  Route::get('/wards',[WardsController::class,'index'])->name('wards.index');
-  Route::get('/wards/create',[WardsController::class,'create'])->name('wards.create');
-  Route::post('/wards',[WardsController::class,'store'])->name('wards.store');
-  Route::get('/wards/{id}/edit',[WardsController::class,'edit'])->name('wards.edit');
-  Route::post('/wards/{id}',[WardsController::class,'update'])->name('wards.update');
-  Route::get('/wards/{id}',[WardsController::class,'destroy'])->name('wards.destroy');
+  // //WARD------------------------------------------------------------------------------------------
+  // Route::get('/wards',[WardsController::class,'index'])->name('wards.index');
+  // Route::get('/wards/create',[WardsController::class,'create'])->name('wards.create');
+  // Route::post('/wards',[WardsController::class,'store'])->name('wards.store');
+  // Route::get('/wards/{id}/edit',[WardsController::class,'edit'])->name('wards.edit');
+  // Route::post('/wards/{id}',[WardsController::class,'update'])->name('wards.update');
+  // Route::get('/wards/{id}',[WardsController::class,'destroy'])->name('wards.destroy');
 
   //BADGE------------------------------------------------------------------------------------------
   Route::get('/badges',[BadgesController::class,'index'])->name('badges.index');

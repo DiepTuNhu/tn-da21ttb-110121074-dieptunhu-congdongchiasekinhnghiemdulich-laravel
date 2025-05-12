@@ -30,36 +30,39 @@ class PageController extends Controller
         return view('user.index', compact('travelTypes', 'destinations'));
     }
 
-    public function getCommunity(Request $request)
-    {
-        // Lấy danh sách loại hình du lịch
-        $travelTypes = TravelType::where('status', 0)->get();
+ public function getCommunity(Request $request)
+{
+    // Lấy danh sách loại hình du lịch
+    $travelTypes = TravelType::where('status', 0)->get();
 
-        // Lấy bộ lọc từ request
-        $travelTypeId = $request->get('type'); // Lọc theo loại hình
+    // Lấy bộ lọc từ request
+    $travelTypeId = $request->get('type');
+    $province = $request->get('province');
 
-        // Lọc các địa điểm
-        $query = Destination::where('status', '!=', 1);
+    // Truy vấn cơ bản: chỉ lấy những địa điểm còn hoạt động
+    $query = Destination::where('status', '!=', 1);
 
-        if ($travelTypeId) {
-            $query->where('travel_type_id', $travelTypeId); // Sử dụng travel_type_id
-        }
-
-        $destinations = $query->get();
-
-        // Gắn hình ảnh chính cho các địa điểm
-        foreach ($destinations as $destination) {
-            $destination->mainImage = $destination->destinationImages()->where('status', 2)->first();
-        }
-
-        // Trả về dữ liệu nếu yêu cầu là AJAX
-        if ($request->wantsJson()) {
-            return response()->json([
-                'destinations' => $destinations,
-            ]);
-        }
-
-        // Trả về view nếu không phải AJAX
-        return view('user.layout.community', compact('destinations', 'travelTypes'));
+    // Lọc theo loại hình du lịch nếu có
+    if ($travelTypeId) {
+        $query->where('travel_type_id', $travelTypeId);
     }
+
+    // Lọc theo tỉnh nếu có
+    if ($province) {
+        // So sánh chứa tên tỉnh trong chuỗi địa chỉ
+        $query->where('address', 'LIKE', "%$province%");
+    }
+
+    // Lấy dữ liệu sau khi đã áp dụng bộ lọc
+    $destinations = $query->get();
+
+    // Gắn hình ảnh chính cho từng địa điểm
+    foreach ($destinations as $destination) {
+        $destination->mainImage = $destination->destinationImages()->where('status', 2)->first();
+    }
+
+    // Trả về view cùng với dữ liệu đã lọc
+    return view('user.layout.community', compact('destinations', 'travelTypes'));
+}
+
 }

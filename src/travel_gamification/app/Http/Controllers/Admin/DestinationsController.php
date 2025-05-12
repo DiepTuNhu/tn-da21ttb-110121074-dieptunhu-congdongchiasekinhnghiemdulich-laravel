@@ -160,7 +160,7 @@ class DestinationsController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'name' => 'required|string|max:255|unique:destinations,name',
+            'name' => 'required|string|max:255|unique:destinations,name,' . $id,
             'price' => 'required|string|max:255',
             'id_type' => 'required|exists:travel_types,id', // Kiểm tra id có tồn tại trong bảng types
             'highlights' => 'nullable|string',
@@ -172,7 +172,6 @@ class DestinationsController extends Controller
             'name.unique' => 'Tên địa điểm đã tồn tại.',
             'price.required' => 'Bạn chưa nhập giá.',
             'id_type.required' => 'Bạn chưa chọn loại hình.',
-
         ]);
 
         $destination = Destination::find($id);

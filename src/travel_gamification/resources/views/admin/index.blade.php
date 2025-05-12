@@ -78,7 +78,7 @@
             <li class="nav-item"><a class="nav-link" href="{{route('utilities.index')}}" onclick="loadPage(event, this)">Tiện ích</a></li>
           </ul>
         </li>
-        <li class="nav-item">
+        {{-- <li class="nav-item">
           <a class="nav-link" href="#" onclick="toggleDropdown(event, 'locationDropdown2')">
             Đơn vị hành chính
           </a>
@@ -87,7 +87,7 @@
             <li class="nav-item"><a class="nav-link" href="{{ route('districts.index') }}" onclick="loadPage(event, this)">Huyện</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('wards.index') }}" onclick="loadPage(event, this)">Xã</a></li>
           </ul>
-        </li>
+        </li> --}}
         
         <li class="nav-item"><a class="nav-link" href="{{route('badges.index')}}" onclick="loadPage(event, this)">Huy hiệu</a></li>
         <li class="nav-item"><a class="nav-link" href="{{route('missions.index')}}" onclick="loadPage(event, this)">Nhiệm vụ</a></li>
@@ -95,7 +95,14 @@
         <li class="nav-item"><a class="nav-link" href="{{route('users.index')}}" onclick="loadPage(event, this)">Người dùng</a></li>
         <li class="nav-item"><a class="nav-link" href="{{route('slides.index')}}" onclick="loadPage(event, this)">Trình chiếu</a></li>
         {{-- <li class="nav-item"><a class="nav-link" href="#">Báo cáo & Đánh giá</a></li> --}}
-        <li class="nav-item"><a class="nav-link text-danger" href="#">Đăng xuất</a></li>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+          @csrf
+        </form>
+        <li class="nav-item">
+          <a class="nav-link text-danger" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            Đăng xuất
+          </a>
+        </li>
       </ul>
     </div>
     <div class="main-content" id="main-content">
