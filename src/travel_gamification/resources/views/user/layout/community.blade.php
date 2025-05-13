@@ -6,23 +6,32 @@
   </header>
 
   <div class="filters">
-    <select id="vungmien">
-      <option value="">Chọn vùng miền</option>
-    </select>
+    {{-- Dropdown vùng miền --}}
+    <select id="vungmien" class="form-select">
+    <option value="">Chọn vùng miền</option>
+    <option value="Bắc" {{ isset($region) && $region == 'Bắc' ? 'selected' : '' }}>Miền Bắc</option>
+    <option value="Trung" {{ isset($region) && $region == 'Trung' ? 'selected' : '' }}>Miền Trung</option>
+    <option value="Nam" {{ isset($region) && $region == 'Nam' ? 'selected' : '' }}>Miền Nam</option>
+</select>
 
 <select id="tinh" class="form-select">
     <option value="">Chọn tỉnh / thành</option>
-    <!-- Sẽ đổ dữ liệu bằng JavaScript như bạn đang làm -->
+    @if(isset($province))
+        <option value="{{ $province }}" selected>{{ $province }}</option>
+    @endif
 </select>
 
-    <select id="travelTypeDropdown" class="form-select">
-        <option value="">Chọn loại hình du lịch</option>
-        @foreach($travelTypes as $type)
-            @if($type->status == 0)
-                <option value="{{ $type->id }}">{{ $type->name }}</option>
-            @endif
-        @endforeach
-    </select>
+<select id="travelTypeDropdown" class="form-select">
+    <option value="">Chọn loại hình du lịch</option>
+    @foreach($travelTypes as $type)
+        @if($type->status == 0)
+            <option value="{{ $type->id }}" {{ isset($travelTypeId) && $travelTypeId == $type->id ? 'selected' : '' }}>
+                {{ $type->name }}
+            </option>
+        @endif
+    @endforeach
+</select>
+
 
     <input type="text" class="search-input" placeholder="🔍 Tìm địa điểm, bài viết..." />
     <button id="toggle-form-btn" class="toggle-submit-btn">✍️ Đăng bài chia sẻ</button>
@@ -84,126 +93,87 @@
   @endforeach
 </div>
 
-    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-    const regions = {
-        'Miền Bắc': ['Hà Nội', 'Hải Phòng', 'Quảng Ninh', 'Bắc Ninh', 'Bắc Giang', 'Hà Nam', 'Hải Dương', 'Hòa Bình', 'Hưng Yên', 'Lạng Sơn', 'Nam Định', 'Ninh Bình', 'Phú Thọ', 'Sơn La', 'Thái Bình', 'Thái Nguyên', 'Tuyên Quang', 'Vĩnh Phúc', 'Yên Bái', 'Cao Bằng', 'Bắc Kạn', 'Điện Biên', 'Hà Giang', 'Lai Châu', 'Lào Cai'],
-        'Miền Trung': ['Thanh Hóa', 'Nghệ An', 'Hà Tĩnh', 'Quảng Bình', 'Quảng Trị', 'Thừa Thiên Huế', 'Đà Nẵng', 'Quảng Nam', 'Quảng Ngãi', 'Bình Định', 'Phú Yên', 'Khánh Hòa', 'Ninh Thuận', 'Bình Thuận', 'Kon Tum', 'Gia Lai', 'Đắk Lắk', 'Đắk Nông', 'Lâm Đồng'],
-        'Miền Nam': ['TP Hồ Chí Minh', 'Bình Dương', 'Bình Phước', 'Tây Ninh', 'Đồng Nai', 'Bà Rịa - Vũng Tàu', 'Long An', 'Tiền Giang', 'Bến Tre', 'Trà Vinh', 'Vĩnh Long', 'Đồng Tháp', 'An Giang', 'Cần Thơ', 'Hậu Giang', 'Kiên Giang', 'Sóc Trăng', 'Bạc Liêu', 'Cà Mau']
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    const provincesByRegion = {
+        'Bắc': ['Hà Nội', 'Hải Phòng', 'Quảng Ninh', 'Bắc Ninh', 'Bắc Giang', 'Hà Nam', 'Hải Dương', 'Hòa Bình', 'Hưng Yên', 'Lạng Sơn', 'Nam Định', 'Ninh Bình', 'Phú Thọ', 'Sơn La', 'Thái Bình', 'Thái Nguyên', 'Tuyên Quang', 'Vĩnh Phúc', 'Yên Bái', 'Cao Bằng', 'Bắc Kạn', 'Điện Biên', 'Hà Giang', 'Lai Châu', 'Lào Cai'],
+        'Trung': ['Thanh Hóa', 'Nghệ An', 'Hà Tĩnh', 'Quảng Bình', 'Quảng Trị', 'Thừa Thiên Huế', 'Đà Nẵng', 'Quảng Nam', 'Quảng Ngãi', 'Bình Định', 'Phú Yên', 'Khánh Hòa', 'Ninh Thuận', 'Bình Thuận', 'Kon Tum', 'Gia Lai', 'Đắk Lắk', 'Đắk Nông', 'Lâm Đồng'],
+        'Nam': ['TP Hồ Chí Minh', 'Bình Dương', 'Bình Phước', 'Tây Ninh', 'Đồng Nai', 'Bà Rịa - Vũng Tàu', 'Long An', 'Tiền Giang', 'Bến Tre', 'Trà Vinh', 'Vĩnh Long', 'Đồng Tháp', 'An Giang', 'Cần Thơ', 'Hậu Giang', 'Kiên Giang', 'Sóc Trăng', 'Bạc Liêu', 'Cà Mau']
     };
 
-    let allTinh = []; // Lưu toàn bộ danh sách tỉnh
+    let allProvinces = [];
 
-    $(document).ready(function () {
-        // 1. Hiển thị vùng miền
-        $.each(regions, function (region) {
-            $('#vungmien').append(`<option value="${region}">${region}</option>`);
-        });
+    function loadProvinceOptions(region) {
+        const provinceDropdown = $('#tinh');
+        provinceDropdown.empty().append('<option value="">Chọn tỉnh / thành</option>');
 
-        // 2. Lấy danh sách tỉnh từ API
-        $.getJSON('https://esgoo.net/api-tinhthanh/1/0.htm', function (res) {
-            if (res.error == 0) {
-                allTinh = res.data;
-            }
-        });
+        let filteredList = [];
 
-        // 3. Khi chọn vùng miền → lọc tỉnh
-        $('#vungmien').on('change', function () {
-            const selectedRegion = $(this).val();
-            const provinces = regions[selectedRegion] || [];
-
-            $('#tinh').html('<option value="">Chọn tỉnh / thành</option>');
-            $('#huyen').html('<option value="">Chọn quận / huyện</option>');
-
-            allTinh.forEach(tinh => {
-                if (provinces.includes(tinh.name) || provinces.includes(tinh.full_name)) {
-                    $('#tinh').append(`<option value="${tinh.name}">${tinh.full_name}</option>`);
-                }
-            });
-        });
-
-        // 4. Khi chọn tỉnh → gửi AJAX để lọc địa điểm
-        $('#tinh').on('change', function () {
-            const selectedProvince = $(this).val();
-
-            // Gửi AJAX request để lọc địa điểm theo tỉnh
-            $.ajax({
-                url: `{{ route('page.community') }}`,
-                method: 'GET',
-                data: { province: selectedProvince },
-                success: function (response) {
-                    // Cập nhật danh sách địa điểm
-                    $('#destinationList').html(response);
-                },
-                error: function (error) {
-                    console.error('Error:', error);
-                }
-            });
-        });
-    });
-    </script> --}}
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
- // Gọi API tỉnh thành
-$.getJSON('https://esgoo.net/api-tinhthanh/1/0.htm', function (res) {
-    if (res.error === 0) {
-        res.data.forEach(tinh => {
-            $('#tinh').append(`<option value="${tinh.name}">${tinh.full_name}</option>`);
-        });
-    }
-});
-
-// Khi người dùng chọn tỉnh thì chuyển trang có thêm ?province=...
-$('#tinh').on('change', function () {
-    const selectedProvince = $(this).val();
-
-    // Kiểm tra nếu người dùng đã chọn tỉnh
-    if (selectedProvince) {
-        // Lấy type hiện tại từ URL (nếu có)
-        const urlParams = new URLSearchParams(window.location.search);
-        const typeParam = urlParams.get('type');
-
-        // Ghép route + province + type nếu có
-        let url = `{{ route('page.community') }}?province=${encodeURIComponent(selectedProvince)}`;
-        
-        // Nếu có type trong URL, thêm type vào URL
-        if (typeParam) {
-            url += `&type=${encodeURIComponent(typeParam)}`;
+        if (region && provincesByRegion[region]) {
+            filteredList = provincesByRegion[region];
+        } else {
+            filteredList = allProvinces.map(p => p.name); // nếu không có miền, hiện toàn bộ
         }
 
-        // Chuyển hướng đến URL đã tạo
-        window.location.href = url;
-    }
-});
-
-</script>
-  {{-- Dropdown loại hình du lịch --}}
-  <script>
-      document.getElementById('travelTypeDropdown').addEventListener('change', function () {
-          const selectedType = this.value;
-
-          if (selectedType) {
-              // Chuyển hướng đến route với tham số type
-              window.location.href = `{{ route('page.community') }}?type=${selectedType}`;
-          }
-      });
-  </script>
-
-  {{-- <script>
-    document.getElementById('provinceDropdown').addEventListener('change', function () {
-        const selectedProvince = this.value;
-
-        // Gửi AJAX request
-        fetch(`{{ route('page.community') }}?province=${selectedProvince}`, {
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
+        allProvinces.forEach(p => {
+            if (filteredList.includes(p.name)) {
+                const selected = (new URLSearchParams(window.location.search).get('province') === p.name) ? 'selected' : '';
+                provinceDropdown.append(`<option value="${p.name}" ${selected}>${p.full_name}</option>`);
             }
-        })
-        .then(response => response.text())
-        .then(html => {
-            document.getElementById('destinationList').innerHTML = html;
-        })
-        .catch(error => console.error('Error:', error));
+        });
+    }
+
+    $(document).ready(function () {
+        // Gọi API để lấy danh sách tỉnh
+        $.getJSON('https://esgoo.net/api-tinhthanh/1/0.htm', function (res) {
+            if (res.error === 0) {
+                allProvinces = res.data;
+
+                const urlParams = new URLSearchParams(window.location.search);
+                const currentRegion = urlParams.get('region');
+                loadProvinceOptions(currentRegion); // Gọi sau khi có dữ liệu
+            }
+        });
+
+        // Sự kiện chọn vùng miền
+        $('#vungmien').on('change', function () {
+            const region = $(this).val();
+            const urlParams = new URLSearchParams(window.location.search);
+            urlParams.set('region', region);
+            urlParams.delete('province'); // reset tỉnh
+            window.location.href = `{{ route('page.community') }}?${urlParams.toString()}`;
+        });
+
+        // Sự kiện chọn tỉnh
+        $('#tinh').on('change', function () {
+            const province = $(this).val();
+            const urlParams = new URLSearchParams(window.location.search);
+            urlParams.set('province', province);
+            window.location.href = `{{ route('page.community') }}?${urlParams.toString()}`;
+        });
+
+        // Sự kiện chọn loại hình du lịch
+        document.getElementById('travelTypeDropdown').addEventListener('change', function () {
+            const type = this.value;
+            const urlParams = new URLSearchParams(window.location.search);
+
+            if (type) urlParams.set('type', type);
+            else urlParams.delete('type');
+
+            window.location.href = `{{ route('page.community') }}?${urlParams.toString()}`;
+        });
     });
-</script> --}}
+</script>
+{{-- Đăng bài --}}
+<script>
+  const toggleBtn = document.getElementById("toggle-form-btn");
+  const submitSection = document.getElementById("submit-section");
+
+  toggleBtn.addEventListener("click", () => {
+    const isVisible = submitSection.style.display === "block";
+    submitSection.style.display = isVisible ? "none" : "block";
+    toggleBtn.textContent = isVisible ? "✍️ Đăng bài chia sẻ" : "✖️ Đóng lại";
+  });
+</script>
+
 </section>
