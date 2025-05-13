@@ -929,8 +929,9 @@ html {
 .post-card-explore:hover {
   transform: translateY(-5px);
 }
-.post-card-explore h4 {
+.post-card-explore h3 {
   color: var(--gray-dark) ;
+  margin: 5px;
 }
 .post-card-explore img {
   width: 100%;

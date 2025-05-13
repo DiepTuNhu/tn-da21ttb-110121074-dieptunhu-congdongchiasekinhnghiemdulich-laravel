@@ -87,4 +87,48 @@ class PageController extends Controller
         return $regions[$region] ?? [];
     }
 
-}
+    public function getExplore (Request $request)
+        {
+            // Lấy danh sách loại hình du lịch
+            $travelTypes = TravelType::where('status', 0)->get();
+
+            // Lấy bộ lọc từ request
+            $travelTypeId = $request->get('type');
+            $province = $request->get('province');
+            $region = $request->get('region'); // Lấy miền từ request
+
+            // Truy vấn cơ bản: chỉ lấy những địa điểm còn hoạt động
+            $query = Destination::where('status', '!=', 1);
+
+            // Lọc theo loại hình du lịch nếu có
+            if ($travelTypeId) {
+                $query->where('travel_type_id', $travelTypeId);
+            }
+
+            // Lọc theo tỉnh nếu có
+            if ($province) {
+                $query->where('address', 'LIKE', "%$province%");
+            }
+
+            // Lọc theo miền nếu có
+            if ($region) {
+                $provincesInRegion = $this->getProvincesByRegion($region); // Hàm lấy danh sách tỉnh theo miền
+                $query->where(function ($q) use ($provincesInRegion) {
+                    foreach ($provincesInRegion as $province) {
+                        $q->orWhere('address', 'LIKE', "%$province%");
+                    }
+                });
+            }
+
+            // Lấy dữ liệu sau khi đã áp dụng bộ lọc
+            $destinations = $query->get();
+
+            // Gắn hình ảnh chính cho từng địa điểm
+            foreach ($destinations as $destination) {
+                $destination->mainImage = $destination->destinationImages()->where('status', 2)->first();
+            }
+
+            // Trả về view cùng với dữ liệu đã lọc
+            return view('user.layout.explore ', compact('destinations', 'travelTypes', 'travelTypeId', 'province', 'region'));
+        }
+    }

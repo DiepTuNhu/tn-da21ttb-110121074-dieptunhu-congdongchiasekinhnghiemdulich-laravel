@@ -12,7 +12,7 @@
 
       <ul class="nav-links" id="nav-links">
         <li><a class="{{request() -> is('/') ? 'active' : ''}}" href="{{ route('page.index') }}">Trang Chủ</a></li>
-        <li><a href="./khampha.html">Khám phá</a></li>
+        <li><a class="{{request() -> is('explore') ? 'active' : ''}}" href="{{ route('page.explore') }}">Khám phá</a></li>
         <li><a class="{{request() -> is('community') ? 'active' : ''}}" href="{{ route('page.community') }}">Cộng đồng</a></li>
         
         <li><a href="./nhiemvu.html">Nhiệm vụ</a></li>

@@ -1,27 +1,27 @@
 @extends('user.master')
 @section('content')
   <header class="explore-header">
-    <h1>Góc chia sẻ</h1>
+    <h1>Khám phá địa điểm</h1>
     <p>Khám phá những bài chia sẻ về địa điểm du lịch khác nhau trên khắp Việt Nam!</p>
   </header>
 
   <div class="filters">
     {{-- Dropdown vùng miền --}}
     <select id="vungmien" class="form-select">
-    <option value="">Chọn vùng miền</option>
-    <option value="Bắc" {{ isset($region) && $region == 'Bắc' ? 'selected' : '' }}>Miền Bắc</option>
-    <option value="Trung" {{ isset($region) && $region == 'Trung' ? 'selected' : '' }}>Miền Trung</option>
-    <option value="Nam" {{ isset($region) && $region == 'Nam' ? 'selected' : '' }}>Miền Nam</option>
-</select>
+      <option value="">Chọn vùng miền</option>
+      <option value="Bắc" {{ isset($region) && $region == 'Bắc' ? 'selected' : '' }}>Miền Bắc</option>
+      <option value="Trung" {{ isset($region) && $region == 'Trung' ? 'selected' : '' }}>Miền Trung</option>
+      <option value="Nam" {{ isset($region) && $region == 'Nam' ? 'selected' : '' }}>Miền Nam</option>
+    </select>
 
-<select id="tinh" class="form-select">
+  <select id="tinh" class="form-select">
     <option value="">Chọn tỉnh / thành</option>
     @if(isset($province))
         <option value="{{ $province }}" selected>{{ $province }}</option>
     @endif
-</select>
+  </select>
 
-<select id="travelTypeDropdown" class="form-select">
+  <select id="travelTypeDropdown" class="form-select">
     <option value="">Chọn loại hình du lịch</option>
     @foreach($travelTypes as $type)
         @if($type->status == 0)
@@ -30,25 +30,13 @@
             </option>
         @endif
     @endforeach
-</select>
+  </select>
 
 
     <input type="text" class="search-input" placeholder="🔍 Tìm địa điểm, bài viết..." />
-    <button id="toggle-form-btn" class="toggle-submit-btn">✍️ Đăng bài chia sẻ</button>
+
   </div>
 
-  <section class="submit-section" id="submit-section" style="display: none">
-    <h2>📝 Đăng bài chia sẻ của bạn</h2>
-    <form class="submit-form">
-      <input type="text" placeholder="Tiêu đề bài viết" required />
-      <textarea placeholder="Nội dung bài viết ngắn gọn..." rows="4" required></textarea>
-      <input type="text" placeholder="Địa điểm (ví dụ: TP. Đà Lạt)" required />
-      <input type="text" placeholder="Chi phí (ví dụ: Miễn phí, 1-3 triệu...)" />
-      <input type="date" placeholder="Ngày đi" />
-      <input type="url" placeholder="Link ảnh (hoặc để trống nếu chưa có)" />
-      <button type="submit">Đăng bài</button>
-    </form>
-  </section>
 
   <div class="explore-grid">
   @foreach ($destinations as $destination)
@@ -160,20 +148,9 @@
             if (type) urlParams.set('type', type);
             else urlParams.delete('type');
 
-            window.location.href = `{{ route('page.community') }}?${urlParams.toString()}`;
+            window.location.href = `{{ route('page.explore') }}?${urlParams.toString()}`;
         });
     });
-</script>
-{{-- Đăng bài --}}
-<script>
-  const toggleBtn = document.getElementById("toggle-form-btn");
-  const submitSection = document.getElementById("submit-section");
-
-  toggleBtn.addEventListener("click", () => {
-    const isVisible = submitSection.style.display === "block";
-    submitSection.style.display = isVisible ? "none" : "block";
-    toggleBtn.textContent = isVisible ? "✍️ Đăng bài chia sẻ" : "✖️ Đóng lại";
-  });
 </script>
 
 </section>

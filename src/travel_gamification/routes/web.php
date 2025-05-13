@@ -39,6 +39,7 @@ use App\Http\Controllers\Admin\DestinationImagesController;
 Route::get('/', [PageController::class, 'index'])->name('page.index');
 
 Route::get('/community', [PageController::class, 'getCommunity'])->name('page.community');
+Route::get('/explore', [PageController::class, 'getExplore'])->name('page.explore');
 
 //LOGIN
 Route::get('/login',[LoginController::class,'index'])->name('login');
