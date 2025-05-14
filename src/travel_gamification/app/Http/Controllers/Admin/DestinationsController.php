@@ -8,6 +8,9 @@ use App\Models\Destination;
 use App\Models\TravelType;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
+use App\Helpers\GeoHelper;
+use App\Models\Utility;
+use App\Models\DestinationUtility;
 
 class DestinationsController extends Controller
 {
@@ -126,6 +129,27 @@ class DestinationsController extends Controller
         $destination->transportation = $request->transportation;
         $destination->user_id = auth()->id();
         $destination->save();
+
+        // Tính khoảng cách với tất cả các tiện ích hiện có
+        $utilities = Utility::all();
+        foreach ($utilities as $utility) {
+            $distance = GeoHelper::calculateDistance(
+                $destination->latitude,
+                $destination->longitude,
+                $utility->latitude,
+                $utility->longitude
+            );
+
+            // Nếu khoảng cách <= 5km, thêm vào bảng trung gian
+            if ($distance <= 5) {
+                DestinationUtility::create([
+                    'destination_id' => $destination->id,
+                    'utility_id' => $utility->id,
+                    'distance' => $distance,
+                    'status' => 'nearby',
+                ]);
+            }
+        }
 
         return redirect()->route('destinations.index')->with('success', 'Địa điểm đã được thêm thành công.');
     }

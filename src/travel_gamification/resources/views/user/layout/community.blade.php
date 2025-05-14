@@ -65,7 +65,7 @@
         <h3 style="text-align: center" style="margin: 0">{{ $destination->name }}</h3>
 
         {{-- Hiển thị đặc điểm nổi bật --}}
-        <p class="post-excerpt">
+        <p class="post-excerpt" style="text-align: justify">
           {{ strip_tags($destination->highlights) }}
         </p>
 
@@ -176,4 +176,4 @@
   });
 </script>
 
-</section>
+@endsection

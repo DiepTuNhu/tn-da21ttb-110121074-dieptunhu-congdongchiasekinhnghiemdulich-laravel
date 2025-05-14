@@ -3,10 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="{{ asset('style.css') }}" />
+    {{-- <link rel="icon" type="image/png" href="{{ asset('logo/logo_trang_full.png') }}" /> --}}
     <title>Document</title>
     <style>
-      body {
+      body .container-index{
         background-image: url("https://external-preview.redd.it/TSpXTYLRJTPeS9xy468Jj20MVf0EC0mke38TcJDKoEY.jpg?auto=webp&s=cec93075daae2c45d033833c88d5bcbeffb5252d");
         background-repeat: no-repeat;
         background-size: cover;

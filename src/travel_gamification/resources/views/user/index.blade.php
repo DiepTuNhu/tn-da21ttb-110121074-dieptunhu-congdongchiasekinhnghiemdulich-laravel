@@ -1,5 +1,6 @@
 @extends('user.master')
 @section('content')
+<div class="container-index">
 <div class="slider">
   <!-- Lớp ảnh nền -->
   <div class="slider-images">
@@ -260,8 +261,8 @@
         </div>
       @endforeach
     </div>
-
+</div>
     
     <!-- ... -->
   </div>
-</section>
+@endsection

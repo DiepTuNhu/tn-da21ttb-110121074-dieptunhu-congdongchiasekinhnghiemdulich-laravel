@@ -6,7 +6,7 @@
       </div>
 
       <div class="logo">
-        <img src="logo/logo_mau_full.png" alt="" />
+        <img src="{{ asset('logo/logo_mau_full.png') }}" alt="" />
         <!-- <a href="./logo.png">TravelShare 🌍</a> -->
       </div>
 
@@ -15,9 +15,9 @@
         <li><a class="{{request() -> is('explore') ? 'active' : ''}}" href="{{ route('page.explore') }}">Khám phá</a></li>
         <li><a class="{{request() -> is('community') ? 'active' : ''}}" href="{{ route('page.community') }}">Cộng đồng</a></li>
         
-        <li><a href="./nhiemvu.html">Nhiệm vụ</a></li>
-        <li><a href="./xephang.html">Xếp hạng</a></li>
-        <li><a href="./hoso.html">Hồ sơ</a></li>
+        <li><a class="{{request() -> is('mission') ? 'active' : ''}}" href="{{ route('page.mission') }}">Nhiệm vụ</a></li>
+        <li><a class="{{request() -> is('ranking') ? 'active' : ''}}" href="{{ route('page.ranking') }}">Xếp hạng</a></li>
+        <li><a class="{{request() -> is('profile') ? 'active' : ''}}" href="{{ route('page.profile') }}">Hồ sơ</a></li>
       </ul>
     </div>
     <div class="navbar-search" id="navbarSearch">

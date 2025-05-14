@@ -6,7 +6,7 @@
           <div class="footer-column">
             <!-- <h5 class="footer-title">TravelViet</h5> -->
             <img
-              src="logo/logo_footer.png"
+              src="{{ asset('logo/logo_footer.png') }}"
               alt=""
               width="300px"
               height="150px"
