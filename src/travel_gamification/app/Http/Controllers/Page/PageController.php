@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\TravelType;
 use App\Models\Destination;
 use App\Models\Mission;
+use App\Models\DestinationUtility;
 use Illuminate\Support\Facades\Http;
 
 
@@ -167,13 +168,41 @@ class PageController extends Controller
             return $image->status == 1; // Loại bỏ ảnh có status = 1
         });
 
+        // Lấy danh sách tiện ích gần địa điểm
+        $nearbyUtilities = DestinationUtility::where('destination_id', $id)
+            ->where('distance', '<=', 5) // Chỉ lấy tiện ích trong bán kính 5km
+            ->with('utility') // Lấy thông tin tiện ích qua quan hệ
+            ->get();
+
         // Lấy API Key từ file .env
         $googleMapsApiKey = env('GOOGLE_MAPS_API_KEY');
 
         // Tạo URL Google Maps
         $mapUrl = "https://www.google.com/maps/embed/v1/place?key={$googleMapsApiKey}&q=" . urlencode($destination->name . ', ' . $destination->address);
+    // Phân loại tiện ích theo loại
+    $foodUtilities = $nearbyUtilities->filter(function ($utility) {
+        return $utility->utility->utility_types->name === 'Ẩm thực'; // So sánh theo tên loại
+    });
 
+    $stayUtilities = $nearbyUtilities->filter(function ($utility) {
+        return $utility->utility->utility_types->name === 'Lưu trú'; // So sánh theo tên loại
+    });
         // Trả về view cùng với dữ liệu
-        return view('user.layout.detail_destination', compact('destination', 'mainImage', 'subImages', 'mapUrl'));
+        return view('user.layout.detail_destination', compact('destination', 'mainImage', 'subImages', 'mapUrl', 'foodUtilities', 'stayUtilities'));
+    }
+
+    public function showDestination($id)
+    {
+        // Lấy thông tin địa điểm
+        $destination = Destination::findOrFail($id);
+
+        // Lấy danh sách tiện ích gần địa điểm
+        $nearbyUtilities = DestinationUtility::where('destination_id', $id)
+            ->where('distance', '<=', 5) // Chỉ lấy tiện ích trong bán kính 5km
+            ->with('utility') // Lấy thông tin tiện ích qua quan hệ
+            ->get();
+
+        // Truyền dữ liệu sang view
+        return view('user.layout.detail_destination', compact('destination', 'nearbyUtilities'));
     }
 }

@@ -11,6 +11,7 @@ use App\Models\DestinationUtility;
 use App\Helpers\GeoHelper;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
+use App\Services\DistanceService;
 
 class UtilitiesController extends Controller
 {
@@ -36,7 +37,7 @@ class UtilitiesController extends Controller
     }
 
     
-    public function store(Request $request)
+    public function store(Request $request, DistanceService $distanceService)
     {
         // Validate dữ liệu từ form
         $request->validate([
@@ -118,26 +119,13 @@ class UtilitiesController extends Controller
         // Lưu tiện ích vào cơ sở dữ liệu
         $utility->save();
 
-        // Tính khoảng cách với tất cả các địa điểm hiện có
-        $destinations = Destination::all();
-        foreach ($destinations as $destination) {
-            $distance = GeoHelper::calculateDistance(
-                $utility->latitude,
-                $utility->longitude,
-                $destination->latitude,
-                $destination->longitude
-            );
-
-            // Nếu khoảng cách <= 5km, thêm vào bảng trung gian
-            if ($distance <= 5) {
-                DestinationUtility::create([
-                    'destination_id' => $destination->id,
-                    'utility_id' => $utility->id,
-                    'distance' => $distance,
-                    'status' => 'nearby',
-                ]);
-            }
-        }
+        // Tính khoảng cách và lưu vào bảng trung gian
+        $distanceService->calculateAndSaveDistances(
+            $utility->latitude,
+            $utility->longitude,
+            'utility',
+            $utility->id
+        );
 
         return redirect()->route('utilities.index')->with('success', 'Tiện ích đã được thêm thành công!');
     }

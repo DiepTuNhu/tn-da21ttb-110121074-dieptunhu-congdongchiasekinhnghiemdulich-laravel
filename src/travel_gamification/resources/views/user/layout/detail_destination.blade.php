@@ -78,191 +78,44 @@
         <h3 class="section-title">Tiện ích xung quanh</h3>
 
         <div class="utility-tabs">
-          <button class="tab-btn active" data-tab="food">🍽 Ẩm thực</button>
-          <button class="tab-btn" data-tab="stay">🛏 Lưu trú</button>
-          <button class="tab-btn" data-tab="shop">🛍 Mua sắm</button>
-          <button class="tab-btn" data-tab="activity">🧭 Hoạt động</button>
+            <button class="tab-btn active" data-tab="food">🍽 Ẩm thực</button>
+            <button class="tab-btn" data-tab="stay">🛏 Lưu trú</button>
         </div>
 
         <div class="utility-content active" id="food">
-          <div class="utility-grid">
-            <div class="utility-card">
-              <img src="../food1.jpg" alt="" />
-              <div class="content">
-                <h4>Bánh căn</h4>
-                <p>Món đặc sản Đà Lạt</p>
-              </div>
+            <div class="utility-grid">
+                @forelse ($foodUtilities as $utility)
+                    <div class="utility-card">
+                        <img src="{{ $utility->utility->image ? asset('storage/utility_image/' . $utility->utility->image) : asset('default-image.png') }}" 
+                             alt="{{ $utility->utility->name }}" />
+                        <div class="content">
+                            <h4>{{ $utility->utility->name }}</h4>
+                            {{-- <p>{{ $utility->utility->description ?? 'Thông tin đang được cập nhật.' }}</p> --}}
+                            <p><strong>Khoảng cách:</strong> {{ number_format($utility->distance, 2) }} km</p>
+                        </div>
+                    </div>
+                @empty
+                    <p>Không có tiện ích nào thuộc loại Ẩm thực.</p>
+                @endforelse
             </div>
-            <div class="utility-card">
-              <img src="../food2.jpg" alt="" />
-              <div class="content">
-                <h4>Lẩu gà lá é</h4>
-                <p>Món ăn nóng hổi cho thời tiết lạnh</p>
-              </div>
-            </div>
-            <div class="utility-card">
-              <img src="../food1.jpg" alt="" />
-              <div class="content">
-                <h4>Bánh căn</h4>
-                <p>Món đặc sản Đà Lạt</p>
-              </div>
-            </div>
-            <div class="utility-card">
-              <img src="../food2.jpg" alt="" />
-              <div class="content">
-                <h4>Lẩu gà lá é</h4>
-                <p>Món ăn nóng hổi cho thời tiết lạnh</p>
-              </div>
-            </div>
-            <div class="utility-card">
-              <img src="../food1.jpg" alt="" />
-              <div class="content">
-                <h4>Bánh căn</h4>
-                <p>Món đặc sản Đà Lạt</p>
-              </div>
-            </div>
-            <div class="utility-card">
-              <img src="../food2.jpg" alt="" />
-              <div class="content">
-                <h4>Lẩu gà lá é</h4>
-                <p>Món ăn nóng hổi cho thời tiết lạnh</p>
-              </div>
-            </div>
-          </div>
         </div>
 
         <div class="utility-content" id="stay">
-          <div class="utility-grid">
-            <div class="utility-card">
-              <img src="../homestay.jpg" alt="" />
-              <div class="content">
-                <h4>Sunny Homestay</h4>
-                <p>Gần trung tâm, view đồi</p>
-              </div>
+            <div class="utility-grid">
+                @forelse ($stayUtilities as $utility)
+                    <div class="utility-card">
+                        <img src="{{ $utility->utility->image ? asset('storage/utility_image/' . $utility->utility->image) : asset('default-image.png') }}" 
+                             alt="{{ $utility->utility->name }}" />
+                        <div class="content">
+                            <h4>{{ $utility->utility->name }}</h4>
+                            {{-- <p>{{ $utility->utility->description ?? 'Thông tin đang được cập nhật.' }}</p> --}}
+                            <p><strong>Khoảng cách:</strong> {{ number_format($utility->distance, 2) }} km</p>
+                        </div>
+                    </div>
+                @empty
+                    <p>Không có tiện ích nào thuộc loại Lưu trú.</p>
+                @endforelse
             </div>
-            <div class="utility-card">
-              <img src="../homestay.jpg" alt="" />
-              <div class="content">
-                <h4>Sunny Homestay</h4>
-                <p>Gần trung tâm, view đồi</p>
-              </div>
-            </div>
-            <div class="utility-card">
-              <img src="../homestay.jpg" alt="" />
-              <div class="content">
-                <h4>Sunny Homestay</h4>
-                <p>Gần trung tâm, view đồi</p>
-              </div>
-            </div>
-            <div class="utility-card">
-              <img src="../homestay.jpg" alt="" />
-              <div class="content">
-                <h4>Sunny Homestay</h4>
-                <p>Gần trung tâm, view đồi</p>
-              </div>
-            </div>
-            <div class="utility-card">
-              <img src="../homestay.jpg" alt="" />
-              <div class="content">
-                <h4>Sunny Homestay</h4>
-                <p>Gần trung tâm, view đồi</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="utility-content" id="shop">
-          <div class="utility-grid">
-            <div class="utility-card">
-              <img src="../cho.jpg" alt="" />
-              <div class="content">
-                <h4>Chợ Đà Lạt</h4>
-                <p>Đặc sản, rau củ, đồ lưu niệm</p>
-              </div>
-            </div>
-            <div class="utility-card">
-              <img src="../cho.jpg" alt="" />
-              <div class="content">
-                <h4>Chợ Đà Lạt</h4>
-                <p>Đặc sản, rau củ, đồ lưu niệm</p>
-              </div>
-            </div>
-            <div class="utility-card">
-              <img src="../cho.jpg" alt="" />
-              <div class="content">
-                <h4>Chợ Đà Lạt</h4>
-                <p>Đặc sản, rau củ, đồ lưu niệm</p>
-              </div>
-            </div>
-            <div class="utility-card">
-              <img src="../cho.jpg" alt="" />
-              <div class="content">
-                <h4>Chợ Đà Lạt</h4>
-                <p>Đặc sản, rau củ, đồ lưu niệm</p>
-              </div>
-            </div>
-            <div class="utility-card">
-              <img src="../cho.jpg" alt="" />
-              <div class="content">
-                <h4>Chợ Đà Lạt</h4>
-                <p>Đặc sản, rau củ, đồ lưu niệm</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="utility-content" id="activity">
-          <div class="utility-grid">
-            <div class="utility-card">
-              <img src="../zipline.jpg" alt="" />
-              <div class="content">
-                <h4>Trượt zipline</h4>
-                <p>Trải nghiệm mạo hiểm tại thác</p>
-              </div>
-            </div>
-            <div class="utility-card">
-              <img src="../zipline.jpg" alt="" />
-              <div class="content">
-                <h4>Trượt zipline</h4>
-                <p>Trải nghiệm mạo hiểm tại thác</p>
-              </div>
-            </div>
-            <div class="utility-card">
-              <img src="../zipline.jpg" alt="" />
-              <div class="content">
-                <h4>Trượt zipline</h4>
-                <p>Trải nghiệm mạo hiểm tại thác</p>
-              </div>
-            </div>
-            <div class="utility-card">
-              <img src="../zipline.jpg" alt="" />
-              <div class="content">
-                <h4>Trượt zipline</h4>
-                <p>Trải nghiệm mạo hiểm tại thác</p>
-              </div>
-            </div>
-            <div class="utility-card">
-              <img src="../zipline.jpg" alt="" />
-              <div class="content">
-                <h4>Trượt zipline</h4>
-                <p>Trải nghiệm mạo hiểm tại thác</p>
-              </div>
-            </div>
-            <div class="utility-card">
-              <img src="../zipline.jpg" alt="" />
-              <div class="content">
-                <h4>Trượt zipline</h4>
-                <p>Trải nghiệm mạo hiểm tại thác</p>
-              </div>
-            </div>
-            <div class="utility-card">
-              <img src="../zipline.jpg" alt="" />
-              <div class="content">
-                <h4>Trượt zipline</h4>
-                <p>Trải nghiệm mạo hiểm tại thác</p>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -283,19 +136,19 @@
 </script>
 <!-- tab nội dung tiện ích -->
 <script>
-  const tabButtons = document.querySelectorAll(".tab-btn");
-  const tabContents = document.querySelectorAll(".utility-content");
+    const tabButtons = document.querySelectorAll(".tab-btn");
+    const tabContents = document.querySelectorAll(".utility-content");
 
-  tabButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      // Xóa active cũ
-      tabButtons.forEach((btn) => btn.classList.remove("active"));
-      tabContents.forEach((content) => content.classList.remove("active"));
+    tabButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            // Xóa class "active" khỏi tất cả các nút và nội dung
+            tabButtons.forEach((btn) => btn.classList.remove("active"));
+            tabContents.forEach((content) => content.classList.remove("active"));
 
-      // Thêm active mới
-      button.classList.add("active");
-      document.getElementById(button.dataset.tab).classList.add("active");
+            // Thêm class "active" vào nút và nội dung được chọn
+            button.classList.add("active");
+            document.getElementById(button.dataset.tab).classList.add("active");
+        });
     });
-  });
 </script>
 @endsection

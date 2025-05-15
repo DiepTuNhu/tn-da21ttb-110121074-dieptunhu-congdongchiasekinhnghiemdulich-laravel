@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Http;
 use App\Helpers\GeoHelper;
 use App\Models\Utility;
 use App\Models\DestinationUtility;
+use App\Services\DistanceService;
 
 class DestinationsController extends Controller
 {
@@ -39,7 +40,7 @@ class DestinationsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, DistanceService $distanceService)
     {
         $this->validate($request, [
             'name' => 'required|string|max:255|unique:destinations,name',
@@ -130,26 +131,13 @@ class DestinationsController extends Controller
         $destination->user_id = auth()->id();
         $destination->save();
 
-        // Tính khoảng cách với tất cả các tiện ích hiện có
-        $utilities = Utility::all();
-        foreach ($utilities as $utility) {
-            $distance = GeoHelper::calculateDistance(
-                $destination->latitude,
-                $destination->longitude,
-                $utility->latitude,
-                $utility->longitude
-            );
-
-            // Nếu khoảng cách <= 5km, thêm vào bảng trung gian
-            if ($distance <= 5) {
-                DestinationUtility::create([
-                    'destination_id' => $destination->id,
-                    'utility_id' => $utility->id,
-                    'distance' => $distance,
-                    'status' => 'nearby',
-                ]);
-            }
-        }
+        // Tính khoảng cách và lưu vào bảng trung gian
+        $distanceService->calculateAndSaveDistances(
+            $destination->latitude,
+            $destination->longitude,
+            'destination',
+            $destination->id
+        );
 
         return redirect()->route('destinations.index')->with('success', 'Địa điểm đã được thêm thành công.');
     }
@@ -157,9 +145,17 @@ class DestinationsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $destination = Destination::findOrFail($id);
+
+        // Lấy danh sách tiện ích gần địa điểm
+        $nearbyUtilities = DestinationUtility::where('destination_id', $id)
+            ->where('distance', '<=', 5) // Chỉ lấy tiện ích trong bán kính 5km
+            ->with('utility') // Lấy thông tin tiện ích qua quan hệ
+            ->get();
+
+        return view('user.layout.detail_destination', compact('destination', 'nearbyUtilities'));
     }
 
     /**
@@ -245,7 +241,7 @@ class DestinationsController extends Controller
         $destination->local_cuisine = $request->local_cuisine ?: null;
         $destination->transportation = $request->transportation ?: null;
         $destination->travel_type_id = $request->id_type ?: null;
-        $destination->status = $request->status ?: null;
+        $destination->status = $request->has('status') ? $request->status : $destination->status;
 
         $destination->save();
 
