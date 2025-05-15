@@ -7,6 +7,8 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
     <!-- jQuery -->
@@ -68,41 +70,32 @@
         
 
         <li class="nav-item">
-          <a class="nav-link" href="#" onclick="toggleDropdown(event, 'locationDropdown1')">
-            Quản lý địa điểm
-          </a>
-          <ul class="nav flex-column px-3 collapse" id="locationDropdown1">
-            <li class="nav-item"><a class="nav-link" href="{{route('travel_types.index')}}" onclick="loadPage(event, this)">Loại hình du lịch</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{route('destinations.index')}}" onclick="loadPage(event, this)">Địa điểm du lịch</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{route('utility_types.index')}}" onclick="loadPage(event, this)">Loại tiện ích</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{route('utilities.index')}}" onclick="loadPage(event, this)">Tiện ích</a></li>
-          </ul>
-        </li>
-        {{-- <li class="nav-item">
-          <a class="nav-link" href="#" onclick="toggleDropdown(event, 'locationDropdown2')">
-            Đơn vị hành chính
-          </a>
-          <ul class="nav flex-column px-3 collapse" id="locationDropdown2">
-            <li class="nav-item"><a class="nav-link" href="{{ route('provinces.index') }}" onclick="loadPage(event, this)">Tỉnh</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ route('districts.index') }}" onclick="loadPage(event, this)">Huyện</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ route('wards.index') }}" onclick="loadPage(event, this)">Xã</a></li>
-          </ul>
-        </li> --}}
-        
-        <li class="nav-item"><a class="nav-link" href="{{route('badges.index')}}" onclick="loadPage(event, this)">Huy hiệu</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{route('missions.index')}}" onclick="loadPage(event, this)">Nhiệm vụ</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{route('roles.index')}}" onclick="loadPage(event, this)">Phân quyền</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{route('users.index')}}" onclick="loadPage(event, this)">Người dùng</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{route('slides.index')}}" onclick="loadPage(event, this)">Trình chiếu</a></li>
-        {{-- <li class="nav-item"><a class="nav-link" href="#">Báo cáo & Đánh giá</a></li> --}}
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-          @csrf
-        </form>
-        <li class="nav-item">
-          <a class="nav-link text-danger" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-            Đăng xuất
-          </a>
-        </li>
+  <a class="nav-link" href="#" onclick="toggleDropdown(event, 'locationDropdown1')">
+    <i class="bi bi-geo-alt"></i> Quản lý địa điểm
+  </a>
+  <ul class="nav flex-column px-3 collapse" id="locationDropdown1">
+    <li class="nav-item"><a class="nav-link" href="{{route('travel_types.index')}}" onclick="loadPage(event, this)"><i class="bi bi-map"></i> Loại hình du lịch</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{route('destinations.index')}}" onclick="loadPage(event, this)"><i class="bi bi-building"></i> Địa điểm du lịch</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{route('utility_types.index')}}" onclick="loadPage(event, this)"><i class="bi bi-box"></i> Loại tiện ích</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{route('utilities.index')}}" onclick="loadPage(event, this)"><i class="bi bi-plug"></i> Tiện ích</a></li>
+  </ul>
+</li>
+
+<li class="nav-item"><a class="nav-link" href="{{route('badges.index')}}" onclick="loadPage(event, this)"><i class="bi bi-award"></i> Huy hiệu</a></li>
+<li class="nav-item"><a class="nav-link" href="{{route('missions.index')}}" onclick="loadPage(event, this)"><i class="bi bi-flag"></i> Nhiệm vụ</a></li>
+<li class="nav-item"><a class="nav-link" href="{{route('roles.index')}}" onclick="loadPage(event, this)"><i class="bi bi-person-lock"></i> Phân quyền</a></li>
+<li class="nav-item"><a class="nav-link" href="{{route('users.index')}}" onclick="loadPage(event, this)"><i class="bi bi-people"></i> Người dùng</a></li>
+<li class="nav-item"><a class="nav-link" href="{{route('slides.index')}}" onclick="loadPage(event, this)"><i class="bi bi-sliders"></i> Trình chiếu</a></li>
+{{-- <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-graph-up"></i> Báo cáo & Đánh giá</a></li> --}}
+<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+  @csrf
+</form>
+<li class="nav-item">
+  <a class="nav-link text-danger" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+    <i class="bi bi-box-arrow-right"></i> Đăng xuất
+  </a>
+</li>
+
       </ul>
     </div>
     <div class="main-content" id="main-content">

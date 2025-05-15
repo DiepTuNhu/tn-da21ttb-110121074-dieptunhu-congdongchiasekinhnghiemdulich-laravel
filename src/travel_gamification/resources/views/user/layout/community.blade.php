@@ -37,18 +37,44 @@
     <button id="toggle-form-btn" class="toggle-submit-btn">✍️ Đăng bài chia sẻ</button>
   </div>
 
-  <section class="submit-section" id="submit-section" style="display: none">
+  <section class="submit-section" id="submit-section" style="display: none;">
     <h2>📝 Đăng bài chia sẻ của bạn</h2>
-    <form class="submit-form">
-      <input type="text" placeholder="Tiêu đề bài viết" required />
-      <textarea placeholder="Nội dung bài viết ngắn gọn..." rows="4" required></textarea>
-      <input type="text" placeholder="Địa điểm (ví dụ: TP. Đà Lạt)" required />
-      <input type="text" placeholder="Chi phí (ví dụ: Miễn phí, 1-3 triệu...)" />
-      <input type="date" placeholder="Ngày đi" />
-      <input type="url" placeholder="Link ảnh (hoặc để trống nếu chưa có)" />
-      <button type="submit">Đăng bài</button>
+    <form class="submit-form" method="POST" action="">
+        @csrf
+        <div class="form-group">
+            <label for="title" class="form-label">Tiêu đề bài viết</label>
+            <input type="text" id="title" name="title" class="form-control" placeholder="Tiêu đề bài viết" required />
+        </div>
+
+        <div class="form-group">
+            <label for="content" class="form-label">Nội dung bài viết</label>
+            <textarea id="content" name="content" class="form-control" rows="6" placeholder="Nội dung bài viết ngắn gọn..." required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="location" class="form-label">Địa điểm</label>
+            <input type="text" id="location" name="location" class="form-control" placeholder="Địa điểm (ví dụ: TP. Đà Lạt)" required />
+        </div>
+
+        <div class="form-group">
+            <label for="cost" class="form-label">Chi phí</label>
+            <input type="text" id="cost" name="cost" class="form-control" placeholder="Chi phí (ví dụ: Miễn phí, 1-3 triệu...)" />
+        </div>
+
+        <div class="form-group">
+            <label for="date" class="form-label">Ngày đi</label>
+            <input type="date" id="date" name="date" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label for="image" class="form-label">Link ảnh</label>
+            <input type="url" id="image" name="image" class="form-control" placeholder="Link ảnh (hoặc để trống nếu chưa có)" />
+        </div>
+
+        <button type="submit" class="btn-submit">Đăng bài</button>
     </form>
-  </section>
+</section>
+
 
   <div class="explore-grid">
   @foreach ($destinations as $destination)
@@ -164,16 +190,29 @@
         });
     });
 </script>
-{{-- Đăng bài --}}
-<script>
-  const toggleBtn = document.getElementById("toggle-form-btn");
-  const submitSection = document.getElementById("submit-section");
+            <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+            <script>
+                ClassicEditor
+                    .create(document.querySelector('#content'), {
+                        ckfinder: {
+                            uploadUrl: '{{ route('ckeditor.upload') }}', // Đường dẫn xử lý upload ảnh
+                        },
+                        toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', '|', 'insertTable', 'uploadImage', 'undo', 'redo']
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            </script>
+  {{-- Đăng bài --}}
+  <script>
+    const toggleBtn = document.getElementById("toggle-form-btn");
+    const submitSection = document.getElementById("submit-section");
 
-  toggleBtn.addEventListener("click", () => {
-    const isVisible = submitSection.style.display === "block";
-    submitSection.style.display = isVisible ? "none" : "block";
-    toggleBtn.textContent = isVisible ? "✍️ Đăng bài chia sẻ" : "✖️ Đóng lại";
-  });
-</script>
+    toggleBtn.addEventListener("click", () => {
+      const isVisible = submitSection.style.display === "block";
+      submitSection.style.display = isVisible ? "none" : "block";
+      toggleBtn.textContent = isVisible ? "✍️ Đăng bài chia sẻ" : "✖️ Đóng lại";
+    });
+  </script>
 
 @endsection
