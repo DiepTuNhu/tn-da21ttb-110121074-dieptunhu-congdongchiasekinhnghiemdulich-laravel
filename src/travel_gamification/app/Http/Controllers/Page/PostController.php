@@ -14,7 +14,8 @@ class PostController extends Controller
     {
         $destinations = Destination::all();
         // ... các dữ liệu khác ...
-        return view('user.layout.community', compact('destinations'));
+        $isLoggedIn = Auth::check();
+        return view('user.layout.community', compact('destinations', 'isLoggedIn'));
     }
     
     public function store(Request $request)
@@ -43,4 +44,9 @@ class PostController extends Controller
         return redirect()->route('page.community')->with('success', 'Đăng bài thành công!');
     }
 
+    public function showDetailPost($id)
+    {
+        $post = Post::with(['user', 'destination', 'destination.destinationImages'])->findOrFail($id);
+        return view('user.layout.detail_post', compact('post'));
+    }
 }

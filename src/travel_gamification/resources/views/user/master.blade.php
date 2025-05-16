@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{{ asset('style.css') }}" />
+    <!-- Font Awesome 6 CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<!-- Thêm vào <head> của layout hoặc file blade chi tiết bài viết -->
+<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/styles.css">
     {{-- <link rel="icon" type="image/png" href="{{ asset('logo/logo_trang_full.png') }}" /> --}}
     <title>Cộng đồng chia sẻ kinh nghiệm du lịch</title>
     <style>
@@ -61,19 +65,7 @@
       showSlide(index);
     });
   });
-</script>
-<!-- Ẩn thanh tìm kiếm khi đang ở trang chủ -->
-
-<script>
-  // Kiểm tra nếu đang ở trang chủ
-  const isHomepage = window.location.pathname.endsWith("trangchu.html") || window.location.pathname === "/";
-  const navbarSearch = document.getElementById("navbarSearch");
-
-  if (isHomepage && navbarSearch) {
-    navbarSearch.classList.add("hidden");
-  }
-</script>
-<script>
+  
   function toggleDropdown() {
       const dropdown = document.getElementById('user-dropdown');
       dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';

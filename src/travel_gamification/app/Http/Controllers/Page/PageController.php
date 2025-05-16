@@ -8,7 +8,9 @@ use App\Models\TravelType;
 use App\Models\Destination;
 use App\Models\Mission;
 use App\Models\DestinationUtility;
+use App\Models\Post;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth;
 
 
 class PageController extends Controller
@@ -18,6 +20,8 @@ class PageController extends Controller
     // }
     public function index()
     {
+        $posts = Post::with(['user', 'destination', 'destination.destinationImages'])->orderBy('created_at', 'desc')->get();
+        $isLoggedIn = Auth::check();
         // Lấy tất cả các loại hình du lịch từ bảng travel_types
         $travelTypes = TravelType::all();
         // Lấy tất cả các điểm đến từ bảng destination
@@ -29,7 +33,7 @@ class PageController extends Controller
         
 
         // Truyền dữ liệu sang view
-        return view('user.index', compact('travelTypes', 'destinations'));
+        return view('user.index', compact('travelTypes', 'destinations','posts', 'isLoggedIn'));
     }
 
     public function getCommunity(Request $request)
@@ -73,8 +77,20 @@ class PageController extends Controller
             $destination->mainImage = $destination->destinationImages()->where('status', 2)->first();
         }
 
+        // Lấy danh sách bài viết mới nhất
+        $posts = Post::with(['user', 'destination', 'destination.destinationImages'])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
         // Trả về view cùng với dữ liệu đã lọc
-        return view('user.layout.community', compact('destinations', 'travelTypes', 'travelTypeId', 'province', 'region'));
+        return view('user.layout.community', compact(
+            'destinations',
+            'travelTypes',
+            'travelTypeId',
+            'province',
+            'region',
+            'posts'
+        ));
     }
 
     // Hàm trả về danh sách tỉnh theo miền
@@ -131,7 +147,7 @@ class PageController extends Controller
         }
 
         // Trả về view cùng với dữ liệu đã lọc
-        return view('user.layout.explore ', compact('destinations', 'travelTypes', 'travelTypeId', 'province', 'region'));
+        return view('user.layout.explore', compact('destinations', 'travelTypes', 'travelTypeId', 'province', 'region'));
     }
 
 
@@ -180,13 +196,13 @@ class PageController extends Controller
         // Tạo URL Google Maps
         $mapUrl = "https://www.google.com/maps/embed/v1/place?key={$googleMapsApiKey}&q=" . urlencode($destination->name . ', ' . $destination->address);
     // Phân loại tiện ích theo loại
-    $foodUtilities = $nearbyUtilities->filter(function ($utility) {
-        return $utility->utility->utility_types->name === 'Ẩm thực'; // So sánh theo tên loại
-    });
+        $foodUtilities = $nearbyUtilities->filter(function ($utility) {
+            return $utility->utility->utility_types->name === 'Ẩm thực'; // So sánh theo tên loại
+        });
 
-    $stayUtilities = $nearbyUtilities->filter(function ($utility) {
-        return $utility->utility->utility_types->name === 'Lưu trú'; // So sánh theo tên loại
-    });
+        $stayUtilities = $nearbyUtilities->filter(function ($utility) {
+            return $utility->utility->utility_types->name === 'Lưu trú'; // So sánh theo tên loại
+        });
         // Trả về view cùng với dữ liệu
         return view('user.layout.detail_destination', compact('destination', 'mainImage', 'subImages', 'mapUrl', 'foodUtilities', 'stayUtilities'));
     }

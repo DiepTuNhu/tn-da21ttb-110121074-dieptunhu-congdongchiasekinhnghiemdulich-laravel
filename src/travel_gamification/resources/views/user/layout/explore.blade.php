@@ -50,7 +50,7 @@
 
         {{-- Hiển thị tên địa điểm --}}
         <div class="post-content-explore">
-          <h3 style="text-align: center; margin: 0">{{ $destination->name }}</h3>
+          <h3 style="text-align: center">{{ $destination->name }}</h3>
 
           {{-- Hiển thị đặc điểm nổi bật --}}
           <p class="post-excerpt" style="text-align: justify">
@@ -73,7 +73,7 @@
             {{-- Footer thông tin --}}
             <div class="info-footer">
               <span><i class="fas fa-calendar-alt"></i> {{ $destination->updated_at->format('d/m/Y') }}</span>
-              <span><i class="fas fa-heart" style="color: #e74c3c"></i> 135 lượt thích</span>
+              {{-- <span><i class="fas fa-heart" style="color: #e74c3c"></i> 135 lượt thích</span> --}}
             </div>
           </div>
         </div>
@@ -129,7 +129,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             urlParams.set('region', region);
             urlParams.delete('province'); // reset tỉnh
-            window.location.href = `{{ route('page.community') }}?${urlParams.toString()}`;
+            window.location.href = `{{ route('page.explore') }}?${urlParams.toString()}`;
         });
 
         // Sự kiện chọn tỉnh
@@ -137,7 +137,7 @@
             const province = $(this).val();
             const urlParams = new URLSearchParams(window.location.search);
             urlParams.set('province', province);
-            window.location.href = `{{ route('page.community') }}?${urlParams.toString()}`;
+            window.location.href = `{{ route('page.explore') }}?${urlParams.toString()}`;
         });
 
         // Sự kiện chọn loại hình du lịch

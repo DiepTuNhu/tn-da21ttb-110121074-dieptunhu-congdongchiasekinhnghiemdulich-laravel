@@ -10,4 +10,14 @@ class Post extends Model
     use HasFactory;
 
     protected $fillable = ['title', 'content', 'address', 'status', 'user_id'];
+
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class, 'user_id');
+    }
+    
+    public function destination()
+    {
+        return $this->belongsTo(\App\Models\Destination::class, 'destination_id');
+    }
 }

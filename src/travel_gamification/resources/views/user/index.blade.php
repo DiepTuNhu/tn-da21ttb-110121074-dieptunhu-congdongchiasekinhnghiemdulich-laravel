@@ -60,10 +60,10 @@
 </div>
 
 <!-- Font Awesome Icon -->
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-/>
+
+<!-- Font Awesome 6 CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <section class="intro-section">
   <h2>Chào mừng đến với Cộng Đồng Du Lịch Trải Nghiệm!</h2>
   <p>
