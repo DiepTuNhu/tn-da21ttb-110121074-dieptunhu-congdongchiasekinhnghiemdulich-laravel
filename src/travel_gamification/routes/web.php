@@ -20,6 +20,7 @@ use App\Http\Controllers\Admin\MissionsController;
 use App\Http\Controllers\Admin\UtilitiesController;
 use App\Http\Controllers\Admin\DestinationsController;
 use App\Http\Controllers\Admin\DestinationImagesController;
+use App\Http\Controllers\Page\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,8 @@ use App\Http\Controllers\Admin\DestinationImagesController;
 Route::get('/', [PageController::class, 'index'])->name('page.index');
 
 Route::get('/community', [PageController::class, 'getCommunity'])->name('page.community');
+Route::post('/community/post', [PostController::class, 'store'])->name('community.post');
+
 Route::get('/explore', [PageController::class, 'getExplore'])->name('page.explore');
 Route::get('/mission', [PageController::class, 'getMission'])->name('page.mission');
 Route::get('/ranking', [PageController::class, 'getRanking'])->name('page.ranking');
@@ -63,6 +66,7 @@ Route::post('/logout',[LoginController::class,'logout'])->name('logout');
 
 // ADMIN=======================================================================================================================================
 Route::post('/ckeditor/upload', [CKEditorController::class, 'upload'])->name('ckeditor.upload');
+
 Route::prefix('admin')->group(function () {
 
 //TYPE LOCATION------------------------------------------------------------------------------------------

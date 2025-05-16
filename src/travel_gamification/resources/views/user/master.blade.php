@@ -79,12 +79,18 @@
       dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
   }
 
-  // Đóng dropdown khi nhấp ra ngoài
-  document.addEventListener('click', function (event) {
-      const dropdown = document.getElementById('user-dropdown');
-      const toggle = document.querySelector('.user-dropdown-toggle');
-      if (!toggle.contains(event.target) && !dropdown.contains(event.target)) {
-          dropdown.style.display = 'none';
-      }
-  });
+document.addEventListener('click', function (event) {
+    const dropdown = document.getElementById('user-dropdown');
+    const toggle = document.querySelector('.user-dropdown-toggle');
+
+    if (
+        (toggle && !toggle.contains(event.target)) &&
+        (dropdown && !dropdown.contains(event.target))
+    ) {
+        if (dropdown) {
+            dropdown.style.display = 'none';
+        }
+    }
+});
+
 </script>

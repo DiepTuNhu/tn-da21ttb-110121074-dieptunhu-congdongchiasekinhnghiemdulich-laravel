@@ -147,7 +147,7 @@
                 ClassicEditor
                     .create(document.querySelector('#description'), {
                         ckfinder: {
-                            uploadUrl: '{{ route('ckeditor.upload') }}', // Đường dẫn xử lý upload ảnh
+                            uploadUrl: '{{ route('ckeditor.upload') }}?_token={{ csrf_token() }}'
                         },
                         toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', '|', 'insertTable', 'uploadImage', 'undo', 'redo']
                     })

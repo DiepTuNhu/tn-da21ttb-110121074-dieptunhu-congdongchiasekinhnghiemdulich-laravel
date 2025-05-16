@@ -171,7 +171,7 @@
                 ClassicEditor
                     .create(document.querySelector(selector), {
                         ckfinder: {
-                            uploadUrl: '{{ route('ckeditor.upload') }}',
+                            uploadUrl: '{{ route('ckeditor.upload') }}?_token={{ csrf_token() }}'
                         },
                         toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', '|', 'insertTable', 'uploadImage', 'undo', 'redo']
                     })

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 15, 2025 at 03:00 PM
+-- Generation Time: May 16, 2025 at 03:58 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -364,8 +364,16 @@ CREATE TABLE `posts` (
   `user_id` int UNSIGNED DEFAULT NULL,
   `destination_id` int UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `price` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `posts`
+--
+
+INSERT INTO `posts` (`id`, `title`, `content`, `address`, `status`, `average_rating`, `user_id`, `destination_id`, `created_at`, `updated_at`, `price`) VALUES
+(2, 'Ao Bà Om tuyệt đẹp', '<p>Loren ipsun dolor sit anet, consectetur adipisci elit, sed eiusnod tenpor incidunt ut labore et dolore nagna aliqua. Ut enin ad ninin venian, quis nostrun exercitationen ullan corporis suscipit laboriosan, nisi ut aliquid ex ea connodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillun dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt nollit anin id est laborun.</p><figure class=\"image\"><img src=\"http://127.0.0.1:8000/storage/uploads/1747361227_ao-ba-om.jpg\"><figcaption>Mặt hồ êm ả</figcaption></figure><p>Lorean ipsun dolor sit aneat, conseacteatur adipisci ealit, sead eaiusnod teanpor incidunt ut laborea eat dolorea nagna aliqua. Ut eanin ad ninin veanian, quis nostrun eaxearcitationean ullan corporis suscipit laboriosan, nisi ut aliquid eax eaa connodi conseaquatur. Quis autea iurea reapreaheandearit in voluptatea vealit eassea cillun dolorea eau fugiat nulla pariatur. eaxceapteaur sint obcaeacat cupiditat non proideant, sunt in culpa qui officia deasearunt nollit anin id east laborun.</p><p>Lorem ips dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostr exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cill dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est labor.</p><figure class=\"image\"><img src=\"http://127.0.0.1:8000/storage/uploads/1747361282_aobaom-1.jpg\"></figure><figure class=\"image image-style-side\"><img src=\"http://127.0.0.1:8000/storage/uploads/1747361282_aobaom-6.jpg\"></figure><p>Lorem pisum dolor sit amet, consectetur adpisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscpit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>', 'Phường 8, Thành phố Trà Vinh, Tỉnh Trà Vinh', '0', 0.00, 3, 11, '2025-05-16 03:57:26', '2025-05-16 03:57:26', 'Miễn phí');
 
 -- --------------------------------------------------------
 
@@ -776,7 +784,7 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT for table `destinations`
 --
 ALTER TABLE `destinations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `destination_images`
@@ -830,7 +838,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `ratings`

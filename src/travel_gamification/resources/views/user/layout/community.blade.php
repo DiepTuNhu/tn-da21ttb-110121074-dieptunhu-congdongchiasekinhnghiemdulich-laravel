@@ -39,7 +39,7 @@
 
   <section class="submit-section" id="submit-section" style="display: none;">
     <h2>📝 Đăng bài chia sẻ của bạn</h2>
-    <form class="submit-form" method="POST" action="">
+    <form class="submit-form" method="POST" action="{{ route('community.post') }}">
         @csrf
         <div class="form-group">
             <label for="title" class="form-label">Tiêu đề bài viết</label>
@@ -48,27 +48,23 @@
 
         <div class="form-group">
             <label for="content" class="form-label">Nội dung bài viết</label>
-            <textarea id="content" name="content" class="form-control" rows="6" placeholder="Nội dung bài viết ngắn gọn..." required></textarea>
+            <textarea id="content" name="content" class="form-control" rows="6" placeholder="Nội dung bài viết ngắn gọn..." ></textarea>
         </div>
 
         <div class="form-group">
             <label for="location" class="form-label">Địa điểm</label>
-            <input type="text" id="location" name="location" class="form-control" placeholder="Địa điểm (ví dụ: TP. Đà Lạt)" required />
+            <select id="id_location" name="id_location" class="form-control" required>
+                <option value="">Chọn địa điểm</option>
+                @foreach($destinations as $destination)
+                    <option value="{{ $destination->id }}">{{ $destination->name }}</option>
+                @endforeach
+            </select>
+
         </div>
 
         <div class="form-group">
             <label for="cost" class="form-label">Chi phí</label>
             <input type="text" id="cost" name="cost" class="form-control" placeholder="Chi phí (ví dụ: Miễn phí, 1-3 triệu...)" />
-        </div>
-
-        <div class="form-group">
-            <label for="date" class="form-label">Ngày đi</label>
-            <input type="date" id="date" name="date" class="form-control" />
-        </div>
-
-        <div class="form-group">
-            <label for="image" class="form-label">Link ảnh</label>
-            <input type="url" id="image" name="image" class="form-control" placeholder="Link ảnh (hoặc để trống nếu chưa có)" />
         </div>
 
         <button type="submit" class="btn-submit">Đăng bài</button>
@@ -190,29 +186,62 @@
         });
     });
 </script>
-            <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
-            <script>
-                ClassicEditor
-                    .create(document.querySelector('#content'), {
-                        ckfinder: {
-                            uploadUrl: '{{ route('ckeditor.upload') }}', // Đường dẫn xử lý upload ảnh
-                        },
-                        toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', '|', 'insertTable', 'uploadImage', 'undo', 'redo']
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
-            </script>
-  {{-- Đăng bài --}}
-  <script>
-    const toggleBtn = document.getElementById("toggle-form-btn");
-    const submitSection = document.getElementById("submit-section");
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+<script>
+  let editorInstance;
 
+  ClassicEditor
+      .create(document.querySelector('#content'), {
+          ckfinder: {
+              uploadUrl: '{{ route('ckeditor.upload') }}?_token={{ csrf_token() }}'
+          },
+          toolbar: [
+              'heading', '|', 'bold', 'italic', 'link',
+              'bulletedList', 'numberedList', 'blockQuote', '|',
+              'insertTable', 'uploadImage', 'undo', 'redo'
+          ]
+      })
+      .then(editor => {
+          editorInstance = editor;
+      })
+      .catch(error => {
+          console.error('CKEditor error:', error);
+      });
+
+  document.querySelector("form").addEventListener("submit", function (e) {
+      // Sử dụng instance của CKEditor 5
+      const content = editorInstance.getData();
+      if (content.trim() === "") {
+          e.preventDefault();
+          alert("Vui lòng nhập nội dung bài viết.");
+      }
+  });
+</script>
+
+  {{-- Đăng bài --}}
+<script>
+  const toggleBtn = document.getElementById("toggle-form-btn");
+  const submitSection = document.getElementById("submit-section");
+
+  if (toggleBtn && submitSection) {
     toggleBtn.addEventListener("click", () => {
       const isVisible = submitSection.style.display === "block";
       submitSection.style.display = isVisible ? "none" : "block";
       toggleBtn.textContent = isVisible ? "✍️ Đăng bài chia sẻ" : "✖️ Đóng lại";
     });
-  </script>
+  }
 
+</script>
+{{-- ...existing code... --}}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#location').select2({
+            placeholder: "Chọn địa điểm",
+            allowClear: true
+        });
+    });
+</script>
+{{-- ...existing code... --}}
 @endsection

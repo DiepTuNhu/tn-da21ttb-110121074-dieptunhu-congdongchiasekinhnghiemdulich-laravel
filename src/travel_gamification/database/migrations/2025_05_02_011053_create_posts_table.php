@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title', 255)->nullable();
             $table->text('content')->nullable();
             $table->string('address', 255)->nullable();
+            $table->string('price', 255)->nullable();
             $table->string('status', 5)->nullable();
             $table->float('average_rating')->default(0);
             $table->unsignedInteger('user_id')->nullable();
