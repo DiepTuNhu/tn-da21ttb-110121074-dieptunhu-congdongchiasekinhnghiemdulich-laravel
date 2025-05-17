@@ -23,12 +23,12 @@ class PostController extends Controller
         $validatedData = $request->validate([
             'title'       => 'required|string|max:255',
             'content'     => 'required|string',
-            'id_location' => 'required|integer|exists:destinations,id',
+            'location' => 'required|integer|exists:destinations,id',
             'cost'        => 'nullable|string|max:255',
         ]);
 
         // Lấy destination
-        $destination = Destination::find($validatedData['id_location']);
+        $destination = Destination::find($validatedData['location']);
 
         $post = new Post();
         $post->title          = $validatedData['title'];

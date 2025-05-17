@@ -25,15 +25,20 @@ class PageController extends Controller
         // Lấy tất cả các loại hình du lịch từ bảng travel_types
         $travelTypes = TravelType::all();
         // Lấy tất cả các điểm đến từ bảng destination
-        // $destinations = Destination::all();
-        // Lấy danh sách địa điểm và hình ảnh liên quan
+        $posts = Post::with(['user', 'destination', 'destination.destinationImages'])
+            ->orderBy('created_at', 'desc')
+            ->paginate(8, ['*'], 'posts_page');
+
         $destinations = Destination::with(['destinationImages' => function ($query) {
             $query->where('status', 2);
-        }])->get();
-        
+        }])
+            ->orderBy('created_at', 'desc')
+            ->paginate(8, ['*'], 'destinations_page'); // Phân trang bài viết admin
 
-        // Truyền dữ liệu sang view
-        return view('user.index', compact('travelTypes', 'destinations','posts', 'isLoggedIn'));
+        $isLoggedIn = Auth::check();
+        $travelTypes = TravelType::all();
+
+        return view('user.index', compact('travelTypes', 'destinations', 'posts', 'isLoggedIn'));
     }
 
     public function getCommunity(Request $request)

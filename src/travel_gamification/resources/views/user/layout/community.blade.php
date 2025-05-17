@@ -53,7 +53,7 @@
 
         <div class="form-group">
             <label for="location" class="form-label">Địa điểm</label>
-            <select id="id_location" name="id_location" class="form-control" required>
+            <select id="location" name="id_location" class="form-control" required>
                 <option value="">Chọn địa điểm</option>
                 @foreach($destinations as $destination)
                     <option value="{{ $destination->id }}">{{ $destination->name }}</option>
@@ -76,14 +76,26 @@
   @foreach ($posts as $post)
     <a href="{{ route('post.detail', $post->id) }}" style="text-decoration:none; color:inherit;">
         <div class="post-card-explore">
-        {{-- Hình ảnh địa điểm --}}
-        @if ($post->destination && $post->destination->destinationImages && $post->destination->destinationImages->isNotEmpty())
-            <img src="{{ $post->destination->destinationImages->first()->image_url }}" alt="{{ $post->destination->name }}" style="height: 240px"/>
+
+        @php
+            // Lấy ảnh đầu tiên trong content (nếu có)
+            $firstImage = null;
+            if ($post->content) {
+                preg_match('/<img[^>]+src="([^">]+)"/i', $post->content, $matches);
+                $firstImage = $matches[1] ?? null;
+            }
+        @endphp
+
+        @if ($firstImage)
+            <img src="{{ $firstImage }}" alt="{{ $post->title }}" />
+        @elseif ($post->destination && $post->destination->destinationImages && $post->destination->destinationImages->isNotEmpty())
+            <img src="{{ $post->destination->destinationImages->first()->image_url }}" alt="{{ $post->destination->name }}" />
         @else
             <img src="default-image.png" alt="Default Image" />
         @endif
 
         <div class="post-content-explore">
+            
             {{-- Tiêu đề bài viết --}}
             <h3 style="text-align: center">{{ $post->title }}</h3>
             {{-- Nội dung rút gọn --}}
@@ -99,22 +111,37 @@
                     <i class="fas fa-location-dot"></i>
                     <span>{{ $post->address }}</span>
                 </div>
-                <div class="info-row">
-                    <i class="fas fa-dollar-sign"></i>
-                    <span>{{ $post->price ?? 'Không rõ' }}</span>
-                </div>
-                <div class="info-row" style="align-items: center;">
+
+                {{-- <div class="info-row" style="align-items: center;">
                     @if(isset($post->user) && !empty($post->user->avatar))
                         <img src="{{ asset('storage/avatars/' . $post->user->avatar) }}" alt="avatar" style="width:28px;height:28px;border-radius:50%;object-fit:cover;margin-right:8px;">
                     @else
-                        <img src="{{ asset('default-avatar.png') }}" alt="avatar" style="width:28px;height:28px;border-radius:50%;object-fit:cover;margin-right:8px;">
+                        <img src="{{ asset('default.') }}" alt="avatar" style="width:28px;height:28px;border-radius:50%;object-fit:cover;margin-right:8px;">
                     @endif
                     <span>{{ $post->user->username ?? 'Ẩn danh' }}</span>
-                </div>
+                </div> --}}
                 <hr class="info-divider" />
                 <div class="info-footer">
-                    <span><i class="fas fa-calendar-alt"></i> {{ $post->created_at->format('d/m/Y') }}</span>
-                    <span><i class="fas fa-heart" style="color: #e74c3c"></i> 135 lượt thích</span>
+                    <div class="footer-row">
+                        <div class="footer-col left">
+                            <i class="fas fa-user"></i>
+                            {{ $post->user->username ?? 'Ẩn danh' }}
+                        </div>
+                        <div class="footer-col right">
+                            <i class="fas fa-calendar-alt"></i>
+                            {{ $post->created_at->format('d/m/Y') }}
+                        </div>
+                    </div>
+                    <div class="footer-row">
+                        <div class="footer-col left">
+                            <i class="fas fa-heart" style="color: #e74c3c"></i>
+                            128 lượt thích
+                        </div>
+                        <div class="footer-col right">
+                            <i class="fas fa-comment-alt"></i>
+                            24 bình luận
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

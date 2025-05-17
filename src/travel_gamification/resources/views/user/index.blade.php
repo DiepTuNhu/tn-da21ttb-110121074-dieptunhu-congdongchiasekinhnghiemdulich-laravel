@@ -77,7 +77,7 @@
   <h3>Khám phá theo loại hình du lịch</h3>
   <div class="categories">
     @foreach ($travelTypes as $type)
-      <div class="category-card">
+      <div class="category-card travel-type-filter" data-id="{{ $type->id }}">
         {{ $type->name }}
       </div>
     @endforeach
@@ -105,123 +105,62 @@
 <section class="latest-posts-section">
   <div class="section-heading">Bài chia sẻ từ cộng đồng</div>
 
-  <div class="posts">
+  <div class="posts" id="posts-list">
     <!-- Các post của người dùng -->
-    <div class="post-card user-post">
-      <img src="../1.png" alt="Post 1" />
+    @foreach ($posts as $post)
+      <div class="post-card user-post">
+        @php
+            // Lấy ảnh đầu tiên trong content (nếu có)
+            $firstImage = null;
+            if ($post->content) {
+                preg_match('/<img[^>]+src="([^">]+)"/i', $post->content, $matches);
+                $firstImage = $matches[1] ?? null;
+            }
+        @endphp
 
-      <h4>10 điểm check-in biển đẹp nhất Việt Nam</h4>
+        @if ($firstImage)
+            <img src="{{ $firstImage }}" alt="{{ $post->title }}" />
+        @elseif ($post->destination && $post->destination->destinationImages && $post->destination->destinationImages->isNotEmpty())
+            <img src="{{ $post->destination->destinationImages->first()->image_url }}" alt="{{ $post->destination->name }}" />
+        @else
+            <img src="default-image.png" alt="Default Image" />
+        @endif
 
-      <p class="post-excerpt">
-        Đây là danh sách những bãi biển đẹp mê hồn mà bạn nhất định phải ghé qua khi đến Việt
-        Nam. Từ nước biển trong xanh đến bãi cát trắng mịn màng, mỗi nơi đều có vẻ đẹp riêng
-        biệt...
-      </p>
+        <h4 style="text-align: center">{{ $post->title }}</h4>
 
-      <div class="post-meta">
-        <div class="meta-left"><i class="fas fa-user"></i> Ngọc Hii</div>
-        <div class="meta-right"><i class="fas fa-calendar-alt"></i> 2 ngày trước</div>
+        <p class="post-excerpt" style="text-align: justify">
+          {{ \Illuminate\Support\Str::limit(strip_tags($post->content), 120) }}
+        </p>
+
+        <div class="post-meta">
+          <div class="meta-left">
+            <i class="fas fa-user"></i> {{ $post->user->username ?? 'Ẩn danh' }}
+          </div>
+          <div class="meta-right">
+            <i class="fas fa-calendar-alt"></i>
+            @if ($post->updated_at->diffInHours() < 24)
+              {{ $post->updated_at->diffForHumans() }}
+            @else
+              {{ $post->updated_at->format('d/m/Y') }}
+            @endif
+          </div>
+
+        </div>
+
+        <div class="post-stats">
+          <div class="likes"><i class="fas fa-heart"></i> {{ $post->likes_count ?? 0 }} lượt thích</div>
+          <div class="comments"><i class="fas fa-comment-alt"></i> {{ $post->comments_count ?? 0 }} bình luận</div>
+        </div>
       </div>
-
-      <div class="post-stats">
-        <div class="likes"><i class="fas fa-heart"></i> 128 lượt thích</div>
-        <div class="comments"><i class="fas fa-comment-alt"></i> 24 bình luận</div>
-      </div>
-    </div>
-
-    <div class="post-card user-post">
-      <img src="../1.png" alt="Post 1" />
-
-      <h4>10 điểm check-in biển đẹp nhất Việt Nam</h4>
-
-      <p class="post-excerpt">
-        Đây là danh sách những bãi biển đẹp mê hồn mà bạn nhất định phải ghé qua khi đến Việt
-        Nam. Từ nước biển trong xanh đến bãi cát trắng mịn màng, mỗi nơi đều có vẻ đẹp riêng
-        biệt...
-      </p>
-
-      <div class="post-meta">
-        <div class="meta-left"><i class="fas fa-user"></i> Ngọc Hii</div>
-        <div class="meta-right"><i class="fas fa-calendar-alt"></i> 2 ngày trước</div>
-      </div>
-
-      <div class="post-stats">
-        <div class="likes"><i class="fas fa-heart"></i> 128 lượt thích</div>
-        <div class="comments"><i class="fas fa-comment-alt"></i> 24 bình luận</div>
-      </div>
-    </div>
-
-    <div class="post-card user-post">
-      <img src="../1.png" alt="Post 1" />
-
-      <h4>10 điểm check-in biển đẹp nhất Việt Nam</h4>
-
-      <p class="post-excerpt">
-        Đây là danh sách những bãi biển đẹp mê hồn mà bạn nhất định phải ghé qua khi đến Việt
-        Nam. Từ nước biển trong xanh đến bãi cát trắng mịn màng, mỗi nơi đều có vẻ đẹp riêng
-        biệt...
-      </p>
-
-      <div class="post-meta">
-        <div class="meta-left"><i class="fas fa-user"></i> Ngọc Hii</div>
-        <div class="meta-right"><i class="fas fa-calendar-alt"></i> 2 ngày trước</div>
-      </div>
-
-      <div class="post-stats">
-        <div class="likes"><i class="fas fa-heart"></i> 128 lượt thích</div>
-        <div class="comments"><i class="fas fa-comment-alt"></i> 24 bình luận</div>
-      </div>
-    </div>
-
-    <div class="post-card user-post">
-      <img src="../1.png" alt="Post 1" />
-
-      <h4>10 điểm check-in biển đẹp nhất Việt Nam</h4>
-
-      <p class="post-excerpt">
-        Đây là danh sách những bãi biển đẹp mê hồn mà bạn nhất định phải ghé qua khi đến Việt
-        Nam. Từ nước biển trong xanh đến bãi cát trắng mịn màng, mỗi nơi đều có vẻ đẹp riêng
-        biệt...
-      </p>
-
-      <div class="post-meta">
-        <div class="meta-left"><i class="fas fa-user"></i> Ngọc Hii</div>
-        <div class="meta-right"><i class="fas fa-calendar-alt"></i> 2 ngày trước</div>
-      </div>
-
-      <div class="post-stats">
-        <div class="likes"><i class="fas fa-heart"></i> 128 lượt thích</div>
-        <div class="comments"><i class="fas fa-comment-alt"></i> 24 bình luận</div>
-      </div>
-    </div>
-
-    <div class="post-card user-post">
-      <img src="../1.png" alt="Post 1" />
-
-      <h4>10 điểm check-in biển đẹp nhất Việt Nam</h4>
-
-      <p class="post-excerpt">
-        Đây là danh sách những bãi biển đẹp mê hồn mà bạn nhất định phải ghé qua khi đến Việt
-        Nam. Từ nước biển trong xanh đến bãi cát trắng mịn màng, mỗi nơi đều có vẻ đẹp riêng
-        biệt...
-      </p>
-
-      <div class="post-meta">
-        <div class="meta-left"><i class="fas fa-user"></i> Ngọc Hii</div>
-        <div class="meta-right"><i class="fas fa-calendar-alt"></i> 2 ngày trước</div>
-      </div>
-
-      <div class="post-stats">
-        <div class="likes"><i class="fas fa-heart"></i> 128 lượt thích</div>
-        <div class="comments"><i class="fas fa-comment-alt"></i> 24 bình luận</div>
-      </div>
-    </div>
-    <!-- ... -->
+    @endforeach
+  </div>
+  <div class="pagination-wrapper" id="posts-pagination">
+    {!! $posts->appends(request()->except('posts_page'))->links() !!}
   </div>
 
   <div class="section-heading">Thông tin địa điểm du lịch</div>
 
-    <div class="posts">
+    <div class="posts" id="destinations-list">
       @foreach ($destinations as $destination)
         <div class="post-card admin-post">
           {{-- Kiểm tra nếu có hình ảnh --}}
@@ -261,8 +200,50 @@
         </div>
       @endforeach
     </div>
+    <div class="pagination-wrapper" id="destinations-pagination">
+      {!! $destinations->appends(request()->except('destinations_page'))->links() !!}
+    </div>
 </div>
-    
+{{-- <input type="hidden" id="selected-travel-type" value=""> --}}
     <!-- ... -->
   </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+$(document).on('click', '#posts-pagination a', function(e) {
+    e.preventDefault();
+    var url = $(this).attr('href');
+    $.get(url, function(data) {
+        $('#posts-list').html($(data).find('#posts-list').html());
+        $('#posts-pagination').html($(data).find('#posts-pagination').html());
+        window.history.pushState({}, '', url);
+        // Đợi DOM cập nhật xong rồi mới cuộn
+        setTimeout(function() {
+            var offset = $('#posts-list').offset();
+            if(offset) {
+                $('html, body').animate({
+                    scrollTop: offset.top - 80
+                }, 400);
+            }
+        }, 50);
+    });
+});
+
+$(document).on('click', '#destinations-pagination a', function(e) {
+    e.preventDefault();
+    var url = $(this).attr('href');
+    $.get(url, function(data) {
+        $('#destinations-list').html($(data).find('#destinations-list').html());
+        $('#destinations-pagination').html($(data).find('#destinations-pagination').html());
+        window.history.pushState({}, '', url);
+        setTimeout(function() {
+            var offset = $('#destinations-list').offset();
+            if(offset) {
+                $('html, body').animate({
+                    scrollTop: offset.top - 80
+                }, 400);
+            }
+        }, 50);
+    });
+});
+</script>
 @endsection
