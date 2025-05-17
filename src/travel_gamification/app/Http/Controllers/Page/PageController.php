@@ -9,6 +9,7 @@ use App\Models\Destination;
 use App\Models\Mission;
 use App\Models\DestinationUtility;
 use App\Models\Post;
+use App\Models\Slide;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,26 +21,69 @@ class PageController extends Controller
     // }
     public function index()
     {
-        $posts = Post::with(['user', 'destination', 'destination.destinationImages'])->orderBy('created_at', 'desc')->get();
+        $slides = Slide::where('status', 0)
+            ->orderBy('updated_at', 'desc')
+            ->take(5)
+            ->get();
+        $posts = Post::where('status', 0)
+            ->with(['user', 'destination', 'destination.destinationImages'])
+            ->orderBy('updated_at', 'desc')
+            ->paginate(8, ['*'], 'posts_page');
+            
         $isLoggedIn = Auth::check();
         // Lấy tất cả các loại hình du lịch từ bảng travel_types
-        $travelTypes = TravelType::all();
         // Lấy tất cả các điểm đến từ bảng destination
-        $posts = Post::with(['user', 'destination', 'destination.destinationImages'])
-            ->orderBy('created_at', 'desc')
-            ->paginate(8, ['*'], 'posts_page');
 
-        $destinations = Destination::with(['destinationImages' => function ($query) {
+
+        // $destinations = Destination::with(['destinationImages' => function ($query) {
+        //     $query->where('status', 2);
+        
+        $destinations = Destination::where('status', 0)
+            ->with(['destinationImages' => function ($query) {
             $query->where('status', 2);
         }])
-            ->orderBy('created_at', 'desc')
+            ->orderBy('updated_at', 'desc')
             ->paginate(8, ['*'], 'destinations_page'); // Phân trang bài viết admin
 
         $isLoggedIn = Auth::check();
-        $travelTypes = TravelType::all();
+        // $travelTypes = TravelType::all();
+        $travelTypes = TravelType::where('status', 0)->get();
 
-        return view('user.index', compact('travelTypes', 'destinations', 'posts', 'isLoggedIn'));
+        return view('user.index', compact('travelTypes', 'destinations', 'posts', 'isLoggedIn', 'slides'));
     }
+
+    public function ajaxFilterPosts(Request $request)
+    {
+        $typeId = $request->get('type_id');
+
+        $userPosts = Post::where('status', 0)
+            ->with('destination')
+            ->whereHas('destination', function ($query) use ($typeId) {
+                $query->where('travel_type_id', $typeId);
+            })
+            ->orderBy('updated_at', 'desc')
+            ->get();
+
+        $adminPosts = Destination::where('status', 0)
+            ->with('destinationImages')
+            ->where('travel_type_id', $typeId)
+            ->orderBy('updated_at', 'desc')
+            ->get();
+
+        // Render riêng 2 phần HTML
+        $userHtml = view('user.layout.partials.user_posts_list', [
+            'posts' => $userPosts, // truyền đúng tên biến
+        ])->render();
+
+        $adminHtml = view('user.layout.partials.admin_posts_list', [
+            'destinations' => $adminPosts // 👈 Phải đúng tên
+        ])->render();
+        return response()->json([
+            'userHtml' => $userHtml,
+            'adminHtml' => $adminHtml
+        ]);
+    }
+
 
     public function getCommunity(Request $request)
     {
@@ -83,8 +127,9 @@ class PageController extends Controller
         }
 
         // Lấy danh sách bài viết mới nhất
-        $posts = Post::with(['user', 'destination', 'destination.destinationImages'])
-            ->orderBy('created_at', 'desc')
+        $posts = Post::where('status', 0)
+            ->with(['user', 'destination', 'destination.destinationImages'])
+            ->orderBy('updated_at', 'desc')
             ->get();
 
         // Trả về view cùng với dữ liệu đã lọc

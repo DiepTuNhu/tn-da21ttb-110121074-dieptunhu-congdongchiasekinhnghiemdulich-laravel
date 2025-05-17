@@ -4,18 +4,13 @@
 <div class="slider">
   <!-- Lớp ảnh nền -->
   <div class="slider-images">
-    <img
-      src="https://hoanghamobile.com/tin-tuc/wp-content/uploads/2024/04/anh-bien-4.jpg"
-      class="slide active"
-    />
-    <img
-      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQC7nDAgdISBszyj7r743tbGBZJenmQorkFMg&s"
-      class="slide"
-    />
-    <img
-      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIGCekEF9R6QeLMdA7UH6UdxthAnuRNHqcEGqGku3lD8jzQynTX9jzlYJ86GpYIvCazCI&usqp=CAU"
-      class="slide"
-    />
+    @foreach($slides as $key => $slide)
+        <img
+            src="{{ asset('storage/slide_image/' . $slide->image) }}"
+            class="slide{{ $key === 0 ? ' active' : '' }}"
+            alt="{{ $slide->title ?? 'Slide' }}"
+        />
+    @endforeach
   </div>
   <div class="overlay">
     <div class="content">
@@ -53,9 +48,9 @@
     </div>
   </div>
   <div class="slider-dots">
-    <span class="dot active"></span>
-    <span class="dot"></span>
-    <span class="dot"></span>
+    @foreach($slides as $key => $slide)
+        <span class="dot{{ $key === 0 ? ' active' : '' }}"></span>
+    @endforeach
   </div>
 </div>
 
@@ -70,7 +65,7 @@
     Chia sẻ chuyến đi, ghi dấu những hành trình, kết nối cùng hàng ngàn tín đồ xê dịch. Đăng bài
     nhận điểm thưởng và quà tặng hấp dẫn mỗi ngày!
   </p>
-  <a href="#thamgia" class="join-btn">Tham Gia Ngay</a>
+  <a href="{{ route('login') }}" class="join-btn">Tham Gia Ngay</a>
 </section>
 
 <section class="category-section">
@@ -105,101 +100,19 @@
 <section class="latest-posts-section">
   <div class="section-heading">Bài chia sẻ từ cộng đồng</div>
 
-  <div class="posts" id="posts-list">
-    <!-- Các post của người dùng -->
-    @foreach ($posts as $post)
-      <div class="post-card user-post">
-        @php
-            // Lấy ảnh đầu tiên trong content (nếu có)
-            $firstImage = null;
-            if ($post->content) {
-                preg_match('/<img[^>]+src="([^">]+)"/i', $post->content, $matches);
-                $firstImage = $matches[1] ?? null;
-            }
-        @endphp
+    <div id="user-posts-wrapper">
+      @include('user.layout.partials.user_posts_list', ['posts' => $posts])
+    </div>
 
-        @if ($firstImage)
-            <img src="{{ $firstImage }}" alt="{{ $post->title }}" />
-        @elseif ($post->destination && $post->destination->destinationImages && $post->destination->destinationImages->isNotEmpty())
-            <img src="{{ $post->destination->destinationImages->first()->image_url }}" alt="{{ $post->destination->name }}" />
-        @else
-            <img src="default-image.png" alt="Default Image" />
-        @endif
-
-        <h4 style="text-align: center">{{ $post->title }}</h4>
-
-        <p class="post-excerpt" style="text-align: justify">
-          {{ \Illuminate\Support\Str::limit(strip_tags($post->content), 120) }}
-        </p>
-
-        <div class="post-meta">
-          <div class="meta-left">
-            <i class="fas fa-user"></i> {{ $post->user->username ?? 'Ẩn danh' }}
-          </div>
-          <div class="meta-right">
-            <i class="fas fa-calendar-alt"></i>
-            @if ($post->updated_at->diffInHours() < 24)
-              {{ $post->updated_at->diffForHumans() }}
-            @else
-              {{ $post->updated_at->format('d/m/Y') }}
-            @endif
-          </div>
-
-        </div>
-
-        <div class="post-stats">
-          <div class="likes"><i class="fas fa-heart"></i> {{ $post->likes_count ?? 0 }} lượt thích</div>
-          <div class="comments"><i class="fas fa-comment-alt"></i> {{ $post->comments_count ?? 0 }} bình luận</div>
-        </div>
-      </div>
-    @endforeach
-  </div>
-  <div class="pagination-wrapper" id="posts-pagination">
-    {!! $posts->appends(request()->except('posts_page'))->links() !!}
-  </div>
+    <div class="pagination-wrapper" id="posts-pagination">
+      {!! $posts->appends(request()->except('posts_page'))->links() !!}
+    </div>
 
   <div class="section-heading">Thông tin địa điểm du lịch</div>
-
-    <div class="posts" id="destinations-list">
-      @foreach ($destinations as $destination)
-        <div class="post-card admin-post">
-          {{-- Kiểm tra nếu có hình ảnh --}}
-          @if ($destination->destinationImages && $destination->destinationImages->isNotEmpty())
-            <img src="{{ $destination->destinationImages->first()->image_url }}" alt="{{ $destination->name }}" />
-          @else
-            <img src="default-image.png" alt="Default Image" />
-          @endif
-
-          {{-- Hiển thị tên địa điểm --}}
-          <h3 style="text-align: center">{{ $destination->name }}</h3>
-
-          {{-- Hiển thị đặc điểm nổi bật --}}
-          <p class="post-excerpt" style="text-align: justify">
-            {{ strip_tags($destination->highlights) }}
-          </p>
-
-          {{-- Hiển thị địa chỉ và giá --}}
-          <div class="post-info-block">
-            <div class="info-row">
-              <i class="fas fa-location-dot"></i>
-              <span>{{ $destination->address }}</span>
-            </div>
-            <div class="info-row">
-              <i class="fas fa-dollar-sign"></i>
-              <span>{{ $destination->price }}</span>
-            </div>
-
-            <hr class="info-divider" />
-
-            {{-- Footer thông tin --}}
-            <div class="info-footer">
-              <span><i class="fas fa-calendar-alt"></i> {{ $destination->updated_at->format('d/m/Y') }}</span>
-              <span><i class="fas fa-heart" style="color: #e74c3c"></i> 135 lượt thích</span>
-            </div>
-          </div>
-        </div>
-      @endforeach
+    <div id="admin-posts-wrapper">
+        @include('user.layout.partials.admin_posts_list', ['posts' => $posts])
     </div>
+    
     <div class="pagination-wrapper" id="destinations-pagination">
       {!! $destinations->appends(request()->except('destinations_page'))->links() !!}
     </div>
@@ -246,4 +159,32 @@ $(document).on('click', '#destinations-pagination a', function(e) {
     });
 });
 </script>
+
+<script>
+$(document).on('click', '.travel-type-filter', function() {
+    var travelTypeId = $(this).data('id');
+
+    $.ajax({
+        url: '{{ route("filter.posts.by.traveltype") }}',
+        type: 'GET',
+        data: {
+            type_id: travelTypeId
+        },
+        success: function(data) {
+            $('#user-posts-wrapper').html(data.userHtml);
+            $('#admin-posts-wrapper').html(data.adminHtml);
+
+            // ✅ Thêm đoạn này để cuộn xuống
+            $('html, body').animate({
+                scrollTop: $('#user-posts-wrapper').offset().top
+            }, 600); // 600ms để cuộn mượt
+        },
+        error: function() {
+            alert('Lỗi khi lọc bài viết');
+        }
+      });
+    });
+</script>
+
+
 @endsection

@@ -41,6 +41,8 @@ Route::get('/', [PageController::class, 'index'])->name('page.index');
 
 Route::get('/community', [PageController::class, 'getCommunity'])->name('page.community');
 Route::post('/community/post', [PostController::class, 'store'])->name('community.post');
+Route::get('/ajax/filter-posts', [PageController::class, 'ajaxFilterPosts'])->name('filter.posts.by.traveltype');
+
 
 Route::get('/explore', [PageController::class, 'getExplore'])->name('page.explore');
 Route::get('/mission', [PageController::class, 'getMission'])->name('page.mission');
