@@ -64,6 +64,37 @@
                         </select>
                     </div>
                 </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="frequency">Tần suất</label>
+                        <select name="frequency" class="form-control" id="frequency">
+                            <option value="daily">Hàng ngày</option>
+                            <option value="weekly">Hàng tuần</option>
+                            <option value="monthly">Hàng tháng</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="start_date">Ngày bắt đầu</label>
+                        <input type="datetime-local" name="start_date" class="form-control" id="start_date">
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="end_date">Ngày kết thúc</label>
+                        <input type="datetime-local" name="end_date" class="form-control" id="end_date">
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="status">Trạng thái</label>
+                        <select name="status" class="form-control" id="status">
+                            <option value="0">Hiện</option>
+                            <option value="1">Ẩn</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Thêm</button>
                 </div>

@@ -12,6 +12,8 @@ use App\Models\Post;
 use App\Models\Slide;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+use App\Models\Attendance;
 
 
 class PageController extends Controller
@@ -248,16 +250,6 @@ class PageController extends Controller
         return view('user.layout.explore', compact('destinations', 'travelTypes', 'travelTypeId', 'province', 'region'));
     }
 
-
-    public function getMission(Request $request)
-    {
-        // Lấy danh sách nhiệm vụ có trạng thái hoạt động
-        $missions = Mission::all();
-
-        // Trả về view cùng với danh sách nhiệm vụ
-        return view('user.layout.mission', compact('missions'));
-    }
-
     public function getRanking(Request $request)
     {
         // Trả về view cùng với danh sách nhiệm vụ
@@ -318,5 +310,78 @@ class PageController extends Controller
 
         // Truyền dữ liệu sang view
         return view('user.layout.detail_destination', compact('destination', 'nearbyUtilities'));
+    }
+
+    public function getMission(Request $request)
+    {
+        // Lấy danh sách nhiệm vụ có trạng thái hoạt động
+        $missions = Mission::where('status', 0)->get();
+
+        // Lọc theo tần suất
+        $dailyMissions = $missions->where('frequency', 'daily');
+        $weeklyMissions = $missions->where('frequency', 'weekly');
+        $monthlyMissions = $missions->where('frequency', 'monthly');
+        // Nhiệm vụ đặc biệt: frequency = 'once' hoặc null
+        $onceMissions = $missions->filter(function($mission) {
+            return $mission->frequency === 'once' || is_null($mission->frequency);
+        });
+
+        // Trả về view cùng với danh sách nhiệm vụ đã phân loại
+        return view('user.layout.mission', compact('dailyMissions', 'weeklyMissions', 'monthlyMissions', 'onceMissions'));
+    }
+
+    // public function checkAttendanceStreak($userId, $days = 7)
+    // {
+    //     $dates = Attendance::where('user_id', $userId)
+    //         ->orderByDesc('date')
+    //         ->pluck('date')
+    //         ->toArray();
+
+    //     if (count($dates) < $days) return false;
+
+    //     $streak = 1;
+    //     for ($i = 1; $i < count($dates); $i++) {
+    //         $prev = Carbon::parse($dates[$i - 1]);
+    //         $curr = Carbon::parse($dates[$i]);
+    //         if ($prev->diffInDays($curr) == 1) {
+    //             $streak++;
+    //             if ($streak == $days) return true;
+    //         } else {
+    //             $streak = 1;
+    //         }
+    //     }
+    //     return false;
+    // }
+    public function checkMissionCompletion($userId, $missionId)
+    {
+        $mission = Mission::find($missionId);
+
+        // Nhiệm vụ đặc biệt: điểm danh liên tiếp
+        // if (is_null($mission->condition_type) && $mission->condition_value) {
+        //     return $this->checkAttendanceStreak($userId, $mission->condition_value);
+        // }
+
+        switch ($mission->condition_type) {
+            case 'like':
+                // Đếm số lượt like của user (có thể so sánh với condition_value nếu cần)
+                $likeCount = \App\Models\Like::where('user_id', $userId)->count();
+                return $mission->condition_value ? $likeCount >= $mission->condition_value : $likeCount > 0;
+
+            case 'comment':
+                // Đếm số lượt comment của user
+                $commentCount = \App\Models\Comment::where('user_id', $userId)->count();
+                return $mission->condition_value ? $commentCount >= $mission->condition_value : $commentCount > 0;
+
+            case 'post':
+                // Đếm số bài viết của user
+                $postCount = \App\Models\Post::where('user_id', $userId)->count();
+                return $mission->condition_value ? $postCount >= $mission->condition_value : $postCount > 0;
+
+            // Thêm các loại nhiệm vụ khác nếu có
+            // case 'share': ...
+        default:
+            return false;
+        }
+
     }
 }

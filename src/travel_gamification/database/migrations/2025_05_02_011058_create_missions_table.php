@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name', 100)->nullable();
             $table->text('description')->nullable();
             $table->integer('points_reward')->nullable();
-            $table->string('frequency', 20)->default('daily');
+            $table->string('frequency', 20)->nullable();
             $table->string('condition_type', 255)->nullable();
             $table->integer('condition_value')->nullable();
             $table->dateTime('start_date')->nullable();

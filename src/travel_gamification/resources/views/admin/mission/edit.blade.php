@@ -58,6 +58,31 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label for="frequency">Tần suất</label>
+                        <select name="frequency" class="form-control" id="frequency">
+                            <option value="daily" {{ $mission->frequency == 'daily' ? 'selected' : '' }}>Hàng ngày</option>
+                            <option value="weekly" {{ $mission->frequency == 'weekly' ? 'selected' : '' }}>Hàng tuần</option>
+                            <option value="monthly" {{ $mission->frequency == 'monthly' ? 'selected' : '' }}>Hàng tháng</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="start_date">Ngày bắt đầu</label>
+                        <input type="datetime-local" name="start_date" class="form-control" id="start_date"
+                            value="{{ $mission->start_date ? \Carbon\Carbon::parse($mission->start_date)->format('Y-m-d\TH:i') : '' }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="end_date">Ngày kết thúc</label>
+                        <input type="datetime-local" name="end_date" class="form-control" id="end_date"
+                            value="{{ $mission->end_date ? \Carbon\Carbon::parse($mission->end_date)->format('Y-m-d\TH:i') : '' }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Trạng thái</label>
+                        <select name="status" class="form-control" id="status">
+                            <option value="0" {{ $mission->status ? 'selected' : '' }}>Hiện</option>
+                            <option value="1" {{ !$mission->status ? 'selected' : '' }}>Ẩn</option>
+                        </select>
+                    </div>
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">

@@ -9,6 +9,7 @@ use App\Models\Badge;
 use App\Models\Like;
 use App\Models\Comment;
 use App\Models\Post;
+use Carbon\Carbon;
 
 class MissionsController extends Controller
 {
@@ -39,24 +40,26 @@ class MissionsController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-        // Validate dữ liệu
         $request->validate([
             'name' => 'required|max:100',
             'description' => 'required',
             'points_reward' => 'required|integer|min:0',
-            'condition_type' => 'required|string|max:255',
+            'condition_type' => 'nullable|string|max:255',
             'condition_value' => 'nullable|integer',
             'badge_id' => 'nullable|exists:badges,id',
+            'frequency' => 'nullable|string|max:20',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
+            'status' => 'required|boolean',
         ], [
             'name.required' => 'Vui lòng nhập tên nhiệm vụ.',
             'description.required' => 'Vui lòng nhập mô tả.',
             'points_reward.required' => 'Vui lòng nhập điểm thưởng.',
             'points_reward.integer' => 'Điểm thưởng phải là số nguyên.',
             'points_reward.min' => 'Điểm thưởng phải lớn hơn hoặc bằng 0.',
-            'condition_type.required' => 'Vui lòng nhập loại điều kiện.',
-            'condition_type.string' => 'Loại điều kiện phải là chuỗi.',
             'badge_id.exists' => 'Huy hiệu không hợp lệ.',
+            'status.required' => 'Vui lòng chọn trạng thái.',
+            'end_date.after_or_equal' => 'Ngày kết thúc phải sau hoặc bằng ngày bắt đầu.',
         ]);
 
         // Lưu dữ liệu vào cơ sở dữ liệu
@@ -67,6 +70,10 @@ class MissionsController extends Controller
         $mission->condition_type = $request->condition_type;
         $mission->condition_value = $request->condition_value;
         $mission->badge_id = $request->badge_id;
+        $mission->frequency = $request->frequency;
+        $mission->start_date = $request->start_date;
+        $mission->end_date = $request->end_date;
+        $mission->status = $request->status;
         $mission->save();
 
         // Chuyển hướng về danh sách nhiệm vụ với thông báo thành công
@@ -105,18 +112,23 @@ class MissionsController extends Controller
             'name' => 'required|max:100',
             'description' => 'required',
             'points_reward' => 'required|integer|min:0',
-            'condition_type' => 'required|string|max:255',
+            'condition_type' => 'nullable|string|max:255',
             'condition_value' => 'nullable|integer',
             'badge_id' => 'nullable|exists:badges,id',
+            'frequency' => 'nullable|string|max:20',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
+            'status' => 'required|boolean',
         ], [
             'name.required' => 'Vui lòng nhập tên nhiệm vụ.',
             'description.required' => 'Vui lòng nhập mô tả.',
             'points_reward.required' => 'Vui lòng nhập điểm thưởng.',
             'points_reward.integer' => 'Điểm thưởng phải là số nguyên.',
             'points_reward.min' => 'Điểm thưởng phải lớn hơn hoặc bằng 0.',
-            'condition_type.required' => 'Vui lòng nhập loại điều kiện.',
             'condition_type.string' => 'Loại điều kiện phải là chuỗi.',
             'badge_id.exists' => 'Huy hiệu không hợp lệ.',
+            'status.required' => 'Vui lòng chọn trạng thái.',
+            'end_date.after_or_equal' => 'Ngày kết thúc phải sau hoặc bằng ngày bắt đầu.',
         ]);
 
         // Cập nhật thông tin nhiệm vụ
@@ -126,6 +138,10 @@ class MissionsController extends Controller
         $mission->condition_type = $request->condition_type;
         $mission->condition_value = $request->condition_value;
         $mission->badge_id = $request->badge_id;
+        $mission->frequency = $request->frequency;
+        $mission->start_date = $request->start_date;
+        $mission->end_date = $request->end_date;
+        $mission->status = $request->status;
         $mission->save();
 
         // Chuyển hướng về danh sách nhiệm vụ với thông báo thành công
@@ -166,5 +182,41 @@ class MissionsController extends Controller
             default:
                 return false;
         }
+    }
+
+    public function isMissionAvailable($mission)
+    {
+        $now = Carbon::now();
+
+        // Nếu chưa tới ngày bắt đầu thì không active
+        if ($mission->start_date && $now->lt($mission->start_date)) {
+            return false;
+        }
+        // Nếu có ngày kết thúc và đã quá ngày kết thúc thì không active
+        if ($mission->end_date && $now->gt($mission->end_date)) {
+            return false;
+        }
+
+        // Kiểm tra theo chu kỳ
+        switch ($mission->frequency) {
+            case 'daily':
+                $start = $now->copy()->startOfDay();
+                $end = $now->copy()->endOfDay();
+                break;
+            case 'weekly':
+                $start = $now->copy()->startOfWeek();
+                $end = $now->copy()->endOfWeek();
+                break;
+            case 'monthly':
+                $start = $now->copy()->startOfMonth();
+                $end = $now->copy()->endOfMonth();
+                break;
+            default:
+                $start = $mission->start_date;
+                $end = $mission->end_date;
+                break;
+        }
+
+        return $now->between($start, $end);
     }
 }
