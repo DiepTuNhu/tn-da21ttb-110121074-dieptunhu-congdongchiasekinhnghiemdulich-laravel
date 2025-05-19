@@ -1,4 +1,5 @@
 <div class="posts" id="user-posts">
+  @if($posts->count())
     <!-- Các post của người dùng -->
     @foreach ($posts as $post)
       <a href="{{ route('post.detail', $post->id) }}" style="text-decoration:none; color:inherit;">
@@ -18,7 +19,7 @@
           @elseif ($post->destination && $post->destination->destinationImages && $post->destination->destinationImages->isNotEmpty())
               <img src="{{ $post->destination->destinationImages->first()->image_url }}" alt="{{ $post->destination->name }}" />
           @else
-              <img src="default-image.png" alt="Default Image" />
+              <img src="canh.png" alt="Default Image" />
           @endif
 
           <h4 style="text-align: center">{{ $post->title }}</h4>
@@ -49,4 +50,9 @@
         </div>
       </a>
     @endforeach
+  @else
+      <div class="alert alert-warning" style="margin-top: 30px;">
+          Không tìm thấy bài chia sẻ phù hợp.
+      </div>
+  @endif
   </div>  

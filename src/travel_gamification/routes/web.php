@@ -38,7 +38,7 @@ use App\Http\Controllers\Page\PostController;
 // });
 
 Route::get('/', [PageController::class, 'index'])->name('page.index');
-
+Route::get('/search', [PageController::class, 'search'])->name('user.search');
 Route::get('/community', [PageController::class, 'getCommunity'])->name('page.community');
 Route::post('/community/post', [PostController::class, 'store'])->name('community.post');
 Route::get('/ajax/filter-posts', [PageController::class, 'ajaxFilterPosts'])->name('filter.posts.by.traveltype');

@@ -16,8 +16,12 @@ return new class extends Migration
             $table->string('name', 100)->nullable();
             $table->text('description')->nullable();
             $table->integer('points_reward')->nullable();
+            $table->string('frequency', 20)->default('daily');
             $table->string('condition_type', 255)->nullable();
             $table->integer('condition_value')->nullable();
+            $table->dateTime('start_date')->nullable();
+            $table->dateTime('end_date')->nullable();
+            $table->boolean('status')->default(true);
             $table->unsignedInteger('badge_id')->nullable();
             $table->foreign('badge_id')->references('id')->on('badges')->onDelete('cascade')->onUpdate('cascade');
 

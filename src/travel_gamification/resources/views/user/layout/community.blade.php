@@ -91,7 +91,7 @@
         @elseif ($post->destination && $post->destination->destinationImages && $post->destination->destinationImages->isNotEmpty())
             <img src="{{ $post->destination->destinationImages->first()->image_url }}" alt="{{ $post->destination->name }}" />
         @else
-            <img src="default-image.png" alt="Default Image" />
+            <img src="canh.png" alt="Default Image" />
         @endif
 
         <div class="post-content-explore">

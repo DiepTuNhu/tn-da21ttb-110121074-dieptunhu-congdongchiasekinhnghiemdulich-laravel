@@ -85,6 +85,49 @@ class PageController extends Controller
     }
 
 
+    public function search(Request $request)
+    {
+        $keyword = $request->input('keyword');
+
+        $destinations = Destination::query();
+        if ($keyword) {
+            $destinations->where(function($q) use ($keyword) {
+                $q->where('name', 'like', "%$keyword%")
+                  ->orWhereRaw("LOWER(TRIM(SUBSTRING_INDEX(address, ',', -1))) LIKE ?", ['%' . strtolower($keyword) . '%']);
+            });
+        }
+        $destinations = $destinations
+            ->with(['destinationImages' => function ($query) {
+                $query->where('status', 2);
+            }])
+            ->orderBy('updated_at', 'desc')
+            ->paginate(8, ['*'], 'destinations_page');
+
+        $posts = Post::query()
+            ->with(['user', 'destination', 'destination.destinationImages'])
+            ->whereHas('destination', function ($q) use ($keyword) {
+                if ($keyword) {
+                    $q->where('name', 'like', "%$keyword%")
+                      ->orWhereRaw("LOWER(TRIM(SUBSTRING_INDEX(address, ',', -1))) LIKE ?", ['%' . strtolower($keyword) . '%']);
+                }
+            })
+            ->orderBy('updated_at', 'desc')
+            ->paginate(8, ['*'], 'posts_page');
+
+        $slides = Slide::where('status', 0)
+            ->orderBy('updated_at', 'desc')
+            ->take(5)
+            ->get();
+        $travelTypes = TravelType::where('status', 0)->get();
+
+        // Lấy danh sách tỉnh/thành từ address (unique)
+        $provinces = Destination::selectRaw("TRIM(SUBSTRING_INDEX(address, ',', -1)) as province")
+            ->distinct()
+            ->pluck('province');
+
+        return view('user.index', compact('travelTypes', 'destinations', 'posts', 'slides', 'provinces'));
+    }
+
     public function getCommunity(Request $request)
     {
         // Lấy danh sách loại hình du lịch

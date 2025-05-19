@@ -17,27 +17,15 @@
       <h1>Chia Sẻ Trải Nghiệm Du Lịch, Rinh Quà Cực Chất!</h1>
       <p>Viết bài, chia sẻ địa điểm yêu thích, nhận điểm thưởng & quà tặng mỗi ngày!</p>
 
-      <div class="search-form">
-        <div class="form-group">
-          <i class="fas fa-map-marker-alt"></i>
-          <input type="text" placeholder="Bạn muốn khám phá địa điểm nào?" />
-        </div>
-        <div class="form-group">
-          <i class="fas fa-tags"></i>
-          <select>
-            <option>Chủ đề yêu thích</option>
-            <option>Ẩm thực</option>
-            <option>Check-in</option>
-            <option>Phượt</option>
-            <option>Family Trip</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <i class="fas fa-search"></i>
-          <input type="text" placeholder="Tìm kiếm bài chia sẻ, địa điểm..." />
-        </div>
-        <button class="search-btn"><i class="fas fa-compass"></i> Khám Phá Ngay</button>
-      </div>
+      <form action="{{ route('user.search') }}" method="GET">
+          <div class="search-form">
+              <div class="form-group">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <input type="text" name="keyword" placeholder="Bạn muốn khám phá địa điểm nào?" value="{{ request('keyword') }}" style="width: 500px; height: 60px" />
+              </div>
+              <button type="submit" class="search-btn"><i class="fas fa-compass"></i> Khám Phá Ngay</button>
+          </div>
+      </form>
 
       <div class="highlight-box">
         <h4>Top Chia Sẻ Nổi Bật</h4>
@@ -186,5 +174,12 @@ $(document).on('click', '.travel-type-filter', function() {
     });
 </script>
 
-
+@if(request('keyword'))
+<script>
+    window.onload = function() {
+        var el = document.getElementById('user-posts-wrapper');
+        if(el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+@endif
 @endsection
