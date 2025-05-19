@@ -29,6 +29,9 @@ class PageController extends Controller
             ->get();
         $posts = Post::where('status', 0)
             ->with(['user', 'destination', 'destination.destinationImages'])
+            ->whereHas('destination', function ($query) {
+                $query->where('status', 0);
+            })
             ->orderBy('updated_at', 'desc')
             ->paginate(8, ['*'], 'posts_page');
             
@@ -314,10 +317,28 @@ class PageController extends Controller
 
     public function getMission(Request $request)
     {
-        // Lấy danh sách nhiệm vụ có trạng thái hoạt động
+        $userId = Auth::id();
         $missions = Mission::where('status', 0)->get();
 
-        // Lọc theo tần suất
+        // Thêm tiến độ cho từng nhiệm vụ
+        foreach ($missions as $mission) {
+            switch ($mission->condition_type) {
+                case 'like':
+                    $done = \App\Models\Like::where('user_id', $userId)->count();
+                    break;
+                case 'comment':
+                    $done = \App\Models\Comment::where('user_id', $userId)->count();
+                    break;
+                case 'post':
+                    $done = \App\Models\Post::where('user_id', $userId)->count();
+                    break;
+                default:
+                    $done = 0;
+            }
+            $mission->progress_done = $done;
+            $mission->progress_total = $mission->condition_value ?? 1;
+        }
+
         $dailyMissions = $missions->where('frequency', 'daily');
         $weeklyMissions = $missions->where('frequency', 'weekly');
         $monthlyMissions = $missions->where('frequency', 'monthly');

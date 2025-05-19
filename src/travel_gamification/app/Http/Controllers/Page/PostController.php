@@ -47,6 +47,95 @@ class PostController extends Controller
     public function showDetailPost($id)
     {
         $post = Post::with(['user', 'destination', 'destination.destinationImages'])->findOrFail($id);
-        return view('user.layout.detail_post', compact('post'));
+        $comments = \App\Models\Comment::where('post_id', $id)
+            ->orderBy('created_at', 'desc')
+            ->paginate(5);
+
+        return view('user.layout.detail_post', compact('post', 'comments'));
     }
+
+    public function like($id)
+    {
+        if (!auth()->check()) {
+            return response()->json(['error' => 'Bạn cần đăng nhập!'], 401);
+        }
+
+        $user = auth()->user();
+        $post = \App\Models\Post::findOrFail($id);
+
+        // Kiểm tra đã like chưa
+        $liked = \App\Models\Like::where('user_id', $user->id)->where('post_id', $id)->first();
+        if ($liked) {
+            return response()->json(['message' => 'Bạn đã thích bài viết này!']);
+        }
+
+        \App\Models\Like::create([
+            'user_id' => $user->id,
+            'post_id' => $id,
+        ]);
+
+        // Đếm lại số lượt thích
+        $likeCount = \App\Models\Like::where('post_id', $id)->count();
+
+        return response()->json(['success' => true, 'like_count' => $likeCount]);
+    }
+
+    public function comment(Request $request, $id)
+    {
+        $request->validate([
+            'content' => 'required|string|max:1000',
+        ]);
+
+        if (!auth()->check()) {
+            return response()->json(['error' => 'Bạn cần đăng nhập!'], 401);
+        }
+
+        $comment = \App\Models\Comment::create([
+            'user_id' => auth()->id(),
+            'post_id' => $id,
+            'content' => $request->content,
+            'parent_comment_id' => $request->parent_comment_id ?? null,
+        ]);
+
+        // Trả về dữ liệu bình luận mới để render lên giao diện
+        return response()->json([
+            'success' => true,
+            'username' => auth()->user()->username,
+            'avatar' => auth()->user()->avatar ? asset('storage/avatars/' . auth()->user()->avatar) : asset('default-avatar.png'),
+            'content' => $comment->content,
+            'created_at' => $comment->created_at->format('d/m/Y H:i'),
+        ]);
+    }
+
+    public function detail($id)
+    {
+        $post = Post::with(['user', 'destination', 'likes'])->findOrFail($id);
+        $comments = \App\Models\Comment::where('post_id', $id)
+            ->orderBy('created_at', 'desc')
+            ->paginate(5);
+
+        return view('user.layout.detail_post', compact('post', 'comments'));
+    }
+public function likeComment($id)
+{
+    if (!auth()->check()) {
+        return response()->json(['error' => 'Bạn cần đăng nhập!'], 401);
+    }
+    $user = auth()->user();
+    // Kiểm tra đã like chưa
+    $liked = \App\Models\Like::where('user_id', $user->id)
+        ->where('comment_id', $id)
+        ->whereNull('post_id')
+        ->first();
+    if ($liked) {
+        return response()->json(['message' => 'Bạn đã thích bình luận này!']);
+    }
+    \App\Models\Like::create([
+        'user_id' => $user->id,
+        'comment_id' => $id,
+        'post_id' => null,
+    ]);
+    $likeCount = \App\Models\Like::where('comment_id', $id)->whereNull('post_id')->count();
+    return response()->json(['success' => true, 'like_count' => $likeCount]);
+}
 }

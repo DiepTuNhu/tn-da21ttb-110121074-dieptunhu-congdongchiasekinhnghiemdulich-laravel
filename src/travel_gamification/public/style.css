@@ -1124,6 +1124,7 @@ html {
     font-size: 15px;
 }
 
+
 /* NHIEM VU========================================================================================================================= */
 
 .mission-header {
@@ -2028,34 +2029,108 @@ a {
 }
 
 .comment {
-    margin-top: 20px;
     display: flex;
-    gap: 10px;
+    align-items: flex-start;
+    background: #f9f9f9;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    padding: 12px 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    margin-top: 10px;
 }
-
+.comment.reply {
+    margin-left: 48px;
+    background: #f1f7ff;
+    border-left: 3px solid #4cafef;
+}
 .comment img {
     width: 36px;
     height: 36px;
     border-radius: 50%;
+    margin-right: 12px;
+    object-fit: cover;
+    border: 2px solid #e0e0e0;
 }
-
 .comment-body {
-    background: #f1f1f1;
-    padding: 10px 14px;
-    border-radius: 8px;
+    flex: 1;
 }
-
 .comment-body strong {
-    color: #333;
-    display: block;
-    margin-bottom: 4px;
+    color: #1976d2;
+    font-size: 15px;
 }
-
 .comment-actions {
-    font-size: 13px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 18px;
     margin-top: 4px;
-    color: #007aff;
-    cursor: pointer;
+    margin-bottom: 2px;
+}
+.comment-actions .action-btn {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 5px;
+    font-size: 13px;
+    margin: 0 0 0 0;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+}
+.comment-actions .reply-btn {
+    background: #e3f2fd;
+    color: #1976d2;
+}
+.comment-actions .reply-btn:hover {
+    background: #bbdefb;
+    color: #0d47a1;
+}
+.comment-actions .report {
+    background: #fff3e0;
+    color: #e67e22;
+}
+.comment-actions .report:hover {
+    background: #ffe0b2;
+    color: #d35400;
+}
+.comment-actions .like {
+    background: #ffebee;
+    color: #e74c3c;
+}
+.comment-actions .like:hover {
+    background: #ffcdd2;
+    color: #c0392b;
+}
+.comment-actions .like-count {
+    color: #e74c3c;
+    font-weight: bold;
+    margin-left: 2px;
+}
+@media (max-width: 600px) {
+    .comment-actions {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+}
+.comment-options a,
+.comment-like a {
+    color: #888;
+    margin-left: 10px;
+    font-size: 13px;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.comment-options a:hover,
+.comment-like a:hover {
+    color: #e74c3c;
+}
+.comment-like {
+    display: inline-block;
+    margin-top: 4px;
+    font-size: 13px;
+    color: #e74c3c;
+}
+.comment-like i {
+    margin-right: 2px;
 }
 
 textarea {

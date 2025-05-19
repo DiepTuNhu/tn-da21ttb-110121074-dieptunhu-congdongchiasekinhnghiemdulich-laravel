@@ -34,7 +34,10 @@
 
     <div class="post-interact">
       <div class="post-actions">
-        <button class="btn like"><i class="fas fa-heart"></i> Thích</button>
+        <button class="btn like" id="like-btn" data-post="{{ $post->id }}">
+            <i class="fas fa-heart"></i> Thích
+            <span id="like-count">{{ $post->likes->count() }}</span>
+        </button>
         <button class="btn save"><i class="fas fa-bookmark"></i> Lưu bài viết</button>
         <button class="btn report"><i class="fas fa-flag"></i> Báo cáo</button>
       </div>
@@ -49,19 +52,58 @@
     <div class="comment-section">
       <h3>Bình luận</h3>
 
-      <div class="comment">
-        <img src="https://i.pravatar.cc/36?img=2" alt="avatar" />
-        <div class="comment-body">
-          <strong>Bình Minh</strong>
-          Chuyến đi quá đẹp, mình cũng muốn thử!
-          <div class="comment-actions">👍 Thích · 💬 Trả lời</div>
-        </div>
-      </div>
-
-      <form class="comment-form">
-        <textarea rows="3" placeholder="Viết bình luận..."></textarea>
+      <form class="comment-form" id="comment-form">
+        <textarea rows="3" name="content" placeholder="Viết bình luận..." required></textarea>
+        <input type="hidden" name="parent_comment_id" value="">
         <button type="submit">Gửi bình luận</button>
       </form>
+      <div id="comment-list">
+        @foreach($comments as $comment)
+            @if(!$comment->parent_comment_id)
+            <div class="comment">
+                <img src="{{ $comment->user && $comment->user->avatar ? asset('storage/avatars/' . $comment->user->avatar) : asset('storage/default.jpg') }}" alt="avatar" />
+                <div class="comment-body">
+                    <strong>{{ $comment->user->username ?? 'Ẩn danh' }}</strong>
+                    <div>{{ $comment->content }}</div>
+                    <div class="comment-actions">
+                        <span class="comment-time">{{ $comment->created_at->format('d/m/Y H:i') }}</span>
+                        <a href="#" class="reply-btn action-btn" data-id="{{ $comment->id }}"><i class="fas fa-reply"></i> Trả lời</a>
+                        <a href="#" class="report-comment action-btn report" data-id="{{ $comment->id }}"><i class="fas fa-flag"></i> Báo cáo</a>
+                        <a href="#" class="like-comment-btn action-btn like" data-id="{{ $comment->id }}">
+                            <i class="fas fa-heart"></i> Thích
+                            <span id="comment-like-count-{{ $comment->id }}" class="like-count">{{ $comment->likes->count() }}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {{-- Hiển thị các reply --}}
+            @foreach($comments as $reply)
+                @if($reply->parent_comment_id == $comment->id)
+                <div class="comment reply">
+                    <img src="{{ $reply->user && $reply->user->avatar ? asset('storage/avatars/' . $reply->user->avatar) : asset('storage/default.jpg') }}" alt="avatar" />
+                    <div class="comment-body">
+                        <strong>{{ $reply->user->username ?? 'Ẩn danh' }}</strong>
+                        <div>{{ $reply->content }}</div>
+                        <div class="comment-actions">
+                            <span class="comment-time">{{ $reply->created_at->format('d/m/Y H:i') }}</span>
+                            <a href="#" class="reply-btn action-btn" data-id="{{ $reply->id }}"><i class="fas fa-reply"></i> Trả lời</a>
+                            <a href="#" class="report-comment action-btn report" data-id="{{ $reply->id }}"><i class="fas fa-flag"></i> Báo cáo</a>
+                            <a href="#" class="like-comment-btn action-btn like" data-id="{{ $reply->id }}">
+                                <i class="fas fa-heart"></i> Thích
+                                <span id="comment-like-count-{{ $reply->id }}" class="like-count">{{ $reply->likes->count() }}</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                @endif
+            @endforeach
+            @endif
+        @endforeach
+    </div>
+    {{-- Hiển thị phân trang --}}
+    <div class="pagination" style="display: flex; justify-content: center; margin-top: 24px; margin-bottom: 16px;">
+        {{ $comments->links() }}
+    </div>
     </div>
   </div>
 
@@ -83,4 +125,107 @@
     </div>
   </div>
   </div>
+
+  <script>
+document.getElementById('like-btn').onclick = function() {
+    fetch('{{ route('posts.like', $post->id) }}', {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Accept': 'application/json'
+        }
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.success) {
+            document.getElementById('like-count').innerText = data.like_count;
+        } else if(data.error) {
+            alert(data.error);
+        } else if(data.message) {
+            alert(data.message);
+        }
+    });
+};
+
+document.getElementById('comment-form').onsubmit = function(e) {
+    e.preventDefault();
+    fetch('{{ route('posts.comment', $post->id) }}', {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            content: this.content.value,
+            parent_comment_id: this.parent_comment_id.value
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.success) {
+            let html = `<div class="comment">
+                <img src="${data.avatar}" alt="avatar" />
+                <div class="comment-body">
+                    <strong>${data.username}</strong>
+                    ${data.content}
+                    <div class="comment-actions">${data.created_at}</div>
+                </div>
+            </div>`;
+            const commentList = document.getElementById('comment-list');
+            commentList.insertAdjacentHTML('afterbegin', html);
+
+            // Nếu số bình luận > 5 thì xóa bình luận cuối cùng
+            if (commentList.children.length > 5) {
+                commentList.removeChild(commentList.lastElementChild);
+            }
+            this.reset();
+        } else if(data.error) {
+            alert(data.error);
+        }
+    });
+};
+
+document.querySelectorAll('.reply-btn').forEach(btn => {
+    btn.onclick = function(e) {
+        e.preventDefault();
+        const parentId = this.getAttribute('data-id');
+        document.querySelector('#comment-form [name=parent_comment_id]').value = parentId;
+        document.querySelector('#comment-form textarea').focus();
+    }
+});
+
+document.querySelectorAll('.report-comment').forEach(btn => {
+    btn.onclick = function(e) {
+        e.preventDefault();
+        const commentId = this.getAttribute('data-id');
+        if(confirm('Bạn có chắc muốn báo cáo bình luận này không?')) {
+            // Gửi AJAX hoặc chuyển hướng đến route báo cáo
+            alert('Đã gửi báo cáo cho quản trị viên!');
+        }
+    }
+});
+
+document.querySelectorAll('.like-comment-btn').forEach(btn => {
+    btn.onclick = function(e) {
+        e.preventDefault();
+        const commentId = this.getAttribute('data-id');
+        fetch('{{ url("comments/like") }}/' + commentId, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.success) {
+                document.getElementById('comment-like-count-' + commentId).innerText = data.like_count;
+            } else if(data.error) {
+                alert(data.error);
+            }
+        });
+    }
+});
+  </script>
 @endsection

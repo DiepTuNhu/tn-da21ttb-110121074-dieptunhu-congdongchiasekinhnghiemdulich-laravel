@@ -35,7 +35,7 @@
   @auth
       <!-- Hiển thị khi đã đăng nhập -->
       <div class="user-info" style="display: flex; align-items: center;">
-          <img src="{{ Auth::user()->avatar ? asset('storage/avatars/' . Auth::user()->avatar) : asset('default-avatar.png') }}" 
+          <img src="{{ Auth::user()->avatar ? asset('storage/avatars/' . Auth::user()->avatar) : asset('storage/default.jpg') }}" 
                alt="Avatar" 
                class="user-avatar" 
                style="border-radius: 50%; width: 40px; height: 40px; margin-right: 10px;">

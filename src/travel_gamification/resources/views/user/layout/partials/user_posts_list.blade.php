@@ -44,8 +44,10 @@
           </div>
 
           <div class="post-stats">
-            <div class="likes"><i class="fas fa-heart"></i> {{ $post->likes_count ?? 0 }} lượt thích</div>
-            <div class="comments"><i class="fas fa-comment-alt"></i> {{ $post->comments_count ?? 0 }} bình luận</div>
+            <div class="likes"><i class="fas fa-heart"></i> {{ $post->likes->count() }} lượt thích</div>
+            <div class="comments"><i class="fas fa-comment-alt"></i> {{ $post->comments->count() }} bình luận</div>
+            {{-- <div class="comments"><i class="fas fa-comment-alt"></i> {{ $post->comments->where('parent_comment_id', null)->count() }} bình luận</div> --}}
+          
           </div>
         </div>
       </a>

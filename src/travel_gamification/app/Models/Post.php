@@ -20,4 +20,14 @@ class Post extends Model
     {
         return $this->belongsTo(\App\Models\Destination::class, 'destination_id');
     }
+
+    public function likes()
+    {
+        return $this->hasMany(\App\Models\Like::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(\App\Models\Comment::class);
+    }
 }

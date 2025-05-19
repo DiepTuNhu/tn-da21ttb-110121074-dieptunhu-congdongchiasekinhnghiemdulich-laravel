@@ -52,7 +52,9 @@ Route::get('/profile', [PageController::class, 'getProfile'])->name('page.profil
 // Route::get('/detailDestination', [PageController::class, 'getDetailDestination'])->name('destination.detailDestination');
 Route::get('/destination/{id}', [PageController::class, 'getDetailDestination'])->name('destination.detail');
 Route::get('/post/{id}', [PostController::class, 'showDetailPost'])->name('post.detail');
-//LOGIN
+Route::post('/posts/{id}/like', [PostController::class, 'like'])->name('posts.like');
+Route::post('/posts/{id}/comment', [PostController::class, 'comment'])->name('posts.comment');
+Route::post('/comments/like/{id}', [PostController::class, 'likeComment'])->name('comments.like');//LOGIN
 Route::get('/login',[LoginController::class,'index'])->name('login');
 Route::post('/login/store',[LoginController::class,'store'])->name('login.store');
 

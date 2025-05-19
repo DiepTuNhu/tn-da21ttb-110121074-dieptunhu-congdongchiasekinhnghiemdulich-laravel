@@ -60,7 +60,7 @@
 
         <div class="form-group">
             <label for="location" class="form-label">Địa điểm</label>
-            <select id="location" name="id_location" class="form-control" required>
+            <select id="location" name="location" class="form-control" required>
                 <option value="">Chọn địa điểm</option>
                 @foreach($destinations as $destination)
                     <option value="{{ $destination->id }}">{{ $destination->name }}</option>
@@ -142,11 +142,11 @@
                     <div class="footer-row">
                         <div class="footer-col left">
                             <i class="fas fa-heart" style="color: #e74c3c"></i>
-                            128 lượt thích
+                            {{ $post->likes->count() }} lượt thích
                         </div>
                         <div class="footer-col right">
                             <i class="fas fa-comment-alt"></i>
-                            24 bình luận
+                            {{ $post->comments->count() }} bình luận
                         </div>
                     </div>
                 </div>
