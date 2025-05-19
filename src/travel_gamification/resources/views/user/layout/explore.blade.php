@@ -32,8 +32,16 @@
     @endforeach
   </select>
 
+  <select id="destinationDropdown" class="form-select" style="width: 400px !important;">
+    <option value="">🔍 Tìm địa điểm du lịch...</option>
+    @foreach($destinations as $destination)
+      <option value="{{ route('destination.detail', ['id' => $destination->id]) }}">
+        {{ $destination->name }}
+      </option>
+    @endforeach
+  </select>
 
-    <input type="text" class="search-input" placeholder="🔍 Tìm địa điểm, bài viết..." />
+    {{-- <input type="text" class="search-input" placeholder="🔍 Tìm địa điểm, bài viết..." /> --}}
 
   </div>
 
@@ -82,6 +90,8 @@
   </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
     const provincesByRegion = {
         'Bắc': ['Hà Nội', 'Hải Phòng', 'Quảng Ninh', 'Bắc Ninh', 'Bắc Giang', 'Hà Nam', 'Hải Dương', 'Hòa Bình', 'Hưng Yên', 'Lạng Sơn', 'Nam Định', 'Ninh Bình', 'Phú Thọ', 'Sơn La', 'Thái Bình', 'Thái Nguyên', 'Tuyên Quang', 'Vĩnh Phúc', 'Yên Bái', 'Cao Bằng', 'Bắc Kạn', 'Điện Biên', 'Hà Giang', 'Lai Châu', 'Lào Cai'],
@@ -149,6 +159,20 @@
             else urlParams.delete('type');
 
             window.location.href = `{{ route('page.explore') }}?${urlParams.toString()}`;
+        });
+
+        // Khởi tạo Select2 cho dropdown địa điểm
+        $('#destinationDropdown').select2({
+            placeholder: "🔍 Tìm địa điểm du lịch...",
+            allowClear: true
+        });
+
+        // Khi chọn địa điểm sẽ chuyển trang
+        $('#destinationDropdown').on('change', function () {
+            const url = $(this).val();
+            if (url) {
+                window.location.href = url;
+            }
         });
     });
 </script>

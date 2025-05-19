@@ -136,24 +136,20 @@ class PageController extends Controller
         // Lấy bộ lọc từ request
         $travelTypeId = $request->get('type');
         $province = $request->get('province');
-        $region = $request->get('region'); // Lấy miền từ request
+        $region = $request->get('region');
+        $destinationId = $request->get('destination_id');
 
-        // Truy vấn cơ bản: chỉ lấy những địa điểm còn hoạt động
+        // Truy vấn địa điểm theo bộ lọc
         $query = Destination::where('status', '!=', 1);
 
-        // Lọc theo loại hình du lịch nếu có
         if ($travelTypeId) {
             $query->where('travel_type_id', $travelTypeId);
         }
-
-        // Lọc theo tỉnh nếu có
         if ($province) {
             $query->where('address', 'LIKE', "%$province%");
         }
-
-        // Lọc theo miền nếu có
         if ($region) {
-            $provincesInRegion = $this->getProvincesByRegion($region); // Hàm lấy danh sách tỉnh theo miền
+            $provincesInRegion = $this->getProvincesByRegion($region);
             $query->where(function ($q) use ($provincesInRegion) {
                 foreach ($provincesInRegion as $province) {
                     $q->orWhere('address', 'LIKE', "%$province%");
@@ -161,27 +157,36 @@ class PageController extends Controller
             });
         }
 
-        // Lấy dữ liệu sau khi đã áp dụng bộ lọc
         $destinations = $query->get();
 
-        // Gắn hình ảnh chính cho từng địa điểm
         foreach ($destinations as $destination) {
             $destination->mainImage = $destination->destinationImages()->where('status', 2)->first();
         }
 
-        // Lấy danh sách bài viết mới nhất
-        $posts = Post::where('status', 0)
-            ->with(['user', 'destination', 'destination.destinationImages'])
-            ->orderBy('updated_at', 'desc')
-            ->get();
+        // Lấy danh sách id các địa điểm đã lọc
+        $destinationIds = $destinations->pluck('id')->toArray();
 
-        // Trả về view cùng với dữ liệu đã lọc
+        // Lọc bài viết theo các địa điểm đã lọc
+        $postsQuery = Post::where('status', 0)
+            ->with(['user', 'destination', 'destination.destinationImages']);
+
+        // Nếu chọn 1 địa điểm cụ thể thì chỉ lấy bài viết của địa điểm đó
+        if ($destinationId) {
+            $postsQuery->where('destination_id', $destinationId);
+        } else {
+            // Nếu không, lấy bài viết của tất cả địa điểm đã lọc
+            $postsQuery->whereIn('destination_id', $destinationIds);
+        }
+
+        $posts = $postsQuery->orderBy('updated_at', 'desc')->get();
+
         return view('user.layout.community', compact(
             'destinations',
             'travelTypes',
             'travelTypeId',
             'province',
             'region',
+            'destinationId',
             'posts'
         ));
     }

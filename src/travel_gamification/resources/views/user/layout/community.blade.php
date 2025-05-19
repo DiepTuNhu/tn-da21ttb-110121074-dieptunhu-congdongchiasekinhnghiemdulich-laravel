@@ -8,33 +8,40 @@
   <div class="filters">
     {{-- Dropdown vùng miền --}}
     <select id="vungmien" class="form-select">
-    <option value="">Chọn vùng miền</option>
-    <option value="Bắc" {{ isset($region) && $region == 'Bắc' ? 'selected' : '' }}>Miền Bắc</option>
-    <option value="Trung" {{ isset($region) && $region == 'Trung' ? 'selected' : '' }}>Miền Trung</option>
-    <option value="Nam" {{ isset($region) && $region == 'Nam' ? 'selected' : '' }}>Miền Nam</option>
-</select>
+        <option value="">Chọn vùng miền</option>
+        <option value="Bắc" {{ isset($region) && $region == 'Bắc' ? 'selected' : '' }}>Miền Bắc</option>
+        <option value="Trung" {{ isset($region) && $region == 'Trung' ? 'selected' : '' }}>Miền Trung</option>
+        <option value="Nam" {{ isset($region) && $region == 'Nam' ? 'selected' : '' }}>Miền Nam</option>
+    </select>
 
-<select id="tinh" class="form-select">
-    <option value="">Chọn tỉnh / thành</option>
-    @if(isset($province))
-        <option value="{{ $province }}" selected>{{ $province }}</option>
-    @endif
-</select>
-
-<select id="travelTypeDropdown" class="form-select">
-    <option value="">Chọn loại hình du lịch</option>
-    @foreach($travelTypes as $type)
-        @if($type->status == 0)
-            <option value="{{ $type->id }}" {{ isset($travelTypeId) && $travelTypeId == $type->id ? 'selected' : '' }}>
-                {{ $type->name }}
-            </option>
+    <select id="tinh" class="form-select">
+        <option value="">Chọn tỉnh / thành</option>
+        @if(isset($province))
+            <option value="{{ $province }}" selected>{{ $province }}</option>
         @endif
-    @endforeach
-</select>
+    </select>
 
-
-    <input type="text" class="search-input" placeholder="🔍 Tìm địa điểm, bài viết..." />
+    <select id="travelTypeDropdown" class="form-select">
+        <option value="">Chọn loại hình du lịch</option>
+        @foreach($travelTypes as $type)
+            @if($type->status == 0)
+                <option value="{{ $type->id }}" {{ isset($travelTypeId) && $travelTypeId == $type->id ? 'selected' : '' }}>
+                    {{ $type->name }}
+                </option>
+            @endif
+        @endforeach
+    </select>
+    <select id="destinationDropdown" class="form-select destination-dropdown-select2">
+        <option value="">🔍 Tìm địa điểm du lịch...</option>
+        @foreach($destinations as $destination)
+            <option value="{{ $destination->id }}" data-id="{{ $destination->id }}"
+                {{ (isset($destinationId) && $destinationId == $destination->id) ? 'selected' : '' }}>
+                {{ $destination->name }}
+            </option>
+        @endforeach
+    </select>
     <button id="toggle-form-btn" class="toggle-submit-btn">✍️ Đăng bài chia sẻ</button>
+    
   </div>
 
   <section class="submit-section" id="submit-section" style="display: none;">
@@ -73,7 +80,7 @@
 
 
   <div class="explore-grid">
-  @foreach ($posts as $post)
+  @forelse ($posts as $post)
     <a href="{{ route('post.detail', $post->id) }}" style="text-decoration:none; color:inherit;">
         <div class="post-card-explore">
 
@@ -147,7 +154,11 @@
         </div>
         </div>
     </a>
-  @endforeach
+  @empty
+    <div style="width:100%;text-align:center;padding:40px 0;color:#888;font-size:18px;">
+      Địa điểm này hiện chưa có bài đăng nào.
+    </div>
+  @endforelse
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -282,6 +293,24 @@
         $('#location').select2({
             placeholder: "Chọn địa điểm",
             allowClear: true
+        });
+        $('#destinationDropdown').select2({
+            placeholder: "🔍 Tìm địa điểm du lịch...",
+            allowClear: true,
+            width: '100%',
+            dropdownCssClass: 'destination-dropdown-select2',
+            selectionCssClass: 'destination-dropdown-select2'
+        });
+        $('#destinationDropdown').on('change', function () {
+            const destinationId = $(this).find('option:selected').data('id');
+            const urlParams = new URLSearchParams(window.location.search);
+
+            if (destinationId) {
+                urlParams.set('destination_id', destinationId);
+            } else {
+                urlParams.delete('destination_id');
+            }
+            window.location.href = `{{ route('page.community') }}?${urlParams.toString()}`;
         });
     });
 </script>
