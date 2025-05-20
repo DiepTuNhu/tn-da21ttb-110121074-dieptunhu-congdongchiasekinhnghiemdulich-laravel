@@ -208,7 +208,7 @@
         <button type="submit" class="login-btn">Đăng nhập</button>
       </form>
 
-      <div class="login-google" onclick="alert('Đang tích hợp đăng nhập Google...')">
+      <div class="login-google" onclick="window.location.href='{{ route('login.google') }}'">
         <img src="https://cdn-icons-png.flaticon.com/512/300/300221.png" alt="Google" />
         <span>Đăng nhập bằng Google</span>
       </div>

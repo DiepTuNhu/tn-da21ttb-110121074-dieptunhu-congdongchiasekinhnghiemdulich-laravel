@@ -24,12 +24,12 @@
               <i class="fas fa-location-dot"></i>
               <span>{{ $destination->address }}</span>
             </div>
-            <div class="info-row">
+            {{-- <div class="info-row">
               <i class="fas fa-dollar-sign"></i>
               <span>{{ $destination->price }}</span>
-            </div>
+            </div> --}}
 
-            <hr class="info-divider" />
+            <hr class="info-divider" style="margin: 0;"/>
 
             {{-- Footer thông tin --}}
             <div class="info-footer">

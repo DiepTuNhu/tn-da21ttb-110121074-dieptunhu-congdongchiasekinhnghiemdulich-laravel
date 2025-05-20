@@ -360,7 +360,7 @@ html {
 .post-excerpt {
     font-size: 14px;
     color: var(--text-color);
-    margin: 0 16px 16px;
+    margin: 0 16px;
     text-align: left;
 
     display: -webkit-box;
@@ -437,7 +437,7 @@ html {
 .info-divider {
     border: none;
     border-top: 1px solid #eee;
-    margin: 12px 0;
+    margin: 5px 8px;
 }
 
 .info-footer {
@@ -446,8 +446,11 @@ html {
     align-items: center;
     font-size: 13px;
     color: var(--text-color);
+    padding: 5px 10px;
 }
-
+.info-footer hr {
+    padding: 0;
+}
 .info-footer i {
     margin-right: 6px;
     color: var(--text-color);
@@ -460,10 +463,6 @@ html {
 
 .likes i {
     color: var(--error-color);
-}
-
-.comments i {
-    color: var(--info-color);
 }
 
 .meta-right,
@@ -1123,7 +1122,6 @@ html {
     max-width: 100%;
     font-size: 15px;
 }
-
 
 /* NHIEM VU========================================================================================================================= */
 
@@ -2022,6 +2020,12 @@ a {
     color: #1e88e5;
     text-decoration: none;
     margin-bottom: 6px;
+    padding-top: 5px;
+}
+
+.related-box div {
+    font-size: 15px;
+    padding-top: 5px;
 }
 
 .comment-section {
@@ -2229,4 +2233,96 @@ textarea {
 .main td {
     border: 1px solid #ddd;
     padding: 8px;
+}
+
+/* NGUOI DUNG THEO DOI============================================================= */
+.profile-info-follow img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.profile-info-follow h2 {
+    margin: 0 0 6px;
+}
+
+.profile-tab:hover {
+    background: #ddd;
+}
+
+.profile-tab.active {
+    background: #ff5722;
+    color: white;
+}
+
+.profile-tab-content {
+    display: none;
+}
+
+.profile-tab-content.active {
+    display: block;
+}
+
+.profile-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.profile-card-item {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.profile-card-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.profile-card-img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    display: block;
+}
+
+.profile-card-content {
+    padding: 14px;
+}
+
+.profile-card-content h4 {
+    margin: 0 0 6px;
+    font-size: 16px;
+    color: #333;
+}
+
+.profile-card-content p {
+    font-size: 13px;
+    color: #666;
+}
+
+.profile-status {
+    font-weight: bold;
+    color: green;
+}
+
+@media (max-width: 768px) {
+    .profile-info-follow {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .profile-details {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .profile-tabs {
+        flex-direction: column;
+    }
 }

@@ -26,28 +26,33 @@
 
           <p class="post-excerpt" style="text-align: justify">
             {{ \Illuminate\Support\Str::limit(strip_tags($post->content), 120) }}
-          </p>
-
-          <div class="post-meta">
-            <div class="meta-left">
-              <i class="fas fa-user"></i> {{ $post->user->username ?? 'Ẩn danh' }}
-            </div>
-            <div class="meta-right">
-              <i class="fas fa-calendar-alt"></i>
-              @if ($post->updated_at->diffInHours() < 24)
-                {{ $post->updated_at->diffForHumans() }}
-              @else
-                {{ $post->updated_at->format('d/m/Y') }}
-              @endif
-            </div>
-
-          </div>
-
-          <div class="post-stats">
-            <div class="likes"><i class="fas fa-heart"></i> {{ $post->likes->count() }} lượt thích</div>
-            <div class="comments"><i class="fas fa-comment-alt"></i> {{ $post->comments->count() }} bình luận</div>
-            {{-- <div class="comments"><i class="fas fa-comment-alt"></i> {{ $post->comments->where('parent_comment_id', null)->count() }} bình luận</div> --}}
-          
+          </p> 
+          <hr class="info-divider" />
+          <div class="info-footer">
+              <div class="footer-row">
+                  <div class="footer-col left">
+                      <i class="fas fa-user"></i>
+                      {{ $post->user->username ?? 'Ẩn danh' }}
+                  </div>
+                  <div class="footer-col right">
+                      <i class="fas fa-calendar-alt"></i>
+                      @if ($post->updated_at->diffInHours() < 24)
+                          {{ $post->updated_at->diffForHumans() }}
+                      @else
+                          {{ $post->updated_at->format('d/m/Y') }}
+                      @endif
+                  </div>
+              </div>
+              <div class="footer-row">
+                  <div class="footer-col left">
+                      <i class="fas fa-heart" style="color: #e74c3c"></i>
+                      {{ $post->likes->count() }} lượt thích
+                  </div>
+                  <div class="footer-col right">
+                      <i class="fas fa-comment-alt"></i>
+                      {{ $post->comments->count() }} bình luận
+                  </div>
+              </div>
           </div>
         </div>
       </a>
@@ -57,4 +62,4 @@
           Không tìm thấy bài chia sẻ phù hợp.
       </div>
   @endif
-  </div>  
+  </div>

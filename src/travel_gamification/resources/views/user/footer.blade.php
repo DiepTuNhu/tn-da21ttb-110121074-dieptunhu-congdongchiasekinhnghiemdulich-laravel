@@ -29,9 +29,7 @@
               <li><a href="#">Trang chủ</a></li>
               <li><a href="#">Cộng đồng</a></li>
               <li><a href="#">Khám phá</a></li>
-              <li><a href="#">Nhiệm vụ</a></li>
               <li><a href="#">Xếp hạng</a></li>
-              <li><a href="#">Hồ sơ</a></li>
             </ul>
           </div>
 

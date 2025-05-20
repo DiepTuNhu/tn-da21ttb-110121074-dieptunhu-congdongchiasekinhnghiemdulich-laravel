@@ -51,7 +51,13 @@ class PostController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(5);
 
-        return view('user.layout.detail_post', compact('post', 'comments'));
+        // Lấy các bài viết liên quan cùng địa điểm, loại trừ bài hiện tại
+        $relatedPosts = Post::where('destination_id', $post->destination_id)
+            ->where('id', '!=', $post->id)
+            ->limit(5)
+            ->get();
+
+        return view('user.layout.detail_post', compact('post', 'comments', 'relatedPosts'));
     }
 
     public function like($id)

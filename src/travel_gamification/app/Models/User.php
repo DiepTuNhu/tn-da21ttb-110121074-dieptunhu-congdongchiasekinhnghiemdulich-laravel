@@ -52,4 +52,19 @@ class User extends Authenticatable
     {
         return $this->hasMany(Destination::class, 'user_id');
     }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    public function missions()
+    {
+        return $this->belongsToMany(Mission::class, 'user_missions'); // hoặc hasMany nếu phù hợp với cấu trúc DB của bạn
+    }
 }

@@ -4,14 +4,14 @@
   <div class="main">
     <h1>{{ $post->title }}</h1>
     <div class="meta user-meta">
-      <img class="author-avatar" src="{{ $post->user && $post->user->avatar ? asset('storage/avatars/' . $post->user->avatar) : asset('default-avatar.png') }}" alt="avatar" />
+      <img class="author-avatar" src="{{ $post->user && $post->user->avatar ? asset('storage/avatars/' . $post->user->avatar) : asset('storage/default.jpg') }}" alt="avatar" />
       <div class="user-info">
         <span class="author-name">{{ $post->user->username ?? 'Ẩn danh' }}</span>
         <span class="meta-details">
           {{-- <i class="fas fa-calendar-alt"></i> 12/04/2025 <i class="fas fa-chart-bar"></i> 1234
           lượt xem <i class="fas fa-heart"></i> 256 lượt thích --}}
           <span class="badge">Địa điểm</span>
-          <i class="fas fa-calendar-alt"></i> {{ $post->updated_at->format('d/m/Y') }}
+          <i class="fas fa-calendar-alt"></i> {{ $post->updated_at->format('d/m/Y') }} <i class="fas fa-heart"></i> {{ $post->likes->count() }} lượt thích
           {{-- Nếu có lượt xem, lượt thích thì hiển thị ở đây --}}
         </span>
       </div>
@@ -114,14 +114,16 @@
         <img src="{{ $post->user && $post->user->avatar ? asset('storage/avatars/' . $post->user->avatar) : asset('default-avatar.png') }}" alt="" />
         <strong>{{ $post->user->username ?? 'Ẩn danh' }}</strong>
       </p>
-      <a href="#">Xem hồ sơ</a>
+      <a href="{{ route('detail_user_follow', ['id' => $post->user->id]) }}">Xem hồ sơ</a>
     </div>
 
     <div class="related-box">
       <strong>Bài viết liên quan</strong>
-      <a href="#">Khám phá Huế mộng mơ</a>
-      <a href="#">Ẩm thực Hội An</a>
-      <a href="#">Trekking ở Sapa</a>
+      @forelse($relatedPosts as $related)
+        <a href="{{ route('post.detail', $related->id) }}">{{ $related->title }}</a>
+      @empty
+        <div>Không có bài viết liên quan</div>
+      @endforelse
     </div>
   </div>
   </div>

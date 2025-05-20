@@ -183,7 +183,7 @@ class PageController extends Controller
             $postsQuery->whereIn('destination_id', $destinationIds);
         }
 
-        $posts = $postsQuery->orderBy('updated_at', 'desc')->get();
+        $posts = $postsQuery->orderBy('updated_at', 'desc')->paginate(12); // hoặc số lượng bạn muốn
 
         return view('user.layout.community', compact(
             'destinations',
@@ -242,7 +242,7 @@ class PageController extends Controller
         }
 
         // Lấy dữ liệu sau khi đã áp dụng bộ lọc
-        $destinations = $query->get();
+        $destinations = $query->paginate(12);
 
         // Gắn hình ảnh chính cho từng địa điểm
         foreach ($destinations as $destination) {
@@ -404,5 +404,22 @@ class PageController extends Controller
             return false;
         }
 
+    }
+    public function like($id)
+    {
+        $post = Post::findOrFail($id);
+        $user = Auth::user();
+        $liked = $post->likes()->where('user_id', $user->id)->exists();
+
+        if ($liked) {
+            $post->likes()->where('user_id', $user->id)->delete();
+        } else {
+            $post->likes()->create(['user_id' => $user->id]);
+        }
+
+        return response()->json([
+            'liked' => !$liked,
+            'count' => $post->likes()->count()
+        ]);
     }
 }

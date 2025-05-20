@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Str;
+
 
 class LoginController extends Controller
 {
@@ -94,5 +97,43 @@ class LoginController extends Controller
         
         // Chuyển hướng đến trang chủ sau khi đăng xuất
         return redirect()->route('page.index');
+    }
+
+    public function redirectToGoogle()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function handleGoogleCallback()
+    {
+        $googleUser = Socialite::driver('google')->user();
+
+        // Tìm user theo email
+        $user = \App\Models\User::where('email', $googleUser->getEmail())->first();
+
+        if (!$user) {
+            // Lấy role_id của "người dùng"
+            $role = \App\Models\Role::whereRaw('LOWER(name) = ?', ['người dùng'])->first();
+
+            // Tạo user mới
+            $user = \App\Models\User::create([
+                'username'    => $googleUser->getName(),
+                'email'       => $googleUser->getEmail(),
+                'avatar'      => $googleUser->getAvatar(),
+                'password'    => bcrypt(Str::random(16)),
+                'status'      => 0,
+                'role_id'     => $role ? $role->id : null,
+            ]);
+        }
+
+        // Đăng nhập user
+        Auth::login($user);
+
+        // Lưu session
+        Session::put('userEmail', $user->email);
+        Session::put('userID', $user->id);
+
+        // Điều hướng về trang người dùng
+        return redirect()->route('user.index')->with(['flag' => 'success', 'message' => 'Đăng nhập thành công bằng Google']);
     }
 }

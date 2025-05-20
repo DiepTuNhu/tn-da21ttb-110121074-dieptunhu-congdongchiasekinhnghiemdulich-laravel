@@ -79,54 +79,45 @@
 </section>
 
 
-  <div class="explore-grid">
-  @forelse ($posts as $post)
-    <a href="{{ route('post.detail', $post->id) }}" style="text-decoration:none; color:inherit;">
-        <div class="post-card-explore">
+<div class="posts" id="user-posts">
+  @if($posts->count())
+    <!-- Các post của người dùng -->
+    @foreach ($posts as $post)
+      <a href="{{ route('post.detail', $post->id) }}" style="text-decoration:none; color:inherit;">
 
-        @php
-            // Lấy ảnh đầu tiên trong content (nếu có)
-            $firstImage = null;
-            if ($post->content) {
-                preg_match('/<img[^>]+src="([^">]+)"/i', $post->content, $matches);
-                $firstImage = $matches[1] ?? null;
-            }
-        @endphp
+        <div class="post-card user-post">
+          @php
+              // Lấy ảnh đầu tiên trong content (nếu có)
+              $firstImage = null;
+              if ($post->content) {
+                  preg_match('/<img[^>]+src="([^">]+)"/i', $post->content, $matches);
+                  $firstImage = $matches[1] ?? null;
+              }
+          @endphp
 
-        @if ($firstImage)
-            <img src="{{ $firstImage }}" alt="{{ $post->title }}" />
-        @elseif ($post->destination && $post->destination->destinationImages && $post->destination->destinationImages->isNotEmpty())
-            <img src="{{ $post->destination->destinationImages->first()->image_url }}" alt="{{ $post->destination->name }}" />
-        @else
-            <img src="canh.png" alt="Default Image" />
-        @endif
+          @if ($firstImage)
+              <img src="{{ $firstImage }}" alt="{{ $post->title }}" />
+          @elseif ($post->destination && $post->destination->destinationImages && $post->destination->destinationImages->isNotEmpty())
+              <img src="{{ $post->destination->destinationImages->first()->image_url }}" alt="{{ $post->destination->name }}" />
+          @else
+              <img src="canh.png" alt="Default Image" />
+          @endif
 
-        <div class="post-content-explore">
-            
-            {{-- Tiêu đề bài viết --}}
-            <h3 style="text-align: center">{{ $post->title }}</h3>
-            {{-- Nội dung rút gọn --}}
-            <p class="post-excerpt" style="text-align: justify">
-                {{ \Illuminate\Support\Str::limit(strip_tags($post->content), 120) }}
-            </p>
-            <div class="post-info-block">
-                <div class="info-row" style="font-weight: bold; text-align: center; margin-bottom: 4px;">
-                    <i class="fas fa-map-pin"></i>
-                    <span>{{ $post->destination->name ?? 'Địa điểm không xác định' }}</span>
-                </div>
-                <div class="info-row">
-                    <i class="fas fa-location-dot"></i>
-                    <span>{{ $post->address }}</span>
-                </div>
+          <h4 style="text-align: center">{{ $post->title }}</h4>
 
-                {{-- <div class="info-row" style="align-items: center;">
-                    @if(isset($post->user) && !empty($post->user->avatar))
-                        <img src="{{ asset('storage/avatars/' . $post->user->avatar) }}" alt="avatar" style="width:28px;height:28px;border-radius:50%;object-fit:cover;margin-right:8px;">
-                    @else
-                        <img src="{{ asset('default.') }}" alt="avatar" style="width:28px;height:28px;border-radius:50%;object-fit:cover;margin-right:8px;">
-                    @endif
-                    <span>{{ $post->user->username ?? 'Ẩn danh' }}</span>
-                </div> --}}
+          <div class="post-excerpt" style="text-align: justify">
+            {{ \Illuminate\Support\Str::limit(strip_tags($post->content), 120) }}
+          
+
+            <div class="info-row" style="display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: bold;">
+                <i class="fas fa-map-pin" style="color: #e74c3c; font-size: 16px;"></i>
+                <span style="font-size: 14px;">
+                    {{ $post->destination->name ?? 'Địa điểm không xác định' }}
+                </span> 
+            </div>
+    </div>
+
+          
                 <hr class="info-divider" />
                 <div class="info-footer">
                     <div class="footer-row">
@@ -136,7 +127,11 @@
                         </div>
                         <div class="footer-col right">
                             <i class="fas fa-calendar-alt"></i>
-                            {{ $post->created_at->format('d/m/Y') }}
+                            @if ($post->updated_at->diffInHours() < 24)
+                                {{ $post->updated_at->diffForHumans() }}
+                            @else
+                                {{ $post->updated_at->format('d/m/Y') }}
+                            @endif
                         </div>
                     </div>
                     <div class="footer-row">
@@ -150,16 +145,17 @@
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
-        </div>
-    </a>
-  @empty
-    <div style="width:100%;text-align:center;padding:40px 0;color:#888;font-size:18px;">
-      Địa điểm này hiện chưa có bài đăng nào.
-    </div>
-  @endforelse
-</div>
+      </a>
+    @endforeach
+  @else
+      <div class="alert alert-warning" style="margin-top: 30px;">
+          Không tìm thấy bài chia sẻ phù hợp.
+      </div>
+  @endif
+  </div>  
+    <div class="pagination">
+        {{ $posts->links() }}
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>

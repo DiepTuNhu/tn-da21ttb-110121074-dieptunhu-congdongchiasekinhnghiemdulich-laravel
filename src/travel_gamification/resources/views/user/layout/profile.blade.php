@@ -5,23 +5,25 @@
       <!-- Thông tin cá nhân -->
       <div class="profile-info">
         <img
-          src="https://img.tripi.vn/cdn-cgi/image/width=700,height=700/https://gcs.tripi.vn/public-tripi/tripi-feed/img/482883xvq/anh-mo-ta.png"
-          alt="avatar"
+            src="{{ $user->avatar ? asset('storage/avatars/' . $user->avatar) : asset('storage/default.jpg') }}"
+            alt="avatar"
         />
         <div>
-          <h2>Nguyễn Văn A <span class="profile-badge">🥇 Nhà chinh phục</span></h2>
+            <h2>
+                {{ $user->username }}
+                <span class="profile-badge">🥇 Nhà chinh phục</span>
+            </h2>
 
-          <div class="profile-meta">
-            <p><i class="fas fa-map-marker-alt"></i> Quê quán: Hà Nội</p>
-            <p><i class="fas fa-calendar-alt"></i> Tham gia từ: 12/03/2024</p>
-            <p><i class="fas fa-star"></i> Điểm tích lũy: <strong>1.240</strong></p>
-          </div>
+            <div class="profile-meta">
+                <p><i class="fas fa-calendar-alt"></i> Tham gia từ: {{ $user->created_at->format('d/m/Y') }}</p>
+                <p><i class="fas fa-star"></i> Điểm tích lũy: <strong>{{ number_format($user->score ?? 0, 0, ',', '.') }}</strong></p>
+            </div>
 
-          <div class="profile-stats">
-            <span><i class="fas fa-file-alt"></i> 12 bài viết</span>
-            <span><i class="fas fa-heart"></i> 856 lượt thích</span>
-            <span><i class="fas fa-check-circle"></i> 6 nhiệm vụ</span>
-          </div>
+            <div class="profile-stats">
+                <span><i class="fas fa-file-alt"></i> {{ $user->posts_count ?? 0 }} bài viết</span>
+                <span><i class="fas fa-heart"></i> {{ $user->likes_count ?? 0 }} lượt thích</span>
+                <span><i class="fas fa-check-circle"></i> {{ $user->missions_count ?? 0 }} nhiệm vụ</span>
+            </div>
         </div>
       </div>
 
@@ -38,34 +40,37 @@
       <!-- Nội dung: Bài viết -->
       <div class="profile-tab-content active" id="posts">
         <div class="profile-card-grid">
-          <div class="profile-card-item">
-            <img class="profile-card-img" src="../1.png" alt="" />
-            <div class="profile-card-content">
-              <h4>Check-in Đà Lạt</h4>
-              <p>❤️ 120 lượt thích · 12 bình luận</p>
-            </div>
-          </div>
-          <div class="profile-card-item">
-            <img class="profile-card-img" src="../1.png" alt="" />
-            <div class="profile-card-content">
-              <h4>Check-in Đà Lạt</h4>
-              <p>❤️ 120 lượt thích · 12 bình luận</p>
-            </div>
-          </div>
-          <div class="profile-card-item">
-            <img class="profile-card-img" src="../1.png" alt="" />
-            <div class="profile-card-content">
-              <h4>Check-in Đà Lạt</h4>
-              <p>❤️ 120 lượt thích · 12 bình luận</p>
-            </div>
-          </div>
-          <div class="profile-card-item">
-            <img class="profile-card-img" src="../2.png" alt="" />
-            <div class="profile-card-content">
-              <h4>Phú Quốc – Thiên đường biển</h4>
-              <p>❤️ 90 lượt thích · 8 bình luận</p>
-            </div>
-          </div>
+            @forelse($posts as $post)
+                <div class="profile-card-item">
+                    <a href="{{ route('post.detail', $post->id) }}" style="text-decoration: none; color: inherit;">
+                        @php
+                            // Lấy ảnh đầu tiên trong content (nếu có)
+                            $firstImage = null;
+                            if ($post->content) {
+                                preg_match('/<img[^>]+src="([^">]+)"/i', $post->content, $matches);
+                                $firstImage = $matches[1] ?? null;
+                            }
+                        @endphp
+
+                        @if ($firstImage)
+                            <img class="profile-card-img" src="{{ $firstImage }}" alt="{{ $post->title }}" />
+                        @elseif ($post->destination && $post->destination->destinationImages && $post->destination->destinationImages->isNotEmpty())
+                            <img class="profile-card-img" src="{{ $post->destination->destinationImages->first()->image_url }}" alt="{{ $post->destination->name }}" />
+                        @else
+                            <img class="profile-card-img" src="{{ asset('canh.png') }}" alt="Default Image" />
+                        @endif
+                        <div class="profile-card-content">
+                            <h4>{{ $post->title }}</h4>
+                            <p>
+                                ❤️ {{ $post->likes_count ?? 0 }} lượt thích · 
+                                {{ $post->comments_count ?? 0 }} bình luận
+                            </p>
+                        </div>
+                    </a>
+                </div>
+            @empty
+                <p>Bạn chưa đăng bài viết nào.</p>
+            @endforelse
         </div>
       </div>
 
@@ -89,22 +94,39 @@
 
       <!-- Nội dung: Đã thích -->
       <div class="profile-tab-content" id="likes">
-        <div class="profile-card-grid">
-          <div class="profile-card-item">
-            <img class="profile-card-img" src="../3.png" alt="" />
-            <div class="profile-card-content">
-              <h4>Hội An về đêm</h4>
-              <p>❤️ 150 lượt thích · 30 bình luận</p>
-            </div>
+          <div class="profile-card-grid">
+              @forelse($likedPosts as $post)
+                  <div class="profile-card-item">
+                      <a href="{{ route('post.detail', $post->id) }}" style="text-decoration: none; color: inherit;">
+                          @php
+                              // Lấy ảnh đầu tiên trong content (nếu có)
+                              $firstImage = null;
+                              if ($post->content) {
+                                  preg_match('/<img[^>]+src="([^">]+)"/i', $post->content, $matches);
+                                  $firstImage = $matches[1] ?? null;
+                              }
+                          @endphp
+
+                          @if ($firstImage)
+                              <img class="profile-card-img" src="{{ $firstImage }}" alt="{{ $post->title }}" />
+                          @elseif ($post->destination && $post->destination->destinationImages && $post->destination->destinationImages->isNotEmpty())
+                              <img class="profile-card-img" src="{{ $post->destination->destinationImages->first()->image_url }}" alt="{{ $post->destination->name }}" />
+                          @else
+                              <img class="profile-card-img" src="{{ asset('canh.png') }}" alt="Default Image" />
+                          @endif
+                          <div class="profile-card-content">
+                              <h4>{{ $post->title }}</h4>
+                              <p>
+                                  ❤️ {{ $post->likes_count ?? 0 }} lượt thích · 
+                                  {{ $post->comments_count ?? 0 }} bình luận
+                              </p>
+                          </div>
+                      </a>
+                  </div>
+              @empty
+                  <p>Bạn chưa thích bài viết nào của người khác.</p>
+              @endforelse
           </div>
-          <div class="profile-card-item">
-            <img class="profile-card-img" src="../4.png" alt="" />
-            <div class="profile-card-content">
-              <h4>Đà Nẵng - Cầu Rồng</h4>
-              <p>❤️ 132 lượt thích · 20 bình luận</p>
-            </div>
-          </div>
-        </div>
       </div>
 
       <!-- Nội dung: Đã chia sẻ -->

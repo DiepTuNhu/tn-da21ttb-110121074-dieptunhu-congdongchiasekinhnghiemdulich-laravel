@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\UtilitiesController;
 use App\Http\Controllers\Admin\DestinationsController;
 use App\Http\Controllers\Admin\DestinationImagesController;
 use App\Http\Controllers\Page\PostController;
+use App\Http\Controllers\Page\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,13 +42,17 @@ Route::get('/', [PageController::class, 'index'])->name('page.index');
 Route::get('/search', [PageController::class, 'search'])->name('user.search');
 Route::get('/community', [PageController::class, 'getCommunity'])->name('page.community');
 Route::post('/community/post', [PostController::class, 'store'])->name('community.post');
+Route::post('/post/{id}/like', [PostController::class, 'like'])->middleware('auth');
 Route::get('/ajax/filter-posts', [PageController::class, 'ajaxFilterPosts'])->name('filter.posts.by.traveltype');
 
 
 Route::get('/explore', [PageController::class, 'getExplore'])->name('page.explore');
 Route::get('/mission', [PageController::class, 'getMission'])->name('page.mission');
 Route::get('/ranking', [PageController::class, 'getRanking'])->name('page.ranking');
+
 Route::get('/profile', [PageController::class, 'getProfile'])->name('page.profile');
+Route::get('/profile', [ProfileController::class, 'show'])->name('page.profile')->middleware('auth');
+Route::get('/user/{id}/detail', [ProfileController::class, 'detail'])->name('detail_user_follow');
 
 // Route::get('/detailDestination', [PageController::class, 'getDetailDestination'])->name('destination.detailDestination');
 Route::get('/destination/{id}', [PageController::class, 'getDetailDestination'])->name('destination.detail');
@@ -66,8 +71,11 @@ Route::post('/xulydangky',[RegisterController::class,'postSignup'])->name('postS
 // Route::post('/page/logout', [AuthController::class, 'logout'])->name('page.logout');
 Route::post('/logout',[LoginController::class,'logout'])->name('logout');
 
+// Route::get('auth/google', [App\Http\Controllers\User\LoginController::class, 'redirectToGoogle'])->name('login.google');
+// Route::get('auth/google/callback', [App\Http\Controllers\User\LoginController::class, 'handleGoogleCallback']);
 
-
+Route::get('auth/google', [LoginController::class, 'redirectToGoogle'])->name('login.google');
+Route::get('auth/google/callback', [LoginController::class, 'handleGoogleCallback']);
 
 // ADMIN=======================================================================================================================================
 Route::post('/ckeditor/upload', [CKEditorController::class, 'upload'])->name('ckeditor.upload');
