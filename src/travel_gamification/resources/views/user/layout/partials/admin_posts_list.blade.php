@@ -11,7 +11,7 @@
           @endif
 
           {{-- Hiển thị tên địa điểm --}}
-          <h3 style="text-align: center">{{ $destination->name }}</h3>
+          <h4 style="text-align: center">{{ $destination->name }}</h4>
 
           {{-- Hiển thị đặc điểm nổi bật --}}
           <p class="post-excerpt" style="text-align: justify">

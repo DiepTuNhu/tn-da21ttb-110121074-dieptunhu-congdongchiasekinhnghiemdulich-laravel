@@ -39,10 +39,17 @@
   @auth
       <!-- Hiển thị khi đã đăng nhập -->
       <div class="user-info" style="display: flex; align-items: center;">
-          <img src="{{ Auth::user()->avatar ? asset('storage/avatars/' . Auth::user()->avatar) : asset('storage/default.jpg') }}" 
-               alt="Avatar" 
-               class="user-avatar" 
-               style="border-radius: 50%; width: 40px; height: 40px; margin-right: 10px;">
+          <img 
+              src="{{
+                  Auth::user()->avatar
+                      ? (Str::startsWith(Auth::user()->avatar, 'http')
+                          ? Auth::user()->avatar
+                          : asset('storage/avatars/' . Auth::user()->avatar))
+                      : asset('storage/default.jpg')
+              }}"
+              alt="Avatar" 
+              class="user-avatar" 
+              style="border-radius: 50%; width: 40px; height: 40px; margin-right: 10px;">
           <div>
               <div style="font-weight: bold; font-size: 14px;">{{ Auth::user()->username }}</div>
               <div style="font-size: 12px; color: #555;">{{ Auth::user()->email }}</div>

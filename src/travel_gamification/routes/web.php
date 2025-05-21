@@ -63,6 +63,8 @@ Route::post('/comments/like/{id}', [PostController::class, 'likeComment'])->name
 Route::get('/login',[LoginController::class,'index'])->name('login');
 Route::post('/login/store',[LoginController::class,'store'])->name('login.store');
 
+Route::get('/utility/{id}', [\App\Http\Controllers\Page\PageController::class, 'getDetailUtility'])->name('utility.detail');
+
 //REGISTER
 Route::get('/register',[RegisterController::class,'index'])->name('register');
 Route::post('/xulydangky',[RegisterController::class,'postSignup'])->name('postSignup');

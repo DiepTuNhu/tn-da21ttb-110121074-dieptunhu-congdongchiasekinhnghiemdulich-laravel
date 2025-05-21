@@ -107,13 +107,18 @@ class LoginController extends Controller
     public function handleGoogleCallback()
     {
         $googleUser = Socialite::driver('google')->user();
-
+// dd($googleUser);
         // Tìm user theo email
         $user = \App\Models\User::where('email', $googleUser->getEmail())->first();
 
         if (!$user) {
-            // Lấy role_id của "người dùng"
-            $role = \App\Models\Role::whereRaw('LOWER(name) = ?', ['người dùng'])->first();
+            // Lấy role_id của "người dùng" (không phân biệt hoa thường)
+            $role = \App\Models\Role::whereRaw('LOWER(name) = ?', [mb_strtolower('người dùng')])->first();
+
+            // Nếu không tìm thấy role, báo lỗi
+            if (!$role) {
+                return redirect()->route('login')->with(['flag' => 'danger', 'message' => 'Không tìm thấy vai trò "người dùng"']);
+            }
 
             // Tạo user mới
             $user = \App\Models\User::create([
@@ -121,11 +126,11 @@ class LoginController extends Controller
                 'email'       => $googleUser->getEmail(),
                 'avatar'      => $googleUser->getAvatar(),
                 'password'    => bcrypt(Str::random(16)),
-                'status'      => 0,
-                'role_id'     => $role ? $role->id : null,
+                'status'      => '0',
+                'role_id'     => $role->id,
             ]);
         }
-
+// dd($user);
         // Đăng nhập user
         Auth::login($user);
 
@@ -134,6 +139,6 @@ class LoginController extends Controller
         Session::put('userID', $user->id);
 
         // Điều hướng về trang người dùng
-        return redirect()->route('user.index')->with(['flag' => 'success', 'message' => 'Đăng nhập thành công bằng Google']);
+        return redirect()->route('page.index')->with(['flag' => 'success', 'message' => 'Đăng nhập thành công bằng Google']);
     }
 }

@@ -108,14 +108,15 @@
           <div class="post-excerpt" style="text-align: justify">
             {{ \Illuminate\Support\Str::limit(strip_tags($post->content), 120) }}
           
-
-            <div class="info-row" style="display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: bold;">
+        </div>
+        <div class="post-info-block">
+            <div style="display: flex; align-items: center; justify-content: left; gap: 6px; font-weight: bold;">
                 <i class="fas fa-map-pin" style="color: #e74c3c; font-size: 16px;"></i>
                 <span style="font-size: 14px;">
                     {{ $post->destination->name ?? 'Địa điểm không xác định' }}
                 </span> 
             </div>
-    </div>
+        </div>
 
           
                 <hr class="info-divider" />

@@ -13,4 +13,13 @@ class Utility extends Model
     {
         return $this->belongsTo(UtilityType::class, 'utility_type_id');
     }
+    public function nearbyDestinations()
+    {
+        return $this->belongsToMany(
+            \App\Models\Destination::class,
+            'destination_utilities',
+            'utility_id',
+            'destination_id'
+        )->withPivot('distance');
+    }
 }

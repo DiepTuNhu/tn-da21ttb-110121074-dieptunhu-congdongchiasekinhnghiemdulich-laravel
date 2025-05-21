@@ -1,6 +1,6 @@
 @extends('user.master')
 @section('content')
-<div class="container-content">
+<div class="container-utility">
       <div class="location-header">
         <div class="gallery">
           {{-- Ảnh chính --}}
@@ -86,35 +86,37 @@
             <div class="utility-grid">
                 @forelse ($foodUtilities as $utility)
                     <div class="utility-card">
-                        <img src="{{ $utility->utility->image ? asset('storage/utility_image/' . $utility->utility->image) : asset('default-image.png') }}" 
-                             alt="{{ $utility->utility->name }}" />
-                        <div class="content">
-                            <h4>{{ $utility->utility->name }}</h4>
-                            {{-- <p>{{ $utility->utility->description ?? 'Thông tin đang được cập nhật.' }}</p> --}}
-                            <p><strong>Khoảng cách:</strong> {{ number_format($utility->distance, 2) }} km</p>
-                        </div>
+                        <a href="{{ route('utility.detail', $utility->utility->id) }}">
+                            <img src="{{ $utility->utility->image ? asset('storage/utility_image/' . $utility->utility->image) : asset('default-image.png') }}" 
+                                alt="{{ $utility->utility->name }}" />
+                            <div class="content">
+                                <h4>{{ $utility->utility->name }}</h4>
+                                <p><strong>Khoảng cách:</strong> {{ number_format($utility->distance, 2) }} km</p>
+                            </div>
+                        </a>
                     </div>
-                @empty
-                    <p>Không có tiện ích nào thuộc loại Ẩm thực.</p>
-                @endforelse
+@empty
+    <p>Không có tiện ích nào thuộc loại Ẩm thực.</p>
+@endforelse
             </div>
         </div>
 
         <div class="utility-content" id="stay">
             <div class="utility-grid">
                 @forelse ($stayUtilities as $utility)
-                    <div class="utility-card">
-                        <img src="{{ $utility->utility->image ? asset('storage/utility_image/' . $utility->utility->image) : asset('default-image.png') }}" 
-                             alt="{{ $utility->utility->name }}" />
-                        <div class="content">
-                            <h4>{{ $utility->utility->name }}</h4>
-                            {{-- <p>{{ $utility->utility->description ?? 'Thông tin đang được cập nhật.' }}</p> --}}
-                            <p><strong>Khoảng cách:</strong> {{ number_format($utility->distance, 2) }} km</p>
-                        </div>
-                    </div>
-                @empty
-                    <p>Không có tiện ích nào thuộc loại Lưu trú.</p>
-                @endforelse
+    <div class="utility-card">
+        <a href="{{ route('utility.detail', $utility->utility->id) }}">
+            <img src="{{ $utility->utility->image ? asset('storage/utility_image/' . $utility->utility->image) : asset('default-image.png') }}" 
+                 alt="{{ $utility->utility->name }}" />
+            <div class="content">
+                <h4>{{ $utility->utility->name }}</h4>
+                <p><strong>Khoảng cách:</strong> {{ number_format($utility->distance, 2) }} km</p>
+            </div>
+        </a>
+    </div>
+@empty
+    <p>Không có tiện ích nào thuộc loại Lưu trú.</p>
+@endforelse
             </div>
         </div>
       </div>

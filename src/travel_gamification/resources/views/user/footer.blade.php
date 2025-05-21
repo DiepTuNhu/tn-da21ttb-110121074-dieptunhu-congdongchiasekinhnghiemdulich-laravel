@@ -12,8 +12,7 @@
               height="150px"
             />
             <p class="footer-text">
-              VietNamTravel giúp bạn khám phá những điểm đến tuyệt đẹp trên khắp Việt Nam. Chia sẻ trải
-              nghiệm, lưu giữ hành trình.
+              VietNamTravel - Cùng bạn khám phá vẻ đẹp Việt Nam, lưu giữ hành trình và chia sẻ cảm hứng du lịch.
             </p>
             <div class="social-icons">
               <a href="#"><i class="fab fa-facebook-f"></i></a>

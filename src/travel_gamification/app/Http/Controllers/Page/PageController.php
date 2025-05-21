@@ -10,6 +10,7 @@ use App\Models\Mission;
 use App\Models\DestinationUtility;
 use App\Models\Post;
 use App\Models\Slide;
+use App\Models\Utility;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -195,7 +196,21 @@ class PageController extends Controller
             'posts'
         ));
     }
+    public function getDetailUtility($id)
+    {
+        $utility = Utility::with('utility_types', 'nearbyDestinations')->findOrFail($id);
 
+        // Tiện ích liên quan (cùng loại)
+        $relatedUtilities = Utility::where('utility_type_id', $utility->utility_type_id)
+            ->where('id', '!=', $utility->id)
+            ->limit(4)
+            ->get();
+
+        // Lấy các địa điểm gần tiện ích này (có thể giới hạn số lượng nếu muốn)
+        $nearbyDestinations = $utility->nearbyDestinations()->with('destinationImages')->limit(4)->get();
+
+        return view('user.layout.detail_utility', compact('utility', 'relatedUtilities', 'nearbyDestinations'));
+    }
     // Hàm trả về danh sách tỉnh theo miền
     private function getProvincesByRegion($region)
     {

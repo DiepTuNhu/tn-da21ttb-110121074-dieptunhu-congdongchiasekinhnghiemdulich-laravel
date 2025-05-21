@@ -14,8 +14,8 @@
   </div>
   <div class="overlay">
     <div class="content">
-      <h1>Chia Sẻ Trải Nghiệm Du Lịch, Rinh Quà Cực Chất!</h1>
-      <p>Viết bài, chia sẻ địa điểm yêu thích, nhận điểm thưởng & quà tặng mỗi ngày!</p>
+      <h1>Du lịch không chỉ đi, mà còn chơi và chia sẻ!</h1>
+      <p>Chia sẻ niềm vui du lịch – tích điểm mỗi ngày cùng cộng đồng mê khám phá!</p>
 
       <form action="{{ route('user.search') }}" method="GET">
           <div class="search-form">
@@ -50,8 +50,7 @@
 <section class="intro-section">
   <h2>Chào mừng đến với Cộng Đồng Du Lịch Trải Nghiệm!</h2>
   <p>
-    Chia sẻ chuyến đi, ghi dấu những hành trình, kết nối cùng hàng ngàn tín đồ xê dịch. Đăng bài
-    nhận điểm thưởng và quà tặng hấp dẫn mỗi ngày!
+    Viết về những nơi bạn đã đi qua - Gửi gắm cảm hứng đến hàng ngàn người đam mê du lịch - Tích lũy điểm thưởng và mở ra những trải nghiệm mới mỗi ngày!
   </p>
   <a href="{{ route('login') }}" class="join-btn">Tham Gia Ngay</a>
 </section>
@@ -114,12 +113,12 @@ $(document).on('click', '#posts-pagination a', function(e) {
     e.preventDefault();
     var url = $(this).attr('href');
     $.get(url, function(data) {
-        $('#posts-list').html($(data).find('#posts-list').html());
+        $('#user-posts-wrapper').html($(data).find('#user-posts-wrapper').html());
         $('#posts-pagination').html($(data).find('#posts-pagination').html());
         window.history.pushState({}, '', url);
         // Đợi DOM cập nhật xong rồi mới cuộn
         setTimeout(function() {
-            var offset = $('#posts-list').offset();
+            var offset = $('#user-posts-wrapper').offset();
             if(offset) {
                 $('html, body').animate({
                     scrollTop: offset.top - 80
