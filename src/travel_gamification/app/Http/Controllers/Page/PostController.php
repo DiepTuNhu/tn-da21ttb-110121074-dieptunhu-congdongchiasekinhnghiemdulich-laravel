@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Page;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Like;
 use App\Models\Destination;
 use Illuminate\Support\Facades\Auth;
 
@@ -101,15 +102,18 @@ class PostController extends Controller
             'post_id' => $id,
             'content' => $request->content,
             'parent_comment_id' => $request->parent_comment_id ?? null,
+            'status' => '0', // Thêm dòng này để mặc định trạng thái là 0
         ]);
 
         // Trả về dữ liệu bình luận mới để render lên giao diện
         return response()->json([
             'success' => true,
-            'username' => auth()->user()->username,
-            'avatar' => auth()->user()->avatar ? asset('storage/avatars/' . auth()->user()->avatar) : asset('default-avatar.png'),
+            'id' => $comment->id,
+            'username' => $comment->user->username ?? 'Ẩn danh',
+            'avatar' => $comment->user && $comment->user->avatar ? asset('storage/avatars/' . $comment->user->avatar) : asset('storage/default.jpg'),
             'content' => $comment->content,
             'created_at' => $comment->created_at->format('d/m/Y H:i'),
+            'like_count' => $comment->likes->count()// hoặc $comment->likes->count() nếu có
         ]);
     }
 

@@ -170,8 +170,16 @@ document.getElementById('comment-form').onsubmit = function(e) {
                 <img src="${data.avatar}" alt="avatar" />
                 <div class="comment-body">
                     <strong>${data.username}</strong>
-                    ${data.content}
-                    <div class="comment-actions">${data.created_at}</div>
+                    <div>${data.content}</div>
+                    <div class="comment-actions">
+                        <span class="comment-time">${data.created_at}</span>
+                        <a href="#" class="reply-btn action-btn" data-id="${data.id}"><i class="fas fa-reply"></i> Trả lời</a>
+                        <a href="#" class="report-comment action-btn report" data-id="${data.id}"><i class="fas fa-flag"></i> Báo cáo</a>
+                        <a href="#" class="like-comment-btn action-btn like" data-id="${data.id}">
+                            <i class="fas fa-heart"></i> Thích
+                            <span id="comment-like-count-${data.id}" class="like-count">${data.like_count}</span>
+                        </a>
+                    </div>
                 </div>
             </div>`;
             const commentList = document.getElementById('comment-list');
@@ -182,6 +190,9 @@ document.getElementById('comment-form').onsubmit = function(e) {
                 commentList.removeChild(commentList.lastElementChild);
             }
             this.reset();
+
+            // Gán lại sự kiện cho các nút mới
+            rebindCommentEvents && rebindCommentEvents();
         } else if(data.error) {
             alert(data.error);
         }

@@ -155,8 +155,11 @@
       </div>
   @endif
   </div>  
+    @if($posts->hasPages())
     <div class="pagination">
         {{ $posts->links() }}
+    </div>
+@endif
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>

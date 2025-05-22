@@ -1,6 +1,6 @@
 @extends('user.master')
 @section('content')
-<div class="container-utility">
+<div class="container-destination">
       <div class="location-header">
         <div class="gallery">
           {{-- Ảnh chính --}}
@@ -17,7 +17,7 @@
               <button class="nav-btn left" onclick="scrollThumbs(-1)">❮</button>
               <div class="thumbnails" id="thumbnailList">
                   @foreach ($subImages as $image)
-                      <img src="{{ $image->image_url }}" onclick="showImage(this)">
+                      <img style="height: 80px; width: 105px" src="{{ $image->image_url }}" onclick="showImage(this)">
                   @endforeach
               </div>
               <button class="nav-btn right" onclick="scrollThumbs(1)">❯</button>

@@ -1,5 +1,6 @@
 @extends('user.master')
 @section('content')
+<div class="ranking-page">
 <header class="ranking-header">
   <h1 class="ranking-title">🏆 Bảng Xếp Hạng</h1>
   <p class="ranking-description">Khám phá người dùng và bài viết nổi bật nhất trong cộng đồng!</p>
@@ -84,4 +85,5 @@
     </tbody>
   </table>
 </section>
+</div>
 @endsection
