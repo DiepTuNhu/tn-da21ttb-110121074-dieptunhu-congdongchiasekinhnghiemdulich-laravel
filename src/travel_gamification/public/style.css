@@ -875,15 +875,14 @@ html {
 }
 /* KHAM PHA==================================================================================================================== */
 .explore-header {
-    background: url("https://hoanghamobile.com/tin-tuc/wp-content/uploads/2024/04/anh-bien-4.jpg")
-        center/cover no-repeat;
-    position: relative;
-    padding: 100px 20px 60px;
-    color: var(--background-white);
+
     text-align: center;
-    padding-top: 150px;
+    padding: 60px 20px 30px;
+    background: linear-gradient(to right, #ff7043, var(--secondary-color));
+    color: var(--background-white);
+    margin-top: 75px;
 }
-.explore-header::after {
+/* .explore-header::after {
     content: "";
     position: absolute;
     top: 0;
@@ -897,7 +896,7 @@ html {
 .explore-header p {
     position: relative;
     z-index: 1;
-}
+} */
 
 .filters {
     background: var(--background-white);
@@ -2408,7 +2407,6 @@ textarea {
     .post-card {
         min-width: 0;
     }
-
 }
 
 @media (max-width: 768px) {
@@ -2480,3 +2478,65 @@ textarea {
         font-size: 12px !important;
     }
 }
+.select-card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    width: 170px;
+    background: #fff;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: box-shadow 0.2s, border 0.2s, transform 0.2s;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.select-card img {
+    width: 100%;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    background: #f3f3f3;
+}
+.select-card-title {
+    font-weight: bold;
+    margin-top: 6px;
+    font-size: 16px;
+    text-align: center;
+}
+.select-card-desc {
+    font-size: 13px;
+    color: #666;
+    margin-top: 4px;
+    text-align: center;
+    min-height: 32px;
+}
+.select-card:hover {
+    border: 1.5px solid #3498db;
+    box-shadow: 0 4px 16px rgba(52, 152, 219, 0.12);
+    transform: translateY(-2px) scale(1.03);
+    background: #f0f8ff;
+}
+#modal-destination-list,
+#modal-utility-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: flex-start;
+    align-items: stretch;
+    min-height: 120px;
+    margin-bottom: 8px;
+        padding: 16px 24px 8px 24px;
+}
+#choose-type-modal {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    inset: 0;
+    z-index: 9999 !important;
+}
+

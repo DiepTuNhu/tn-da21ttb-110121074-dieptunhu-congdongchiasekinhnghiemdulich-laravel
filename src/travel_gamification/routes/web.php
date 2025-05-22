@@ -165,5 +165,15 @@ Route::prefix('admin')->group(function () {
   Route::post('/destination_images/{id}',[DestinationImagesController::class,'update'])->name('destination_images.update');
   Route::get('/destination_images/{id}',[DestinationImagesController::class,'destroy'])->name('destination_images.destroy');
   
+  // POST-------------------------------------------------------------------------------------------------
+  Route::get('/posts', [App\Http\Controllers\Admin\PostController::class, 'index'])->name('posts.index');
+  Route::post('/posts/{id}/toggle-status', [App\Http\Controllers\Admin\PostController::class, 'toggleStatus'])->name('admin.posts.toggleStatus');
+  Route::delete('/posts/{id}', [App\Http\Controllers\Admin\PostController::class, 'destroy'])->name('admin.posts.destroy');
+
+  // COMMENT-------------------------------------------------------------------------------------------------
+  Route::get('/comments', [App\Http\Controllers\Admin\CommentController::class, 'index'])->name('comments.index');
+  Route::post('/reviews/{id}/toggle-status', [App\Http\Controllers\Admin\CommentController::class, 'toggleStatus'])->name('reviews.toggleStatus');
+  Route::delete('/reviews/{id}', [App\Http\Controllers\Admin\CommentController::class, 'destroy'])->name('reviews.destroy');
+
 });
 

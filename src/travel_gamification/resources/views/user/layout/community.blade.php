@@ -41,10 +41,66 @@
         @endforeach
     </select>
     <button id="toggle-form-btn" class="toggle-submit-btn">✍️ Đăng bài chia sẻ</button>
-    
+    <!-- Modal chọn loại đăng bài -->
+<div id="choose-type-modal" style="
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(2px);
+">
+    <div class="choose-modal-outer">
+        <div class="choose-modal-inner" style="
+            background: #fff;
+            padding: 30px 40px;
+            border-radius: 12px;
+            width: 700px;
+            max-width: 90vw;
+            height: 80vh;
+            margin-top: 120px;
+            margin-bottom: 80px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            position: relative;
+            animation: fadeIn 0.3s ease-in-out;
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        ">
+            <h3 style="margin-bottom: 20px; font-size: 20px;">📝 Bạn muốn đăng bài về?</h3>
+            
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <button class="choose-type-btn" data-type="destination"
+                    style="padding: 10px; background-color: #1e90ff; color: white; border: none; border-radius: 6px; cursor: pointer;">
+                    🗺️ Địa điểm du lịch
+                </button>
+                <button class="choose-type-btn" data-type="utility"
+                    style="padding: 10px; background-color: #32cd32; color: white; border: none; border-radius: 6px; cursor: pointer;">
+                    🧰 Tiện ích
+                </button>
+            </div>
+
+            <button id="close-type-modal"
+                style="position: absolute; top: 12px; right: 12px; background: none; border: none; font-size: 20px; cursor: pointer;">✖️</button>
+
+            <div id="choose-list-container" style="margin-top: 20px;"></div>
+        </div>
+    </div>
+</div>
+
+<style>
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>
   </div>
 
-  <section class="submit-section" id="submit-section" style="display: none;">
+  {{-- <section class="submit-section" id="submit-section" style="display: none;">
     <h2>📝 Đăng bài chia sẻ của bạn</h2>
     <form class="submit-form" method="POST" action="{{ route('community.post') }}">
         @csrf
@@ -76,7 +132,7 @@
 
         <button type="submit" class="btn-submit">Đăng bài</button>
     </form>
-</section>
+</section> --}}
 
 
 <div class="posts" id="user-posts">
@@ -314,5 +370,173 @@
         });
     });
 </script>
-{{-- ...existing code... --}}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const modal = document.getElementById("choose-type-modal");
+    const openBtn = document.getElementById("toggle-form-btn");
+    const closeBtn = document.getElementById("close-type-modal");
+    const chooseListContainer = document.getElementById("choose-list-container");
+    const submitSection = document.getElementById("submit-section");
+
+    const allDestinations = @json($destinations);
+    const utilityTypes = @json($utilityTypes ?? []);
+    const utilities = @json($utilities ?? []);
+
+    openBtn.addEventListener("click", function () {
+        modal.style.display = "flex";
+        chooseListContainer.innerHTML = "";
+    });
+
+    closeBtn.addEventListener("click", function () {
+        modal.style.display = "none";
+        chooseListContainer.innerHTML = "";
+    });
+
+    document.querySelectorAll(".choose-type-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+            const type = btn.getAttribute("data-type");
+            if (type === "destination") {
+                chooseListContainer.innerHTML = `
+                    <div style="margin-bottom:12px; display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;">
+                        <select id="modal-type" class="form-select" style="width: 180px;">
+                            <option value="">Tất cả loại hình du lịch</option>
+                            @foreach($travelTypes as $t)
+                                <option value="{{ $t->id }}">{{ $t->name }}</option>
+                            @endforeach
+                        </select>
+                        <select id="modal-province" class="form-select" style="width: 180px;">
+                            <option value="">Tất cả tỉnh/thành</option>
+                        </select>
+                    </div>
+                    <div id="modal-destination-list" style="margin-top:16px;"></div>
+                `;
+
+                // Lấy danh sách tỉnh từ API
+                $.getJSON('https://esgoo.net/api-tinhthanh/1/0.htm', function(res) {
+                    if (res.error === 0) {
+                        let html = '<option value="">Tất cả tỉnh/thành</option>';
+                        res.data.forEach(function(p) {
+                            html += `<option value="${p.name}">${p.full_name}</option>`;
+                        });
+                        document.getElementById('modal-province').innerHTML = html;
+                    }
+                });
+
+                function renderDestinations() {
+                    const typeId = document.getElementById('modal-type').value;
+                    const province = document.getElementById('modal-province').value;
+                    let filtered = allDestinations;
+                    if (typeId) filtered = filtered.filter(d => d.travel_type_id == typeId);
+                    if (province) {
+                        filtered = filtered.filter(d => {
+                            if (!d.address) return false;
+                            // Lấy tên tỉnh/thành ở cuối address (sau "tỉnh ", "thành phố ", "TP ")
+                            let match = d.address.match(/(?:tỉnh|thành phố|TP)\s*([^\-,]+)$/i);
+                            if (match && match[1]) {
+                                return match[1].trim() === province;
+                            }
+                            // Nếu không match, fallback lấy phần cuối sau dấu phẩy
+                            let parts = d.address.split(/,| - |–/);
+                            let last = parts[parts.length - 1].replace(/^(tỉnh|thành phố|TP)\s*/i, '').trim();
+                            return last === province;
+                        });
+                    }
+                    let html = '';
+                    filtered.forEach(d => {
+                        html += `
+            <div class="select-card" data-type="destination" data-id="${d.id}">
+                <img src="${d.main_image ? d.main_image.image_url : 'canh.png'}" alt="${d.name}" />
+                <div class="select-card-title">${d.name}</div>
+                <div class="select-card-desc">${d.short_description ? d.short_description : ''}</div>
+            </div>`;
+                    });
+                    document.getElementById('modal-destination-list').innerHTML = html || '<div style="margin:16px; text-align:center;">Không có địa điểm phù hợp.</div>';
+                }
+                document.getElementById('modal-type').onchange = renderDestinations;
+                document.getElementById('modal-province').onchange = renderDestinations;
+                // Đảm bảo gọi lại mỗi lần popup mở
+                setTimeout(renderDestinations, 500);
+            }
+
+            if (type === "utility") {
+    chooseListContainer.innerHTML = `
+        <div style="margin-bottom:12px; display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;">
+            <select id="modal-utility-type" class="form-select" style="width: 180px;">
+                <option value="">Chọn loại tiện ích</option>
+                @foreach($utilityTypes as $u)
+                    <option value="{{ $u->id }}">{{ $u->name }}</option>
+                @endforeach
+            </select>
+            <select id="modal-utility-province" class="form-select" style="width: 180px;">
+                <option value="">Tất cả tỉnh/thành</option>
+            </select>
+        </div>
+        <div id="modal-utility-list" style="margin-top:16px;"></div>
+    `;
+
+    // Lấy danh sách tỉnh từ API
+    $.getJSON('https://esgoo.net/api-tinhthanh/1/0.htm', function(res) {
+        if (res.error === 0) {
+            let html = '<option value="">Tất cả tỉnh/thành</option>';
+            res.data.forEach(function(p) {
+                html += `<option value="${p.name}">${p.full_name}</option>`;
+            });
+            document.getElementById('modal-utility-province').innerHTML = html;
+        }
+    });
+
+    function renderUtilities() {
+        const typeId = document.getElementById('modal-utility-type').value;
+        const province = document.getElementById('modal-utility-province').value;
+        let filtered = utilities;
+        if (typeId) filtered = filtered.filter(u => u.utility_type_id == typeId);
+        if (province) {
+            filtered = filtered.filter(u => {
+                if (!u.address) return false;
+                // Lấy tên tỉnh/thành ở cuối address (sau "tỉnh ", "thành phố ", "TP ")
+                let match = u.address.match(/(?:tỉnh|thành phố|TP)\s*([^\-,]+)$/i);
+                if (match && match[1]) {
+                    return match[1].trim() === province;
+                }
+                // Nếu không match, fallback lấy phần cuối sau dấu phẩy
+                let parts = u.address.split(/,| - |–/);
+                let last = parts[parts.length - 1].replace(/^(tỉnh|thành phố|TP)\s*/i, '').trim();
+                return last === province;
+            });
+        }
+        let html = '';
+        filtered.forEach(u => {
+            html += `
+            <div class="select-card" data-type="utility" data-id="${u.id}">
+                <img src="${u.image_url || 'canh.png'}" alt="${u.name}" />
+                <div class="select-card-title">${u.name}</div>
+            </div>`;
+        });
+        document.getElementById('modal-utility-list').innerHTML = html || '<div style="margin:16px; text-align:center;">Không có tiện ích phù hợp.</div>';
+    }
+    document.getElementById('modal-utility-type').onchange = renderUtilities;
+    document.getElementById('modal-utility-province').onchange = renderUtilities;
+    renderUtilities();
+}
+        });
+    });
+
+    chooseListContainer.addEventListener('click', function(e) {
+        const card = e.target.closest('.select-card');
+        if (card) {
+            const type = card.getAttribute('data-type');
+            const id = card.getAttribute('data-id');
+            modal.style.display = "none";
+            chooseListContainer.innerHTML = "";
+            submitSection.style.display = "block";
+            if (type === "destination") {
+                document.getElementById('location').value = id;
+                $('#location').trigger('change');
+            }
+            // Xử lý thêm nếu là tiện ích
+        }
+    });
+});
+</script>
+
 @endsection

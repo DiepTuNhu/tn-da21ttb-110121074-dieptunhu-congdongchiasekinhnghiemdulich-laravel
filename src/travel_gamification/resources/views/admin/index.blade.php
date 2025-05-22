@@ -85,6 +85,8 @@
 <li class="nav-item"><a class="nav-link" href="{{route('missions.index')}}" onclick="loadPage(event, this)"><i class="bi bi-flag"></i> Nhiệm vụ</a></li>
 <li class="nav-item"><a class="nav-link" href="{{route('roles.index')}}" onclick="loadPage(event, this)"><i class="bi bi-person-lock"></i> Phân quyền</a></li>
 <li class="nav-item"><a class="nav-link" href="{{route('users.index')}}" onclick="loadPage(event, this)"><i class="bi bi-people"></i> Người dùng</a></li>
+<li class="nav-item"><a class="nav-link" href="{{route('posts.index')}}" onclick="loadPage(event, this)"><i class="bi bi-people"></i> Bài viết</a></li>
+<li class="nav-item"><a class="nav-link" href="{{route('comments.index')}}" onclick="loadPage(event, this)"><i class="bi bi-people"></i> Bài viết</a></li>
 <li class="nav-item"><a class="nav-link" href="{{route('slides.index')}}" onclick="loadPage(event, this)"><i class="bi bi-sliders"></i> Trình chiếu</a></li>
 {{-- <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-graph-up"></i> Báo cáo & Đánh giá</a></li> --}}
 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

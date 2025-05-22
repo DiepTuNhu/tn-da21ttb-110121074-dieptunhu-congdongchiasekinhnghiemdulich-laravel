@@ -186,15 +186,17 @@ class PageController extends Controller
 
         $posts = $postsQuery->orderBy('updated_at', 'desc')->paginate(12); // hoặc số lượng bạn muốn
 
-        return view('user.layout.community', compact(
-            'destinations',
-            'travelTypes',
-            'travelTypeId',
-            'province',
-            'region',
-            'destinationId',
-            'posts'
-        ));
+        return view('user.layout.community', [
+            'destinations' => $destinations,
+            'travelTypes' => $travelTypes,
+            'travelTypeId' => $travelTypeId,
+            'province' => $province,
+            'region' => $region,
+            'destinationId' => $destinationId,
+            'posts' => $posts,
+            'utilityTypes' => \App\Models\UtilityType::all(),
+            'utilities' => \App\Models\Utility::all(),
+        ]);
     }
     public function getDetailUtility($id)
     {

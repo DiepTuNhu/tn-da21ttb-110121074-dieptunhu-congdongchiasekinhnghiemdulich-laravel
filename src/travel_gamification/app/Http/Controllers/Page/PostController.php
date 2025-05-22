@@ -49,6 +49,7 @@ class PostController extends Controller
     {
         $post = Post::with(['user', 'destination', 'destination.destinationImages'])->findOrFail($id);
         $comments = \App\Models\Comment::where('post_id', $id)
+            ->where('status', 0) // Thêm dòng này để chỉ lấy bình luận status = 0
             ->orderBy('created_at', 'desc')
             ->paginate(5);
 
