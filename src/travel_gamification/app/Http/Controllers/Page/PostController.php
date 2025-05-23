@@ -8,6 +8,7 @@ use App\Models\Post;
 use App\Models\Like;
 use App\Models\Destination;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -106,7 +107,7 @@ class PostController extends Controller
 
     public function showDetailPost($id)
     {
-        $post = Post::with(['user', 'destination', 'destination.destinationImages'])->findOrFail($id);
+        $post = Post::with(['user', 'destination', 'destination.destinationImages', 'utility'])->findOrFail($id);
         $comments = \App\Models\Comment::where('post_id', $id)
             ->where('status', 0) // Thêm dòng này để chỉ lấy bình luận status = 0
             ->orderBy('created_at', 'desc')
@@ -118,7 +119,17 @@ class PostController extends Controller
             ->limit(5)
             ->get();
 
-        return view('user.layout.detail_post', compact('post', 'comments', 'relatedPosts'));
+        // Lấy bài viết liên quan về địa điểm
+        $relatedDestinationPosts = Post::where('id', '!=', $post->id)
+            ->where('destination_id', $post->destination_id)
+            ->limit(5)->get();
+
+        // Lấy bài viết liên quan về tiện ích
+        $relatedUtilityPosts = Post::where('id', '!=', $post->id)
+            ->where('utility_id', $post->utility_id)
+            ->limit(5)->get();
+
+        return view('user.layout.detail_post', compact('post', 'comments', 'relatedPosts', 'relatedDestinationPosts', 'relatedUtilityPosts'));
     }
 
     public function like($id)
@@ -170,10 +181,15 @@ class PostController extends Controller
             'success' => true,
             'id' => $comment->id,
             'username' => $comment->user->username ?? 'Ẩn danh',
-            'avatar' => $comment->user && $comment->user->avatar ? asset('storage/avatars/' . $comment->user->avatar) : asset('storage/default.jpg'),
+            'avatar' => $comment->user && $comment->user->avatar
+                ? (Str::startsWith($comment->user->avatar, ['http://', 'https://'])
+                    ? $comment->user->avatar
+                    : asset('storage/avatars/' . $comment->user->avatar))
+                : asset('storage/default.jpg'),
             'content' => $comment->content,
             'created_at' => $comment->created_at->format('d/m/Y H:i'),
-            'like_count' => $comment->likes->count()// hoặc $comment->likes->count() nếu có
+            'like_count' => $comment->likes->count(),
+            'can_edit' => auth()->id() === $comment->user_id, // Thêm dòng này để JS biết có hiển thị nút Sửa/Xóa không
         ]);
     }
 
@@ -209,5 +225,119 @@ class PostController extends Controller
         return response()->json(['success' => true, 'like_count' => $likeCount]);
     }
 
+    public function updateComment(Request $request, $id)
+    {
+        $comment = \App\Models\Comment::findOrFail($id);
 
+        // Chỉ cho phép người tạo comment được sửa
+        if (auth()->id() !== $comment->user_id) {
+            return response()->json(['error' => 'Bạn không có quyền sửa bình luận này!'], 403);
+        }
+
+        $request->validate([
+            'content' => 'required|string|max:1000',
+        ]);
+
+        $comment->content = $request->input('content');
+        $comment->save();
+
+        return response()->json([
+            'success' => true,
+            'content' => $comment->content,
+        ]);
+    }
+
+    public function edit($id)
+    {
+        $post = Post::findOrFail($id);
+
+        // Chỉ cho phép người đăng bài được sửa
+        if (auth()->id() !== $post->user_id) {
+            abort(403, 'Bạn không có quyền sửa bài viết này.');
+        }
+
+        $postType = $post->post_type ?? 'destination';
+        $destinations = \App\Models\Destination::where('status', 0)->get();
+        $utilities = [];
+        $selectedDestination = $post->destination_id ?? null;
+        $selectedUtility = $post->utility_id ?? null;
+
+        if ($postType === 'utility') {
+            $utilities = \App\Models\Utility::all();
+        }
+
+        return view('user.layout.edit_post_articles', [
+            'post' => $post,
+            'postType' => $postType,
+            'destinations' => $destinations,
+            'utilities' => $utilities,
+            'selectedDestination' => $selectedDestination,
+            'selectedUtility' => $selectedUtility,
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $post = Post::findOrFail($id);
+
+        // Chỉ cho phép người đăng bài được sửa
+        if (auth()->id() !== $post->user_id) {
+            abort(403, 'Bạn không có quyền sửa bài viết này.');
+        }
+
+        $postType = $request->input('post_type', 'destination');
+
+        if ($postType === 'utility') {
+            $validatedData = $request->validate([
+                'title'         => 'required|string|max:255',
+                'content'       => 'required|string',
+                'utility_id'    => 'required|integer|exists:utilities,id',
+                'price'         => 'nullable|string|max:255',
+                'opening_hours' => 'nullable|string|max:255',
+                'phone'         => 'nullable|string|max:20',
+            ]);
+
+            $utility = \App\Models\Utility::find($validatedData['utility_id']);
+
+            $post->title         = $validatedData['title'];
+            $post->content       = $validatedData['content'];
+            $post->utility_id    = $validatedData['utility_id'];
+            $post->price         = $validatedData['price'] ?? null;
+            $post->opening_hours = $validatedData['opening_hours'] ?? null;
+            $post->phone         = $validatedData['phone'] ?? null;
+            $post->address       = $utility ? $utility->address : null;
+            $post->post_type     = 'utility';
+            $post->save();
+
+        } else {
+            $validatedData = $request->validate([
+                'title'     => 'required|string|max:255',
+                'content'   => 'required|string',
+                'location'  => 'required|integer|exists:destinations,id',
+                'cost'      => 'nullable|string|max:255',
+            ]);
+
+            $destination = \App\Models\Destination::find($validatedData['location']);
+
+            $post->title          = $validatedData['title'];
+            $post->content        = $validatedData['content'];
+            $post->destination_id = $destination->id;
+            $post->address        = $destination->address;
+            $post->price          = $validatedData['cost'] ?? null;
+            $post->post_type      = 'destination';
+            $post->save();
+        }
+
+        return redirect()->route('page.community')->with('success', 'Cập nhật bài viết thành công!');
+    }
+    
+    public function deleteComment($id)
+    {
+        $comment = \App\Models\Comment::findOrFail($id);
+        if (auth()->id() !== $comment->user_id) {
+            return response()->json(['error' => 'Bạn không có quyền xóa bình luận này!']);
+        }
+        $comment->delete();
+        return response()->json(['success' => true]);
+    }
 }

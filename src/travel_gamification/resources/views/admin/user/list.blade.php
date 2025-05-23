@@ -38,7 +38,11 @@
                         {{-- <td>{{$user->password}}</td> --}}
                           <td>    
                             @if($user->avatar)
-                              <img src="{{ asset('storage/avatars/' . $user->avatar) }}" alt="User Image" width="100">
+                                @if(Str::startsWith($user->avatar, ['http://', 'https://']))
+                                    <img src="{{ $user->avatar }}" alt="User Image" width="100">
+                                @else
+                                    <img src="{{ asset('storage/avatars/' . $user->avatar) }}" alt="User Image" width="100">
+                                @endif
                             @else
                                 <span>Chưa có ảnh</span>
                             @endif

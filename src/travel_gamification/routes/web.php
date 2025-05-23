@@ -44,6 +44,9 @@ Route::get('/community', [PageController::class, 'getCommunity'])->name('page.co
 // Route::post('/community/post', [PostController::class, 'store'])->name('community.post');
 Route::get('/community/post-articles', [PostController::class, 'create'])->name('post_articles');
 Route::post('/community/post-articles', [PostController::class, 'store'])->name('post_articles.store');
+Route::get('/community/post-articles/{id}/edit', [PostController::class, 'edit'])->name('post.edit');
+Route::post('/community/post-articles/{id}/update', [PostController::class, 'update'])->name('post.update');
+
 Route::post('/post/{id}/like', [PostController::class, 'like'])->middleware('auth');
 Route::get('/ajax/filter-posts', [PageController::class, 'ajaxFilterPosts'])->name('filter.posts.by.traveltype');
 
@@ -61,7 +64,12 @@ Route::get('/destination/{id}', [PageController::class, 'getDetailDestination'])
 Route::get('/post/{id}', [PostController::class, 'showDetailPost'])->name('post.detail');
 Route::post('/posts/{id}/like', [PostController::class, 'like'])->name('posts.like');
 Route::post('/posts/{id}/comment', [PostController::class, 'comment'])->name('posts.comment');
-Route::post('/comments/like/{id}', [PostController::class, 'likeComment'])->name('comments.like');//LOGIN
+Route::post('/comments/like/{id}', [PostController::class, 'likeComment'])->name('comments.like');
+Route::post('comments/update/{id}', [PostController::class, 'updateComment'])->name('comments.update');
+Route::post('/comments/delete/{id}', [PostController::class, 'deleteComment'])->name('comments.delete');
+
+
+//LOGIN
 Route::get('/login',[LoginController::class,'index'])->name('login');
 Route::post('/login/store',[LoginController::class,'store'])->name('login.store');
 

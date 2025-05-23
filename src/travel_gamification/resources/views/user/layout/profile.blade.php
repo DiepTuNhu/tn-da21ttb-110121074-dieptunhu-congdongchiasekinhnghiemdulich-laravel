@@ -4,10 +4,17 @@
     <div class="profile-container">
       <!-- Thông tin cá nhân -->
       <div class="profile-info">
-        <img
-            src="{{ $user->avatar ? asset('storage/avatars/' . $user->avatar) : asset('storage/default.jpg') }}"
-            alt="avatar"
-        />
+            <img 
+                src="@if($user->avatar)
+                        @if(Str::startsWith($user->avatar, ['http://', 'https://']))
+                            {{ $user->avatar }}
+                        @else
+                            {{ asset('storage/avatars/' . $user->avatar) }}
+                        @endif
+                    @else
+                        {{ asset('default-avatar.png') }}
+                    @endif"
+                alt="avatar" />
         <div>
             <h2>
                 {{ $user->username }}

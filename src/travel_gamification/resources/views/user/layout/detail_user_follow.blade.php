@@ -4,8 +4,18 @@
     <!-- Thông tin người dùng -->
     <div class="profile-info-follow">
         <div class="profile-details">
-            <img src="{{ $user->avatar ? asset('storage/avatars/' . $user->avatar) : asset('default-avatar.png') }}" alt="avatar" />
-            <div>
+            <img 
+                src="@if($user->avatar)
+                        @if(Str::startsWith($user->avatar, ['http://', 'https://']))
+                            {{ $user->avatar }}
+                        @else
+                            {{ asset('storage/avatars/' . $user->avatar) }}
+                        @endif
+                    @else
+                        {{ asset('default-avatar.png') }}
+                    @endif"
+                alt="avatar" />
+                <div>
                 <h2>
                     {{ $user->username }}
                     <span

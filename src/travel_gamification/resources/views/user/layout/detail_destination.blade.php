@@ -53,19 +53,19 @@
         </p>
     </div>
     <div class="info-card">
-        <strong>Hoạt động du lịch</strong>
+        <strong>Ẩm thực địa phương</strong>
         <p>
-            {!! $destination->activities ?? 'Thông tin đang được cập nhật.' !!}
+            {!! $destination->local_cuisine ?? 'Thông tin đang được cập nhật.' !!}
         </p>
     </div>
     <div class="info-card">
         <strong>Thời điểm lý tưởng</strong>
         <p>
-            {!! $destination->ideal_time ?? 'Thông tin đang được cập nhật.' !!}
+            {!! $destination->best_time ?? 'Thông tin đang được cập nhật.' !!}
         </p>
     </div>
     <div class="info-card">
-        <strong>Phương tiện di chuyển</strong>
+        <strong>Di chuyển</strong>
         <p>
             {!! $destination->transportation ?? 'Thông tin đang được cập nhật.' !!}
         </p>

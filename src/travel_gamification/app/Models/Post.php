@@ -30,4 +30,8 @@ class Post extends Model
     {
         return $this->hasMany(\App\Models\Comment::class);
     }
+    public function utility()
+    {
+        return $this->belongsTo(\App\Models\Utility::class, 'utility_id');
+    }
 }

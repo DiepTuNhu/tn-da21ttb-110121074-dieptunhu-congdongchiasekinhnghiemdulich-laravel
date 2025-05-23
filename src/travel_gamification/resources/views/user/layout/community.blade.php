@@ -339,20 +339,19 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 });
 
+                // Địa điểm
                 function renderDestinations() {
                     const typeId = document.getElementById('modal-type').value;
                     const province = document.getElementById('modal-province').value;
-                    let filtered = allDestinations; // <-- dùng danh sách đầy đủ
+                    let filtered = allDestinations;
                     if (typeId) filtered = filtered.filter(d => d.travel_type_id == typeId);
                     if (province) {
                         filtered = filtered.filter(d => {
                             if (!d.address) return false;
-                            // Lấy tên tỉnh/thành ở cuối address (sau "tỉnh ", "thành phố ", "TP ")
                             let match = d.address.match(/(?:tỉnh|thành phố|TP)\s*([^\-,]+)$/i);
                             if (match && match[1]) {
                                 return match[1].trim() === province;
                             }
-                            // Nếu không match, fallback lấy phần cuối sau dấu phẩy
                             let parts = d.address.split(/,| - |–/);
                             let last = parts[parts.length - 1].replace(/^(tỉnh|thành phố|TP)\s*/i, '').trim();
                             return last === province;
@@ -360,12 +359,18 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                     let html = '';
                     filtered.forEach(d => {
+                        let mainImage = 'canh.png';
+                        if (d.destination_images && d.destination_images.length > 0) {
+                            const img2 = d.destination_images.find(img => img.status == 2);
+                            if (img2 && img2.image_url) mainImage = img2.image_url;
+                            else if (d.destination_images[0].image_url) mainImage = d.destination_images[0].image_url;
+                        }
                         html += `
-            <div class="select-card" data-type="destination" data-id="${d.id}">
-                <img src="${d.main_image ? d.main_image.image_url : 'canh.png'}" alt="${d.name}" />
-                <div class="select-card-title">${d.name}</div>
-                <div class="select-card-desc">${d.short_description ? d.short_description : ''}</div>
-            </div>`;
+                        <div class="select-card" data-type="destination" data-id="${d.id}">
+                            <img src="${mainImage}" alt="${d.name}" />
+                            <div class="select-card-title">${d.name}</div>
+                            <div class="select-card-desc">${d.short_description ? d.short_description : ''}</div>
+                        </div>`;
                     });
                     document.getElementById('modal-destination-list').innerHTML = html || '<div style="margin:16px; text-align:center;">Không có địa điểm phù hợp.</div>';
                 }
@@ -402,6 +407,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    // Tiện ích
     function renderUtilities() {
         const typeId = document.getElementById('modal-utility-type').value;
         const province = document.getElementById('modal-utility-province').value;
@@ -410,12 +416,10 @@ document.addEventListener("DOMContentLoaded", function () {
         if (province) {
             filtered = filtered.filter(u => {
                 if (!u.address) return false;
-                // Lấy tên tỉnh/thành ở cuối address (sau "tỉnh ", "thành phố ", "TP ")
                 let match = u.address.match(/(?:tỉnh|thành phố|TP)\s*([^\-,]+)$/i);
                 if (match && match[1]) {
                     return match[1].trim() === province;
                 }
-                // Nếu không match, fallback lấy phần cuối sau dấu phẩy
                 let parts = u.address.split(/,| - |–/);
                 let last = parts[parts.length - 1].replace(/^(tỉnh|thành phố|TP)\s*/i, '').trim();
                 return last === province;
@@ -423,9 +427,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         let html = '';
         filtered.forEach(u => {
+            let imgSrc = 'canh.png';
+            if (u.content) {
+                const match = u.content.match(/<img[^>]+src="([^">]+)"/i);
+                if (match && match[1]) imgSrc = match[1];
+            }
             html += `
             <div class="select-card" data-type="utility" data-id="${u.id}">
-                <img src="${u.image_url || 'canh.png'}" alt="${u.name}" />
+                <img src="${imgSrc}" alt="${u.name}" />
                 <div class="select-card-title">${u.name}</div>
             </div>`;
         });
