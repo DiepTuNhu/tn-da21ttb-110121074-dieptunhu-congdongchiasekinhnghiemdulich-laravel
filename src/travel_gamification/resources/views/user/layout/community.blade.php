@@ -40,7 +40,11 @@
             </option>
         @endforeach
     </select>
-    <button id="toggle-form-btn" class="toggle-submit-btn">✍️ Đăng bài chia sẻ</button>
+    @if($isLoggedIn)
+        <button id="toggle-form-btn" class="toggle-submit-btn">✍️ Đăng bài chia sẻ</button>
+    @else
+        <button type="button" class="toggle-submit-btn" onclick="alert('Bạn cần đăng nhập để đăng bài!')">✍️ Đăng bài chia sẻ</button>
+    @endif
     <!-- Modal chọn loại đăng bài -->
 <div id="choose-type-modal" style="
     display: none;
@@ -99,41 +103,6 @@
 }
 </style>
   </div>
-
-  {{-- <section class="submit-section" id="submit-section" style="display: none;">
-    <h2>📝 Đăng bài chia sẻ của bạn</h2>
-    <form class="submit-form" method="POST" action="{{ route('community.post') }}">
-        @csrf
-        <div class="form-group">
-            <label for="title" class="form-label">Tiêu đề bài viết</label>
-            <input type="text" id="title" name="title" class="form-control" placeholder="Tiêu đề bài viết" required />
-        </div>
-
-        <div class="form-group">
-            <label for="content" class="form-label">Nội dung bài viết</label>
-            <textarea id="content" name="content" class="form-control" rows="6" placeholder="Nội dung bài viết ngắn gọn..." ></textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="location" class="form-label">Địa điểm</label>
-            <select id="location" name="location" class="form-control" required>
-                <option value="">Chọn địa điểm</option>
-                @foreach($destinations as $destination)
-                    <option value="{{ $destination->id }}">{{ $destination->name }}</option>
-                @endforeach
-            </select>
-
-        </div>
-
-        <div class="form-group">
-            <label for="cost" class="form-label">Chi phí</label>
-            <input type="text" id="cost" name="cost" class="form-control" placeholder="Chi phí (ví dụ: Miễn phí, 1-3 triệu...)" />
-        </div>
-
-        <button type="submit" class="btn-submit">Đăng bài</button>
-    </form>
-</section> --}}
-
 
 <div class="posts" id="user-posts">
   @if($posts->count())
@@ -220,9 +189,9 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     const provincesByRegion = {
-        'Bắc': ['Hà Nội', 'Hải Phòng', 'Quảng Ninh', 'Bắc Ninh', 'Bắc Giang', 'Hà Nam', 'Hải Dương', 'Hòa Bình', 'Hưng Yên', 'Lạng Sơn', 'Nam Định', 'Ninh Bình', 'Phú Thọ', 'Sơn La', 'Thái Bình', 'Thái Nguyên', 'Tuyên Quang', 'Vĩnh Phúc', 'Yên Bái', 'Cao Bằng', 'Bắc Kạn', 'Điện Biên', 'Hà Giang', 'Lai Châu', 'Lào Cai'],
+        'Bắc': ['Hà Nội', 'Hải Phòng', 'Quảng Ninh', 'Bắc Ninh', 'Bắc Giang', 'Hà Nam', 'Hải Dương', 'Hoà Bình', 'Hưng Yên', 'Lạng Sơn', 'Nam Định', 'Ninh Bình', 'Phú Thọ', 'Sơn La', 'Thái Bình', 'Thái Nguyên', 'Tuyên Quang', 'Vĩnh Phúc', 'Yên Bái', 'Cao Bằng', 'Bắc Kạn', 'Điện Biên', 'Hà Giang', 'Lai Châu', 'Lào Cai'],
         'Trung': ['Thanh Hóa', 'Nghệ An', 'Hà Tĩnh', 'Quảng Bình', 'Quảng Trị', 'Thừa Thiên Huế', 'Đà Nẵng', 'Quảng Nam', 'Quảng Ngãi', 'Bình Định', 'Phú Yên', 'Khánh Hòa', 'Ninh Thuận', 'Bình Thuận', 'Kon Tum', 'Gia Lai', 'Đắk Lắk', 'Đắk Nông', 'Lâm Đồng'],
-        'Nam': ['TP Hồ Chí Minh', 'Bình Dương', 'Bình Phước', 'Tây Ninh', 'Đồng Nai', 'Bà Rịa - Vũng Tàu', 'Long An', 'Tiền Giang', 'Bến Tre', 'Trà Vinh', 'Vĩnh Long', 'Đồng Tháp', 'An Giang', 'Cần Thơ', 'Hậu Giang', 'Kiên Giang', 'Sóc Trăng', 'Bạc Liêu', 'Cà Mau']
+        'Nam': ['Hồ Chí Minh', 'Bình Dương', 'Bình Phước', 'Tây Ninh', 'Đồng Nai', 'Bà Rịa - Vũng Tàu', 'Long An', 'Tiền Giang', 'Bến Tre', 'Trà Vinh', 'Vĩnh Long', 'Đồng Tháp', 'An Giang', 'Cần Thơ', 'Hậu Giang', 'Kiên Giang', 'Sóc Trăng', 'Bạc Liêu', 'Cà Mau']
     };
 
     let allProvinces = [];
@@ -288,59 +257,7 @@
         });
     });
 </script>
-<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
-<script>
-  let editorInstance;
 
-  ClassicEditor
-      .create(document.querySelector('#content'), {
-          ckfinder: {
-              uploadUrl: '{{ route('ckeditor.upload') }}?_token={{ csrf_token() }}'
-          },
-          toolbar: [
-              'heading', '|', 'bold', 'italic', 'link',
-              'bulletedList', 'numberedList', 'blockQuote', '|',
-              'insertTable', 'uploadImage', 'undo', 'redo'
-          ]
-      })
-      .then(editor => {
-          editorInstance = editor;
-      })
-      .catch(error => {
-          console.error('CKEditor error:', error);
-      });
-
-  document.querySelector("form").addEventListener("submit", function (e) {
-      // Sử dụng instance của CKEditor 5
-      const content = editorInstance.getData();
-      if (content.trim() === "") {
-          e.preventDefault();
-          alert("Vui lòng nhập nội dung bài viết.");
-      }
-  });
-</script>
-
-  {{-- Đăng bài --}}
-<script>
-  const toggleBtn = document.getElementById("toggle-form-btn");
-  const submitSection = document.getElementById("submit-section");
-  const isLoggedIn = {{ $isLoggedIn ? 'true' : 'false' }};
-
-  if (toggleBtn && submitSection) {
-    toggleBtn.addEventListener("click", () => {
-      if (!isLoggedIn) {
-        alert("Vui lòng đăng nhập để đăng bài chia sẻ!");
-        // Có thể chuyển hướng sang trang đăng nhập nếu muốn:
-        // window.location.href = "{{ route('login') }}";
-        return;
-      }
-      const isVisible = submitSection.style.display === "block";
-      submitSection.style.display = isVisible ? "none" : "block";
-      toggleBtn.textContent = isVisible ? "✍️ Đăng bài chia sẻ" : "✖️ Đóng lại";
-    });
-  }
-
-</script>
 {{-- ...existing code... --}}
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -378,7 +295,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const chooseListContainer = document.getElementById("choose-list-container");
     const submitSection = document.getElementById("submit-section");
 
-    const allDestinations = @json($destinations);
+    const allDestinations = @json($allDestinations); // dùng biến này cho popup
     const utilityTypes = @json($utilityTypes ?? []);
     const utilities = @json($utilities ?? []);
 
@@ -425,7 +342,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 function renderDestinations() {
                     const typeId = document.getElementById('modal-type').value;
                     const province = document.getElementById('modal-province').value;
-                    let filtered = allDestinations;
+                    let filtered = allDestinations; // <-- dùng danh sách đầy đủ
                     if (typeId) filtered = filtered.filter(d => d.travel_type_id == typeId);
                     if (province) {
                         filtered = filtered.filter(d => {
@@ -521,22 +438,27 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    chooseListContainer.addEventListener('click', function(e) {
-        const card = e.target.closest('.select-card');
-        if (card) {
-            const type = card.getAttribute('data-type');
-            const id = card.getAttribute('data-id');
-            modal.style.display = "none";
-            chooseListContainer.innerHTML = "";
-            submitSection.style.display = "block";
-            if (type === "destination") {
-                document.getElementById('location').value = id;
-                $('#location').trigger('change');
-            }
-            // Xử lý thêm nếu là tiện ích
+chooseListContainer.addEventListener('click', function(e) {
+    const card = e.target.closest('.select-card');
+    if (card) {
+        const type = card.getAttribute('data-type');
+        const id = card.getAttribute('data-id');
+        modal.style.display = "none";
+        chooseListContainer.innerHTML = "";
+        // XÓA hoặc kiểm tra submitSection trước khi dùng
+        // if (submitSection) submitSection.style.display = "block";
+        if (type === "destination") {
+            window.location.href = "{{ route('post_articles') }}?type=destination&destination_id=" + id;
+            return;
         }
-    });
+        if (type === "utility") {
+            window.location.href = "{{ route('post_articles') }}?type=utility&utility_id=" + id;
+            return;
+        }
+    }
 });
+});
+
 </script>
 
 @endsection

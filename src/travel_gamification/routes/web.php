@@ -41,7 +41,9 @@ use App\Http\Controllers\Page\ProfileController;
 Route::get('/', [PageController::class, 'index'])->name('page.index');
 Route::get('/search', [PageController::class, 'search'])->name('user.search');
 Route::get('/community', [PageController::class, 'getCommunity'])->name('page.community');
-Route::post('/community/post', [PostController::class, 'store'])->name('community.post');
+// Route::post('/community/post', [PostController::class, 'store'])->name('community.post');
+Route::get('/community/post-articles', [PostController::class, 'create'])->name('post_articles');
+Route::post('/community/post-articles', [PostController::class, 'store'])->name('post_articles.store');
 Route::post('/post/{id}/like', [PostController::class, 'like'])->middleware('auth');
 Route::get('/ajax/filter-posts', [PageController::class, 'ajaxFilterPosts'])->name('filter.posts.by.traveltype');
 

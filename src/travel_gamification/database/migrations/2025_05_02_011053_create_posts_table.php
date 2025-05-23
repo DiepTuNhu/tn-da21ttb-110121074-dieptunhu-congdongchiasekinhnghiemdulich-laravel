@@ -17,12 +17,17 @@ return new class extends Migration
             $table->text('content')->nullable();
             $table->string('address', 255)->nullable();
             $table->string('price', 255)->nullable();
+            $table->string('post_type', 50)->nullable();
+            $table->string('opening_hours')->nullable(); 
+            $table->string('phone')->nullable();
             $table->string('status', 5)->nullable();
             $table->float('average_rating')->default(0);
             $table->unsignedInteger('user_id')->nullable();
             $table->unsignedInteger('destination_id')->nullable();
+            $table->unsignedInteger('utility_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('destination_id')->references('id')->on('destinations')->onDelete('set null')->onUpdate('cascade');
+            $table->foreign('destination_id')->references('id')->on('destinations')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('utility_id')->references('id')->on('utilities')->onDelete('cascade')->onUpdate('cascade');
 
             $table->timestamps();
         });

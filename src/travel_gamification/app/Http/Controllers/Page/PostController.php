@@ -18,29 +18,88 @@ class PostController extends Controller
         $isLoggedIn = Auth::check();
         return view('user.layout.community', compact('destinations', 'isLoggedIn'));
     }
+
+    public function create(Request $request)
+    {
+        // Lấy loại bài đăng: 'destination' (mặc định) hoặc 'utility'
+        $postType = $request->get('type', 'destination');
+
+        // Lấy danh sách địa điểm
+        $destinations = \App\Models\Destination::where('status', 0)->get();
+
+        // Lấy id địa điểm được chọn (nếu có)
+        $selectedDestination = $request->input('destination_id', null);
+
+        // Nếu là đăng tiện ích thì lấy danh sách tiện ích
+        $utilities = [];
+        $selectedUtility = $request->input('utility_id', null); // <-- lấy từ URL
+        if ($postType === 'utility') {
+            $utilities = \App\Models\Utility::all();
+        }
+
+        // Trả về view, truyền thêm biến postType và utilities
+        return view('user.layout.post_articles', [
+            'destinations' => $destinations,
+            'selectedDestination' => $selectedDestination,
+            'postType' => $postType,
+            'utilities' => $utilities,
+            'selectedUtility' => $selectedUtility, // <-- truyền về view
+        ]);
+    }
     
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'title'       => 'required|string|max:255',
-            'content'     => 'required|string',
-            'location' => 'required|integer|exists:destinations,id',
-            'cost'        => 'nullable|string|max:255',
-        ]);
+        $postType = $request->input('post_type', 'destination');
 
-        // Lấy destination
-        $destination = Destination::find($validatedData['location']);
+        if ($postType === 'utility') {
+            // Validate cho tiện ích
+            $validatedData = $request->validate([
+                'title'         => 'required|string|max:255',
+                'content'       => 'required|string',
+                'utility_id'    => 'required|integer|exists:utilities,id',
+                'price'         => 'nullable|string|max:255',
+                'opening_hours' => 'nullable|string|max:255',
+                'phone'         => 'nullable|string|max:20',
+            ]);
 
-        $post = new Post();
-        $post->title          = $validatedData['title'];
-        $post->content        = $validatedData['content'];
-        $post->status         = 0;
-        $post->user_id        = Auth::id();
-        $post->destination_id = $destination->id;
-        $post->address        = $destination->address; // Gán địa chỉ tại đây
-        $post->price          = $validatedData['cost'] ?? null;
+            // Lấy tiện ích để lấy địa chỉ
+            $utility = \App\Models\Utility::find($validatedData['utility_id']);
 
-        $post->save();
+            $post = new Post();
+            $post->title         = $validatedData['title'];
+            $post->content       = $validatedData['content'];
+            $post->status        = 0;
+            $post->user_id       = Auth::id();
+            $post->utility_id    = $validatedData['utility_id'];
+            $post->price         = $validatedData['price'] ?? null;
+            $post->opening_hours = $validatedData['opening_hours'] ?? null;
+            $post->phone         = $validatedData['phone'] ?? null;
+            $post->post_type     = 'utility';
+            $post->address       = $utility ? $utility->address : null; // <-- Lưu địa chỉ tiện ích
+            $post->save();
+
+        } else {
+            // Validate cho địa điểm
+            $validatedData = $request->validate([
+                'title'     => 'required|string|max:255',
+                'content'   => 'required|string',
+                'location'  => 'required|integer|exists:destinations,id',
+                'cost'      => 'nullable|string|max:255',
+            ]);
+
+            $destination = Destination::find($validatedData['location']);
+
+            $post = new Post();
+            $post->title          = $validatedData['title'];
+            $post->content        = $validatedData['content'];
+            $post->status         = 0;
+            $post->user_id        = Auth::id();
+            $post->destination_id = $destination->id;
+            $post->address        = $destination->address;
+            $post->price          = $validatedData['cost'] ?? null;
+            $post->post_type      = 'destination';
+            $post->save();
+        }
 
         return redirect()->route('page.community')->with('success', 'Đăng bài thành công!');
     }
@@ -127,26 +186,28 @@ class PostController extends Controller
 
         return view('user.layout.detail_post', compact('post', 'comments'));
     }
-public function likeComment($id)
-{
-    if (!auth()->check()) {
-        return response()->json(['error' => 'Bạn cần đăng nhập!'], 401);
+    public function likeComment($id)
+    {
+        if (!auth()->check()) {
+            return response()->json(['error' => 'Bạn cần đăng nhập!'], 401);
+        }
+        $user = auth()->user();
+        // Kiểm tra đã like chưa
+        $liked = \App\Models\Like::where('user_id', $user->id)
+            ->where('comment_id', $id)
+            ->whereNull('post_id')
+            ->first();
+        if ($liked) {
+            return response()->json(['message' => 'Bạn đã thích bình luận này!']);
+        }
+        \App\Models\Like::create([
+            'user_id' => $user->id,
+            'comment_id' => $id,
+            'post_id' => null,
+        ]);
+        $likeCount = \App\Models\Like::where('comment_id', $id)->whereNull('post_id')->count();
+        return response()->json(['success' => true, 'like_count' => $likeCount]);
     }
-    $user = auth()->user();
-    // Kiểm tra đã like chưa
-    $liked = \App\Models\Like::where('user_id', $user->id)
-        ->where('comment_id', $id)
-        ->whereNull('post_id')
-        ->first();
-    if ($liked) {
-        return response()->json(['message' => 'Bạn đã thích bình luận này!']);
-    }
-    \App\Models\Like::create([
-        'user_id' => $user->id,
-        'comment_id' => $id,
-        'post_id' => null,
-    ]);
-    $likeCount = \App\Models\Like::where('comment_id', $id)->whereNull('post_id')->count();
-    return response()->json(['success' => true, 'like_count' => $likeCount]);
-}
+
+
 }
