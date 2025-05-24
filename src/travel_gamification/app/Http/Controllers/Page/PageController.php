@@ -68,22 +68,22 @@ class PageController extends Controller
                 $query->where('travel_type_id', $typeId);
             })
             ->orderBy('updated_at', 'desc')
-            ->get();
+            ->paginate(8); // <-- Dùng paginate
 
         $adminPosts = Destination::where('status', 0)
             ->with('destinationImages')
             ->where('travel_type_id', $typeId)
             ->orderBy('updated_at', 'desc')
-            ->get();
+            ->paginate(8); // <-- Dùng paginate
 
-        // Render riêng 2 phần HTML
         $userHtml = view('user.layout.partials.user_posts_list', [
-            'posts' => $userPosts, // truyền đúng tên biến
+            'posts' => $userPosts,
         ])->render();
 
         $adminHtml = view('user.layout.partials.admin_posts_list', [
-            'destinations' => $adminPosts // 👈 Phải đúng tên
+            'destinations' => $adminPosts
         ])->render();
+
         return response()->json([
             'userHtml' => $userHtml,
             'adminHtml' => $adminHtml
@@ -299,7 +299,7 @@ class PageController extends Controller
 
         // Lấy danh sách tiện ích gần địa điểm
         $nearbyUtilities = DestinationUtility::where('destination_id', $id)
-            ->where('distance', '<=', 5) // Chỉ lấy tiện ích trong bán kính 5km
+            ->where('distance', '<=', 20) // Chỉ lấy tiện ích trong bán kính 5km
             ->with('utility') // Lấy thông tin tiện ích qua quan hệ
             ->get();
 
@@ -327,7 +327,7 @@ class PageController extends Controller
 
         // Lấy danh sách tiện ích gần địa điểm
         $nearbyUtilities = DestinationUtility::where('destination_id', $id)
-            ->where('distance', '<=', 5) // Chỉ lấy tiện ích trong bán kính 5km
+            ->where('distance', '<=', 20) // Chỉ lấy tiện ích trong bán kính 5km
             ->with('utility') // Lấy thông tin tiện ích qua quan hệ
             ->get();
 

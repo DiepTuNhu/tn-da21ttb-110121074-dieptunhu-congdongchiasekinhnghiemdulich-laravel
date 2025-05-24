@@ -98,6 +98,15 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="latitude">Vĩ độ (Latitude)</label>
+                        <input type="text" name="latitude" class="form-control" id="latitude" value="{{ old('latitude', $utility->latitude) }}" placeholder="Nhập vĩ độ nếu muốn">
+                    </div>
+                    <div class="form-group">
+                        <label for="longitude">Kinh độ (Longitude)</label>
+                        <input type="text" name="longitude" class="form-control" id="longitude" value="{{ old('longitude', $utility->longitude) }}" placeholder="Nhập kinh độ nếu muốn">
+                    </div>
+                    
+                    <div class="form-group">
                         <label for="image1" class="form-label">Chọn ảnh</label>
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="image1" name="image1" accept="image/*" onchange="previewImage(1)">
@@ -130,6 +139,7 @@
                             <option value="1" {{ $utility->status == 1 ? 'selected' : '' }}>Ẩn</option>
                         </select>
                     </div>
+
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">

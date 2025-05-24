@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 24, 2025 at 05:27 AM
+-- Generation Time: May 24, 2025 at 03:38 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -525,28 +525,13 @@ CREATE TABLE `destination_utilities` (
 --
 
 INSERT INTO `destination_utilities` (`destination_id`, `utility_id`, `status`, `quality`, `distance`) VALUES
-(13, 33, NULL, NULL, 0.115137),
-(13, 34, 'nearby', NULL, 0.98336),
-(18, 27, 'nearby', NULL, 0),
-(18, 29, 'nearby', NULL, 0),
-(18, 31, 'nearby', NULL, 0),
-(23, 27, 'nearby', NULL, 0),
-(23, 29, 'nearby', NULL, 0),
-(23, 31, 'nearby', NULL, 0),
-(26, 27, 'nearby', NULL, 0),
-(26, 29, 'nearby', NULL, 0),
-(26, 31, 'nearby', NULL, 0),
-(28, 27, 'nearby', NULL, 0),
-(28, 29, 'nearby', NULL, 0),
-(28, 31, 'nearby', NULL, 0),
-(32, 27, 'nearby', NULL, 0),
-(32, 29, 'nearby', NULL, 0),
-(32, 31, 'nearby', NULL, 0),
-(33, 27, 'nearby', NULL, 0),
-(33, 29, 'nearby', NULL, 0),
-(33, 31, 'nearby', NULL, 0),
-(35, 27, 'nearby', NULL, 0),
-(35, 29, 'nearby', NULL, 0),
+(5, 36, 'nearby', NULL, 9.023),
+(5, 40, 'nearby', NULL, 14.6307),
+(8, 36, 'nearby', NULL, 7.69205),
+(13, 33, 'nearby', NULL, 0.2864),
+(13, 34, 'nearby', NULL, 1.3392),
+(13, 37, 'nearby', NULL, 1.9402),
+(13, 38, 'nearby', NULL, 0.1135),
 (35, 31, 'nearby', NULL, 0),
 (38, 27, 'nearby', NULL, 0),
 (38, 29, 'nearby', NULL, 0),
@@ -947,12 +932,16 @@ CREATE TABLE `utilities` (
 
 INSERT INTO `utilities` (`id`, `name`, `price`, `address`, `latitude`, `longitude`, `distance`, `time`, `image`, `status`, `description`, `utility_type_id`, `created_at`, `updated_at`) VALUES
 (27, 'Khách Sạn Làng Nổi Tân Lập', 'Trung bình mỗi đêm khoảng 560.000VNĐ/phòng', 'Xã Tân Lập, Huyện Mộc Hóa, Tỉnh Long An', NULL, NULL, NULL, '24/7', '1746705831.webp', '0', '<p>Khách Sạn Làng Nổi Tân Lập cao 8 tầng với 32 phòng, được đặt tại vị trí ấn tượng trên một hòn đảo ven sông Rạch Rừng, nằm bên trong khu du lịch. Nếu bạn thích ngắm cảnh của rừng nổi Tân Lập vào mỗi thời khắc trong ngày thì đây sẽ là lựa chọn lý tưởng nhất.&nbsp;</p>', 13, '2025-05-08 12:01:49', '2025-05-15 14:03:04'),
-(28, 'Phú Thắng Grand Hotel', 'Có nhiều loại phòng giá dao động từ 230.000VNĐ đến 2.700.000VNĐ', 'Xã Đức Hòa Hạ, Huyện Đức Hòa, Tỉnh Long An', 51.50000000, 10.50000000, NULL, '24/7', '1746706640.webp', '0', '<p>Khách Sạn Phú Thắng Grand là một khách sạn sang trọng và hiện đại, nằm ở khu công nghiệp Tân Đức - Long An, cách Làng Nổi Tân Lập chỉ 30,5km nên rất thuận tiện cho việc du chuyển. Khách sạn có 3 hạng phòng tốt nhất là Grand Deluxe, Grand Premier và Grand Executive vô cùng sang trọng cho bạn tự do lựa chọn cùng một số tiện ích hấp dẫn kèm theo.</p>', 13, '2025-05-08 12:17:20', '2025-05-15 14:02:55'),
+(28, 'Phú Thắng Grand Hotel', 'Có nhiều loại phòng giá dao động từ 230.000VNĐ đến 2.700.000VNĐ', 'Xã Đức Hòa Hạ, Huyện Đức Hòa, Tỉnh Long An', 51.50000000, 10.50000000, NULL, '24/7', '1746706640.webp', '0', '<p>Khách Sạn Phú Thắng Grand là một khách sạn sang trọng và hiện đại, nằm ở khu công nghiệp Tân Đức - Long An, cách Làng Nổi Tân Lập chỉ 30,5km nên rất thuận tiện cho việc du chuyển. Khách sạn có 3 hạng phòng tốt nhất là Grand Deluxe, Grand Premier và Grand Executive vô cùng sang trọng cho bạn tự do lựa chọn cùng một số tiện ích hấp dẫn kèm theo.</p>', 13, '2025-05-08 12:17:20', '2025-05-24 12:15:51'),
 (29, 'The Island Lodge Thoi Son', 'Có nhiều loại phòng giá dao động từ 4.000.000VNĐ đến 6.000.000VNĐ', 'Xã Thới Sơn, Thành phố Mỹ Tho, Tỉnh Tiền Giang', NULL, NULL, NULL, '24/7', '1746707083.webp', '0', '<p>The Island Lodge Mỹ Tho là một khách sạn nằm ở Tiền Giang, cách Làng Nổi Tân Lập 26,3km. Với thiết kế theo phong cách kiến trúc cổ điển, khách sạn tạo ra một không gian yên tĩnh, gần gũi với thiên nhiên. Khách sạn có phòng nghỉ sang trọng, được trang bị đầy đủ tiện nghi hiện đại, cùng với một số hoạt động giải trí và dịch vụ như hồ bơi, spa, nhà hàng và bar.</p>', 13, '2025-05-08 12:24:43', '2025-05-15 14:02:45'),
 (30, 'Khách sạn Ruby', 'Dao động từ 300.000VNĐ đến 1.300.000VNĐ', 'Thị trấn Bến Lức, Huyện Bến Lức, Tỉnh Long An', 10.63987920, 106.49937440, NULL, '24/7', '1746714353.jpg', '0', '<p>Khách sạn Ruby&nbsp;là một nhà nghỉ khách sạn được thiết kế với 32&nbsp;phòng có kích cỡ khác nhau phù hợp với nhiều nhu cầu của khách hàng. Hệ thống thiết bị hiện đại, điều hòa, tivi, bàn ghế được làm từ gỗ, sóng wifi và các các dịch vụ đưa đón khách tham quan các điểm du lịch. Được thiết kế và trang trí theo phong cách cổ điển nhưng không kém phần&nbsp;sang trọng và quý phái. Các trang thiết bị và phòng ốc của nhà nghỉ - khách sạn rất tiện nghi và hiện đại nhằm mang lại sự hài lòng và thoải mái cho khách hàng trong suốt thời gian lưu trú tại phòng khách sạn. Với vị trí thuận lợi, RuBy là nơi khách hàng lựa chọn dừng chân và nghỉ dưỡng lý tưởng nhất&nbsp;tại Long An</p>', 13, '2025-05-08 14:25:53', '2025-05-15 14:02:29'),
 (31, 'Bich Ngoan Hotel', 'Từ 617.284 VND/đêm', 'Phường 1, Thành phố Trà Vinh, Tỉnh Trà Vinh', NULL, NULL, NULL, '24/7', '1746964363.webp', '0', '<p>Bich Ngoan Hotel là lựa chọn lý tưởng cho du khách khi đến với thành phố Trà Vinh, mang đến không gian nghỉ dưỡng hiện đại và tiện nghi. Là khách sạn đạt chuẩn 2 sao, nơi đây nổi bật với thiết kế sang trọng trong từng đường nét, phong cách phục vụ chuyên nghiệp và tận tâm. Tất cả các phòng đều được trang bị đầy đủ tiện nghi hiện đại cùng nội thất cao cấp, đảm bảo mang đến sự thoải mái tối đa cho du khách trong suốt kỳ nghỉ.</p><p>Ngoài ra, Bich Ngoan Hotel còn cung cấp nhiều tiện ích hấp dẫn như hồ bơi ngoài trời để thư giãn, nhà hàng sang trọng phục vụ ẩm thực địa phương và quốc tế, cùng phòng gym hiện đại dành cho những ai yêu thích thể thao. Với sự kết hợp hoàn hảo giữa vị trí thuận tiện, tiện ích đẳng cấp và dịch vụ chất lượng, nơi đây hứa hẹn sẽ mang đến cho du khách trải nghiệm lưu trú đáng nhớ khi ghé thăm Ao Bà Om.</p>', 13, '2025-05-11 11:52:44', '2025-05-15 14:02:13'),
 (33, 'Khách sạn Rex Hotel Saigon', 'Dao động từ 2.000.000VNĐ đến 6.000.000 VNĐ', 'Phường Bến Nghé, Quận 1, Thành phố Hồ Chí Minh', 10.78069000, 106.69944000, NULL, '24/7', '1747317602.jpg', '0', '<p>Hãy để chuyến đi của quý khách có một khởi đầu tuyệt vời khi ở lại khách sạn này, nơi có Wi-Fi miễn phí trong tất cả các phòng. Nằm ở vị trí chiến lược tại Quận 1, cho phép quý khách lui tới và gần với các điểm thu hút và tham quan địa phương. Đừng rời đi trước khi ghé thăm Bảo tàng Chứng tích chiến tranh nổi tiếng. Được xếp hạng 5 sao, chỗ nghỉ chất lượng cao này cho phép khách nghỉ sử dụng mát-xa, bể bơi ngoài trời và bồn tắm nước nóng ngay trong khuôn viên.</p>', 13, '2025-05-14 16:01:22', '2025-05-15 14:01:41'),
-(34, 'Anan Saigon', '2.000.000 VND - 5.000.000 VND', 'Phường Bến Nghé, Quận 1, Thành phố Hồ Chí Minh', 10.77180320, 106.70297480, NULL, '17:00 - 23:00', '1747319912.jpg', '0', '<p>Anan Saigon là nhà hàng ẩm thực Việt hiện đại do đầu bếp Peter Cuong Franklin sáng lập, tọa lạc tại 89 Tôn Thất Đạm, Quận 1, TP.HCM. Nhà hàng nổi bật với việc nâng tầm món ăn đường phố Việt Nam bằng kỹ thuật nấu ăn tinh tế. Nơi đây đã được trao 1 sao Michelin và nằm trong top 50 nhà hàng tốt nhất châu Á năm 2024. Các món đặc trưng gồm bánh mì Wagyu, chả giò gan ngỗng, và cá chiên nghệ. Không gian hiện đại, phù hợp cho trải nghiệm ẩm thực cao cấp.</p>', 14, '2025-05-15 14:38:32', '2025-05-15 14:38:32');
+(34, 'Anan Saigon', '2.000.000 VND - 5.000.000 VND', 'Phường Bến Nghé, Quận 1, Thành phố Hồ Chí Minh', 10.77180320, 106.70297480, NULL, '17:00 - 23:00', '1747319912.jpg', '0', '<p>Anan Saigon là nhà hàng ẩm thực Việt hiện đại do đầu bếp Peter Cuong Franklin sáng lập, tọa lạc tại 89 Tôn Thất Đạm, Quận 1, TP.HCM. Nhà hàng nổi bật với việc nâng tầm món ăn đường phố Việt Nam bằng kỹ thuật nấu ăn tinh tế. Nơi đây đã được trao 1 sao Michelin và nằm trong top 50 nhà hàng tốt nhất châu Á năm 2024. Các món đặc trưng gồm bánh mì Wagyu, chả giò gan ngỗng, và cá chiên nghệ. Không gian hiện đại, phù hợp cho trải nghiệm ẩm thực cao cấp.</p>', 14, '2025-05-15 14:38:32', '2025-05-15 14:38:32'),
+(36, 'Nhà nghỉ Nhân Ái', 'Giá chỉ từ 300.000VNĐ/phòng', 'Xã Tân Thành, Huyện Mộc Hóa, Tỉnh Long An', 10.72376074, 106.04765088, NULL, '24/7', 'default_hotel.jpg', '0', '<p>Toàn bộ nhân viên đều tận tình, thân thiện chu đáo. Thiết kế, màu sắc trang trí bên trong khách sạn rất trang nhã. Vị trí khách sạn thuận tiện, dễ dàng di chuyển đến trung tâm.&nbsp;<br>Có nhiều dịch vụ rất tốt kèm theo: ăn uống, giải trí.</p>', 13, '2025-05-24 12:45:20', '2025-05-24 13:02:31'),
+(37, 'Khách sạn Orchids Saigon', 'Dao động từ 3.000.000 đến 5.000.000 VNĐ', 'Phường Võ Thị Sáu, Quận 3, Thành phố Hồ Chí Minh', 10.77494000, 106.68628000, NULL, '24/7', 'default_hotel.jpg', '0', '<p>Đỗ xe và Wi-Fi luôn miễn phí, vì vậy quý khách có thể giữ liên lạc, đến và đi tùy ý. Nằm ở vị trí trung tâm tại Quận 3 của Hồ Chí Minh, chỗ nghỉ này đặt quý khách ở gần các điểm thu hút và tùy chọn ăn uống thú vị. Được xếp hạng 4 sao, chỗ nghỉ chất lượng cao này cho phép khách nghỉ sử dụng phòng tập, nhà hàng và spa ngay trong khuôn viên.</p>', 13, '2025-05-24 12:48:24', '2025-05-24 12:48:24'),
+(38, 'Italiani\'s Pizza', 'Dao động từ 49.000 đến 500.000 VNĐ', 'Phường Bến Nghé, Quận 1, Thành phố Hồ Chí Minh', 10.77883830, 106.69818310, NULL, '11:00 – 21:45', 'default_hotel.jpg', '0', '<p>Italiani’s Pizza chuyên phục vụ những chiếc bánh pizza lò củi đúng chuẩn Napoli ngon tuyệt và những món ăn phong vị Ý được lấy cảm hứng từ truyền thống hơn 200 năm. Chúng tôi dồn hết tâm huyết để tạo ra một nhà bánh pizza địa phương, mang đến cho thực khách một trải nghiệm tuyệt vời khi thưởng thức hương vị pizza chính hiệu của vùng Napoli – cái nôi của pizza Ý.</p>', 14, '2025-05-24 12:53:16', '2025-05-24 12:53:16'),
+(40, 'Nhà Khách Kiến Tường', 'Dao động từ 200.000 đến 500.000 VNĐ', 'Phường 2, Thị xã Kiến Tường, Tỉnh Long An', 10.78105149, 105.93654244, NULL, '24/7', 'default_hotel.jpg', '0', '<p>Nhà Khách Kiến Tường là một địa điểm nghỉ dưỡng lý tưởng, nằm ở trung tâm thành phố Kiến Tường, tỉnh Long An. Với thiết kế hiện đại và tiện nghi đầy đủ, nhà khách cung cấp không gian thoải mái cho du khách.</p><p>Các phòng nghỉ được trang bị điều hòa, TV màn hình phẳng, và Wi-Fi miễn phí. Ngoài ra, nhà khách còn có nhà hàng phục vụ đa dạng các món ăn địa phương và quốc tế. Đội ngũ nhân viên thân thiện và chuyên nghiệp luôn sẵn sàng hỗ trợ, đảm bảo mang đến cho khách hàng trải nghiệm tuyệt vời nhất.</p><p>Khu vực xung quanh nhà khách có nhiều điểm tham quan hấp dẫn, từ các di tích lịch sử đến các khu vực thiên nhiên tuyệt đẹp, tạo điều kiện thuận lợi cho du khách khám phá và thưởng thức văn hóa địa phương.</p>', 13, '2025-05-24 15:16:44', '2025-05-24 15:19:05');
 
 -- --------------------------------------------------------
 
@@ -1276,7 +1265,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `utilities`
 --
 ALTER TABLE `utilities`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `utility_types`

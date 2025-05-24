@@ -151,7 +151,7 @@ class DestinationsController extends Controller
 
         // Lấy danh sách tiện ích gần địa điểm
         $nearbyUtilities = DestinationUtility::where('destination_id', $id)
-            ->where('distance', '<=', 5) // Chỉ lấy tiện ích trong bán kính 5km
+            ->where('distance', '<=', 20) // Chỉ lấy tiện ích trong bán kính 5km
             ->with('utility') // Lấy thông tin tiện ích qua quan hệ
             ->get();
 
@@ -244,6 +244,14 @@ class DestinationsController extends Controller
         $destination->status = $request->has('status') ? $request->status : $destination->status;
 
         $destination->save();
+
+        // Tính lại khoảng cách và lưu vào bảng trung gian nếu có thay đổi vị trí
+        app(\App\Services\DistanceService::class)->calculateAndSaveDistances(
+            $destination->latitude,
+            $destination->longitude,
+            'destination',
+            $destination->id
+        );
 
         return redirect()->route('destinations.index')->with('success', 'Địa điểm đã được cập nhật thành công!');
     }

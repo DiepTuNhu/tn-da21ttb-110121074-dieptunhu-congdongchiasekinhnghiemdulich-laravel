@@ -114,6 +114,8 @@ class UtilitiesController extends Controller
             $imageName = time() . '.' . $request->file('image')->extension();
             $request->file('image')->storeAs('public/utility_image', $imageName);
             $utility->image = $imageName;
+        } else {
+            $utility->image = 'default_hotel.jpg'; // Nếu không có ảnh thì lấy ảnh mặc định
         }
 
         // Lưu tiện ích vào cơ sở dữ liệu
@@ -209,10 +211,11 @@ class UtilitiesController extends Controller
         $utility->address = $address;
         $utility->name = $request->name;
         $utility->price = $request->price;
-        // $utility->latitude = $request->latitude;
-        // $utility->longitude = $request->longitude;
-        $utility->latitude = $location['lat'] ?? null; // Lưu tọa độ latitude từ API
-        $utility->longitude = $location['lng'] ?? null;
+
+        // Ưu tiên lấy tọa độ nhập tay, nếu không có thì lấy từ API
+        $utility->latitude = $request->filled('latitude') ? $request->latitude : ($location['lat'] ?? null);
+        $utility->longitude = $request->filled('longitude') ? $request->longitude : ($location['lng'] ?? null);
+
         $utility->distance = $request->distance;
         $utility->time = $request->time;
         $utility->description = $request->description;
@@ -224,7 +227,16 @@ class UtilitiesController extends Controller
             $imageName = time() . '.' . $request->file('image1')->extension();
             $request->file('image1')->storeAs('public/utility_image', $imageName);
             $utility->image = $imageName;
+        } elseif (!$utility->image) {
+            $utility->image = 'default_hotel.jpg'; // Nếu chưa có ảnh thì gán mặc định
         }
+        
+        app(\App\Services\DistanceService::class)->calculateAndSaveDistances(
+            $utility->latitude,
+            $utility->longitude,
+            'utility',
+            $utility->id
+        );
 
         $utility->save();
 
@@ -236,19 +248,21 @@ class UtilitiesController extends Controller
      */
     public function destroy(string $id)
     {
-        // Tìm người dùng theo ID
+        // Tìm tiện ích theo ID
         $utility = Utility::find($id);
 
-        // Kiểm tra nếu người dùng có ảnh
-        if ($utility->image) {
-            // Xóa ảnh khỏi thư mục lưu trữ
+        if (!$utility) {
+            return redirect()->route('utilities.index')->with('error', 'Utility not found!');
+        }
+
+        // Chỉ xóa file nếu không phải là ảnh mặc định
+        if ($utility->image && $utility->image !== 'default_hotel.jpg') {
             Storage::delete('public/utility_image/' . $utility->image);
         }
 
-        // Xóa người dùng
+        // Xóa tiện ích khỏi database
         $utility->delete();
 
-        // Chuyển hướng về trang danh sách người dùng
-        return redirect()->route('utilities.index');
+        return redirect()->route('utilities.index')->with('success', 'Utility deleted successfully!');
     }
 }
