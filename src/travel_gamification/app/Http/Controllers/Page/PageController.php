@@ -239,7 +239,7 @@ class PageController extends Controller
         $region = $request->get('region'); // Lấy miền từ request
 
         // Truy vấn cơ bản: chỉ lấy những địa điểm còn hoạt động
-        $query = Destination::where('status', '!=', 1);
+        $query = Destination::where('status', '!=', 1)->orderBy('updated_at', 'desc');
 
         // Lọc theo loại hình du lịch nếu có
         if ($travelTypeId) {

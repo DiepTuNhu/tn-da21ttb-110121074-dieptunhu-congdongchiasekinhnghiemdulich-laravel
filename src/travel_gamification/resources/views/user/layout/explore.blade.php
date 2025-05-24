@@ -52,10 +52,10 @@
         <a href="{{ route('destination.detail', ['id' => $destination->id]) }}" style="text-decoration:none; color:inherit;" >
           <div class="post-card admin-post">
             {{-- Kiểm tra nếu có hình ảnh --}}
-            @if ($destination->destinationImages && $destination->destinationImages->isNotEmpty())
-              <img src="{{ $destination->destinationImages->first()->image_url }}" alt="{{ $destination->name }}" />
+            @if ($destination->mainImage)
+                <img src="{{ $destination->mainImage->image_url }}" alt="{{ $destination->name }}" />
             @else
-              <img src="default-image.png" alt="Default Image" />
+                <img src="default-image.png" alt="Default Image" />
             @endif
 
             {{-- Hiển thị tên địa điểm --}}
