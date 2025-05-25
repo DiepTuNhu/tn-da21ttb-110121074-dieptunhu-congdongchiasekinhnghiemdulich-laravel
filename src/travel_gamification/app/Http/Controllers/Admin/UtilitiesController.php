@@ -204,7 +204,7 @@ class UtilitiesController extends Controller
         }
 
         // Kiểm tra và xóa ảnh cũ nếu có
-        if ($utility->image && $request->hasFile('image1') && $utility->image !== 'default.jpg') {
+        if ($utility->image && $request->hasFile('image1') && $utility->image !== 'default_hotel.jpg') {
             Storage::delete('public/utility_image/' . $utility->image);
         }
         

@@ -3,13 +3,24 @@
 <div class="container-utility" style="padding-top: 75px;">
   <div class="place-header">
     <div class="place-left">
-      <img src="{{ $utility->image ? asset('storage/utility_image/' . $utility->image) : asset('default.png') }}" alt="{{ $utility->name }}" />
+      <img src="{{ $utility->image ? asset('storage/utility_image/' . $utility->image) : asset('default.png') }}"
+           alt="{{ $utility->name }}"
+           style="width: 565px; height: 440px; object-fit: cover; border-radius: 8px;" />
     </div>
     <div class="place-right">
       <div class="place-info">
         <h2>{{ $utility->name }}</h2>
         <p><strong>Vị trí:</strong> {{ $utility->address }}</p>
         <p><strong>Giờ mở cửa:</strong> {{ $utility->time }}</p>
+        @if($utility->price)
+            <p><strong>Giá:</strong> {{ $utility->price }}</p>
+        @endif
+        @if($utility->utility_types)
+            <p><strong>Loại tiện ích:</strong> {{ $utility->utility_types->name }}</p>
+        @endif
+        @if($utility->status)
+            <p><strong>Trạng thái:</strong> {{ $utility->status }}</p>
+        @endif
       </div>
       @if($utility->latitude && $utility->longitude)
       <iframe
@@ -48,9 +59,9 @@
             @else
               <img src="default-image.png" alt="Default Image" />
             @endif
-              <div class="card-body">
+              <div class="card-body" style="text-align: center">
                 <h4>{{ $destination->name }}</h4>
-                <p>{{ $destination->address }}</p>
+                {{-- <p>{{ $destination->address }}</p> --}}
                 @if($destination->pivot && $destination->pivot->distance)
                     <p><strong>Khoảng cách:</strong> {{ number_format($destination->pivot->distance, 2) }} km</p>
                 @endif

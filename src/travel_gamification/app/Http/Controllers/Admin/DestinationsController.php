@@ -151,7 +151,7 @@ class DestinationsController extends Controller
 
         // Lấy danh sách tiện ích gần địa điểm
         $nearbyUtilities = DestinationUtility::where('destination_id', $id)
-            ->where('distance', '<=', 20) // Chỉ lấy tiện ích trong bán kính 5km
+            ->where('distance', '<=', 30) // Chỉ lấy tiện ích trong bán kính 5km
             ->with('utility') // Lấy thông tin tiện ích qua quan hệ
             ->get();
 
@@ -234,8 +234,8 @@ class DestinationsController extends Controller
         $destination->address = $address ?: null; // Nếu địa chỉ rỗng, gán null
         $destination->name = $request->name ?: null; // Nếu tên rỗng, gán null
         $destination->price = $request->price ?: null; // Nếu giá rỗng, gán null
-        $destination->latitude = $location['lat'] ?? null; // Lưu tọa độ latitude từ API
-        $destination->longitude = $location['lng'] ?? null; // Lưu tọa độ longitude từ API
+        $destination->latitude = $request->filled('latitude') ? $request->latitude : ($location['lat'] ?? null); // Lưu tọa độ latitude từ API
+        $destination->longitude = $request->filled('longitude') ? $request->longitude : ($location['lng'] ?? null); // Lưu tọa độ longitude từ API
         $destination->highlights = $request->highlights ?: null;
         $destination->best_time = $request->best_time ?: null;
         $destination->local_cuisine = $request->local_cuisine ?: null;

@@ -299,7 +299,7 @@ class PageController extends Controller
 
         // Lấy danh sách tiện ích gần địa điểm
         $nearbyUtilities = DestinationUtility::where('destination_id', $id)
-            ->where('distance', '<=', 20) // Chỉ lấy tiện ích trong bán kính 5km
+            ->where('distance', '<=', 30) // Chỉ lấy tiện ích trong bán kính 5km
             ->with('utility') // Lấy thông tin tiện ích qua quan hệ
             ->get();
 
@@ -308,16 +308,30 @@ class PageController extends Controller
 
         // Tạo URL Google Maps
         $mapUrl = "https://www.google.com/maps/embed/v1/place?key={$googleMapsApiKey}&q=" . urlencode($destination->name . ', ' . $destination->address);
-    // Phân loại tiện ích theo loại
-        $foodUtilities = $nearbyUtilities->filter(function ($utility) {
-            return $utility->utility->utility_types->name === 'Ẩm thực'; // So sánh theo tên loại
-        });
 
-        $stayUtilities = $nearbyUtilities->filter(function ($utility) {
-            return $utility->utility->utility_types->name === 'Lưu trú'; // So sánh theo tên loại
-        });
-        // Trả về view cùng với dữ liệu
-        return view('user.layout.detail_destination', compact('destination', 'mainImage', 'subImages', 'mapUrl', 'foodUtilities', 'stayUtilities'));
+        // Lấy tiện ích Ẩm thực (phân trang 8)
+        $foodUtilities = DestinationUtility::where('destination_id', $id)
+            ->where('distance', '<=', 30)
+            ->whereHas('utility.utility_types', function($q) {
+                $q->where('name', 'Ẩm thực');
+            })
+            ->with('utility')
+            ->orderBy('distance', 'asc') // Sắp xếp theo khoảng cách tăng dần
+            ->paginate(8, ['*'], 'food_page');
+
+        // Lấy tiện ích Lưu trú (phân trang 8)
+        $stayUtilities = DestinationUtility::where('destination_id', $id)
+            ->where('distance', '<=', 30)
+            ->whereHas('utility.utility_types', function($q) {
+                $q->where('name', 'Lưu trú');
+            })
+            ->with('utility')
+            ->orderBy('distance', 'asc') // Sắp xếp theo khoảng cách tăng dần
+            ->paginate(8, ['*'], 'stay_page');
+
+        return view('user.layout.detail_destination', compact(
+            'destination', 'mainImage', 'subImages', 'mapUrl', 'foodUtilities', 'stayUtilities'
+        ));
     }
 
     public function showDestination($id)
@@ -327,7 +341,7 @@ class PageController extends Controller
 
         // Lấy danh sách tiện ích gần địa điểm
         $nearbyUtilities = DestinationUtility::where('destination_id', $id)
-            ->where('distance', '<=', 20) // Chỉ lấy tiện ích trong bán kính 5km
+            ->where('distance', '<=', 30) // Chỉ lấy tiện ích trong bán kính 5km
             ->with('utility') // Lấy thông tin tiện ích qua quan hệ
             ->get();
 

@@ -24,14 +24,20 @@ class DistanceService
 
             $relatedItems = \App\Models\Utility::all();
             foreach ($relatedItems as $item) {
-                $distance = $this->getOsrmDistance($latitude, $longitude, $item->latitude, $item->longitude);
-                if ($distance !== null && $distance <= 15) {
-                    \App\Models\DestinationUtility::create([
-                        'destination_id' => $id,
-                        'utility_id' => $item->id,
-                        'distance' => $distance,
-                        'status' => 'nearby',
-                    ]);
+                // Lọc sơ bộ bằng Haversine, chỉ gọi OSRM nếu < 25km
+                $haversine = $this->haversineDistance($latitude, $longitude, $item->latitude, $item->longitude);
+                if ($haversine <= 40) {
+                    $distance = $this->getOsrmDistance($latitude, $longitude, $item->latitude, $item->longitude);
+                    if ($distance !== null && $distance <= 30) {
+                        \App\Models\DestinationUtility::create([
+                            'destination_id' => $id,
+                            'utility_id' => $item->id,
+                            'distance' => $distance,
+                            'status' => 'nearby',
+                        ]);
+                    }
+                    // Nếu cần delay để tránh bị chặn:
+                    // usleep(500000); // nghỉ 0.5 giây
                 }
             }
         } elseif ($type === 'utility') {
@@ -40,17 +46,36 @@ class DistanceService
 
             $relatedItems = \App\Models\Destination::all();
             foreach ($relatedItems as $item) {
-                $distance = $this->getOsrmDistance($latitude, $longitude, $item->latitude, $item->longitude);
-                if ($distance !== null && $distance <= 20) {
-                    \App\Models\DestinationUtility::create([
-                        'destination_id' => $item->id,
-                        'utility_id' => $id,
-                        'distance' => $distance,
-                        'status' => 'nearby',
-                    ]);
+                $haversine = $this->haversineDistance($latitude, $longitude, $item->latitude, $item->longitude);
+                if ($haversine <= 40) {
+                    $distance = $this->getOsrmDistance($latitude, $longitude, $item->latitude, $item->longitude);
+                    if ($distance !== null && $distance <= 30) {
+                        \App\Models\DestinationUtility::create([
+                            'destination_id' => $item->id,
+                            'utility_id' => $id,
+                            'distance' => $distance,
+                            'status' => 'nearby',
+                        ]);
+                    }
+                    // usleep(500000); // nếu cần
                 }
             }
         }
+    }
+
+    /**
+     * Tính khoảng cách đường chim bay (Haversine) giữa 2 điểm (km)
+     */
+    public function haversineDistance($lat1, $lng1, $lat2, $lng2)
+    {
+        $earthRadius = 6371; // km
+        $dLat = deg2rad($lat2 - $lat1);
+        $dLng = deg2rad($lng2 - $lng1);
+        $a = sin($dLat/2) * sin($dLat/2) +
+            cos(deg2rad($lat1)) * cos(deg2rad($lat2)) *
+            sin($dLng/2) * sin($dLng/2);
+        $c = 2 * atan2(sqrt($a), sqrt(1-$a));
+        return $earthRadius * $c;
     }
 
     // public function getRealDistance($lat1, $lng1, $lat2, $lng2, $mode = 'driving')

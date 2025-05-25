@@ -87,7 +87,14 @@
                     <label for="transportation">Phương tiện di chuyển</label>
                     <textarea name="transportation" id="transportation" class="form-control">{{ old('transportation', $destination->transportation) }}</textarea>
                 </div>
- 
+                <div class="form-group">
+                    <label for="latitude">Vĩ độ (Latitude)</label>
+                    <input type="text" name="latitude" class="form-control" id="latitude" value="{{ old('latitude', $destination->latitude) }}">
+                </div>
+                <div class="form-group">
+                    <label for="longitude">Kinh độ (Longitude)</label>
+                    <input type="text" name="longitude" class="form-control" id="longitude" value="{{ old('longitude', $destination->longitude) }}">
+                </div>
                 <div class="form-group">
                   <label for="status">Trạng thái</label>
                   <select name="status" class="form-control" id="status">

@@ -99,6 +99,12 @@
     <p>Không có tiện ích nào thuộc loại Ẩm thực.</p>
 @endforelse
             </div>
+            {{-- <div class="d-flex justify-content-center mt-3">
+        {{ $foodUtilities->links('pagination::bootstrap-4') }}
+    </div> --}}
+        <div class="pagination">
+      {{ $foodUtilities->links() }}
+    </div>
         </div>
 
         <div class="utility-content" id="stay">
@@ -117,6 +123,9 @@
 @empty
     <p>Không có tiện ích nào thuộc loại Lưu trú.</p>
 @endforelse
+            </div>
+            <div class="pagination">
+                {{ $stayUtilities->links() }}
             </div>
         </div>
       </div>
