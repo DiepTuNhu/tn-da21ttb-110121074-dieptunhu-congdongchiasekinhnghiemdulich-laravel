@@ -16,6 +16,15 @@
     @endif
     <div class="user-info" style="margin-left: 12px;">
         <span class="author-name">{{ $post->user->username ?? 'Ẩn danh' }}</span>
+            @php
+                $isCurrentUser = Auth::check() && Auth::id() === $post->user->id;
+            @endphp      
+@if($isCurrentUser)
+    <a href="{{ route('page.profile') }}" class="profile-button">Xem hồ sơ</a>
+@else
+    <a href="{{ route('detail_user_follow', ['id' => $post->user->id]) }}" class="profile-button">Xem hồ sơ</a>
+@endif
+
         <span class="meta-details">
             <span class="badge">Địa điểm</span>
             <i class="fas fa-calendar-alt"></i> {{ $post->updated_at->format('d/m/Y') }}
@@ -84,21 +93,6 @@
     $mapUrl = "https://www.google.com/maps/embed/v1/place?key={$googleMapsApiKey}&q=" . urlencode($placeName . ', ' . $placeAddress);
 @endphp
 <iframe src="{{ $mapUrl }}" allowfullscreen="" loading="lazy"></iframe>
-    <div class="post-interact">
-      <div class="post-actions">
-        <button class="btn like" id="like-btn" data-post="{{ $post->id }}">
-            <i class="fas fa-heart"></i> Thích
-            <span id="like-count">{{ $post->likes->count() }}</span>
-        </button>
-        <button class="btn save"><i class="fas fa-bookmark"></i> Lưu bài viết</button>
-        <button class="btn report"><i class="fas fa-flag"></i> Báo cáo</button>
-      </div>
-
-      <div class="post-badges">
-        <span><i class="fas fa-star"></i> 120 XP</span>
-        <span><i class="fas fa-medal"></i> Top 10 bài viết tuần</span>
-      </div>
-    </div>
 
       <!-- Bình luận -->
     <div class="comment-section">
@@ -156,16 +150,16 @@
                 @if($reply->parent_comment_id == $comment->id)
                 <div class="comment reply">
                     <img 
-                        src="@if($comment->user && $comment->user->avatar)
-                                @if(Str::startsWith($comment->user->avatar, ['http://', 'https://']))
-                                    {{ $comment->user->avatar }}
-                                @else
-                                    {{ asset('storage/avatars/' . $comment->user->avatar) }}
-                                @endif
+                        src="@if($reply->user && $reply->user->avatar)
+                            @if(Str::startsWith($reply->user->avatar, ['http://', 'https://']))
+                                {{ $reply->user->avatar }}
                             @else
-                                {{ asset('storage/default.jpg') }}
-                            @endif"
-                        alt="avatar" />                      
+                                {{ asset('storage/avatars/' . $reply->user->avatar) }}
+                            @endif
+                        @else
+                            {{ asset('storage/default.jpg') }}
+                        @endif"
+                        alt="avatar" />                     
                     <div class="comment-body">
                         <strong>{{ $reply->user->username ?? 'Ẩn danh' }}</strong>
                         <div>{{ $reply->content }}</div>
@@ -207,45 +201,73 @@
 
   <!-- Sidebar -->
   <div class="sidebar">
-    @php
-        $isCurrentUser = Auth::check() && Auth::id() === $post->user->id;
-    @endphp
-    <div class="author-box">
-      <p>
-        {{-- @php use Illuminate\Support\Str; @endphp --}}
-        @if($post->user && $post->user->avatar)
-            @if(Str::startsWith($post->user->avatar, ['http://', 'https://']))
-                <img src="{{ $post->user->avatar }}" alt="" />
-            @else
-                <img src="{{ asset('storage/avatars/' . $post->user->avatar) }}" alt="" />
-            @endif
-        @else
-            <img src="{{ asset('default-avatar.png') }}" alt="" />
-        @endif
-        <strong>{{ $post->user->username ?? 'Ẩn danh' }}</strong>
-      </p>
-      @if($isCurrentUser)
-          <a href="{{ route('page.profile') }}">Xem hồ sơ</a>
-      @else
-          <a href="{{ route('detail_user_follow', ['id' => $post->user->id]) }}">Xem hồ sơ</a>
-      @endif
+
+<div class="author-box">
+    <div class="post-interact">
+        <!-- Nút hành động -->
+        <div class="post-actions">
+            <button class="btn action-btn like" id="like-btn" data-post="{{ $post->id }}">
+                <i class="fas fa-heart"></i> Thích
+                <span id="like-count">{{ $post->likes->count() }}</span>
+            </button>
+            <button class="btn action-btn save">
+                <i class="fas fa-bookmark"></i> Chia sẻ
+            </button>
+            <button class="btn action-btn report">
+                <i class="fas fa-flag"></i> Báo cáo
+            </button>
+        </div>
+
+        <!-- Phần đánh giá -->
+        <div class="post-rating">
+            <span class="rating-stars">
+                @for ($i = 1; $i <= 5; $i++)
+                    <i class="fas fa-star{{ $i <= round($post->average_rating) ? '' : '-o' }}"></i>
+                @endfor
+            </span>
+            <span class="rating-text"> đánh giá</span>
+            {{-- <span class="rating-text">{{ number_format($post->average_rating, 1) }}/5 từ {{ $post->ratings->count() }} đánh giá</span> --}}
+        </div>
+
+        <!-- Huy hiệu -->
+        <div class="post-badges">
+            {{-- <span class="badge-item">
+                <i class="fas fa-star"></i> 120 XP
+            </span> --}}
+            <span class="badge-item">
+                <i class="fas fa-medal"></i> Top 10 bài viết tuần
+            </span>
+        </div>
+        <div class="post-rating-input">
+    <span class="rating-label">Đánh giá của bạn:</span>
+    <div class="rating-stars-input">
+        <i class="far fa-star"></i>
+        <i class="far fa-star"></i>
+        <i class="far fa-star"></i>
+        <i class="far fa-star"></i>
+        <i class="far fa-star"></i>
     </div>
+</div>
+    </div>
+</div>
+
+
 
     <div class="related-box">
-      <strong>Bài viết liên quan</strong>
+      <strong>Danh sách bài viết</strong>
       @forelse($relatedPosts as $related)
         <a href="{{ route('post.detail', $related->id) }}">{{ $related->title }}</a>
       @empty
-        <div>Không có bài viết liên quan</div>
+        <div>0 bài viết</div>
       @endforelse
     </div>
 
     <div class="related-box">
-      <strong>Bài viết về các tiện ích liên quan</strong>
+      <strong>Tiện ích liên quan</strong>
       @forelse($relatedUtilityPosts as $related)
         <a href="{{ route('post.detail', $related->id) }}">{{ $related->title }}</a>
       @empty
-        <div>Không có bài viết liên quan về tiện ích</div>
+        <div>0 bài viết</div>
       @endforelse
     </div>
   </div>
@@ -452,7 +474,7 @@ function bindCommentEvents() {
                     }
                 })
                 .then(res => res.json())
-                .then data => {
+                .then(data => {
                     if(data.success) {
                         // Xóa bình luận khỏi giao diện
                         const commentEl = document.querySelector('.comment[data-id="' + commentId + '"]');

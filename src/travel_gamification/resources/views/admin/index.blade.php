@@ -81,6 +81,7 @@
   </ul>
 </li>
 
+<li class="nav-item"><a class="nav-link" href="{{route('admin.posts.pending') }}" onclick="loadPage(event, this)"><i class="bi bi-journal-check"></i> Duyệt bài đăng</a></li>
 <li class="nav-item"><a class="nav-link" href="{{route('badges.index')}}" onclick="loadPage(event, this)"><i class="bi bi-award"></i> Huy hiệu</a></li>
 <li class="nav-item"><a class="nav-link" href="{{route('missions.index')}}" onclick="loadPage(event, this)"><i class="bi bi-flag"></i> Nhiệm vụ</a></li>
 <li class="nav-item"><a class="nav-link" href="{{route('roles.index')}}" onclick="loadPage(event, this)"><i class="bi bi-person-lock"></i> Phân quyền</a></li>

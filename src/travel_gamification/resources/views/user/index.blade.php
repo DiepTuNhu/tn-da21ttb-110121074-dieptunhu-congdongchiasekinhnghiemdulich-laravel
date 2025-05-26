@@ -52,7 +52,7 @@
   <p>
     Viết về những nơi bạn đã đi qua - Gửi gắm cảm hứng đến hàng ngàn người đam mê du lịch - Tích lũy điểm thưởng và mở ra những trải nghiệm mới mỗi ngày!
   </p>
-  <a href="{{ route('login') }}" class="join-btn">Tham Gia Ngay</a>
+  <a href="{{ route('register') }}" class="join-btn">Tham Gia Ngay</a>
 </section>
 
 <section class="category-section">
@@ -132,11 +132,11 @@ $(document).on('click', '#destinations-pagination a', function(e) {
     e.preventDefault();
     var url = $(this).attr('href');
     $.get(url, function(data) {
-        $('#destinations-list').html($(data).find('#destinations-list').html());
+        $('#admin-posts-wrapper').html($(data).find('#admin-posts-wrapper').html());
         $('#destinations-pagination').html($(data).find('#destinations-pagination').html());
         window.history.pushState({}, '', url);
         setTimeout(function() {
-            var offset = $('#destinations-list').offset();
+            var offset = $('#admin-posts-wrapper').offset();
             if(offset) {
                 $('html, body').animate({
                     scrollTop: offset.top - 80

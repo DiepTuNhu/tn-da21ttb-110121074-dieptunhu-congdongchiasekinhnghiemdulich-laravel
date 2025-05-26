@@ -14,21 +14,21 @@
             <p class="footer-text">
               VietNamTravel - Cùng bạn khám phá vẻ đẹp Việt Nam, lưu giữ hành trình và chia sẻ cảm hứng du lịch.
             </p>
-            <div class="social-icons">
+            {{-- <div class="social-icons">
               <a href="#"><i class="fab fa-facebook-f"></i></a>
               <a href="#"><i class="fab fa-instagram"></i></a>
               <a href="#"><i class="fab fa-youtube"></i></a>
-            </div>
+            </div> --}}
           </div>
 
           <!-- Liên kết -->
           <div class="footer-column">
             <h6 class="footer-title">Liên kết</h6>
             <ul class="footer-links">
-              <li><a href="#">Trang chủ</a></li>
-              <li><a href="#">Cộng đồng</a></li>
-              <li><a href="#">Khám phá</a></li>
-              <li><a href="#">Xếp hạng</a></li>
+              <li><a href="{{ route('page.index') }}">Trang chủ</a></li>
+              <li><a href="{{ route('page.explore') }}">Cộng đồng</a></li>
+              <li><a href="{{ route('page.community') }}">Khám phá</a></li>
+              <li><a href="{{ route('page.ranking') }}">Xếp hạng</a></li>
             </ul>
           </div>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -37,5 +38,20 @@ class PostController extends Controller
         $post->delete();
 
         return redirect()->back()->with('success', 'Xóa bài viết thành công!');
+    }
+
+    public function approve($id)
+    {
+        $post = Post::findOrFail($id);
+        $post->status = 0; // Đổi về 0 để hiện ra ngoài web
+        $post->save();
+        return redirect()->back()->with('success', 'Đã duyệt bài!');
+    }
+
+    public function pending()
+    {
+        // Lấy các bài chờ duyệt (status = 1 theo quy ước của bạn)
+        $posts = Post::where('status', 1)->latest()->paginate(20);
+        return view('admin.post.pending', compact('posts'));
     }
 }

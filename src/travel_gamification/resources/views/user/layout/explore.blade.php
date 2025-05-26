@@ -34,7 +34,7 @@
 
   <select id="destinationDropdown" class="form-select" style="width: 400px !important;">
     <option value="">🔍 Tìm địa điểm du lịch...</option>
-    @foreach($destinations as $destination)
+    @foreach($allDestinations as $destination)
       <option value="{{ route('destination.detail', ['id' => $destination->id]) }}">
         {{ $destination->name }}
       </option>
@@ -70,7 +70,13 @@
             <div class="post-info-block">
               <div class="info-row">
                 <i class="fas fa-location-dot"></i>
-                <span>{{ $destination->address }}</span>
+                <span>
+                    {{
+                        collect(explode(',', $destination->address))
+                            ->slice(-2)
+                            ->implode(',')
+                    }}
+                </span>
               </div>
               {{-- <div class="info-row">
                 <i class="fas fa-dollar-sign"></i>
@@ -174,15 +180,40 @@
         // Khởi tạo Select2 cho dropdown địa điểm
         $('#destinationDropdown').select2({
             placeholder: "🔍 Tìm địa điểm du lịch...",
-            allowClear: true
+            allowClear: true,
+            ajax: {
+                url: '{{ route('ajax.destinations') }}',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    // Lấy filter hiện tại trên trang
+                    return {
+                        q: params.term, // từ khóa tìm kiếm
+                        region: $('#vungmien').val(),
+                        province: $('#tinh').val(),
+                        type: $('#travelTypeDropdown').val()
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data.results
+                    };
+                },
+                cache: true
+            },
+            minimumInputLength: 0 // Cho phép click vào là hiện luôn danh sách đã lọc
         });
 
-        // Khi chọn địa điểm sẽ chuyển trang
         $('#destinationDropdown').on('change', function () {
             const url = $(this).val();
             if (url) {
                 window.location.href = url;
             }
+        });
+        $('#destinationDropdown').on('select2:open', function () {
+            setTimeout(function() {
+                document.querySelector('.select2-search__field').focus();
+            }, 10);
         });
     });
 </script>

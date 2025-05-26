@@ -52,6 +52,8 @@ Route::get('/ajax/filter-posts', [PageController::class, 'ajaxFilterPosts'])->na
 
 
 Route::get('/explore', [PageController::class, 'getExplore'])->name('page.explore');
+Route::get('/ajax/destinations', [PageController::class, 'ajaxDestinations'])->name('ajax.destinations');
+
 Route::get('/mission', [PageController::class, 'getMission'])->name('page.mission');
 Route::get('/ranking', [PageController::class, 'getRanking'])->name('page.ranking');
 
@@ -90,8 +92,13 @@ Route::get('auth/google', [LoginController::class, 'redirectToGoogle'])->name('l
 Route::get('auth/google/callback', [LoginController::class, 'handleGoogleCallback']);
 
 // ADMIN=======================================================================================================================================
-Route::post('/ckeditor/upload', [CKEditorController::class, 'upload'])->name('ckeditor.upload');
 
+Route::middleware(['auth', 'is_admin'])->prefix('admin')->group(function () {
+    Route::get('/posts/pending', [\App\Http\Controllers\Admin\PostController::class, 'pending'])->name('admin.posts.pending');
+    Route::post('/posts/{id}/approve', [\App\Http\Controllers\Admin\PostController::class, 'approve'])->name('admin.posts.approve');
+});
+Route::get('/admin/posts/pending', [\App\Http\Controllers\Admin\PostController::class, 'pending'])->name('admin.posts.pending');
+Route::post('/ckeditor/upload', [CKEditorController::class, 'upload'])->name('ckeditor.upload');
 Route::prefix('admin')->group(function () {
 
 //TYPE LOCATION------------------------------------------------------------------------------------------

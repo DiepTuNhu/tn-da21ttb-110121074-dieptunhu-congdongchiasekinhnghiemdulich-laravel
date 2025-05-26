@@ -22,7 +22,13 @@
           <div class="post-info-block">
             <div class="info-row">
               <i class="fas fa-location-dot"></i>
-              <span>{{ $destination->address }}</span>
+              <span>
+                    {{
+                        collect(explode(',', $destination->address))
+                            ->slice(-2)
+                            ->implode(',')
+                    }}
+              </span>
             </div>
             {{-- <div class="info-row">
               <i class="fas fa-dollar-sign"></i>

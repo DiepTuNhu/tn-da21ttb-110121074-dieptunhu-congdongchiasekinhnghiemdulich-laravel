@@ -9,6 +9,8 @@ use App\Models\Like;
 use App\Models\Destination;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use App\Notifications\NewPostSubmitted;
+use App\Models\User;
 
 class PostController extends Controller
 {
@@ -93,7 +95,7 @@ class PostController extends Controller
             $post = new Post();
             $post->title          = $validatedData['title'];
             $post->content        = $validatedData['content'];
-            $post->status         = 0;
+            $post->status         = 1;
             $post->user_id        = Auth::id();
             $post->destination_id = $destination->id;
             $post->address        = $destination->address;
@@ -102,7 +104,16 @@ class PostController extends Controller
             $post->save();
         }
 
-        return redirect()->route('page.community')->with('success', 'Đăng bài thành công!');
+        // Gửi thông báo cho admin về bài viết mới
+        $admins = User::whereHas('role', function($query) {
+            $query->whereRaw('LOWER(name) = ?', ['quản trị']);
+        })->get();
+
+        foreach ($admins as $admin) {
+            $admin->notify(new NewPostSubmitted($post));
+        }
+
+        return redirect()->route('page.community')->with('success', 'Bài viết của bạn đã được gửi và đang chờ duyệt bởi quản trị viên.');
     }
 
     public function showDetailPost($id)

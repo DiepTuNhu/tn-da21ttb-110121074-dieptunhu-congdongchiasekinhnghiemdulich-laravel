@@ -27,6 +27,14 @@
         <div class="map-preview">
           <div class="location-info">
               <h2>{{ $destination->name }}</h2>
+              <div class="mb-3" style="display: flex; gap: 10px;">
+                <a href="{{ route('post_articles', ['type' => 'destination', 'destination_id' => $destination->id]) }}" class="btn btn-primary">
+                    Thêm bài viết
+                </a>
+                <a href="{{ route('page.community', ['destination_id' => $destination->id]) }}" class="btn btn-outline-secondary">
+                    Xem bài viết
+                </a>
+            </div>
               <p><strong>Địa chỉ:</strong> {{ $destination->address }}</p>
               <p><strong>Giá:</strong> {{ $destination->price }}</p>
               <p><strong>Bản đồ:</strong></p>
@@ -47,29 +55,41 @@
         <h3 class="section-title">Thông tin mô tả</h3>
         <div class="info-grid">
               <div class="info-card">
-        <strong>Đặc điểm nổi bật</strong>
-        <p>
-            {!! $destination->highlights ?? 'Thông tin đang được cập nhật.' !!}
-        </p>
+    <strong class="toggle-desc" style="cursor:pointer;">
+        Đặc điểm nổi bật
+        <span class="arrow-icon" style="margin-left:8px;"><i class="fa-solid fa-angle-down"></i></span>
+    </strong>
+    <div class="desc-content" style="display:none;">
+        {!! $destination->highlights ?? 'Thông tin đang được cập nhật.' !!}
     </div>
-    <div class="info-card">
-        <strong>Ẩm thực địa phương</strong>
-        <p>
-            {!! $destination->local_cuisine ?? 'Thông tin đang được cập nhật.' !!}
-        </p>
+</div>
+<div class="info-card">
+    <strong class="toggle-desc" style="cursor:pointer;">
+        Ẩm thực địa phương
+        <span class="arrow-icon" style="margin-left:8px;"><i class="fa-solid fa-angle-down"></i></span>
+    </strong>
+    <div class="desc-content" style="display:none;">
+        {!! $destination->local_cuisine ?? 'Thông tin đang được cập nhật.' !!}
     </div>
-    <div class="info-card">
-        <strong>Thời điểm lý tưởng</strong>
-        <p>
-            {!! $destination->best_time ?? 'Thông tin đang được cập nhật.' !!}
-        </p>
+</div>
+<div class="info-card">
+    <strong class="toggle-desc" style="cursor:pointer;">
+        Thời điểm lý tưởng
+        <span class="arrow-icon" style="margin-left:8px;"><i class="fa-solid fa-angle-down"></i></span>
+    </strong>
+    <div class="desc-content" style="display:none;">
+        {!! $destination->best_time ?? 'Thông tin đang được cập nhật.' !!}
     </div>
-    <div class="info-card">
-        <strong>Di chuyển</strong>
-        <p>
-            {!! $destination->transportation ?? 'Thông tin đang được cập nhật.' !!}
-        </p>
+</div>
+<div class="info-card">
+    <strong class="toggle-desc" style="cursor:pointer;">
+        Di chuyển
+        <span class="arrow-icon" style="margin-left:8px;"><i class="fa-solid fa-angle-down"></i></span>
+    </strong>
+    <div class="desc-content" style="display:none;">
+        {!! $destination->transportation ?? 'Thông tin đang được cập nhật.' !!}
     </div>
+</div>
         </div>
       </div>
 
@@ -161,5 +181,30 @@
             document.getElementById(button.dataset.tab).classList.add("active");
         });
     });
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.info-card').forEach(function(card) {
+        card.addEventListener('click', function() {
+            const content = this.querySelector('.desc-content');
+            const arrow = this.querySelector('.arrow-icon');
+            // Ẩn tất cả nội dung khác và reset icon
+            document.querySelectorAll('.desc-content').forEach(function(desc) {
+                if (desc !== content) desc.style.display = 'none';
+            });
+            document.querySelectorAll('.arrow-icon').forEach(function(icon) {
+                if (icon !== arrow) icon.innerHTML = '<i class="fa-solid fa-angle-down"></i>'; // mũi tên xuống
+            });
+            // Toggle nội dung hiện tại và đổi icon
+            if (content.style.display === 'block') {
+                content.style.display = 'none';
+                if (arrow) arrow.innerHTML = '<i class="fa-solid fa-angle-down"></i>'; // mũi tên xuống
+            } else {
+                content.style.display = 'block';
+                if (arrow) arrow.innerHTML = '<i class="fa-solid fa-angle-up"></i>'; // mũi tên lên
+            }
+        });
+    });
+});
 </script>
 @endsection

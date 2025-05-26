@@ -93,22 +93,41 @@ class PageController extends Controller
 
     public function search(Request $request)
     {
-        $keyword = $request->input('keyword');
+        $keyword = trim($request->input('keyword'));
+        $keywordNoSign = $this->stripSpecial($this->stripVN($keyword));
 
-        $destinations = Destination::query();
+        // Lấy tất cả để lọc lại bằng PHP (nếu dữ liệu lớn thì nên tối ưu lại)
+        $destinations = Destination::with(['destinationImages' => function ($query) {
+            $query->where('status', 2);
+        }])->orderBy('updated_at', 'desc')->get();
+
+        // Lọc lại bằng PHP cho tìm không dấu, mềm (cho phép sai ký tự đặc biệt)
         if ($keyword) {
-            $destinations->where(function($q) use ($keyword) {
-                $q->where('name', 'like', "%$keyword%")
-                  ->orWhereRaw("LOWER(TRIM(SUBSTRING_INDEX(address, ',', -1))) LIKE ?", ['%' . strtolower($keyword) . '%']);
-            });
+            $destinations = $destinations->filter(function($item) use ($keywordNoSign) {
+                $nameNoSign = $this->stripSpecial($this->stripVN($item->name));
+                $addressNoSign = $this->stripSpecial($this->stripVN($item->address));
+                similar_text($nameNoSign, $keywordNoSign, $percentName);
+                similar_text($addressNoSign, $keywordNoSign, $percentAddress);
+                return strpos($nameNoSign, $keywordNoSign) !== false
+                    || strpos($addressNoSign, $keywordNoSign) !== false
+                    || $percentName > 60
+                    || $percentAddress > 60;
+            })->values();
         }
-        $destinations = $destinations
-            ->with(['destinationImages' => function ($query) {
-                $query->where('status', 2);
-            }])
-            ->orderBy('updated_at', 'desc')
-            ->paginate(8, ['*'], 'destinations_page');
 
+        // Phân trang lại bằng LengthAwarePaginator
+        $page = request('destinations_page', 1);
+        $perPage = 8;
+        $total = $destinations->count();
+        $destinations = new \Illuminate\Pagination\LengthAwarePaginator(
+            $destinations->forPage($page, $perPage),
+            $total,
+            $perPage,
+            $page,
+            ['path' => request()->url(), 'pageName' => 'destinations_page']
+        );
+
+        // Phần posts vẫn giữ nguyên như cũ
         $posts = Post::query()
             ->with(['user', 'destination', 'destination.destinationImages'])
             ->whereHas('destination', function ($q) use ($keyword) {
@@ -186,7 +205,11 @@ class PageController extends Controller
 
         $posts = $postsQuery->orderBy('updated_at', 'desc')->paginate(12); // hoặc số lượng bạn muốn
 
-        $allDestinations = Destination::where('status', 0)->get(); // không lọc
+        $allDestinations = Destination::where('status', 0)
+            ->with('destinationImages')
+            ->get(); // không lọc
+
+        $utilities = \App\Models\Utility::all(); // hoặc with('images') nếu có bảng ảnh riêng
 
         return view('user.layout.community', [
             'destinations' => $destinations,
@@ -197,7 +220,7 @@ class PageController extends Controller
             'destinationId' => $destinationId,
             'posts' => $posts,
             'utilityTypes' => \App\Models\UtilityType::all(),
-            'utilities' => \App\Models\Utility::all(),
+            'utilities' => $utilities,
             'allDestinations' => $allDestinations,
         ]);
     }
@@ -269,8 +292,17 @@ class PageController extends Controller
             $destination->mainImage = $destination->destinationImages()->where('status', 2)->first();
         }
 
+        $allDestinations = \App\Models\Destination::select('id', 'name')->orderBy('name')->get();
+
         // Trả về view cùng với dữ liệu đã lọc
-        return view('user.layout.explore', compact('destinations', 'travelTypes', 'travelTypeId', 'province', 'region'));
+        return view('user.layout.explore', [
+            'destinations' => $destinations, // vẫn là phân trang
+            'allDestinations' => $allDestinations,
+            'travelTypes' => $travelTypes,
+            'travelTypeId' => $travelTypeId,
+            'province' => $province,
+            'region' => $region
+        ]);
     }
 
     public function getRanking(Request $request)
@@ -455,5 +487,69 @@ class PageController extends Controller
             'liked' => !$liked,
             'count' => $post->likes()->count()
         ]);
+    }
+
+    private function stripVN($str)
+    {
+        $str = mb_strtolower($str, 'UTF-8');
+        $str = preg_replace([
+            '/[àáạảãâầấậẩẫăằắặẳẵ]/u',
+            '/[èéẹẻẽêềếệểễ]/u',
+            '/[ìíịỉĩ]/u',
+            '/[òóọỏõôồốộổỗơờớợởỡ]/u',
+            '/[ùúụủũưừứựửữ]/u',
+            '/[ỳýỵỷỹ]/u',
+            '/[đ]/u'
+        ], [
+            'a','e','i','o','u','y','d'
+        ], $str);
+        return $str;
+    }
+    
+    private function stripSpecial($str)
+    {
+        return preg_replace('/[^a-zA-Z0-9 ]/', '', $str);
+    }
+
+    public function ajaxDestinations(Request $request)
+    {
+        $q = trim($request->input('q'));
+        $region = $request->input('region');
+        $province = $request->input('province');
+        $type = $request->input('type');
+
+        $query = \App\Models\Destination::query();
+
+        if ($q) {
+            $all = $query->select('id', 'name')->get();
+            $qNoSign = $this->stripSpecial($this->stripVN($q));
+            $filtered = $all->filter(function($item) use ($qNoSign) {
+                $nameNoSign = $this->stripSpecial($this->stripVN($item->name));
+                similar_text($nameNoSign, $qNoSign, $percent);
+                return strpos($nameNoSign, $qNoSign) !== false || $percent > 60;
+            })->take(30);
+            $destinations = $filtered->values();
+        } else {
+            // Nếu không có từ khóa thì lọc theo filter
+            if ($region) {
+                $query->where('region', $region);
+            }
+            if ($province) {
+                $query->where('address', 'like', '%' . $province . '%');
+            }
+            if ($type) {
+                $query->where('travel_type_id', $type);
+            }
+            $destinations = $query->orderBy('name')->limit(30)->get();
+        }
+
+        $results = [];
+        foreach ($destinations as $d) {
+            $results[] = [
+                'id' => route('destination.detail', ['id' => $d->id]),
+                'text' => $d->name,
+            ];
+        }
+        return response()->json(['results' => $results]);
     }
 }
