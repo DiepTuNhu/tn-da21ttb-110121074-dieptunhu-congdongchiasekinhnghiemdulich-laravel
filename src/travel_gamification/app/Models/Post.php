@@ -34,4 +34,13 @@ class Post extends Model
     {
         return $this->belongsTo(\App\Models\Utility::class, 'utility_id');
     }
+    public function likedByCurrentUser()
+    {
+        if (!auth()->check()) return false;
+        // Nếu chưa load likes thì lấy từ DB, nếu đã load thì dùng collection
+        if ($this->relationLoaded('likes')) {
+            return $this->likes->where('user_id', auth()->id())->count() > 0;
+        }
+        return $this->likes()->where('user_id', auth()->id())->exists();
+    }
 }

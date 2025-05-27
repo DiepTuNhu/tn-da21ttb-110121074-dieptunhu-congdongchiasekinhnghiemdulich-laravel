@@ -470,4 +470,10 @@ chooseListContainer.addEventListener('click', function(e) {
 
 </script>
 
+@if(session('success'))
+    <script>
+        alert("{{ session('success') }}");
+    </script>
+@endif
+
 @endsection

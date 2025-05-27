@@ -14,6 +14,8 @@ class PostController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
+        $pendingCount = \App\Models\Post::where('status', 1)->count();
+
         if (request()->ajax()) {
             // Nếu là request AJAX, chỉ trả phần nội dung @section('content')
             return view('admin.post.list', compact('posts'))->render();
@@ -45,7 +47,11 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         $post->status = 0; // Đổi về 0 để hiện ra ngoài web
         $post->save();
-        return redirect()->back()->with('success', 'Đã duyệt bài!');
+
+        // Gửi thông báo cho user
+        $post->user->notify(new \App\Notifications\PostApprovedNotification($post));
+
+        return back()->with('success', 'Bài viết đã được duyệt!');
     }
 
     public function pending()

@@ -77,6 +77,17 @@ Route::post('/login/store',[LoginController::class,'store'])->name('login.store'
 
 Route::get('/utility/{id}', [PageController::class, 'getDetailUtility'])->name('utility.detail');
 
+Route::post('/notifications/mark-as-read/{id}', function ($id) {
+    $notification = auth()->user()->notifications()->find($id);
+    if ($notification) $notification->markAsRead();
+    return response()->json(['success' => true]);
+})->name('notifications.markSingleAsRead');
+
+Route::post('/notifications/mark-as-read', function () {
+    auth()->user()->unreadNotifications->markAsRead();
+    return back();
+})->name('notifications.markAsRead');
+
 //REGISTER
 Route::get('/register',[RegisterController::class,'index'])->name('register');
 Route::post('/xulydangky',[RegisterController::class,'postSignup'])->name('postSignup');

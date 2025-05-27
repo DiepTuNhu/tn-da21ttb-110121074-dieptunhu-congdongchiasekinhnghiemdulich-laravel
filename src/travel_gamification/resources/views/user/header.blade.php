@@ -28,17 +28,83 @@
       <a href="{{ route('login') }}" class="login-btn">Đăng nhập</a>
       <a href="{{ route('register') }}" class="signup-btn">Đăng ký</a>
     </div> --}}
-    {{-- filepath: d:\laragon\www\travel_gamification\resources\views\user\header.blade.php --}}
-<div class="right-group">
-  @guest
-      <!-- Hiển thị khi chưa đăng nhập -->
-      <a href="{{ route('login') }}" class="login-btn">Đăng nhập</a>
-      <a href="{{ route('register') }}" class="signup-btn">Đăng ký</a>
-  @endguest
+    {{-- filepath: resources/views/user/header.blade.php --}}
+<div class="right-group" style="display: flex; align-items: center;">
+    @guest
+        <!-- Hiển thị khi chưa đăng nhập -->
+        <a href="{{ route('login') }}" class="login-btn">Đăng nhập</a>
+        <a href="{{ route('register') }}" class="signup-btn">Đăng ký</a>
+    @endguest
 
-  @auth
+    @auth
+    {{-- Ví dụ: resources/views/user/layout/header.blade.php --}}
+<div class="nav-item" style="position: relative;">
+    <a class="nav-link" href="#" id="notificationDropdown" onclick="toggleNotificationDropdown(event)">
+        <i class="fa fa-bell"></i>
+        @if(auth()->user()->unreadNotifications->count() > 0)
+            <span class="badge badge-danger">{{ auth()->user()->unreadNotifications->count() }}</span>
+        @endif
+    </a>
+    <div id="notificationMenu" class="notification-dropdown-menu">
+        <div class="notification-header">
+            <span>Thông báo mới</span>
+            <form action="{{ route('notifications.markAsRead') }}" method="POST" style="margin: 0;">
+                @csrf
+                <button type="submit" class="btn-mark-read">Đánh dấu tất cả đã đọc</button>
+            </form>
+        </div>
+        <hr class="my-1">
+        <div class="notification-list">
+            @php
+                $allNotifications = auth()->user()->notifications()->orderBy('created_at', 'desc')->get();
+            @endphp
+            @forelse($allNotifications as $notification)
+                <a class="notification-item {{ $notification->read_at ? 'read' : 'unread' }}"
+                   href="{{ route('post.detail', $notification->data['post_id']) }}"
+                   onclick="markNotificationRead('{{ $notification->id }}', this)">
+                    <div>
+                        <span>{{ $notification->data['message'] }}</span>
+                        <small class="text-muted d-block">{{ $notification->created_at->diffForHumans() }}</small>
+                    </div>
+                </a>
+            @empty
+                <span class="notification-empty">Không có thông báo</span>
+            @endforelse
+        </div>
+    </div>
+</div>
+
+<style>
+
+</style>
+
+<script>
+function toggleNotificationDropdown(e) {
+    e.preventDefault();
+    let menu = document.getElementById('notificationMenu');
+    menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+    // Đóng khi click ra ngoài
+    document.addEventListener('click', function handler(event) {
+        if (!menu.contains(event.target) && event.target.id !== 'notificationDropdown') {
+            menu.style.display = 'none';
+            document.removeEventListener('click', handler);
+        }
+    });
+}
+function markNotificationRead(id, el) {
+    fetch('/notifications/mark-as-read/' + id, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        }
+    }).then(() => {
+        el.classList.remove('unread');
+        el.classList.add('read');
+    });
+}
+</script>
       <!-- Hiển thị khi đã đăng nhập -->
-      <div class="user-info" style="display: flex; align-items: center;">
+      <div class="user-info" style="display: flex; align-items: center; margin-left: 20px;">
           <img 
               src="{{
                   Auth::user()->avatar
@@ -64,3 +130,4 @@
 </div>
   </div>
 </nav>
+

@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\Paginator;
+use App\Models\Post;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,6 +25,11 @@ class AppServiceProvider extends ServiceProvider
     {
         View::composer('user.layout.community', function ($view) {
             $view->with('isLoggedIn', Auth::check());
+        });
+
+        View::composer('admin.index', function ($view) {
+            $pendingCount = Post::where('status', 1)->count();
+            $view->with('pendingCount', $pendingCount);
         });
 
         Paginator::useBootstrap();

@@ -207,7 +207,7 @@
         <!-- Nút hành động -->
         <div class="post-actions">
             <button class="btn action-btn like" id="like-btn" data-post="{{ $post->id }}">
-                <i class="fas fa-heart"></i> Thích
+                <i id="like-icon" class="{{ $post->likedByCurrentUser() ? 'fas' : 'far' }} fa-heart"></i> Thích
                 <span id="like-count">{{ $post->likes->count() }}</span>
             </button>
             <button class="btn action-btn save">
@@ -286,6 +286,14 @@ document.getElementById('like-btn').onclick = function() {
     .then(data => {
         if(data.success) {
             document.getElementById('like-count').innerText = data.like_count;
+            const icon = document.getElementById('like-icon');
+            if(data.liked) {
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+            } else {
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+            }
         } else if(data.error) {
             alert(data.error);
         } else if(data.message) {

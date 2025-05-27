@@ -48,6 +48,18 @@
         margin-bottom: 5px; /* Khoảng cách giữa các mục */
       }
 
+      .badge-pending {
+        display: inline-block;
+        min-width: 18px;
+        padding: 2px 6px;
+        font-size: 12px;
+        font-weight: bold;
+        color: #fff;
+        background: #e74c3c;
+        border-radius: 10px;
+        margin-left: 6px;
+        vertical-align: middle;
+      }
     </style>
   </head>
   <body>
@@ -81,13 +93,21 @@
   </ul>
 </li>
 
-<li class="nav-item"><a class="nav-link" href="{{route('admin.posts.pending') }}" onclick="loadPage(event, this)"><i class="bi bi-journal-check"></i> Duyệt bài đăng</a></li>
+
 <li class="nav-item"><a class="nav-link" href="{{route('badges.index')}}" onclick="loadPage(event, this)"><i class="bi bi-award"></i> Huy hiệu</a></li>
 <li class="nav-item"><a class="nav-link" href="{{route('missions.index')}}" onclick="loadPage(event, this)"><i class="bi bi-flag"></i> Nhiệm vụ</a></li>
 <li class="nav-item"><a class="nav-link" href="{{route('roles.index')}}" onclick="loadPage(event, this)"><i class="bi bi-person-lock"></i> Phân quyền</a></li>
 <li class="nav-item"><a class="nav-link" href="{{route('users.index')}}" onclick="loadPage(event, this)"><i class="bi bi-people"></i> Người dùng</a></li>
 <li class="nav-item"><a class="nav-link" href="{{route('posts.index')}}" onclick="loadPage(event, this)"><i class="bi bi-people"></i> Bài viết</a></li>
-<li class="nav-item"><a class="nav-link" href="{{route('comments.index')}}" onclick="loadPage(event, this)"><i class="bi bi-people"></i> Đánh giát</a></li>
+<li class="nav-item">
+  <a class="nav-link" href="{{route('admin.posts.pending') }}" onclick="loadPage(event, this)">
+    <i class="bi bi-journal-check"></i> Duyệt bài đăng
+    @if(isset($pendingCount) && $pendingCount > 0)
+      <span class="badge-pending">{{ $pendingCount }}</span>
+    @endif
+  </a>
+</li>
+<li class="nav-item"><a class="nav-link" href="{{route('comments.index')}}" onclick="loadPage(event, this)"><i class="bi bi-people"></i> Đánh giá</a></li>
 <li class="nav-item"><a class="nav-link" href="{{route('slides.index')}}" onclick="loadPage(event, this)"><i class="bi bi-sliders"></i> Trình chiếu</a></li>
 {{-- <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-graph-up"></i> Báo cáo & Đánh giá</a></li> --}}
 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

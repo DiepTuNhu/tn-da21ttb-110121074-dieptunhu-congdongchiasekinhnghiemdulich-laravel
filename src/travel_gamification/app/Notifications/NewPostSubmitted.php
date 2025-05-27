@@ -6,17 +6,18 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use App\Models\Post;
 
 class NewPostSubmitted extends Notification
 {
     use Queueable;
 
-    protected $post;
+    public $post;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($post)
+    public function __construct(Post $post)
     {
         $this->post = $post;
     }
@@ -28,7 +29,7 @@ class NewPostSubmitted extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail']; // Có thể thêm 'database' nếu muốn lưu vào DB
     }
 
     /**
@@ -38,8 +39,9 @@ class NewPostSubmitted extends Notification
     {
         return (new MailMessage)
                     ->subject('Bài viết mới cần duyệt')
-                    ->line('Có bài viết mới: ' . $this->post->title)
-                    ->action('Duyệt bài', url('/admin/post/' . $this->post->id));
+                    ->line('Có một bài viết mới cần duyệt: ' . $this->post->title)
+                    ->action('Xem bài viết', url('/admin/post/' . $this->post->id))
+                    ->line('Vui lòng đăng nhập để duyệt bài.');
     }
 
     /**

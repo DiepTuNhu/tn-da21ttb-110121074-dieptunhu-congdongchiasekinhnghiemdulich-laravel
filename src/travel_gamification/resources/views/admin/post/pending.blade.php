@@ -1,11 +1,12 @@
 @extends('admin.index')
-
-@section('title_name', 'Duyệt bài đăng')
+@section('title_name')
+    Danh sách bài đăng chờ duyệt
+@endsection
 
 @section('content')
 <div class="container">
-    <h3 class="mb-4">Danh sách bài viết chờ duyệt</h3>
-    <table class="table table-bordered" id="logTable">
+    <table id="logTable" class="table table-striped mt-3">
+
         <thead>
             <tr>
                 <th>Tiêu đề</th>

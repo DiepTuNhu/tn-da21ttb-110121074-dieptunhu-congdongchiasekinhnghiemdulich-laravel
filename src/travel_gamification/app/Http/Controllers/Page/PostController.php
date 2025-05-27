@@ -104,7 +104,7 @@ class PostController extends Controller
             $post->save();
         }
 
-        // Gửi thông báo cho admin về bài viết mới
+        // Gửi thông báo cho admin
         $admins = User::whereHas('role', function($query) {
             $query->whereRaw('LOWER(name) = ?', ['quản trị']);
         })->get();
@@ -120,27 +120,26 @@ class PostController extends Controller
     {
         $post = Post::with(['user', 'destination', 'destination.destinationImages', 'utility'])->findOrFail($id);
         $comments = \App\Models\Comment::where('post_id', $id)
-            ->where('status', 0) // Thêm dòng này để chỉ lấy bình luận status = 0
+            ->where('status', 0)
             ->orderBy('created_at', 'desc')
             ->paginate(5);
 
-        // Lấy các bài viết liên quan cùng địa điểm, loại trừ bài hiện tại
-        $relatedPosts = Post::where('destination_id', $post->destination_id)
-            ->where('id', '!=', $post->id)
+        // Danh sách bài viết về địa điểm du lịch cùng địa điểm, chỉ lấy status = 0
+        $relatedPosts = Post::where('id', '!=', $post->id)
+            ->where('post_type', 'destination')
+            ->where('destination_id', $post->destination_id)
+            ->where('status', 0)
             ->limit(5)
             ->get();
 
-        // Lấy bài viết liên quan về địa điểm
-        $relatedDestinationPosts = Post::where('id', '!=', $post->id)
+        // Tiện ích liên quan: các bài viết về tiện ích thuộc địa điểm này, chỉ lấy status = 0
+        $relatedUtilityPosts = Post::where('post_type', 'utility')
             ->where('destination_id', $post->destination_id)
-            ->limit(5)->get();
+            ->where('status', 0)
+            ->limit(5)
+            ->get();
 
-        // Lấy bài viết liên quan về tiện ích
-        $relatedUtilityPosts = Post::where('id', '!=', $post->id)
-            ->where('utility_id', $post->utility_id)
-            ->limit(5)->get();
-
-        return view('user.layout.detail_post', compact('post', 'comments', 'relatedPosts', 'relatedDestinationPosts', 'relatedUtilityPosts'));
+        return view('user.layout.detail_post', compact('post', 'comments', 'relatedPosts', 'relatedUtilityPosts'));
     }
 
     public function like($id)
@@ -155,18 +154,24 @@ class PostController extends Controller
         // Kiểm tra đã like chưa
         $liked = \App\Models\Like::where('user_id', $user->id)->where('post_id', $id)->first();
         if ($liked) {
-            return response()->json(['message' => 'Bạn đã thích bài viết này!']);
+            $liked->delete();
+            $likedStatus = false;
+        } else {
+            \App\Models\Like::create([
+                'user_id' => $user->id,
+                'post_id' => $id,
+            ]);
+            $likedStatus = true;
         }
-
-        \App\Models\Like::create([
-            'user_id' => $user->id,
-            'post_id' => $id,
-        ]);
 
         // Đếm lại số lượt thích
         $likeCount = \App\Models\Like::where('post_id', $id)->count();
 
-        return response()->json(['success' => true, 'like_count' => $likeCount]);
+        return response()->json([
+            'success' => true,
+            'like_count' => $likeCount,
+            'liked' => $likedStatus
+        ]);
     }
 
     public function comment(Request $request, $id)

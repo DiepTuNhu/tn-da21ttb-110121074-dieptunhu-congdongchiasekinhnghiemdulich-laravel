@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: May 25, 2025 at 03:29 PM
--- Server version: 8.0.30
--- PHP Version: 8.1.10
+-- Máy chủ: localhost:3306
+-- Thời gian đã tạo: Th5 27, 2025 lúc 03:00 AM
+-- Phiên bản máy phục vụ: 8.0.30
+-- Phiên bản PHP: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `travel_gamification`
+-- Cơ sở dữ liệu: `travel_gamification`
 --
 CREATE DATABASE IF NOT EXISTS `travel_gamification` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 USE `travel_gamification`;
@@ -26,7 +26,7 @@ USE `travel_gamification`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `badges`
+-- Cấu trúc bảng cho bảng `badges`
 --
 
 CREATE TABLE `badges` (
@@ -40,7 +40,7 @@ CREATE TABLE `badges` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `badges`
+-- Đang đổ dữ liệu cho bảng `badges`
 --
 
 INSERT INTO `badges` (`id`, `name`, `description`, `icon_url`, `status`, `created_at`, `updated_at`) VALUES
@@ -57,7 +57,7 @@ INSERT INTO `badges` (`id`, `name`, `description`, `icon_url`, `status`, `create
 -- --------------------------------------------------------
 
 --
--- Table structure for table `comments`
+-- Cấu trúc bảng cho bảng `comments`
 --
 
 CREATE TABLE `comments` (
@@ -71,10 +71,35 @@ CREATE TABLE `comments` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `comments`
+--
+
+INSERT INTO `comments` (`id`, `content`, `status`, `user_id`, `post_id`, `parent_comment_id`, `created_at`, `updated_at`) VALUES
+(99, 'Cảnh ở đây đẹp quá', '0', 22, 25, NULL, '2025-05-25 16:11:06', '2025-05-25 16:11:06'),
+(100, 'Đúng rồi bạn, ở đây nhiều cây xanh mát mẻ lắm', '0', 3, 25, 99, '2025-05-26 13:32:18', '2025-05-26 13:32:18'),
+(101, 'Gần Ao Bà Om có quán bún nước lèo nào không vậy mọi người', '0', 3, 25, NULL, '2025-05-26 13:34:50', '2025-05-26 13:34:50');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `destinations`
+-- Cấu trúc bảng cho bảng `custom_notifications`
+--
+
+CREATE TABLE `custom_notifications` (
+  `id` int UNSIGNED NOT NULL,
+  `notification_type` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `content` text COLLATE utf8mb4_unicode_ci,
+  `is_read` tinyint(1) NOT NULL DEFAULT '0',
+  `user_id` int UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `destinations`
 --
 
 CREATE TABLE `destinations` (
@@ -96,7 +121,7 @@ CREATE TABLE `destinations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `destinations`
+-- Đang đổ dữ liệu cho bảng `destinations`
 --
 
 INSERT INTO `destinations` (`id`, `name`, `price`, `highlights`, `best_time`, `local_cuisine`, `transportation`, `address`, `latitude`, `longitude`, `status`, `user_id`, `travel_type_id`, `created_at`, `updated_at`) VALUES
@@ -162,7 +187,7 @@ INSERT INTO `destinations` (`id`, `name`, `price`, `highlights`, `best_time`, `l
 -- --------------------------------------------------------
 
 --
--- Table structure for table `destination_images`
+-- Cấu trúc bảng cho bảng `destination_images`
 --
 
 CREATE TABLE `destination_images` (
@@ -176,7 +201,7 @@ CREATE TABLE `destination_images` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `destination_images`
+-- Đang đổ dữ liệu cho bảng `destination_images`
 --
 
 INSERT INTO `destination_images` (`id`, `name`, `image_url`, `status`, `destination_id`, `created_at`, `updated_at`) VALUES
@@ -509,7 +534,7 @@ INSERT INTO `destination_images` (`id`, `name`, `image_url`, `status`, `destinat
 -- --------------------------------------------------------
 
 --
--- Table structure for table `destination_utilities`
+-- Cấu trúc bảng cho bảng `destination_utilities`
 --
 
 CREATE TABLE `destination_utilities` (
@@ -521,7 +546,7 @@ CREATE TABLE `destination_utilities` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `destination_utilities`
+-- Đang đổ dữ liệu cho bảng `destination_utilities`
 --
 
 INSERT INTO `destination_utilities` (`destination_id`, `utility_id`, `status`, `quality`, `distance`) VALUES
@@ -695,7 +720,7 @@ INSERT INTO `destination_utilities` (`destination_id`, `utility_id`, `status`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `failed_jobs`
+-- Cấu trúc bảng cho bảng `failed_jobs`
 --
 
 CREATE TABLE `failed_jobs` (
@@ -711,7 +736,7 @@ CREATE TABLE `failed_jobs` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `follows`
+-- Cấu trúc bảng cho bảng `follows`
 --
 
 CREATE TABLE `follows` (
@@ -725,7 +750,7 @@ CREATE TABLE `follows` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `likes`
+-- Cấu trúc bảng cho bảng `likes`
 --
 
 CREATE TABLE `likes` (
@@ -737,10 +762,20 @@ CREATE TABLE `likes` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `likes`
+--
+
+INSERT INTO `likes` (`id`, `user_id`, `post_id`, `comment_id`, `created_at`, `updated_at`) VALUES
+(36, 22, 25, NULL, '2025-05-25 16:10:27', '2025-05-25 16:10:27'),
+(37, 3, 25, NULL, '2025-05-26 13:07:10', '2025-05-26 13:07:10'),
+(38, 13, 43, NULL, '2025-05-27 02:45:02', '2025-05-27 02:45:02'),
+(39, 13, 39, NULL, '2025-05-27 02:50:33', '2025-05-27 02:50:33');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `migrations`
+-- Cấu trúc bảng cho bảng `migrations`
 --
 
 CREATE TABLE `migrations` (
@@ -750,7 +785,7 @@ CREATE TABLE `migrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `migrations`
+-- Đang đổ dữ liệu cho bảng `migrations`
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
@@ -779,12 +814,13 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (61, '2025_05_02_011053_create_reports_table', 19),
 (62, '2025_05_02_011054_create_ratings_table', 19),
 (63, '2025_05_02_011054_create_shares_table', 19),
-(64, '2025_05_02_011057_create_likes_table', 19);
+(64, '2025_05_02_011057_create_likes_table', 19),
+(65, '2025_05_27_091950_create_notifications_table', 20);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `missions`
+-- Cấu trúc bảng cho bảng `missions`
 --
 
 CREATE TABLE `missions` (
@@ -804,7 +840,7 @@ CREATE TABLE `missions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `missions`
+-- Đang đổ dữ liệu cho bảng `missions`
 --
 
 INSERT INTO `missions` (`id`, `name`, `description`, `points_reward`, `condition_type`, `condition_value`, `frequency`, `start_date`, `end_date`, `badge_id`, `status`, `created_at`, `updated_at`) VALUES
@@ -821,23 +857,37 @@ INSERT INTO `missions` (`id`, `name`, `description`, `points_reward`, `condition
 -- --------------------------------------------------------
 
 --
--- Table structure for table `notifications`
+-- Cấu trúc bảng cho bảng `notifications`
 --
 
 CREATE TABLE `notifications` (
-  `id` int UNSIGNED NOT NULL,
-  `notification_type` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `content` text COLLATE utf8mb4_unicode_ci,
-  `is_read` tinyint(1) NOT NULL DEFAULT '0',
-  `user_id` int UNSIGNED DEFAULT NULL,
+  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `notifiable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `notifiable_id` bigint UNSIGNED NOT NULL,
+  `data` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `read_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `notifications`
+--
+
+INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `data`, `read_at`, `created_at`, `updated_at`) VALUES
+('27f601e1-57fd-44b6-a786-0a9add34e05d', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 13, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"sss\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":40}', '2025-05-27 02:47:22', '2025-05-27 02:47:12', '2025-05-27 02:47:22'),
+('8d7eb92b-de78-4039-ace8-55acf984d262', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 13, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"ssss\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":42}', '2025-05-27 02:47:22', '2025-05-27 02:47:11', '2025-05-27 02:47:22'),
+('9426d2ec-d165-42d0-84e8-4666408f86ba', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 13, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"ssad\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":39}', '2025-05-27 02:47:22', '2025-05-27 02:47:13', '2025-05-27 02:47:22'),
+('bda74f49-c7d8-44bc-abd2-fa01f6023aa7', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 13, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"sadasdsa\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":38}', '2025-05-27 02:47:22', '2025-05-27 02:47:14', '2025-05-27 02:47:22'),
+('cc93e846-24ed-4158-8d68-216ec68ca025', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 13, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"sss\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":41}', '2025-05-27 02:47:22', '2025-05-27 02:47:11', '2025-05-27 02:47:22'),
+('d307ac3d-b0ea-4b52-b425-e90a3a024daa', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 13, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"asa\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":43}', '2025-05-27 02:32:44', '2025-05-27 02:27:58', '2025-05-27 02:32:44'),
+('d744c256-fed7-4787-975f-5df787c627ca', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 13, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"111\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":44}', '2025-05-27 02:47:04', '2025-05-27 02:46:56', '2025-05-27 02:47:04');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `password_reset_tokens`
+-- Cấu trúc bảng cho bảng `password_reset_tokens`
 --
 
 CREATE TABLE `password_reset_tokens` (
@@ -849,7 +899,7 @@ CREATE TABLE `password_reset_tokens` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `personal_access_tokens`
+-- Cấu trúc bảng cho bảng `personal_access_tokens`
 --
 
 CREATE TABLE `personal_access_tokens` (
@@ -868,7 +918,7 @@ CREATE TABLE `personal_access_tokens` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `posts`
+-- Cấu trúc bảng cho bảng `posts`
 --
 
 CREATE TABLE `posts` (
@@ -889,10 +939,27 @@ CREATE TABLE `posts` (
   `utility_id` int UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `posts`
+--
+
+INSERT INTO `posts` (`id`, `title`, `content`, `address`, `status`, `average_rating`, `user_id`, `destination_id`, `created_at`, `updated_at`, `price`, `post_type`, `phone`, `opening_hours`, `utility_id`) VALUES
+(25, 'Ao Bà Om – Thắng cảnh độc đáo của đất Trà Vinh', '<p>Nhắc tới Trà Vinh, người ta nghĩ đến mảnh đất của những ngôi chùa Khmer cổ kính cùng những di tích lịch sử mang nhiều truyền thuyết huyền thoại, gắn liền với hành trình khai phá, gầy dựng phương Nam. Di tích ao Bà Om ngàn năm soi bóng cổ tự là một trong những niềm tự hào của người dân nơi đây.</p><p>Nằm yên bình giữa lòng thành phố Trà Vinh, Ao Bà Om hiện lên như một bức tranh thủy mặc tuyệt đẹp, điểm xuyết bởi sắc xanh của nước, của trời và những tán cây cổ thụ. Không chỉ là một địa điểm <a href=\"https://thamhiemmekong.com/thong-tin-du-lich-mien-tay/dia-diem-du-lich-mien-tay-sieu-dep-nhat-dinh-phai-den.html\">du lịch Miền Tây</a> nổi tiếng, Ao Bà Om còn gắn liền với những truyền thuyết ly kỳ và nét văn hóa đặc sắc của người Khmer Nam Bộ.</p><p><img src=\"https://thamhiemmekong.com/wp-content/uploads/2020/06/ao-ba-om.jpg\" alt=\"\" srcset=\"https://thamhiemmekong.com/wp-content/uploads/2020/06/ao-ba-om.jpg 1600w, https://thamhiemmekong.com/wp-content/uploads/2020/06/ao-ba-om-300x200.jpg 300w, https://thamhiemmekong.com/wp-content/uploads/2020/06/ao-ba-om-768x512.jpg 768w, https://thamhiemmekong.com/wp-content/uploads/2020/06/ao-ba-om-1024x682.jpg 1024w\" sizes=\"100vw\" width=\"1600\"></p><h3><strong>Vị trí:</strong></h3><p>Ao Bà Om, hay Ao Vuông nằm cạnh Quốc lộ 53, thuộc phường 8 thành phố Trà Vinh (trước đây là ấp Tà Cụ, xã Nguyệt Hóa, huyện Châu Thành), cách trung tâm thành phố Trà Vinh khoảng 5 km về phía Tây Nam.</p><p><img src=\"https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-6.jpg\" alt=\"\" srcset=\"https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-6.jpg 1984w, https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-6-300x192.jpg 300w, https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-6-768x491.jpg 768w, https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-6-1024x654.jpg 1024w\" sizes=\"100vw\" width=\"1984\"></p><h3><strong>Vẻ đẹp nên thơ của Ao Bà Om:</strong></h3><p><a href=\"https://thamhiemmekong.com/thong-tin-du-lich-mien-tay/dia-diem-du-lich-tra-vinh-tuong-nhat-dinh-phai-di.html\">Du lịch Trà Vinh</a> đến đây, bạn không đơn thuần chỉ được chiêm ngưỡng vẻ đẹp thơ mộng của thiên nhiên mà còn được cảm nhận rõ nét hơn những giá trị văn hoá độc đáo của vùng đất Trà Vinh qua câu chuyện mang đậm màu sắc Khmer Nam Bộ…</p><p><img src=\"https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-5.jpg\" alt=\"\" srcset=\"https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-5.jpg 2034w, https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-5-300x181.jpg 300w, https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-5-768x464.jpg 768w, https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-5-1024x619.jpg 1024w\" sizes=\"100vw\" width=\"2034\"></p><p>Ấn tượng đầu tiên khi tới thăm ao Bà Om là cảm giác mát mẻ trước cảnh trời nước xanh biếc một màu. Ao có hình chữ nhật, rộng 300m, dài 500m (vì gần với hình vuông nên còn được gọi là Ao Vuông) khách sẽ bất ngờ vì ao lớn quá, phải gọi là hồ thì đúng hơn.</p><p><img src=\"https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-4.jpg\" alt=\"\" srcset=\"https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-4.jpg 2034w, https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-4-300x183.jpg 300w, https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-4-768x470.jpg 768w, https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-4-1024x626.jpg 1024w\" sizes=\"100vw\" width=\"2034\">Bao bọc xung quanh trên bờ ao là rừng cây cổ thụ, đa số là cây sao, cây dầu hàng trăm năm tuổi, có rễ xù xì trồi lên mặt đất cả mét thành những hình thù lạ mắt bốn mùa rợp bóng thâm u tạo không gian thanh bình, yên tĩnh.</p><p><img src=\"https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-3.jpg\" alt=\"\" srcset=\"https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-3.jpg 1994w, https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-3-300x191.jpg 300w, https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-3-768x490.jpg 768w, https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-3-1024x653.jpg 1024w\" sizes=\"100vw\" width=\"1994\">Có bộ rễ lớn đến nỗi có thể tạo thành cái hang độc nhất vô nhị, trẻ con có thể chui vào vui chơi. Lại có bộ rễ cây trở thành ghế ngồi nghỉ chân của khách. Người bản xứ lý giải rằng, những bộ rễ đồ sộ, quấn lấy nhau và nằm trên cao cách mặt đất như ngày nay là do khu đất xung quanh ao bị sụt lún xuống thấp, rễ cây lộ thiên và phát triển theo thời gian.</p><p><img src=\"https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-03.jpg\" alt=\"\" srcset=\"https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-03.jpg 2048w, https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-03-300x230.jpg 300w, https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-03-768x589.jpg 768w, https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-03-1024x786.jpg 1024w\" sizes=\"100vw\" width=\"2048\">Nếu đến đúng mùa thì ao còn được tô điểm bởi những bông sen hồng, bông súng lãng mạn.</p><p><img src=\"https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-02.jpg\" alt=\"\" srcset=\"https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-02.jpg 1600w, https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-02-300x201.jpg 300w, https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-02-768x515.jpg 768w, https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-02-1024x686.jpg 1024w\" sizes=\"100vw\" width=\"1600\"><strong>Truyền thuyết về Ao Bà Om:</strong></p><p>Ngoài cảnh đẹp đến mê mẩn lòng người, ao nước rộng lớn này còn lung linh huyền ảo bởi những câu chuyện nửa hư nửa thực từ bao đời nay ăn sâu vào tiềm thức người dân địa phương.</p><p>Theo truyền thuyết ngày trước, vùng đất Trà Vinh hằng năm cứ đến mùa hạn thì nước ngọt khan hiếm, ruộng rẫy khô cằn, cây cỏ chết héo, người dân trong vùng vì hạn hán rơi vào cảnh lầm than. Để cứu dân khỏi cảnh khốn cùng, một ông hoàng trấn nhậm trong vùng quy tụ bà con đào ao tìm nguồn nước.</p><p>Tình cờ, trong vùng lúc đó cũng xảy ra một vụ tranh cãi khó phân xử là đàn ông và đàn bà, ai phải đi cưới ai và ai phải chịu mọi phí tổn trong lễ cưới? Ông hoàng nhân dịp này chia ra hai bên nam nữ tổ chức một cuộc thi đào ao. Ao bên nào đào sâu hơn, lớn hơn và xong trước thì thắng, bên thua sẽ phải đi cưới.</p><p><img src=\"https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-8.jpg\" alt=\"\" srcset=\"https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-8.jpg 1875w, https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-8-300x172.jpg 300w, https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-8-768x441.jpg 768w, https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-8-1024x588.jpg 1024w\" sizes=\"100vw\" width=\"1875\"><strong>Nét văn hóa đặc sắc:</strong></p><p>Vào những ngày lễ, tết hàng năm của người Khmer, ao Bà Om trở thành nơi sinh hoạt cộng đồng náo nhiệt của cả vùng, nhất là vào Lễ hội Ok Om Bok được tổ chức vào rằm tháng 10 Âm lịch, thu hút hàng ngàn người dân khắp nơi về đây tham dự. Họ cùng nhau nhảy múa, xem hát Dù kê, …thắt chặt thêm tình đoàn kết, hòa hợp các dân tộc anh em ở vùng sông nước Cửu Long. Và khi màn đêm buông xuống, khu vực Ao Bà Om lung linh, huyền ảo, náo nhiệt với Hội thả đèn gió, có rất nhiều loại đèn đủ kích cỡ được thả bay lên trời mang theo lời khấn nguyện, ước mong trời đất giao hòa, mùa màng tốt tươi, con người và&nbsp;vạn vật bình yên, dồi dào sức khỏe.</p><p><img src=\"https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-7.jpg\" alt=\"\" srcset=\"https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-7.jpg 2048w, https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-7-300x200.jpg 300w, https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-7-768x512.jpg 768w, https://thamhiemmekong.com/wp-content/uploads/2020/06/aobaom-7-1024x683.jpg 1024w\" sizes=\"100vw\" width=\"2048\"></p>', 'Phường 8, Thành phố Trà Vinh, Tỉnh Trà Vinh', '0', 0.00, 3, 11, '2025-05-25 15:54:37', '2025-05-25 15:54:37', 'Miễn phí', 'destination', NULL, NULL, NULL),
+(26, 'Biển Ba Động - Địa điểm thu hút đông đảo khách du lịch tại Trà Vinh', '<p>Biển Ba Động là một trong những điểm&nbsp;<a href=\"https://dulichviet.com.vn/du-lich-tra-vinh\">du lịch Trà Vinh</a>&nbsp;nổi tiếng mà mọi du khách khi đến Trà Vinh đều không nên bỏ qua. Nơi này nổi tiếng với những bãi biển dài đầy cát, trải dài với vẻ đẹp hoang sơ đặc trưng. Du khách có thể lựa chọn ghé thăm vào những ngày cuối tuần để thưởng ngoạn vẻ đẹp tự nhiên, tận hưởng không khí trong lành và thưởng thức những món hải sản tươi ngon. Hãy cùng&nbsp;<a href=\"https://dulichviet.com.vn/\">Du Lịch Việt</a>&nbsp;tìm hiểu kinh nghiệm du lịch tại&nbsp;<a href=\"https://dulichviet.com.vn/tin-tuc/bien-ba-dong-dia-diem-thu-hut-dong-dao-khach-du-lich-tai-tra-vinh\">biển Ba Động</a>&nbsp;Trà Vinh qua bài viết dưới đây nhé!</p><figure class=\"image\"><img src=\"https://dulichviet.com.vn/images/bandidau/bien-ba-dong-dia-diem-thu-hut-dong-dao-khach-du-lich-tai-tra-vinh.jpg\" alt=\"Biển Ba Động- Địa điểm thu hút đông đảo khách du lịch tại Trà Vinh\"></figure><h2><strong>Chia sẻ kinh nghiệm du lịch biển Ba Động tại Trà Vinh</strong></h2><h3><strong>Đôi nét giới thiệu về biển Ba Động</strong></h3><p>Theo người dân sinh sống tại đây, bãi biển này được gọi là biển Ba Động vì mỗi khi thủy triều thay đổi, bãi biển hiện ra ba động cát, bao gồm hai hang nhỏ và một hang lớn có hình dáng độc đáo. Được phát hiện và khám phá từ những năm đầu của thế kỷ XX từ người Pháp, nơi này chắc chắn sẽ làm say lòng du khách bởi hàng dừa xanh mướt ven bờ biển. Đây cũng là điểm đến thu hút một lượng lớn du khách đi&nbsp;<a href=\"https://dulichviet.com.vn/du-lich-tra-vinh\">tour Trà Vinh</a>&nbsp;cả trong và ngoài nước mỗi năm.</p><p>Ngoài ra, biển Ba Động còn là một trong những bãi biển hiếm có ở miền Tây Nam Bộ, nơi thiên nhiên đã ban tặng một dải cát kéo dài từ ấp Nhà Mát đến ấp Cồn Trứng. Tuy nhiên, cát ở biển Ba Động không có màu trắng hoặc vàng óng ánh và nước biển không trong xanh như các bãi biển ở miền Trung do có nhiều phù sa.</p><h3><strong>Hướng dẫn di chuyển đến biển Ba Động - Trà Vinh</strong></h3><p>Biển Ba Động nằm tại phường Long Hòa, huyện Duyên Hải và cách trung tâm của Trà Vinh khoảng 55km. Đối với du khách từ miền Bắc hoặc miền Trung, cần lưu ý rằng Trà Vinh không có sân bay, do đó du khách có thể mua vé máy bay đến TP.HCM hoặc Cần Thơ trước, sau đó di chuyển đến Trà Vinh.</p><ul><li>Nếu đi từ TP.HCM, có thể chọn xe máy hoặc ô tô và đi khoảng 200km. Khi đến Trà Vinh, tiếp tục di chuyển trên QL53 đến thị trấn Cầu Ngang, sau đó đi theo hướng ĐT 913 đến xã Trường Long Hòa, cách trung tâm Trà Vinh khoảng 58km.</li><li>Nếu đi từ Cần Thơ, quãng đường sẽ khoảng tầm 75km nên nhiều người thường chọn xe máy. Từ trung tâm Cần Thơ, du khách đi theo hướng QL1A và qua cầu Cần Thơ sau đó rẽ phải vào QL54 và tiếp tục trên hướng TL911 để đến được tỉnh Trà Vinh.</li></ul><h3><strong>Nên tham quan biển Ba Động - Trà Vinh vào thời gian nào?</strong></h3><p>Đến&nbsp;<a href=\"https://dulichviet.com.vn/du-lich-tra-vinh\">du lịch Trà Vinh</a>&nbsp;mỗi mùa trong năm đều mang đến một vẻ đẹp đặc biệt. Do đó, du khách có thể lựa chọn bất kỳ thời điểm nào để đến đây. Tuy nhiên, thường thì nơi này thu hút nhiều du khách vào mùa lễ hội nhất.</p><p>Trà Vinh được biết đến với lễ hội Chol Chnam Thmay (lễ mừng năm mới) của người Khmer, với các sự kiện thú vị như xem múa truyền thống và thả đèn lồng. Lễ hội này thường diễn ra vào giữa tháng 4. Vì vậy, du khách có thể kết hợp đi du lịch biển Ba Động với việc tham gia lễ hội này.</p><figure class=\"image\"><img src=\"https://dulichviet.com.vn/images/bandidau/nen-tham-quan-bien-ba-dong-tra-vinh-vao-thoi-gian-nao.jpg\" alt=\"Nên tham quan biển Ba Động - Trà Vinh vào thời gian nào?\"></figure><h3><strong>Chơi gì ở biển Ba Động?</strong></h3><h4><strong>Hòa mình tắm trong làn nước mát</strong></h4><p>Đặc điểm nổi bật của bãi biển này là bờ cát nông, sóng vỗ dập dìu nhẹ nhàng mà không có những con sóng lớn nguy hiểm, tạo điều kiện an toàn cho du khách tận hưởng không gian tự nhiên mà không cần lo lắng. Bên cạnh đó, bãi biển Ba Động có ưu điểm nữa là do chưa khai thác du lịch nhiều nên nước biển trong xanh không bị ô nhiễm.</p><h4><strong>Tản bộ dọc bờ biển ngắm bình minh hoặc hoàng hôn</strong></h4><p>Với bãi biển trải dài đầy cát và hàng dừa xanh mát bên cạnh, đi dạo dọc bờ biển vào lúc bình minh hoặc hoàng hôn là một trải nghiệm thật thư giãn tại biển Ba Động. Trái ngược với sắc xanh trong trẻo của biển khi trời đứng nắng thì ánh hoàng hôn và bình minh tại đây lại tô điểm cho bãi biển một màu đỏ rực, quyến rũ và ấm áp. Cùng với những tàu thuyền đánh cá xa xa trên biển, tạo cảm giác yên bình và an lành trong lòng những người tham quan.</p><h4><strong>Check in cánh đồng điện gió</strong></h4><p>Công trình điện gió với cầu vàng rực rỡ và có 12 tua-bin gió vươn mình lên trời tạo nên khung cảnh sống ảo đặc sắc, thu hút du khách từ khắp nơi đến tham quan. Mỗi khi bình minh hoặc hoàng hôn buông xuống, từ bờ biển Ba Động du khách có thể ngắm nhìn vẻ đẹp của chiếc cầu vàng phản chiếu bóng của những cánh quạt cao lớn trên biển rộng.</p><p>Du khách đi&nbsp;<a href=\"https://dulichviet.com.vn/du-lich-tra-vinh\"><strong>tour Trà Vinh</strong></a>&nbsp;có thể lựa chọn trang phục ấn tượng, mang theo máy ảnh, đi dọc theo cầu vàng để chụp những bức ảnh sống động, đẹp mắt. Sự hài hòa giữa thiên nhiên và nhân tạo tại đây tạo nên khung cảnh đặc biệt mà bao du khách yêu thích.</p><figure class=\"image\"><img src=\"https://dulichviet.com.vn/images/bandidau/check-in-canh-dong-dien-gio.jpg\" alt=\"Check in cánh đồng điện gió\"></figure>', 'Xã Trường Long Hòa, Thị xã Duyên Hải, Tỉnh Trà Vinh', '0', 0.00, 13, 30, '2025-05-26 15:26:49', '2025-05-26 16:34:02', 'Miễn phí', 'destination', NULL, NULL, NULL),
+(34, 'Hướng dẫn du lịch Làng Nổi Tân Lập – Long An chi tiết', '<p>Long An với đôi dòng Vàm Cỏ cùng hệ thống sông ngòi chằng chịt, hệ thống rừng tràm và thực vật, động vật phong phú là điều kiện phát triển loại hình du lịch sinh thái. Trong đó nổi tiếng nhất là Khu du lịch sinh thái <a href=\"https://thamhiemmekong.com/thong-tin-du-lich-mien-tay/long-an/lang-noi-tan-lap-diem-du-lich-noi-tieng-tai-long.html\">Làng nổi Tân Lập</a>. Đến <a href=\"https://thamhiemmekong.com/thong-tin-du-lich-mien-tay/long-an/lang-noi-tan-lap-diem-du-lich-noi-tieng-tai-long.html\">làng nổi Tân Lập</a>, du khách sẽ có cái nhìn đầy đủ, chân thực về những nét đặc trưng của miền Tây sông nước, của vùng đất ngập nước Đồng Tháp Mười.</p><figure class=\"image\"><img src=\"https://thamhiemmekong.com/wp-content/uploads/2020/03/langnoitanlap-9.jpg\"></figure><h2><strong>Di chuyển đến Làng Nổi Tân Lập ?</strong></h2><p>Nằm ở trung tâm vùng Đồng Tháp Mười, <a href=\"https://thamhiemmekong.com/thong-tin-du-lich-mien-tay/long-an/lang-noi-tan-lap-diem-du-lich-noi-tieng-tai-long.html\">làng nổi Tân Lập</a> tọa lạc trên quốc lộ 62, thuộc xã Tân Lập, huyện Mộc Hóa – tỉnh Long An cách biên giới Campuchia khoảng hơn 15km về phía Nam, cách TP.HCM khoảng 100 km, do đó bạn có thể đi về trong ngày khá dễ dàng.</p><p>Từ TP Hồ Chí Minh các bạn có thể mua vé xe bus từ Bến xe Miền Tây hay bến xe Chợ Lớn đến thẳng khu du lịch. Nếu đi bằng ô tô, xe máy bạn chạy theo Quốc lộ 1A về thành phố Tân An (Long An) khoảng 40km -&gt; tiếp tục đi theo quốc lộ 62 về huyện Mộc Hóa khoảng 62km là tới <a href=\"https://thamhiemmekong.com/thong-tin-du-lich-mien-tay/long-an/lang-noi-tan-lap-diem-du-lich-noi-tieng-tai-long.html\">làng nổi Tân Lập</a>.&nbsp;Bạn dùng Google Map hoặc hỏi người dân chỉ đường sẽ không sợ bị lạc.</p><p>Hoặc xuất phát từ trung tâm thị trấn Củ Chi chạy theo hướng huyện Bến Lức (Long An) chừng 70km cho tới khi gặp ngã ba cuối đường rẽ phải thêm 35km nữa là đến nơi.</p><p><img src=\"https://thamhiemmekong.com/wp-content/uploads/2020/03/langnoitanlap01.jpg\" alt=\"\" srcset=\"https://thamhiemmekong.com/wp-content/uploads/2020/03/langnoitanlap01.jpg 1600w, https://thamhiemmekong.com/wp-content/uploads/2020/03/langnoitanlap01-300x225.jpg 300w, https://thamhiemmekong.com/wp-content/uploads/2020/03/langnoitanlap01-768x576.jpg 768w, https://thamhiemmekong.com/wp-content/uploads/2020/03/langnoitanlap01-1024x767.jpg 1024w\" sizes=\"100vw\" width=\"1600\"></p><h2><strong>Giới thiệu đôi nét về Làng Nổi Tân Lập</strong></h2><p>Các bạn đừng hiểu lầm <a href=\"https://thamhiemmekong.com/thong-tin-du-lich-mien-tay/long-an/lang-noi-tan-lap-diem-du-lich-noi-tieng-tai-long.html\">làng nổi Tân Lập</a> bên trong có một ngôi làng nhé, nơi đây là một khu rừng tràm nguyên sinh rộng lớn và những con đường bí ẩn dẫn vào rừng. Đây được xem là địa điểm phù hợp dành cho những ai thích tìm về với thiên nhiên hoang dã, khám phá nét văn hoá sông nước miền Tây Nam Bộ.</p><p>Sở dĩ có cái tên Làng nổi Tân Lập là do trước kia khi chưa được quy hoạch, vào mùa nước nổi khoảng tháng 7 âm lịch hàng năm người dân ở đây thường nâng cao sàn nhà theo con nước lên, nhìn từ xa giống như một làng nổi trên mặt nước mênh mông. Do đó, khi quy hoạch khu du lịch này, tên gọi làng nổi gắn với địa danh xã Tân Lập đã được đặt cho khu du lịch.</p><p><img src=\"https://thamhiemmekong.com/wp-content/uploads/2020/03/langnoitanlap-1.jpg\" alt=\"\" srcset=\"https://thamhiemmekong.com/wp-content/uploads/2020/03/langnoitanlap-1.jpg 1211w, https://thamhiemmekong.com/wp-content/uploads/2020/03/langnoitanlap-1-300x215.jpg 300w, https://thamhiemmekong.com/wp-content/uploads/2020/03/langnoitanlap-1-768x550.jpg 768w, https://thamhiemmekong.com/wp-content/uploads/2020/03/langnoitanlap-1-1024x734.jpg 1024w\" sizes=\"100vw\" width=\"1211\"></p>', 'Xã Tân Lập, Huyện Mộc Hóa, Tỉnh Long An', '0', 0.00, 13, 5, '2025-05-27 00:58:52', '2025-05-27 01:01:35', 'Dao động từ 20.000VNĐ đến 340.000VNĐ', 'destination', NULL, NULL, NULL),
+(36, 'Đền thờ Bác Hồ Trà Vinh – Địa chỉ đỏ giáo dục truyền thống cách mạng', '<h2><strong>Đền Thờ Bác Hồ Trà Vinh ở đâu?</strong></h2><p>Đền thờ Chủ tịch Hồ Chí Minh; người dân Trà Vinh vẫn quen gọi với cái tên thân thương là Đền thờ Bác Hồ. Tọa lạc tại ấp Vĩnh Hội; xã Long Đức; thành phố Trà Vinh; cách trung tâm tỉnh lỵ Trà Vinh hơn 4 km về phía bắc.</p><h2><strong>Tham quan Khu di tích đền thờ Bác Hồ</strong></h2><p>Khu di tích đền thờ Bác Hồ trong một khuôn viên rộng 5,4 ha với các hạng mục chính như: Đền thờ Bác Hồ; nhà trưng bày thân thế sự nghiệp Chủ tịch Hồ Chí Minh; cây xanh hoa kiểng; ao cá; khu vui chơi cắm trại…và đặc biệt là mô hình Nhà sàn như nơi Bác Hồ sinh sống và làm việc ở Hà Nội.</p><p><img src=\"https://thamhiemmekong.com/wp-content/uploads/2023/11/denthobachotravinh5.jpg\" alt=\"Vỏ bao che được thiết kế theo dạng một đóa sen\" srcset=\"https://thamhiemmekong.com/wp-content/uploads/2023/11/denthobachotravinh5.jpg 1274w, https://thamhiemmekong.com/wp-content/uploads/2023/11/denthobachotravinh5-300x180.jpg 300w, https://thamhiemmekong.com/wp-content/uploads/2023/11/denthobachotravinh5-768x461.jpg 768w, https://thamhiemmekong.com/wp-content/uploads/2023/11/denthobachotravinh5-1024x615.jpg 1024w\" sizes=\"100vw\" width=\"1274\"></p><p>Vỏ bao che được thiết kế theo dạng một đóa sen cách điệu màu hồng tươi. Bên trong; ngôi Đền được phục chế lại theo đúng nguyên trạng khiêm tốn; đơn sơ; với kích thước 4 x 4 m bằng khung gỗ; mái lợp lá; vách tôn.</p><p><img src=\"https://thamhiemmekong.com/wp-content/uploads/2023/11/denthobachotravinh.jpg\" alt=\"Ngôi Đền được phục chế lại theo đúng nguyên trạng\" srcset=\"https://thamhiemmekong.com/wp-content/uploads/2023/11/denthobachotravinh.jpg 1280w, https://thamhiemmekong.com/wp-content/uploads/2023/11/denthobachotravinh-300x225.jpg 300w, https://thamhiemmekong.com/wp-content/uploads/2023/11/denthobachotravinh-768x576.jpg 768w, https://thamhiemmekong.com/wp-content/uploads/2023/11/denthobachotravinh-1024x768.jpg 1024w\" sizes=\"100vw\" width=\"1280\"></p><p>Nhà Trưng bày được xây dựng theo kiến trúc truyền thống dân tộc. Trong đó có nhiều hiện vật hình ảnh; tài liệu quý giúp người tham quan hiểu được một cách khái quát về cuộc đời hoạt động cách mạng của Bác; truyền thống yêu nước; chiến công anh dũng trong chiến tranh và những thành tựu trong công cuộc đổi mới của tỉnh Trà Vinh; quá trình xây dựng và chiến đấu bảo vệ ngôi Đền.</p><p><img src=\"https://thamhiemmekong.com/wp-content/uploads/2023/11/denthobachotravinh4.jpg\" alt=\"Nhà Trưng bày\" srcset=\"https://thamhiemmekong.com/wp-content/uploads/2023/11/denthobachotravinh4.jpg 1229w, https://thamhiemmekong.com/wp-content/uploads/2023/11/denthobachotravinh4-300x203.jpg 300w, https://thamhiemmekong.com/wp-content/uploads/2023/11/denthobachotravinh4-768x520.jpg 768w, https://thamhiemmekong.com/wp-content/uploads/2023/11/denthobachotravinh4-1024x693.jpg 1024w\" sizes=\"100vw\" width=\"1229\"></p><p>Công viên với hồ sen lớn hài hòa cùng trăm loại cây xanh tỏa bóng mát; nhiều loài hoa quanh năm khoe sắc rực rỡ. Không gian thoáng đãng mát mẻ; dễ chịu.</p><p><img src=\"https://thamhiemmekong.com/wp-content/uploads/2023/11/denthobachotravinh3.jpg\" alt=\"Hồ sen lớn\" srcset=\"https://thamhiemmekong.com/wp-content/uploads/2023/11/denthobachotravinh3.jpg 1252w, https://thamhiemmekong.com/wp-content/uploads/2023/11/denthobachotravinh3-300x194.jpg 300w, https://thamhiemmekong.com/wp-content/uploads/2023/11/denthobachotravinh3-768x497.jpg 768w, https://thamhiemmekong.com/wp-content/uploads/2023/11/denthobachotravinh3-1024x662.jpg 1024w\" sizes=\"100vw\" width=\"1252\"></p><p>Trong đó; những tán còng cổ thụ và lũy tre bao quanh cùng hệ thống hầm hào; công sự là nhân chứng của quá trình xây dựng; chiến đấu bảo vệ ngôi Đền; được phục hồi tôn tạo giữ gìn.</p><p><img src=\"https://thamhiemmekong.com/wp-content/uploads/2023/11/denthobachotravinh1.jpg\" alt=\"Khuôn viên ngập tràn cây xanh\" srcset=\"https://thamhiemmekong.com/wp-content/uploads/2023/11/denthobachotravinh1.jpg 1280w, https://thamhiemmekong.com/wp-content/uploads/2023/11/denthobachotravinh1-300x169.jpg 300w, https://thamhiemmekong.com/wp-content/uploads/2023/11/denthobachotravinh1-768x432.jpg 768w, https://thamhiemmekong.com/wp-content/uploads/2023/11/denthobachotravinh1-1024x576.jpg 1024w\" sizes=\"100vw\" width=\"1280\"></p><p>Đặc biệt; vào năm 2012; theo quy hoạch của hệ thống Bảo tàng Hồ Chí Minh trên cả nước đã được Ban Bí thư Trung ương Đảng phê chuẩn; phiên bản Nhà sàn Bác Hồ với tỷ lệ 97% so với nguyên bản đã được dựng lên trong khuôn viên Đền thờ. Đây là một hiện vật quý khẳng định giá trị lịch sử của khu di tích Đền thờ Chủ tịch Hồ Chí Minh Trà Vinh trong hệ thống Bảo tàng Hồ Chí Minh; vừa là điểm nhấn quan trọng trong hành trình <a href=\"https://thamhiemmekong.com/thong-tin-du-lich-mien-tay/dia-diem-du-lich-mien-tay-sieu-dep-nhat-dinh-phai-den.html\">du lịch Miền Tây</a> và nhân dân Nam Bộ thuận tiện hơn trong việc tham quan; nghiên cứu; tìm hiểu thân thế; sự nghiệp của Người.</p><p><img src=\"https://thamhiemmekong.com/wp-content/uploads/2023/11/denthobachotravinh6.jpg\" alt=\"Nhà sàn Bác Hồ với tỷ lệ 97% so với nguyên bản\" srcset=\"https://thamhiemmekong.com/wp-content/uploads/2023/11/denthobachotravinh6.jpg 1341w, https://thamhiemmekong.com/wp-content/uploads/2023/11/denthobachotravinh6-300x190.jpg 300w, https://thamhiemmekong.com/wp-content/uploads/2023/11/denthobachotravinh6-768x486.jpg 768w, https://thamhiemmekong.com/wp-content/uploads/2023/11/denthobachotravinh6-1024x648.jpg 1024w\" sizes=\"100vw\" width=\"1341\"></p>', 'Xã Long Đức, Thành phố Trà Vinh, Tỉnh Trà Vinh', '0', 0.00, 13, 31, '2025-05-27 01:09:18', '2025-05-27 01:29:38', 'Miễn phí', 'destination', NULL, NULL, NULL),
+(38, 'sadasdsa', '<p>sadasdas</p>', 'Xã Điền Hải, Huyện Đông Hải, Tỉnh Bạc Liêu', '0', 0.00, 13, 55, '2025-05-27 01:19:30', '2025-05-27 02:47:14', 'sdfds', 'destination', NULL, NULL, NULL),
+(39, 'ssad', '<p>sadssad</p>', 'Xã Tân Lập, Huyện Mộc Hóa, Tỉnh Long An', '0', 0.00, 13, 5, '2025-05-27 01:22:02', '2025-05-27 02:47:13', 'âsdas', 'destination', NULL, NULL, NULL),
+(40, 'sss', '<p>sss</p>', 'Xã Long Hựu Đông, Huyện Cần Đước, Tỉnh Long An', '0', 0.00, 13, 6, '2025-05-27 01:24:49', '2025-05-27 02:47:12', 'sss', 'destination', NULL, NULL, NULL),
+(41, 'sss', '<p>sss</p>', 'Xã Điền Hải, Huyện Đông Hải, Tỉnh Bạc Liêu', '0', 0.00, 13, 55, '2025-05-27 01:26:42', '2025-05-27 02:47:11', 'sss', 'destination', NULL, NULL, NULL),
+(42, 'ssss', '<p>ssss</p>', 'Phường Bình Thủy, Quận Bình Thuỷ, Thành phố Cần Thơ', '0', 0.00, 13, 63, '2025-05-27 01:29:16', '2025-05-27 02:47:11', 'ssss', 'destination', NULL, NULL, NULL),
+(43, 'asa', '<p>sada</p>', 'Xã Hựu Thạnh, Huyện Đức Hòa, Tỉnh Long An', '0', 0.00, 13, 7, '2025-05-27 02:27:42', '2025-05-27 02:27:58', 'sadsa', 'destination', NULL, NULL, NULL),
+(44, '111', '<p>111</p>', 'Xã Tân Lập, Huyện Mộc Hóa, Tỉnh Long An', '0', 0.00, 13, 5, '2025-05-27 02:46:46', '2025-05-27 02:46:56', '111', 'destination', NULL, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ratings`
+-- Cấu trúc bảng cho bảng `ratings`
 --
 
 CREATE TABLE `ratings` (
@@ -907,7 +974,7 @@ CREATE TABLE `ratings` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `reports`
+-- Cấu trúc bảng cho bảng `reports`
 --
 
 CREATE TABLE `reports` (
@@ -922,7 +989,7 @@ CREATE TABLE `reports` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `roles`
+-- Cấu trúc bảng cho bảng `roles`
 --
 
 CREATE TABLE `roles` (
@@ -933,7 +1000,7 @@ CREATE TABLE `roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `roles`
+-- Đang đổ dữ liệu cho bảng `roles`
 --
 
 INSERT INTO `roles` (`id`, `name`, `created_at`, `updated_at`) VALUES
@@ -943,7 +1010,7 @@ INSERT INTO `roles` (`id`, `name`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shares`
+-- Cấu trúc bảng cho bảng `shares`
 --
 
 CREATE TABLE `shares` (
@@ -959,7 +1026,7 @@ CREATE TABLE `shares` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `slides`
+-- Cấu trúc bảng cho bảng `slides`
 --
 
 CREATE TABLE `slides` (
@@ -971,7 +1038,7 @@ CREATE TABLE `slides` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `slides`
+-- Đang đổ dữ liệu cho bảng `slides`
 --
 
 INSERT INTO `slides` (`id`, `image`, `status`, `created_at`, `updated_at`) VALUES
@@ -984,7 +1051,7 @@ INSERT INTO `slides` (`id`, `image`, `status`, `created_at`, `updated_at`) VALUE
 -- --------------------------------------------------------
 
 --
--- Table structure for table `travel_types`
+-- Cấu trúc bảng cho bảng `travel_types`
 --
 
 CREATE TABLE `travel_types` (
@@ -996,7 +1063,7 @@ CREATE TABLE `travel_types` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `travel_types`
+-- Đang đổ dữ liệu cho bảng `travel_types`
 --
 
 INSERT INTO `travel_types` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES
@@ -1009,7 +1076,7 @@ INSERT INTO `travel_types` (`id`, `name`, `status`, `created_at`, `updated_at`) 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Cấu trúc bảng cho bảng `users`
 --
 
 CREATE TABLE `users` (
@@ -1027,7 +1094,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `users`
+-- Đang đổ dữ liệu cho bảng `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `avatar`, `description`, `user_rank`, `status`, `role_id`, `created_at`, `updated_at`) VALUES
@@ -1035,12 +1102,13 @@ INSERT INTO `users` (`id`, `username`, `email`, `password`, `avatar`, `descripti
 (4, 'admin', 'admin@gmail.com', '$2y$12$MyKYKCyx9ZJ8tnj4NNQzW.fnCoX1xneuUPPjlob9VN5afgtpkXaCa', '1746716717.jpg', NULL, 0, '0', 2, '2025-05-04 01:42:35', '2025-05-08 15:05:17'),
 (13, 'NhuDiep', 'nhinhi@gmail.com', '$2y$12$5YXurp1ympMG/uXy8pQNK.GWO2uOX6ELYg0CwQCnXPWa2AuWaFuve', NULL, NULL, 0, '0', 3, '2025-05-19 16:17:52', '2025-05-19 16:17:52'),
 (21, 'Nga Diep', 'dieptunga25@gmail.com', '$2y$12$0wvVyqIdn0zpgZ9Gikt8Aeu1xSVxebueoieLRXMYpcWoAS7mPasma', 'https://lh3.googleusercontent.com/a/ACg8ocK9owzB-JhcQcFNDhjZkwmY5LSePsRKXpwKCPc9jDkVqyKc-w=s96-c', NULL, 0, '0', 3, '2025-05-21 13:31:55', '2025-05-21 13:31:55'),
-(22, 'linh nguyễn', 'nguyenlinh200409@gmail.com', '$2y$12$NL4r..xfEzcQMiq8m9GQf.vq8m3BYQOiI/fbFqSbd1c0qViT5yE6O', 'https://lh3.googleusercontent.com/a/ACg8ocLurUr84nggrd5E_I6-3UBvRJwAH_-awCMB4dd3YBRQA97GyTU=s96-c', NULL, 0, '0', 3, '2025-05-21 13:32:38', '2025-05-21 13:32:38');
+(22, 'linh nguyễn', 'nguyenlinh200409@gmail.com', '$2y$12$NL4r..xfEzcQMiq8m9GQf.vq8m3BYQOiI/fbFqSbd1c0qViT5yE6O', 'https://lh3.googleusercontent.com/a/ACg8ocLurUr84nggrd5E_I6-3UBvRJwAH_-awCMB4dd3YBRQA97GyTU=s96-c', NULL, 0, '0', 3, '2025-05-21 13:32:38', '2025-05-21 13:32:38'),
+(23, 'Như Diệp', 'dieptunhu2003@gmail.com', '$2y$12$KDypwqCBp258D2AIqiRW/.hDgi8/hAnR7Mxdl5rQHtKPGcthQtlKC', 'https://lh3.googleusercontent.com/a/ACg8ocJohG4YerNT9DxW5GTiAK8Z8ZbuzRFTx9BTF6vMN8Ym5pLdoVCK=s96-c', NULL, 0, '0', 3, '2025-05-26 12:22:20', '2025-05-26 12:22:20');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_missions`
+-- Cấu trúc bảng cho bảng `user_missions`
 --
 
 CREATE TABLE `user_missions` (
@@ -1052,7 +1120,7 @@ CREATE TABLE `user_missions` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `utilities`
+-- Cấu trúc bảng cho bảng `utilities`
 --
 
 CREATE TABLE `utilities` (
@@ -1073,7 +1141,7 @@ CREATE TABLE `utilities` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `utilities`
+-- Đang đổ dữ liệu cho bảng `utilities`
 --
 
 INSERT INTO `utilities` (`id`, `name`, `price`, `address`, `latitude`, `longitude`, `distance`, `time`, `image`, `status`, `description`, `utility_type_id`, `created_at`, `updated_at`) VALUES
@@ -1142,7 +1210,7 @@ INSERT INTO `utilities` (`id`, `name`, `price`, `address`, `latitude`, `longitud
 -- --------------------------------------------------------
 
 --
--- Table structure for table `utility_types`
+-- Cấu trúc bảng cho bảng `utility_types`
 --
 
 CREATE TABLE `utility_types` (
@@ -1154,7 +1222,7 @@ CREATE TABLE `utility_types` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `utility_types`
+-- Đang đổ dữ liệu cho bảng `utility_types`
 --
 
 INSERT INTO `utility_types` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES
@@ -1162,17 +1230,17 @@ INSERT INTO `utility_types` (`id`, `name`, `status`, `created_at`, `updated_at`)
 (14, 'Ẩm thực', '0', '2025-05-08 10:55:50', '2025-05-08 10:55:50');
 
 --
--- Indexes for dumped tables
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `badges`
+-- Chỉ mục cho bảng `badges`
 --
 ALTER TABLE `badges`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `comments`
+-- Chỉ mục cho bảng `comments`
 --
 ALTER TABLE `comments`
   ADD PRIMARY KEY (`id`),
@@ -1181,7 +1249,14 @@ ALTER TABLE `comments`
   ADD KEY `comments_parent_comment_id_foreign` (`parent_comment_id`);
 
 --
--- Indexes for table `destinations`
+-- Chỉ mục cho bảng `custom_notifications`
+--
+ALTER TABLE `custom_notifications`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `notifications_user_id_foreign` (`user_id`);
+
+--
+-- Chỉ mục cho bảng `destinations`
 --
 ALTER TABLE `destinations`
   ADD PRIMARY KEY (`id`),
@@ -1189,28 +1264,28 @@ ALTER TABLE `destinations`
   ADD KEY `destinations_travel_type_id_foreign` (`travel_type_id`);
 
 --
--- Indexes for table `destination_images`
+-- Chỉ mục cho bảng `destination_images`
 --
 ALTER TABLE `destination_images`
   ADD PRIMARY KEY (`id`),
   ADD KEY `destination_images_destination_id_foreign` (`destination_id`);
 
 --
--- Indexes for table `destination_utilities`
+-- Chỉ mục cho bảng `destination_utilities`
 --
 ALTER TABLE `destination_utilities`
   ADD PRIMARY KEY (`destination_id`,`utility_id`),
   ADD KEY `destination_utilities_utility_id_foreign` (`utility_id`);
 
 --
--- Indexes for table `failed_jobs`
+-- Chỉ mục cho bảng `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
 
 --
--- Indexes for table `follows`
+-- Chỉ mục cho bảng `follows`
 --
 ALTER TABLE `follows`
   ADD PRIMARY KEY (`id`),
@@ -1218,7 +1293,7 @@ ALTER TABLE `follows`
   ADD KEY `follows_following_id_foreign` (`following_id`);
 
 --
--- Indexes for table `likes`
+-- Chỉ mục cho bảng `likes`
 --
 ALTER TABLE `likes`
   ADD PRIMARY KEY (`id`),
@@ -1227,33 +1302,33 @@ ALTER TABLE `likes`
   ADD KEY `likes_comment_id_foreign` (`comment_id`);
 
 --
--- Indexes for table `migrations`
+-- Chỉ mục cho bảng `migrations`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `missions`
+-- Chỉ mục cho bảng `missions`
 --
 ALTER TABLE `missions`
   ADD PRIMARY KEY (`id`),
   ADD KEY `missions_badge_id_foreign` (`badge_id`);
 
 --
--- Indexes for table `notifications`
+-- Chỉ mục cho bảng `notifications`
 --
 ALTER TABLE `notifications`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `notifications_user_id_foreign` (`user_id`);
+  ADD KEY `notifications_notifiable_type_notifiable_id_index` (`notifiable_type`,`notifiable_id`);
 
 --
--- Indexes for table `password_reset_tokens`
+-- Chỉ mục cho bảng `password_reset_tokens`
 --
 ALTER TABLE `password_reset_tokens`
   ADD PRIMARY KEY (`email`);
 
 --
--- Indexes for table `personal_access_tokens`
+-- Chỉ mục cho bảng `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
   ADD PRIMARY KEY (`id`),
@@ -1261,7 +1336,7 @@ ALTER TABLE `personal_access_tokens`
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
 
 --
--- Indexes for table `posts`
+-- Chỉ mục cho bảng `posts`
 --
 ALTER TABLE `posts`
   ADD PRIMARY KEY (`id`),
@@ -1270,7 +1345,7 @@ ALTER TABLE `posts`
   ADD KEY `posts_utility_id_foreign` (`utility_id`);
 
 --
--- Indexes for table `ratings`
+-- Chỉ mục cho bảng `ratings`
 --
 ALTER TABLE `ratings`
   ADD PRIMARY KEY (`id`),
@@ -1278,7 +1353,7 @@ ALTER TABLE `ratings`
   ADD KEY `ratings_post_id_foreign` (`post_id`);
 
 --
--- Indexes for table `reports`
+-- Chỉ mục cho bảng `reports`
 --
 ALTER TABLE `reports`
   ADD PRIMARY KEY (`id`),
@@ -1286,14 +1361,14 @@ ALTER TABLE `reports`
   ADD KEY `reports_post_id_foreign` (`post_id`);
 
 --
--- Indexes for table `roles`
+-- Chỉ mục cho bảng `roles`
 --
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `roles_name_unique` (`name`);
 
 --
--- Indexes for table `shares`
+-- Chỉ mục cho bảng `shares`
 --
 ALTER TABLE `shares`
   ADD PRIMARY KEY (`id`),
@@ -1301,180 +1376,180 @@ ALTER TABLE `shares`
   ADD KEY `shares_post_id_foreign` (`post_id`);
 
 --
--- Indexes for table `slides`
+-- Chỉ mục cho bảng `slides`
 --
 ALTER TABLE `slides`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `travel_types`
+-- Chỉ mục cho bảng `travel_types`
 --
 ALTER TABLE `travel_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `users`
+-- Chỉ mục cho bảng `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD KEY `users_role_id_foreign` (`role_id`);
 
 --
--- Indexes for table `user_missions`
+-- Chỉ mục cho bảng `user_missions`
 --
 ALTER TABLE `user_missions`
   ADD PRIMARY KEY (`user_id`,`mission_id`),
   ADD KEY `user_missions_mission_id_foreign` (`mission_id`);
 
 --
--- Indexes for table `utilities`
+-- Chỉ mục cho bảng `utilities`
 --
 ALTER TABLE `utilities`
   ADD PRIMARY KEY (`id`),
   ADD KEY `utilities_utility_type_id_foreign` (`utility_type_id`);
 
 --
--- Indexes for table `utility_types`
+-- Chỉ mục cho bảng `utility_types`
 --
 ALTER TABLE `utility_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `badges`
+-- AUTO_INCREMENT cho bảng `badges`
 --
 ALTER TABLE `badges`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
--- AUTO_INCREMENT for table `comments`
+-- AUTO_INCREMENT cho bảng `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
 
 --
--- AUTO_INCREMENT for table `destinations`
+-- AUTO_INCREMENT cho bảng `custom_notifications`
+--
+ALTER TABLE `custom_notifications`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `destinations`
 --
 ALTER TABLE `destinations`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
--- AUTO_INCREMENT for table `destination_images`
+-- AUTO_INCREMENT cho bảng `destination_images`
 --
 ALTER TABLE `destination_images`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=374;
 
 --
--- AUTO_INCREMENT for table `failed_jobs`
+-- AUTO_INCREMENT cho bảng `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `follows`
+-- AUTO_INCREMENT cho bảng `follows`
 --
 ALTER TABLE `follows`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `likes`
+-- AUTO_INCREMENT cho bảng `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
--- AUTO_INCREMENT for table `migrations`
+-- AUTO_INCREMENT cho bảng `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
--- AUTO_INCREMENT for table `missions`
+-- AUTO_INCREMENT cho bảng `missions`
 --
 ALTER TABLE `missions`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT for table `notifications`
---
-ALTER TABLE `notifications`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `personal_access_tokens`
+-- AUTO_INCREMENT cho bảng `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `posts`
+-- AUTO_INCREMENT cho bảng `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
--- AUTO_INCREMENT for table `ratings`
+-- AUTO_INCREMENT cho bảng `ratings`
 --
 ALTER TABLE `ratings`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `reports`
+-- AUTO_INCREMENT cho bảng `reports`
 --
 ALTER TABLE `reports`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `roles`
+-- AUTO_INCREMENT cho bảng `roles`
 --
 ALTER TABLE `roles`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `shares`
+-- AUTO_INCREMENT cho bảng `shares`
 --
 ALTER TABLE `shares`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `slides`
+-- AUTO_INCREMENT cho bảng `slides`
 --
 ALTER TABLE `slides`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT for table `travel_types`
+-- AUTO_INCREMENT cho bảng `travel_types`
 --
 ALTER TABLE `travel_types`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
--- AUTO_INCREMENT for table `utilities`
+-- AUTO_INCREMENT cho bảng `utilities`
 --
 ALTER TABLE `utilities`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
--- AUTO_INCREMENT for table `utility_types`
+-- AUTO_INCREMENT cho bảng `utility_types`
 --
 ALTER TABLE `utility_types`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- Constraints for dumped tables
+-- Các ràng buộc cho các bảng đã đổ
 --
 
 --
--- Constraints for table `comments`
+-- Các ràng buộc cho bảng `comments`
 --
 ALTER TABLE `comments`
   ADD CONSTRAINT `comments_parent_comment_id_foreign` FOREIGN KEY (`parent_comment_id`) REFERENCES `comments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -1482,34 +1557,40 @@ ALTER TABLE `comments`
   ADD CONSTRAINT `comments_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `destinations`
+-- Các ràng buộc cho bảng `custom_notifications`
+--
+ALTER TABLE `custom_notifications`
+  ADD CONSTRAINT `notifications_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Các ràng buộc cho bảng `destinations`
 --
 ALTER TABLE `destinations`
   ADD CONSTRAINT `destinations_travel_type_id_foreign` FOREIGN KEY (`travel_type_id`) REFERENCES `travel_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `destinations_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `destination_images`
+-- Các ràng buộc cho bảng `destination_images`
 --
 ALTER TABLE `destination_images`
   ADD CONSTRAINT `destination_images_destination_id_foreign` FOREIGN KEY (`destination_id`) REFERENCES `destinations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `destination_utilities`
+-- Các ràng buộc cho bảng `destination_utilities`
 --
 ALTER TABLE `destination_utilities`
   ADD CONSTRAINT `destination_utilities_destination_id_foreign` FOREIGN KEY (`destination_id`) REFERENCES `destinations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `destination_utilities_utility_id_foreign` FOREIGN KEY (`utility_id`) REFERENCES `utilities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `follows`
+-- Các ràng buộc cho bảng `follows`
 --
 ALTER TABLE `follows`
   ADD CONSTRAINT `follows_follower_id_foreign` FOREIGN KEY (`follower_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `follows_following_id_foreign` FOREIGN KEY (`following_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `likes`
+-- Các ràng buộc cho bảng `likes`
 --
 ALTER TABLE `likes`
   ADD CONSTRAINT `likes_comment_id_foreign` FOREIGN KEY (`comment_id`) REFERENCES `comments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -1517,19 +1598,13 @@ ALTER TABLE `likes`
   ADD CONSTRAINT `likes_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `missions`
+-- Các ràng buộc cho bảng `missions`
 --
 ALTER TABLE `missions`
   ADD CONSTRAINT `missions_badge_id_foreign` FOREIGN KEY (`badge_id`) REFERENCES `badges` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `notifications`
---
-ALTER TABLE `notifications`
-  ADD CONSTRAINT `notifications_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `posts`
+-- Các ràng buộc cho bảng `posts`
 --
 ALTER TABLE `posts`
   ADD CONSTRAINT `posts_destination_id_foreign` FOREIGN KEY (`destination_id`) REFERENCES `destinations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -1537,41 +1612,41 @@ ALTER TABLE `posts`
   ADD CONSTRAINT `posts_utility_id_foreign` FOREIGN KEY (`utility_id`) REFERENCES `utilities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `ratings`
+-- Các ràng buộc cho bảng `ratings`
 --
 ALTER TABLE `ratings`
   ADD CONSTRAINT `ratings_post_id_foreign` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `ratings_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `reports`
+-- Các ràng buộc cho bảng `reports`
 --
 ALTER TABLE `reports`
   ADD CONSTRAINT `reports_post_id_foreign` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `reports_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `shares`
+-- Các ràng buộc cho bảng `shares`
 --
 ALTER TABLE `shares`
   ADD CONSTRAINT `shares_post_id_foreign` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `shares_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `users`
+-- Các ràng buộc cho bảng `users`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `users_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `user_missions`
+-- Các ràng buộc cho bảng `user_missions`
 --
 ALTER TABLE `user_missions`
   ADD CONSTRAINT `user_missions_mission_id_foreign` FOREIGN KEY (`mission_id`) REFERENCES `missions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `user_missions_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `utilities`
+-- Các ràng buộc cho bảng `utilities`
 --
 ALTER TABLE `utilities`
   ADD CONSTRAINT `utilities_utility_type_id_foreign` FOREIGN KEY (`utility_type_id`) REFERENCES `utility_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
