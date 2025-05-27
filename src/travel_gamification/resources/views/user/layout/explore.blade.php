@@ -205,9 +205,9 @@
         });
 
         $('#destinationDropdown').on('change', function () {
-            const url = $(this).val();
-            if (url) {
-                window.location.href = url;
+            const id = $(this).val();
+            if (id) {
+                window.location.href = '{{ url('destination') }}/' + id;
             }
         });
         $('#destinationDropdown').on('select2:open', function () {

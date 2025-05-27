@@ -521,18 +521,25 @@ class PageController extends Controller
         $query = \App\Models\Destination::query();
 
         if ($q) {
-            $all = $query->select('id', 'name')->get();
+            // Tìm kiếm trên toàn bộ địa điểm, không filter
+            $all = $query->select('id', 'name', 'address', 'travel_type_id')->get();
             $qNoSign = $this->stripSpecial($this->stripVN($q));
             $filtered = $all->filter(function($item) use ($qNoSign) {
                 $nameNoSign = $this->stripSpecial($this->stripVN($item->name));
-                similar_text($nameNoSign, $qNoSign, $percent);
-                return strpos($nameNoSign, $qNoSign) !== false || $percent > 60;
+                $addressNoSign = $this->stripSpecial($this->stripVN($item->address));
+                return strpos($nameNoSign, $qNoSign) !== false
+                    || strpos($addressNoSign, $qNoSign) !== false;
             })->take(30);
             $destinations = $filtered->values();
         } else {
-            // Nếu không có từ khóa thì lọc theo filter
+            // Không nhập tên, lọc theo filter
             if ($region) {
-                $query->where('region', $region);
+                $provincesInRegion = $this->getProvincesByRegion($region);
+                $query->where(function ($q) use ($provincesInRegion) {
+                    foreach ($provincesInRegion as $province) {
+                        $q->orWhere('address', 'LIKE', "%$province%");
+                    }
+                });
             }
             if ($province) {
                 $query->where('address', 'like', '%' . $province . '%');
@@ -546,7 +553,7 @@ class PageController extends Controller
         $results = [];
         foreach ($destinations as $d) {
             $results[] = [
-                'id' => route('destination.detail', ['id' => $d->id]),
+                'id' => $d->id, // Đúng: chỉ trả về ID
                 'text' => $d->name,
             ];
         }

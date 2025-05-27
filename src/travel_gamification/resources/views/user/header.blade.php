@@ -13,7 +13,19 @@
       <ul class="nav-links" id="nav-links">
         <li><a class="{{request() -> is('/') ? 'active' : ''}}" href="{{ route('page.index') }}">Trang Chủ</a></li>
         <li><a class="{{request() -> is('explore') ? 'active' : ''}}" href="{{ route('page.explore') }}">Khám phá</a></li>
-        <li><a class="{{request() -> is('community') ? 'active' : ''}}" href="{{ route('page.community') }}">Cộng đồng</a></li>
+        <li class="nav-item community-dropdown" style="position: relative;">
+            <a href="#" class="{{ request()->is('community') ? 'active' : '' }}" 
+               onmouseover="showCommunityDropdown()" onmouseout="hideCommunityDropdown()">
+                Cộng đồng <i class="fa fa-caret-down" style="font-size: 12px;"></i>
+            </a>
+            <ul class="community-submenu" id="communitySubmenu"
+                onmouseover="showCommunityDropdown()" onmouseout="hideCommunityDropdown()"
+                style="display: none; position: absolute; left: 0; top: 100%; min-width: 180px; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.12); border-radius: 8px; z-index: 100;">
+                <li><a href="{{ route('page.community') }}">Đọc bài viết</a></li>
+                {{-- <li><a href="{{ route('page.post_articles') }}">Đăng bài mới</a></li> --}}
+                <li><a href="">Đăng bài mới</a></li>
+            </ul>
+        </li>
         
         @auth
             <li><a class="{{request() -> is('mission') ? 'active' : ''}}" href="{{ route('page.mission') }}">Nhiệm vụ</a></li>

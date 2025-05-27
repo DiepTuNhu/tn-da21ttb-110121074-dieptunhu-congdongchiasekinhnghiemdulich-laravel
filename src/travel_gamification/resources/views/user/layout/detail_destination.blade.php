@@ -25,14 +25,14 @@
         </div>
 
         <div class="map-preview">
-          <div class="location-info">
+            <div class="location-info">
               <h2>{{ $destination->name }}</h2>
               <div class="mb-3" style="display: flex; gap: 10px;">
                 <a href="{{ route('post_articles', ['type' => 'destination', 'destination_id' => $destination->id]) }}" class="btn btn-primary">
-                    Thêm bài viết
+                    <i class="fa fa-pen"></i>Thêm bài viết
                 </a>
                 <a href="{{ route('page.community', ['destination_id' => $destination->id]) }}" class="btn btn-outline-secondary">
-                    Xem bài viết
+                    <i class="fa fa-book-open"></i>Xem bài viết
                 </a>
             </div>
               <p><strong>Địa chỉ:</strong> {{ $destination->address }}</p>

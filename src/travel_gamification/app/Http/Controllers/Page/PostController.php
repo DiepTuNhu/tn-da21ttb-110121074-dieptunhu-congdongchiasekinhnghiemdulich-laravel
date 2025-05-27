@@ -14,12 +14,26 @@ use App\Models\User;
 
 class PostController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $destinations = Destination::all();
+
+        $query = Post::query();
+
+        if ($request->filled('destination_id')) {
+            $query->where('destination_id', $request->destination_id);
+        }
+        if ($request->filled('utility_type_id')) {
+            $query->whereHas('utility', function($q) use ($request) {
+                $q->where('utility_type_id', $request->utility_type_id);
+            });
+        }
+        // ... các filter khác ...
+        $posts = $query->latest()->paginate(10);
+
         // ... các dữ liệu khác ...
         $isLoggedIn = Auth::check();
-        return view('user.layout.community', compact('destinations', 'isLoggedIn'));
+        return view('user.layout.community', compact('destinations','posts', 'isLoggedIn'));
     }
 
     public function create(Request $request)
@@ -71,7 +85,7 @@ class PostController extends Controller
             $post = new Post();
             $post->title         = $validatedData['title'];
             $post->content       = $validatedData['content'];
-            $post->status        = 0;
+            $post->status        = 1;
             $post->user_id       = Auth::id();
             $post->utility_id    = $validatedData['utility_id'];
             $post->price         = $validatedData['price'] ?? null;

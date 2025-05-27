@@ -33,18 +33,13 @@
     </select>
     <select id="destinationDropdown" class="form-select destination-dropdown-select2">
         <option value="">🔍 Tìm địa điểm du lịch...</option>
-        @foreach($destinations as $destination)
-            <option value="{{ $destination->id }}" data-id="{{ $destination->id }}"
-                {{ (isset($destinationId) && $destinationId == $destination->id) ? 'selected' : '' }}>
-                {{ $destination->name }}
-            </option>
-        @endforeach
     </select>
-    @if($isLoggedIn)
+    
+    {{-- @if($isLoggedIn)
         <button id="toggle-form-btn" class="toggle-submit-btn">✍️ Đăng bài chia sẻ</button>
     @else
         <button type="button" class="toggle-submit-btn" onclick="alert('Bạn cần đăng nhập để đăng bài!')">✍️ Đăng bài chia sẻ</button>
-    @endif
+    @endif --}}
     <!-- Modal chọn loại đăng bài -->
 <div id="choose-type-modal" style="
     display: none;
@@ -271,13 +266,37 @@
             placeholder: "🔍 Tìm địa điểm du lịch...",
             allowClear: true,
             width: '100%',
-            dropdownCssClass: 'destination-dropdown-select2',
-            selectionCssClass: 'destination-dropdown-select2'
+            ajax: {
+                url: '{{ route('ajax.destinations') }}',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term, // từ khóa tìm kiếm
+                        region: $('#vungmien').val(),
+                        province: $('#tinh').val(),
+                        type: $('#travelTypeDropdown').val()
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data.results
+                    };
+                },
+                cache: true
+            },
+            minimumInputLength: 0
         });
-        $('#destinationDropdown').on('change', function () {
-            const destinationId = $(this).find('option:selected').data('id');
-            const urlParams = new URLSearchParams(window.location.search);
 
+        $('#destinationDropdown').on('select2:open', function () {
+    setTimeout(function() {
+        document.querySelector('.select2-search__field').focus();
+    }, 0);
+});
+
+        $('#destinationDropdown').on('change', function () {
+            const destinationId = $(this).val();
+            const urlParams = new URLSearchParams(window.location.search);
             if (destinationId) {
                 urlParams.set('destination_id', destinationId);
             } else {

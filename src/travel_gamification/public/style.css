@@ -149,6 +149,26 @@ html {
     text-align: center;
     color: #aaa;
 }
+.community-dropdown:hover .community-submenu {
+    display: block !important;
+}
+.community-submenu {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.community-submenu li a {
+    display: block;
+    padding: 10px 20px;
+    color: #333;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+.community-submenu li a:hover {
+    background: #eaf6ff;
+    color: #007bff;
+}
 .pagination-wrapper {
     background-color: #fff;
     padding: 10px;
@@ -1229,6 +1249,8 @@ html {
     background-color: #e64a19;
 }
 
+
+
 /* NHIEM VU========================================================================================================================= */
 
 .mission-header {
@@ -1692,7 +1714,7 @@ img.thumb {
 .container-destination {
     max-width: 1200px;
     margin: 40px auto;
-    padding: 75px 20px;
+    padding: 75px 20px 0px 20px;
 }
 
 .location-header {
@@ -1943,28 +1965,28 @@ iframe {
 }
 
 .location-info .btn-primary {
-    background: #1e90ff;
+    background: #007bff;
     color: #fff;
     border: none;
 }
 .location-info .btn-primary:hover {
-    background: #156fc1;
+    background: #0056b3;
     color: #fff;
 }
 
 .location-info .btn-outline-secondary {
     background: #fff;
-    color: #1e90ff;
-    border: 1px solid #1e90ff;
+    color: #007bff;
+    border: 2px solid #007bff;
 }
 .location-info .btn-outline-secondary:hover {
     background: #eaf6ff;
-    color: #156fc1;
-    border-color: #156fc1;
+    color: #0056b3;
+    border-color: #0056b3;
 }
 .info-card .toggle-desc {
     display: block;
-    font-size: 16px;
+    font-size: 14px;
     /* color: #ff5722; */
     font-weight: bold;
     /* margin-bottom: 8px; */

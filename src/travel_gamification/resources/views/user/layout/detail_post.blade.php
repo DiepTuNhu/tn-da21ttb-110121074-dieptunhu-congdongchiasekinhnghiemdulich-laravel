@@ -255,6 +255,31 @@
 
     <div class="related-box">
       <strong>Danh sách bài viết</strong>
+      @php
+        use App\Models\DestinationUtility;
+        use App\Models\Post;
+
+        $destinationId = null;
+        if ($post->post_type == 'destination') {
+            $destinationId = $post->destination_id;
+        } elseif ($post->post_type == 'utility' && $post->utility) {
+            $destinationUtilities = $post->utility->destinationUtilities ?? null;
+            if ($destinationUtilities && $destinationUtilities->isNotEmpty()) {
+                $destinationId = $destinationUtilities->first()->destination_id;
+            }
+        }
+
+        $relatedPosts = collect();
+        if ($destinationId) {
+            $relatedPosts = Post::where('post_type', 'destination')
+                ->where('destination_id', $destinationId)
+                ->where('id', '!=', $post->id)
+                ->where('status', 0)
+                ->orderBy('created_at', 'desc')
+                ->limit(10)
+                ->get();
+        }
+      @endphp
       @forelse($relatedPosts as $related)
         <a href="{{ route('post.detail', $related->id) }}">{{ $related->title }}</a>
       @empty
@@ -264,6 +289,34 @@
 
     <div class="related-box">
       <strong>Tiện ích liên quan</strong>
+      @php
+        // use App\Models\DestinationUtility;
+        // use App\Models\Post;
+
+        if ($post->post_type == 'destination') {
+            // Lấy các utility_id thuộc địa điểm này
+            $utilityIds = DestinationUtility::where('destination_id', $post->destination_id)
+                ->pluck('utility_id');
+            // Lấy các bài viết tiện ích có utility_id này
+            $relatedUtilityPosts = Post::where('post_type', 'utility')
+                ->whereIn('utility_id', $utilityIds)
+                ->where('status', 0)
+                ->where('id', '!=', $post->id)
+                ->orderBy('created_at', 'desc')
+                ->limit(10)
+                ->get();
+        }
+        // Nếu là bài viết về tiện ích
+        elseif ($post->post_type == 'utility' && $post->utility) {
+            $relatedUtilityPosts = Post::where('post_type', 'utility')
+                ->where('destination_id', $post->utility->destination_id)
+                ->where('id', '!=', $post->id)
+                ->where('status', 0)
+                ->orderBy('created_at', 'desc')
+                ->limit(10)
+                ->get();
+        }
+      @endphp
       @forelse($relatedUtilityPosts as $related)
         <a href="{{ route('post.detail', $related->id) }}">{{ $related->title }}</a>
       @empty

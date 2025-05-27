@@ -22,4 +22,7 @@ class Utility extends Model
             'destination_id'
         )->withPivot('distance');
     }
+    public function destinationUtilities() {
+        return $this->hasMany(\App\Models\DestinationUtility::class, 'utility_id');
+    }
 }

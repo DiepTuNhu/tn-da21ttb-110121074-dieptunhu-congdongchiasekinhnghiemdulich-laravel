@@ -6,10 +6,11 @@
 @section('content')
 <div class="container">
     <table id="logTable" class="table table-striped mt-3">
-
         <thead>
             <tr>
                 <th>Tiêu đề</th>
+                <th>Loại bài đăng</th>
+                <th>Nội dung</th>
                 <th>Người đăng</th>
                 <th>Ngày đăng</th>
                 <th>Hành động</th>
@@ -19,6 +20,18 @@
             @foreach($posts as $post)
             <tr>
                 <td>{{ $post->title }}</td>
+                <td>
+                    @if($post->post_type === 'utility')
+                        Tiện ích
+                    @elseif($post->post_type === 'destination')
+                        Địa điểm
+                    @else
+                        Khác
+                    @endif
+                </td>
+                <td style="max-width:300px; white-space:pre-line; word-break:break-word;">
+                    {!! Str::limit(strip_tags($post->content), 200) !!}
+                </td>
                 <td>{{ $post->user->username ?? 'Ẩn danh' }}</td>
                 <td>{{ $post->created_at }}</td>
                 <td>
