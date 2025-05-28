@@ -1250,6 +1250,38 @@ html {
 }
 
 
+.selected-filters-title {
+      background: #f5f7fa;
+      border-left: 4px solid #007bff;
+      padding: 12px 18px;
+      margin: 20px 0 10px 0;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #2c3e50;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 2px 8px rgba(52,152,219,0.07);
+      margin: 20px 80px 10px 80px;
+  }
+  .selected-filters-title i {
+      color: #0056b3;
+      font-size: 1.3em;
+  }
+  .selected-filters-list {
+      /* color: #007bff; */
+      margin-left: 6px;
+      font-weight: 500;
+  }
+
+.region-label, .region-value { color: #e67e22; font-weight: 700; }
+.province-label, .province-value { color: #27ae60; font-weight: 700; }
+.type-label, .type-value { color: #8e44ad; font-weight: 700; }
+.destination-label, .destination-value { color: #c0392b; font-weight: 700; }
+.selected-filters-list .filter-label { margin-right: 2px; }
+.selected-filters-list .filter-value { margin-right: 8px; }
+
 
 /* NHIEM VU========================================================================================================================= */
 
@@ -2738,7 +2770,53 @@ textarea {
         padding-left: 5px;
     }
 }
-
+.utility-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 100px 0 100px;
+    background: #32cd32;
+    padding: 10px 18px 10px 24px;
+    border-radius: 8px;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+.utility-header-row .section-title.utility {
+    background: none;
+    margin: 0;
+    color: #fff;
+    padding: 0;
+    border-radius: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.utility-type-select {
+    min-width: 200px;
+    max-width: 260px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    font-size: 15px;
+    color: #333;
+    background: #fff;
+    margin-left: 16px;
+}
+@media (max-width: 900px) {
+    .utility-header-row {
+        margin: 20px 10px 0 10px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+    .utility-type-select {
+        width: 100%;
+        max-width: 100%;
+        margin-left: 0;
+    }
+}
 /* Responsive cho community & explore */
 
 @media (max-width: 1024px) {

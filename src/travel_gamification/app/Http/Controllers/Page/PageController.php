@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\Attendance;
+use Illuminate\Support\Facades\DB;
 
 
 class PageController extends Controller
@@ -202,8 +203,63 @@ class PageController extends Controller
             // Nếu không, lấy bài viết của tất cả địa điểm đã lọc
             $postsQuery->whereIn('destination_id', $destinationIds);
         }
+        $posts = $postsQuery->orderBy('updated_at', 'desc')->paginate(12, ['*'], 'page'); // Đổi 'page'
 
-        $posts = $postsQuery->orderBy('updated_at', 'desc')->paginate(12); // hoặc số lượng bạn muốn
+        // Lấy bài viết về tiện ích
+        $utilityPostsQuery = Post::where('status', 0)
+            ->whereNotNull('utility_id')
+            ->with(['user', 'utility']);
+
+        // Lọc theo địa điểm (nếu có)
+        if ($destinationId) {
+            $utilityIds = DB::table('destination_utilities')
+                ->where('destination_id', $destinationId)
+                ->pluck('utility_id')
+                ->toArray();
+            $utilityPostsQuery->whereIn('utility_id', $utilityIds);
+        }
+
+        // Lọc theo tỉnh
+        if ($province) {
+            $utilityPostsQuery->whereHas('utility', function($q) use ($province) {
+                $q->where('address', 'LIKE', "%$province%");
+            });
+        }
+        // Lọc theo miền
+        if ($region) {
+            $provincesInRegion = $this->getProvincesByRegion($region);
+            $utilityPostsQuery->whereHas('utility', function($q) use ($provincesInRegion) {
+                $q->where(function($subQ) use ($provincesInRegion) {
+                    foreach ($provincesInRegion as $province) {
+                        $subQ->orWhere('address', 'LIKE', "%$province%");
+                    }
+                });
+            });
+        }
+        // Lọc theo loại hình tiện ích
+        if ($travelTypeId) {
+            // Lấy danh sách địa điểm thuộc loại hình du lịch đã chọn
+            $destinationIdsByType = \App\Models\Destination::where('travel_type_id', $travelTypeId)->pluck('id')->toArray();
+            // Lấy các utility_id liên kết với các địa điểm này
+            $utilityIdsByType = DB::table('destination_utilities')
+                ->whereIn('destination_id', $destinationIdsByType)
+                ->pluck('utility_id')
+                ->unique()
+                ->toArray();
+            // Lọc các bài viết tiện ích theo các utility_id này
+            $utilityPostsQuery->whereIn('utility_id', $utilityIdsByType);
+        }
+
+        // Lọc theo loại tiện ích (utility_type_id từ request)
+        if ($request->filled('utility_type_id')) {
+            $utilityPostsQuery->whereHas('utility', function($q) use ($request) {
+                $q->where('utility_type_id', $request->utility_type_id);
+            });
+        }
+
+        $utilityPosts = $utilityPostsQuery
+            ->orderBy('updated_at', 'desc')
+            ->paginate(12, ['*'], 'utility_page'); // Đổi 'utility_page'
 
         $allDestinations = Destination::where('status', 0)
             ->with('destinationImages')
@@ -219,6 +275,7 @@ class PageController extends Controller
             'region' => $region,
             'destinationId' => $destinationId,
             'posts' => $posts,
+            'utilityPosts' => $utilityPosts, // <-- Thêm dòng này
             'utilityTypes' => \App\Models\UtilityType::all(),
             'utilities' => $utilities,
             'allDestinations' => $allDestinations,

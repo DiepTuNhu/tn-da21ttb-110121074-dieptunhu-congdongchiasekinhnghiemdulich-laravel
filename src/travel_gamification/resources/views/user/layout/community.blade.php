@@ -40,6 +40,8 @@
     @else
         <button type="button" class="toggle-submit-btn" onclick="alert('Bạn cần đăng nhập để đăng bài!')">✍️ Đăng bài chia sẻ</button>
     @endif --}}
+
+    
     <!-- Modal chọn loại đăng bài -->
 <div id="choose-type-modal" style="
     display: none;
@@ -98,7 +100,38 @@
 }
 </style>
   </div>
+{{-- Hiển thị bộ lọc đã chọn --}}
+@php
+    $regionLabel = $region ?? null;
+    $provinceLabel = $province ?? null;
+    $typeLabel = null;
+    if(isset($travelTypeId) && $travelTypeId) {
+        $typeObj = $travelTypes->firstWhere('id', $travelTypeId);
+        $typeLabel = $typeObj ? $typeObj->name : null;
+    }
+    $destinationLabel = null;
+    if(isset($destinationId) && $destinationId && isset($allDestinations)) {
+        $destinationObj = collect($allDestinations)->firstWhere('id', $destinationId);
+        $destinationLabel = $destinationObj ? $destinationObj->name : null;
+    }
+    $filters = [];
+    if($regionLabel) $filters[] = '<span class="filter-label region-label">Miền:</span> <span class="filter-value region-value">'.$regionLabel.'</span>';
+    if($provinceLabel) $filters[] = '<span class="filter-label province-label">Tỉnh:</span> <span class="filter-value province-value">'.$provinceLabel.'</span>';
+    if($typeLabel) $filters[] = '<span class="filter-label type-label">Loại hình:</span> <span class="filter-value type-value">'.$typeLabel.'</span>';
+    if($destinationLabel) $filters[] = '<span class="filter-label destination-label">Địa điểm:</span> <span class="filter-value destination-value">'.$destinationLabel.'</span>';
+@endphp
+@if(count($filters))
+    <div class="selected-filters-title">
+        <i class="fas fa-filter"></i>
+        <span>Đang lọc:</span>
+        <span class="selected-filters-list">{!! implode(', ', $filters) !!}</span>
+    </div>
+@endif
 
+{{-- ...phần hiển thị bài viết về địa điểm... --}}
+<h2 class="section-title" style="border-left: 0px solid #ccc; color: #fff; margin: 20px 100px 0 100px; background: #0056b3; padding: 15px; border-radius: 8px;">
+    <i class="fas fa-map-marker-alt"></i> Bài viết về địa điểm
+</h2>
 <div class="posts" id="user-posts">
   @if($posts->count())
     <!-- Các post của người dùng -->
@@ -173,14 +206,102 @@
       <div class="alert alert-warning" style="margin-top: 30px;">
           Không tìm thấy bài chia sẻ phù hợp.
       </div>
-  @endif
+  @endif    
   </div>  
     @if($posts->hasPages())
-    <div class="pagination">
+    <div class="pagination" id="pagination-location">
         {{ $posts->links() }}
     </div>
 @endif
 
+{{-- Thêm phần hiển thị bài viết về tiện ích --}}
+{{-- Bộ lọc loại tiện ích --}}
+<div class="utility-header-row">
+    <h2 class="section-title utility" style="border-left: 0px solid #ccc;">
+        <i class="fas fa-toolbox"></i> Bài viết về tiện ích
+    </h2>
+    <select id="utilityTypeFilter" class="form-select utility-type-select">
+        <option value="">Tất cả loại tiện ích</option>
+        @foreach($utilityTypes as $uType)
+            <option value="{{ $uType->id }}" {{ request('utility_type_id') == $uType->id ? 'selected' : '' }}>
+                {{ $uType->name }}
+            </option>
+        @endforeach
+    </select>
+</div>
+<div class="posts" id="utility-posts" style="margin-top: 40px;">
+    @if(isset($utilityPosts) && $utilityPosts->count())
+        @foreach ($utilityPosts as $post)
+            <a href="{{ route('post.detail', $post->id) }}" style="text-decoration:none; color:inherit;">
+                <div class="post-card utility-post">
+                    @php
+                        // Lấy ảnh đầu tiên trong content (nếu có)
+                        $firstImage = null;
+                        if ($post->content) {
+                            preg_match('/<img[^>]+src="([^">]+)"/i', $post->content, $matches);
+                            $firstImage = $matches[1] ?? null;
+                        }
+                    @endphp
+
+                    @if ($firstImage)
+                        <img src="{{ $firstImage }}" alt="{{ $post->title }}" />
+                    @else
+                        <img src="canh.png" alt="Default Image" />
+                    @endif
+
+                    <h4 style="text-align: center">{{ $post->title }}</h4>
+                    <div class="post-excerpt" style="text-align: justify">
+                        {{ \Illuminate\Support\Str::limit(strip_tags($post->content), 120) }}
+                    </div>
+                    <div class="post-info-block">
+                        <div style="display: flex; align-items: center; gap: 6px; font-weight: bold;">
+                            <i class="fas fa-map-pin" style="color: #e67e22; font-size: 16px;"></i>
+                            <span style="font-size: 14px;">
+                                {{ $post->utility->name ?? 'Tiện ích không xác định' }}
+                            </span>
+                        </div>
+                    </div>
+                    <hr class="info-divider" />
+                    <div class="info-footer">
+                        <div class="footer-row">
+                            <div class="footer-col left">
+                                <i class="fas fa-user"></i>
+                                {{ $post->user->username ?? 'Ẩn danh' }}
+                            </div>
+                            <div class="footer-col right">
+                                <i class="fas fa-calendar-alt"></i>
+                                @if ($post->updated_at->diffInHours() < 24)
+                                    {{ $post->updated_at->diffForHumans() }}
+                                @else
+                                    {{ $post->updated_at->format('d/m/Y') }}
+                                @endif
+                            </div>
+                        </div>
+                        <div class="footer-row">
+                            <div class="footer-col left">
+                                <i class="fas fa-heart" style="color: #e74c3c"></i>
+                                {{ $post->likes->count() }} lượt thích
+                            </div>
+                            <div class="footer-col right">
+                                <i class="fas fa-comment-alt"></i>
+                                {{ $post->comments->count() }} bình luận
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        @endforeach
+    @else
+        <div class="alert alert-info" style="margin-top: 30px;">
+            Không có bài viết về tiện ích nào.
+        </div>
+    @endif
+</div>
+@if($utilityPosts->hasPages())
+    <div class="pagination" id="pagination-utility">
+        {{ $utilityPosts->links() }}
+    </div>
+@endif
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     const provincesByRegion = {
@@ -229,6 +350,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             urlParams.set('region', region);
             urlParams.delete('province'); // reset tỉnh
+            urlParams.delete('destination_id'); // reset địa điểm
             window.location.href = `{{ route('page.community') }}?${urlParams.toString()}`;
         });
 
@@ -237,6 +359,7 @@
             const province = $(this).val();
             const urlParams = new URLSearchParams(window.location.search);
             urlParams.set('province', province);
+            urlParams.delete('destination_id'); // reset địa điểm
             window.location.href = `{{ route('page.community') }}?${urlParams.toString()}`;
         });
 
@@ -248,12 +371,14 @@
             if (type) urlParams.set('type', type);
             else urlParams.delete('type');
 
+            urlParams.delete('destination_id'); // reset địa điểm
             window.location.href = `{{ route('page.community') }}?${urlParams.toString()}`;
         });
     });
 </script>
 
-{{-- ...existing code... --}}
+
+
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
@@ -495,4 +620,40 @@ chooseListContainer.addEventListener('click', function(e) {
     </script>
 @endif
 
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Phân trang địa điểm
+    document.querySelectorAll('#pagination-location .pagination a').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = this.href + '#user-posts';
+        });
+    });
+    // Phân trang tiện ích
+    document.querySelectorAll('#pagination-utility .pagination a').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = this.href + '#utility-posts';
+        });
+    });
+    // Khi load lại trang có hash thì cuộn tới phần đó
+    if(window.location.hash) {
+        const el = document.querySelector(window.location.hash);
+        if(el) el.scrollIntoView({behavior: 'smooth', block: 'start'});
+    }
+});
+</script>
+<script>
+    $('#utilityTypeFilter').on('change', function () {
+    const utilityTypeId = $(this).val();
+    const urlParams = new URLSearchParams(window.location.search);
+    if (utilityTypeId) {
+        urlParams.set('utility_type_id', utilityTypeId);
+    } else {
+        urlParams.delete('utility_type_id');
+    }
+    urlParams.delete('page'); // reset phân trang tiện ích nếu có
+    window.location.href = `{{ route('page.community') }}?${urlParams.toString()}#utility-posts`;
+});
+</script>
 @endsection

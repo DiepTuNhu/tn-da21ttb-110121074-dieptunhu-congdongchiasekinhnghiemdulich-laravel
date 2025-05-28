@@ -45,6 +45,28 @@
 
   </div>
 
+  {{-- Hiển thị bộ lọc đã chọn --}}
+  {{-- @php
+      $regionLabel = $region ?? null;
+      $provinceLabel = $province ?? null;
+      $typeLabel = null;
+      if(isset($travelTypeId) && $travelTypeId) {
+          $typeObj = $travelTypes->firstWhere('id', $travelTypeId);
+          $typeLabel = $typeObj ? $typeObj->name : null;
+      }
+      $filters = [];
+      if($regionLabel) $filters[] = '<span class="region-label">Miền:</span> <span class="region-value">'.$regionLabel.'</span>';
+      if($provinceLabel) $filters[] = '<span class="province-label">Tỉnh:</span> <span class="province-value">'.$provinceLabel.'</span>';
+      if($typeLabel) $filters[] = '<span class="type-label">Loại hình:</span> <span class="type-value">'.$typeLabel.'</span>';
+      // if($destinationLabel) $filters[] = '<span class="destination-label">Địa điểm:</span> <span class="destination-value">'.$destinationLabel.'</span>';
+  @endphp
+  @if(count($filters))
+      <div class="selected-filters-title">
+          <i class="fas fa-filter"></i>
+          <span>Đang lọc:</span>
+          <span class="selected-filters-list">{!! implode(', ', $filters) !!}</span>
+      </div>
+  @endif --}}
 
   <div class="posts" id="admin-posts">
     @if($destinations->count())
