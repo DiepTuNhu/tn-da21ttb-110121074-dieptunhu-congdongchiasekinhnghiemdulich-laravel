@@ -35,63 +35,11 @@
         <option value="">🔍 Tìm địa điểm du lịch...</option>
     </select>
     
-    {{-- @if($isLoggedIn)
+    @if($isLoggedIn)
         <button id="toggle-form-btn" class="toggle-submit-btn">✍️ Đăng bài chia sẻ</button>
     @else
         <button type="button" class="toggle-submit-btn" onclick="alert('Bạn cần đăng nhập để đăng bài!')">✍️ Đăng bài chia sẻ</button>
-    @endif --}}
-
-    
-    <!-- Modal chọn loại đăng bài -->
-<div id="choose-type-modal" style="
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.5);
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(2px);
-">
-    <div class="choose-modal-outer">
-        <div class="choose-modal-inner" style="
-            background: #fff;
-            padding: 30px 40px;
-            border-radius: 12px;
-            width: 700px;
-            max-width: 90vw;
-            height: 80vh;
-            margin-top: 120px;
-            margin-bottom: 80px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            position: relative;
-            animation: fadeIn 0.3s ease-in-out;
-            overflow: auto;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-        ">
-            <h3 style="margin-bottom: 20px; font-size: 20px;">📝 Bạn muốn đăng bài về?</h3>
-            
-            <div style="display: flex; flex-direction: column; gap: 12px;">
-                <button class="choose-type-btn" data-type="destination"
-                    style="padding: 10px; background-color: #1e90ff; color: white; border: none; border-radius: 6px; cursor: pointer;">
-                    🗺️ Địa điểm du lịch
-                </button>
-                <button class="choose-type-btn" data-type="utility"
-                    style="padding: 10px; background-color: #32cd32; color: white; border: none; border-radius: 6px; cursor: pointer;">
-                    🧰 Tiện ích
-                </button>
-            </div>
-
-            <button id="close-type-modal"
-                style="position: absolute; top: 12px; right: 12px; background: none; border: none; font-size: 20px; cursor: pointer;">✖️</button>
-
-            <div id="choose-list-container" style="margin-top: 20px;"></div>
-        </div>
-    </div>
-</div>
+    @endif
 
 <style>
 @keyframes fadeIn {
@@ -444,8 +392,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const utilities = @json($utilities ?? []);
 
     openBtn.addEventListener("click", function () {
-        modal.style.display = "flex";
-        chooseListContainer.innerHTML = "";
+        window.location.href = "{{ route('page.post_share') }}";
     });
 
     closeBtn.addEventListener("click", function () {
@@ -591,25 +538,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-chooseListContainer.addEventListener('click', function(e) {
-    const card = e.target.closest('.select-card');
-    if (card) {
-        const type = card.getAttribute('data-type');
-        const id = card.getAttribute('data-id');
-        modal.style.display = "none";
-        chooseListContainer.innerHTML = "";
-        // XÓA hoặc kiểm tra submitSection trước khi dùng
-        // if (submitSection) submitSection.style.display = "block";
-        if (type === "destination") {
-            window.location.href = "{{ route('post_articles') }}?type=destination&destination_id=" + id;
-            return;
-        }
-        if (type === "utility") {
-            window.location.href = "{{ route('post_articles') }}?type=utility&utility_id=" + id;
-            return;
-        }
-    }
-});
 });
 
 </script>

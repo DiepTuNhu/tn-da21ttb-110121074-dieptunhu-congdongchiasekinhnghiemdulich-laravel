@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\DestinationsController;
 use App\Http\Controllers\Admin\DestinationImagesController;
 use App\Http\Controllers\Page\PostController;
 use App\Http\Controllers\Page\ProfileController;
+use App\Http\Controllers\Page\CreateDestinationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,7 @@ Route::get('/', [PageController::class, 'index'])->name('page.index');
 Route::get('/search', [PageController::class, 'search'])->name('user.search');
 Route::get('/community', [PageController::class, 'getCommunity'])->name('page.community');
 // Route::post('/community/post', [PostController::class, 'store'])->name('community.post');
+Route::get('/community/post-share', [PostController::class, 'showPostShare'])->name('page.post_share');
 Route::get('/community/post-articles', [PostController::class, 'create'])->name('post_articles');
 Route::post('/community/post-articles', [PostController::class, 'store'])->name('post_articles.store');
 Route::get('/community/post-articles/{id}/edit', [PostController::class, 'edit'])->name('post.edit');
@@ -53,7 +55,9 @@ Route::get('/ajax/filter-posts', [PageController::class, 'ajaxFilterPosts'])->na
 
 Route::get('/explore', [PageController::class, 'getExplore'])->name('page.explore');
 Route::get('/ajax/destinations', [PageController::class, 'ajaxDestinations'])->name('ajax.destinations');
-
+Route::get('/ajax/post-share-destinations', [\App\Http\Controllers\Page\PostController::class, 'ajaxDestinations'])->name('ajax.post_share_destinations');
+Route::get('/ajax/post-share-utilities', [\App\Http\Controllers\Page\PostController::class, 'ajaxUtilities'])->name('ajax.post_share_utilities');
+Route::get('post_articles/{id}', [PostController::class, 'postArticles'])->name('post_articles');
 Route::get('/mission', [PageController::class, 'getMission'])->name('page.mission');
 Route::get('/ranking', [PageController::class, 'getRanking'])->name('page.ranking');
 
@@ -70,7 +74,10 @@ Route::post('/comments/like/{id}', [PostController::class, 'likeComment'])->name
 Route::post('comments/update/{id}', [PostController::class, 'updateComment'])->name('comments.update');
 Route::post('/comments/delete/{id}', [PostController::class, 'deleteComment'])->name('comments.delete');
 
-
+Route::post('/user/destination/store', [CreateDestinationController::class, 'store'])->name('user.destination.store');
+Route::get('/user/destination/create', function() {
+    return view('user.layout.create_destination');
+})->name('user.destination.create');
 //LOGIN
 Route::get('/login',[LoginController::class,'index'])->name('login');
 Route::post('/login/store',[LoginController::class,'store'])->name('login.store');

@@ -81,7 +81,8 @@
                     <select id="location" name="location" class="form-control" required>
                         <option value="">Chọn địa điểm</option>
                         @foreach($destinations as $destination)
-                            <option value="{{ $destination->id }}" {{ isset($selectedDestination) && $selectedDestination == $destination->id ? 'selected' : '' }}>
+                            <option value="{{ $destination->id }}"
+                                {{ (isset($selectedDestination) && $selectedDestination == $destination->id) ? 'selected' : '' }}>
                                 {{ $destination->name }}
                             </option>
                         @endforeach

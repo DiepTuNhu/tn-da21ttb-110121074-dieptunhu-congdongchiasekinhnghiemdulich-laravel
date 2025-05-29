@@ -1,0 +1,51 @@
+<?php
+
+namespace App\Http\Controllers\Page;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\Destination;
+use App\Models\DestinationImage;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+
+class CreateDestinationController extends Controller
+{
+    public function store(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            // Tạo địa điểm mới
+            $destination = new \App\Models\Destination();
+            $destination->name = $request->name;
+            $destination->address = $request->address;
+            $destination->highlights = $request->highlights;
+            $destination->user_id = Auth::id();
+            $destination->status = 'pending';
+            $destination->save();
+
+            // Lưu ảnh vào bảng destination_images với status = 2
+            if ($request->hasFile('images')) {
+                foreach ($request->file('images') as $file) {
+                    $imageName = time() . '-' . $file->getClientOriginalName();
+                    $imagePath = $file->storeAs('destination_image', $imageName, 'public');
+
+                    DestinationImage::create([
+                        'name' => $imageName,
+                        'image_url' => Storage::url($imagePath), // Lưu đường dẫn đầy đủ
+                        'status' => 2,
+                        'destination_id' => $destination->id,
+                    ]);
+                }
+            }
+
+            DB::commit();
+            // Redirect về trang post_share
+            return redirect()->route('page.post_share')->with('success', 'Tạo địa điểm thành công!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Có lỗi xảy ra: ' . $e->getMessage());
+        }
+    }
+}

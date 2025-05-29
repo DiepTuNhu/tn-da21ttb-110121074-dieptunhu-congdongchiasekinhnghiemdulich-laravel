@@ -22,8 +22,12 @@
                 onmouseover="showCommunityDropdown()" onmouseout="hideCommunityDropdown()"
                 style="display: none; position: absolute; left: 0; top: 100%; min-width: 180px; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.12); border-radius: 8px; z-index: 100;">
                 <li><a href="{{ route('page.community') }}">Đọc bài viết</a></li>
-                {{-- <li><a href="{{ route('page.post_articles') }}">Đăng bài mới</a></li> --}}
-                <li><a href="">Đăng bài mới</a></li>
+                {{-- <li><a href="{{ route( 'page.post_share') }}">Đăng bài mới</a></li> --}}
+                @auth
+                    <li><a href="{{ route('page.post_share') }}">Đăng bài mới</a></li>
+                @else
+                    <li><a href="#" onclick="alert('Bạn cần đăng nhập để đăng bài!'); return false;">Đăng bài mới</a></li>
+                @endauth
             </ul>
         </li>
         

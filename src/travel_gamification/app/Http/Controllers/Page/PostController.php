@@ -36,6 +36,14 @@ class PostController extends Controller
         return view('user.layout.community', compact('destinations','posts', 'isLoggedIn'));
     }
 
+    public function showPostShare(Request $request)
+    {
+        $destinations = \App\Models\Destination::where('status', 0)->get();
+        // $provinces = \App\Models\Province::all(); // Lấy danh sách tỉnh/thành
+        $utilityTypes = \App\Models\UtilityType::all(); // Lấy danh sách loại tiện ích (nếu cần)
+        return view('user.layout.post_share', compact('destinations', 'utilityTypes'));
+    }
+
     public function create(Request $request)
     {
         // Lấy loại bài đăng: 'destination' (mặc định) hoặc 'utility'
@@ -45,7 +53,7 @@ class PostController extends Controller
         $destinations = \App\Models\Destination::where('status', 0)->get();
 
         // Lấy id địa điểm được chọn (nếu có)
-        $selectedDestination = $request->input('destination_id', null);
+        $selectedDestination = $request->input('id'); // hoặc tên param bạn truyền
 
         // Nếu là đăng tiện ích thì lấy danh sách tiện ích
         $utilities = [];
@@ -370,4 +378,196 @@ class PostController extends Controller
         $comment->delete();
         return response()->json(['success' => true]);
     }
+
+    public function ajaxDestinations(Request $request)
+    {
+        $query = \App\Models\Destination::query()->where('status', 0);
+
+        if ($request->filled('province')) {
+            $query->where('address', 'like', '%' . $request->province . '%');
+        }
+
+        $perPage = 20;
+        $page = $request->input('page', 1);
+
+        // Nếu có tìm kiếm q thì lọc trên PHP không dấu, không ký tự đặc biệt
+        if ($request->filled('q')) {
+            $q = $request->q;
+            $qNorm = $this->normalizeSearch($q);
+
+            // Lấy tất cả để lọc trên PHP (chỉ khi có q)
+            $all = $query->with(['destinationImages' => function($q) {
+                $q->where('status', 2)->orderBy('id');
+            }])->get()->filter(function($item) use ($qNorm) {
+                $nameNorm = $this->normalizeSearch($item->name);
+                return strpos($nameNorm, $qNorm) !== false;
+            })->values();
+
+            // Phân trang thủ công trên collection
+            $total = $all->count();
+            $results = $all->slice(($page - 1) * $perPage, $perPage)->map(function($item) {
+                $image = $item->destinationImages->first();
+                return [
+                    'id' => $item->id,
+                    'text' => $item->name,
+                    'image' => $image ? asset($image->image_url) : asset('images/no-image.png'),
+                ];
+            })->values();
+
+            return response()->json([
+                'results' => $results,
+                'current_page' => $page,
+                'last_page' => ceil($total / $perPage),
+                'total' => $total,
+            ]);
+        }
+
+        if ($request->input('all')) {
+            $all = $query->get()->map(function($item) {
+                return [
+                    'id' => $item->id,
+                    'text' => $item->name,
+                ];
+            });
+            return response()->json([
+                'all_results' => $all,
+            ]);
+        }
+
+        $paginator = $query->with(['destinationImages' => function($q) {
+            $q->where('status', 2)->orderBy('id');
+        }])->paginate($perPage, ['*'], 'page', $page);
+
+        $results = $paginator->getCollection()->map(function($item) {
+            $image = $item->destinationImages->first();
+            return [
+                'id' => $item->id,
+                'text' => $item->name,
+                'image' => $image ? asset($image->image_url) : asset('images/no-image.png'),
+            ];
+        });
+
+        return response()->json([
+            'results' => $results,
+            'current_page' => $paginator->currentPage(),
+            'last_page' => $paginator->lastPage(),
+            'total' => $paginator->total(),
+        ]);
+    }
+    public function ajaxUtilities(Request $request)
+    {
+        $query = \App\Models\Utility::query()->where('status', 0);
+
+        if ($request->filled('destination_id')) {
+            $query->whereHas('destinations', function($q) use ($request) {
+                $q->where('destinations.id', $request->destination_id);
+            });
+        }
+        if ($request->filled('utility_type_id')) {
+            $query->where('utility_type_id', $request->utility_type_id);
+        }
+
+        // Nếu có all=1 thì trả về tất cả cho dropdown
+        if ($request->input('all')) {
+            $all = $query->get()->map(function($item) {
+                return [
+                    'id' => $item->id,
+                    'text' => $item->name,
+                ];
+            });
+            return response()->json([
+                'all_results' => $all,
+            ]);
+        }
+
+        $perPage = 20;
+        $page = $request->input('page', 1);
+
+        // Nếu có tìm kiếm q thì lọc trên PHP không dấu, không ký tự đặc biệt
+        if ($request->filled('q')) {
+            $q = $request->q;
+            $qNorm = $this->normalizeSearch($q);
+
+            // Lấy tất cả để lọc trên PHP (chỉ khi có q)
+            $all = $query->get()->filter(function($item) use ($qNorm) {
+                $nameNorm = $this->normalizeSearch($item->name);
+                return strpos($nameNorm, $qNorm) !== false;
+            })->values();
+
+            // Phân trang thủ công trên collection
+            $total = $all->count();
+            $results = $all->slice(($page - 1) * $perPage, $perPage)->map(function($item) {
+                return [
+                    'id' => $item->id,
+                    'text' => $item->name,
+                    'image' => $item->image, // <-- Đảm bảo trả về tên file ảnh
+                ];
+            })->values();
+
+            return response()->json([
+                'results' => $results,
+                'current_page' => $page,
+                'last_page' => ceil($total / $perPage),
+                'total' => $total,
+            ]);
+        }
+
+        $paginator = $query->paginate($perPage, ['*'], 'page', $page);
+
+        $results = $paginator->getCollection()->map(function($item) {
+            return [
+                'id' => $item->id,
+                'text' => $item->name,
+                'image' => $item->image, // <-- Đảm bảo trả về tên file ảnh
+            ];
+        });
+
+        return response()->json([
+            'results' => $results,
+            'current_page' => $paginator->currentPage(),
+            'last_page' => $paginator->lastPage(),
+            'total' => $paginator->total(),
+        ]);
+    }
+
+    private function normalizeSearch($str)
+    {
+        $str = mb_strtolower($str, 'UTF-8');
+        $str = preg_replace([
+            '/[àáạảãâầấậẩẫăằắặẳẵ]/u',
+            '/[èéẹẻẽêềếệểễ]/u',
+            '/[ìíịỉĩ]/u',
+            '/[òóọỏõôồốộổỗơờớợởỡ]/u',
+            '/[ùúụủũưừứựửữ]/u',
+            '/[ỳýỵỷỹ]/u',
+            '/[đ]/u'
+        ], [
+            'a','e','i','o','u','y','d'
+        ], $str);
+        $str = preg_replace('/[^a-z0-9 ]/', '', $str); // chỉ giữ chữ, số, khoảng trắng
+        return $str;
+    }
+public function postArticles(Request $request, $id)
+{
+    $postType = $request->get('postType', 'location');
+    $utilities = [];
+    $selectedUtility = null;
+
+    if ($postType === 'utility') {
+        $utilities = \App\Models\Utility::where('status', 0)->get();
+        $selectedUtility = $id;
+    }
+
+    // Các biến khác như $destinations, $selectedDestination...
+    $destinations = \App\Models\Destination::where('status', 0)->get();
+    $selectedDestination = $postType === 'location' ? $id : null;
+
+    return view('user.layout.post_articles', [
+        'postType' => $postType,
+        'utilities' => $utilities,
+        'selectedUtility' => $selectedUtility,
+        'destinations' => $destinations,
+        'selectedDestination' => $selectedDestination,
+    ]);
+}
 }

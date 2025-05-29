@@ -207,4 +207,21 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Gọi hàm này khi vào trang chi tiết địa điểm
+    if (window.markDestinationAsViewed) {
+        markDestinationAsViewed({{ $destination->id }});
+    } else {
+        // Nếu chưa có hàm, tự tạo luôn cho chắc
+        let id = {{ $destination->id }};
+        let viewed = JSON.parse(localStorage.getItem('viewed_destinations') || '[]');
+        if (!viewed.includes(id)) {
+            viewed.unshift(id);
+            if (viewed.length > 20) viewed = viewed.slice(0, 20);
+            localStorage.setItem('viewed_destinations', JSON.stringify(viewed));
+        }
+    }
+});
+</script>
 @endsection

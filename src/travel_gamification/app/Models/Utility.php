@@ -25,4 +25,8 @@ class Utility extends Model
     public function destinationUtilities() {
         return $this->hasMany(\App\Models\DestinationUtility::class, 'utility_id');
     }
+    public function destinations()
+    {
+        return $this->belongsToMany(Destination::class, 'destination_utilities', 'utility_id', 'destination_id');
+    }
 }
