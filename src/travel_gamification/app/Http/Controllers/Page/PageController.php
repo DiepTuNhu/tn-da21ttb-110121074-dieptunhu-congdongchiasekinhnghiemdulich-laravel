@@ -96,11 +96,19 @@ class PageController extends Controller
     {
         $keyword = trim($request->input('keyword'));
         $keywordNoSign = $this->stripSpecial($this->stripVN($keyword));
+        $travelTypeId = $request->input('travel_type_id');
 
         // Lấy tất cả để lọc lại bằng PHP (nếu dữ liệu lớn thì nên tối ưu lại)
         $destinations = Destination::with(['destinationImages' => function ($query) {
             $query->where('status', 2);
-        }])->orderBy('updated_at', 'desc')->get();
+        }])->orderBy('updated_at', 'desc');
+
+        // Nếu chọn loại hình du lịch thì lọc theo loại hình
+        if ($travelTypeId) {
+            $destinations = $destinations->where('travel_type_id', $travelTypeId);
+        }
+
+        $destinations = $destinations->get();
 
         // Lọc lại bằng PHP cho tìm không dấu, mềm (cho phép sai ký tự đặc biệt)
         if ($keyword) {
@@ -131,10 +139,15 @@ class PageController extends Controller
         // Phần posts vẫn giữ nguyên như cũ
         $posts = Post::query()
             ->with(['user', 'destination', 'destination.destinationImages'])
-            ->whereHas('destination', function ($q) use ($keyword) {
+            ->whereHas('destination', function ($q) use ($keyword, $travelTypeId) {
+                if ($travelTypeId) {
+                    $q->where('travel_type_id', $travelTypeId);
+                }
                 if ($keyword) {
-                    $q->where('name', 'like', "%$keyword%")
-                      ->orWhereRaw("LOWER(TRIM(SUBSTRING_INDEX(address, ',', -1))) LIKE ?", ['%' . strtolower($keyword) . '%']);
+                    $q->where(function($subQ) use ($keyword) {
+                        $subQ->where('name', 'like', "%$keyword%")
+                             ->orWhereRaw("LOWER(TRIM(SUBSTRING_INDEX(address, ',', -1))) LIKE ?", ['%' . strtolower($keyword) . '%']);
+                    });
                 }
             })
             ->orderBy('updated_at', 'desc')

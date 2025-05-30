@@ -28,7 +28,7 @@
             <div class="location-info">
               <h2>{{ $destination->name }}</h2>
               <div class="mb-3" style="display: flex; gap: 10px;">
-                <a href="{{ route('post_articles', ['type' => 'destination', 'destination_id' => $destination->id]) }}" class="btn btn-primary">
+                <a href="{{ route('post_articles', ['id' => $destination->id]) }}?type=destination" class="btn btn-primary">
                     <i class="fa fa-pen"></i>Thêm bài viết
                 </a>
                 <a href="{{ route('page.community', ['destination_id' => $destination->id]) }}" class="btn btn-outline-secondary">

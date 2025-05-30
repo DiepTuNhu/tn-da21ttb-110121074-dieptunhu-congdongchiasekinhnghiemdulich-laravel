@@ -3304,16 +3304,7 @@ textarea {
     font-size: 1.1rem;
     margin: 0;
 }
-.pagination-nav {
-    display: inline-block;
-    margin-top: 16px;
-}
-.pagination {
-    display: flex;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
+
 .page-item {
     margin: 0 4px;
 }
@@ -3377,3 +3368,4 @@ textarea {
 @media (max-width: 600px) {
     #utilityCards .destination-card { width: 100%; }
 }
+

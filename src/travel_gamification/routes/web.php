@@ -23,7 +23,7 @@ use App\Http\Controllers\Admin\DestinationImagesController;
 use App\Http\Controllers\Page\PostController;
 use App\Http\Controllers\Page\ProfileController;
 use App\Http\Controllers\Page\CreateDestinationController;
-
+use App\Http\Controllers\Page\CreateUtilityController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -78,6 +78,9 @@ Route::post('/user/destination/store', [CreateDestinationController::class, 'sto
 Route::get('/user/destination/create', function() {
     return view('user.layout.create_destination');
 })->name('user.destination.create');
+
+Route::get('/utility/create', [CreateUtilityController::class, 'create'])->name('user.utility.create');
+Route::post('/utility/store', [CreateUtilityController::class, 'store'])->name('user.utility.store');
 //LOGIN
 Route::get('/login',[LoginController::class,'index'])->name('login');
 Route::post('/login/store',[LoginController::class,'store'])->name('login.store');

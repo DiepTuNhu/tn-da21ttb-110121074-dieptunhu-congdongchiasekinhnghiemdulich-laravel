@@ -19,7 +19,16 @@
 
       <form action="{{ route('user.search') }}" method="GET">
           <div class="search-form">
-              <div class="form-group">
+              <div class="form-group" style="display: flex; align-items: center;">
+                  {{-- Dropdown loại hình du lịch --}}
+                  <select name="travel_type_id" id="travelTypeSelect" class="form-control" style="width:180px; margin-right:10px; height: 60px;">
+                      <option value="">Tất cả loại hình</option>
+                      @foreach($travelTypes as $type)
+                          <option value="{{ $type->id }}" {{ request('travel_type_id') == $type->id ? 'selected' : '' }}>
+                              {{ $type->name }}
+                          </option>
+                      @endforeach
+                  </select>
                   <i class="fas fa-map-marker-alt"></i>
                   <input type="text" name="keyword" placeholder="Bạn muốn khám phá địa điểm nào?" value="{{ request('keyword') }}" style="width: 500px; height: 60px" />
               </div>
@@ -85,6 +94,14 @@
 </section>
 
 <section class="latest-posts-section">
+    <div class="section-heading">Thông tin địa điểm du lịch</div>
+    <div id="admin-posts-wrapper">
+        @include('user.layout.partials.admin_posts_list', ['posts' => $posts])
+    </div>
+    
+    <div class="pagination-wrapper" id="destinations-pagination">
+      {!! $destinations->appends(request()->except('destinations_page'))->links() !!}
+    </div>
   <div class="section-heading">Bài chia sẻ từ cộng đồng</div>
 
     <div id="user-posts-wrapper">
@@ -95,14 +112,6 @@
       {!! $posts->appends(request()->except('posts_page'))->links() !!}
     </div>
 
-  <div class="section-heading">Thông tin địa điểm du lịch</div>
-    <div id="admin-posts-wrapper">
-        @include('user.layout.partials.admin_posts_list', ['posts' => $posts])
-    </div>
-    
-    <div class="pagination-wrapper" id="destinations-pagination">
-      {!! $destinations->appends(request()->except('destinations_page'))->links() !!}
-    </div>
 </div>
 {{-- <input type="hidden" id="selected-travel-type" value=""> --}}
     <!-- ... -->
@@ -163,7 +172,7 @@ $(document).on('click', '.travel-type-filter', function() {
 
             // ✅ Thêm đoạn này để cuộn xuống
             $('html, body').animate({
-                scrollTop: $('#user-posts-wrapper').offset().top
+                scrollTop: $('#admin-posts-wrapper').offset().top
             }, 600); // 600ms để cuộn mượt
         },
         error: function() {
@@ -176,7 +185,7 @@ $(document).on('click', '.travel-type-filter', function() {
 @if(request('keyword'))
 <script>
     window.onload = function() {
-        var el = document.getElementById('user-posts-wrapper');
+        var el = document.getElementById('admin-posts-wrapper');
         if(el) el.scrollIntoView({ behavior: 'smooth' });
     }
 </script>

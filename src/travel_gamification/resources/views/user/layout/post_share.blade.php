@@ -63,17 +63,17 @@
                 <select id="utilitySelect" class="form-control"></select>
             </div>
         </div>
-        <a href="" class="text-primary" id="createUtilityLink" style="display:none;">+ Tiện ích bạn muốn chia sẻ chưa có? Tạo mới</a>
+        <a href="{{ route('user.utility.create') }}" class="text-primary" id="createUtilityLink" style="display:none;">+ Tiện ích bạn muốn chia sẻ chưa có? Tạo mới</a>
         <br>
         <button id="goToPostFacility" class="btn btn-primary mt-3" disabled>Tiếp tục</button>
     </div>
 </div>
 </div>
-<div id="destinationCards" class="row mt-4"></div>
-<div id="facilityDestinationCards" class="row mt-4"></div>
+<div id="destinationCards" class="row mt-4" style="text-align: center"></div>
+<div id="facilityDestinationCards" class="row mt-4" style="text-align: center"></div>
 <div id="destinationPagination" class="mt-3"></div>
 <div id="facilityDestinationPagination" class="mt-3"></div>
-<div id="utilityCards" class="row mt-4"></div>
+<div id="utilityCards" class="row mt-4"  style="text-align: center"></div>
 <!-- ĐÚNG THỨ TỰ: jQuery trước, select2 sau -->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -104,6 +104,7 @@ $(document).ready(function() {
             $('#facilityDestinationCards').hide().html('');
             $('#destinationPagination').show();
             $('#facilityDestinationPagination').hide().html('');
+            $('#utilityCards').hide().html(''); // <-- Thêm dòng này để ẩn thẻ tiện ích
             renderDestinationCards();
             loadAllDestinationsForDropdown($('#provinceSelect').val());
         } else if(type === 'facility') {
@@ -121,6 +122,7 @@ $(document).ready(function() {
             $('#destinationPagination').hide().html('');
             $('#facilityDestinationPagination').hide().html('');
             $('#utilityTypeSection').hide();
+            $('#utilityCards').hide().html('');
         }
     });
 
@@ -268,6 +270,12 @@ $('#destinationSelect2').on('select2:open', function() {
     });
 });
 
+$('#destinationSelect, #destinationSelect2, #utilitySelect').on('select2:open', function() {
+    setTimeout(function() {
+        document.querySelector('.select2-container--open .select2-search__field').focus();
+    }, 0);
+});
+
     // Hàm lấy toàn bộ địa điểm cho dropdown (không phân trang)
     function loadAllDestinationsForDropdown(province = '') {
         $.ajax({
@@ -311,7 +319,9 @@ $('#destinationSelect2').on('change', function() {
     let destinationId = $(this).val();
     if (destinationId) {
         $('#utilityOptionsRow').show();
-        $('#createUtilityLink').show(); // Hiện link khi chọn địa điểm
+        $('#createUtilityLink')
+            .show()
+            .attr('href', '{{ route('user.utility.create') }}' + '?destination_id=' + destinationId); // <-- Thêm dòng này
         $('#facilityDestinationCards').hide().html('');
         renderUtilityCards(destinationId, $('#utilityTypeSelect').val());
         loadAllUtilitiesForDropdown(destinationId, $('#utilityTypeSelect').val());

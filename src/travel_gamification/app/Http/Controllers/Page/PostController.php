@@ -549,7 +549,7 @@ class PostController extends Controller
     }
 public function postArticles(Request $request, $id)
 {
-    $postType = $request->get('postType', 'location');
+    $postType = $request->get('postType', 'location'); // <-- Đúng tên biến trên URL
     $utilities = [];
     $selectedUtility = null;
 

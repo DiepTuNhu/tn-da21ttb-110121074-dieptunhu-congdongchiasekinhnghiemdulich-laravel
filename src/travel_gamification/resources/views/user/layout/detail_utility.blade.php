@@ -12,9 +12,9 @@
         
         <h2>{{ $utility->name }}</h2>
           <div class="utility-action-group">
-          <a href="{{ route('post_articles', ['type' => 'utility', 'utility_id' => $utility->id]) }}" class="btn-utility btn-utility-primary">
-              <i class="fa fa-pen"></i> Thêm bài viết
-          </a>
+<a href="{{ route('post_articles', ['id' => $utility->id, 'postType' => 'utility']) }}" class="btn-utility btn-utility-primary">
+    <i class="fa fa-pen"></i> Thêm bài viết
+</a>
           <a href="{{ route('page.community', [
               'destination_id' => $utility->destination_id,
               'utility_type_id' => $utility->utility_type_id
