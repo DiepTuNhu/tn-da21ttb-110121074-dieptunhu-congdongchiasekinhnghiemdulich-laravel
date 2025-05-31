@@ -219,15 +219,27 @@
         </div>
 
         <!-- Phần đánh giá -->
-        <div class="post-rating">
+        {{-- <div class="post-rating">
             <span class="rating-stars">
+                @php
+                    $fullStars = floor($post->average_rating);
+                    $halfStar = ($post->average_rating - $fullStars) >= 0.5;
+                @endphp
                 @for ($i = 1; $i <= 5; $i++)
-                    <i class="fas fa-star{{ $i <= round($post->average_rating) ? '' : '-o' }}"></i>
+                    @if ($i <= $fullStars)
+                        <i class="fas fa-star" style="color:#FFA500"></i>
+                    @elseif ($i == $fullStars + 1 && $halfStar)
+                        <i class="fas fa-star-half-alt" style="color:#FFA500"></i>
+                    @else
+                        <i class="far fa-star" style="color:#FFA500"></i>
+                    @endif
                 @endfor
             </span>
-            <span class="rating-text"> đánh giá</span>
-            {{-- <span class="rating-text">{{ number_format($post->average_rating, 1) }}/5 từ {{ $post->ratings->count() }} đánh giá</span> --}}
-        </div>
+            <span class="rating-text">
+                {{ number_format($post->average_rating, 1) }}/5
+                ({{ $post->ratings->count() }} đánh giá)
+            </span>
+        </div> --}}
 
         <!-- Huy hiệu -->
         <div class="post-badges">
@@ -240,13 +252,37 @@
         </div>
         <div class="post-rating-input">
     <span class="rating-label">Đánh giá của bạn:</span>
-    <div class="rating-stars-input">
-        <i class="far fa-star"></i>
-        <i class="far fa-star"></i>
-        <i class="far fa-star"></i>
-        <i class="far fa-star"></i>
-        <i class="far fa-star"></i>
+    <div class="rating-stars-input" id="rating-stars-input">
+        @for ($i = 1; $i <= 5; $i++)
+            <i class="fa-star {{ $post->ratings->where('user_id', Auth::id())->first()?->score >= $i ? 'fas' : 'far' }}" data-score="{{ $i }}"></i>
+        @endfor
     </div>
+      <!-- Hiển thị điểm trung bình -->
+<div class="avg-rating-box">
+    <span class="avg-star"><i class="fas fa-star"></i></span>
+    <span class="avg-score">{{ number_format($post->average_rating, 1) }}</span>
+    <span class="avg-outof">/5 ({{ $post->ratings->count() }} đánh giá)</span>
+</div>
+<div class="avg-stars-row">
+                    @php
+                    $fullStars = floor($post->average_rating);
+                    $halfStar = ($post->average_rating - $fullStars) >= 0.5;
+                @endphp
+ @for ($i = 1; $i <= 5; $i++)
+                    @if ($i <= $fullStars)
+                        <i class="fas fa-star" style="color: #ffd700"></i>
+                    @elseif ($i == $fullStars + 1 && $halfStar)
+                        <i class="fas fa-star-half-alt" style="color:#ffd700"></i>
+                    @else
+                        <i class="far fa-star" style="color:#ffd700"></i>
+                    @endif
+                @endfor
+</div>
+    <span id="rating-message" style="margin-left:8px;color:green;"></span>
+    
+    @guest
+        <div style="color: #f00; margin-top: 8px;">Bạn cần <a href="{{ route('login') }}">đăng nhập</a> để đánh giá!</div>
+    @endguest
 </div>
     </div>
 </div>
@@ -326,6 +362,7 @@
   </div>
   </div>
 
+
   <script>
 document.getElementById('like-btn').onclick = function() {
     fetch('{{ route('posts.like', $post->id) }}', {
@@ -333,7 +370,7 @@ document.getElementById('like-btn').onclick = function() {
         headers: {
             'X-CSRF-TOKEN': '{{ csrf_token() }}',
             'Accept': 'application/json'
-        }
+        }   
     })
     .then(res => res.json())
     .then(data => {
@@ -568,5 +605,76 @@ document.addEventListener('click', function() {
 });
 
 bindCommentEvents(); // Gọi khi trang load và sau khi thêm bình luận mới
+
+// Xử lý đánh giá
+const ratingStarsInput = document.getElementById('rating-stars-input');
+const ratingMessage = document.getElementById('rating-message');
+let userRating = {{ $post->ratings->where('user_id', Auth::id())->first()?->score ?? 0 }};
+
+
+@auth
+document.querySelectorAll('#rating-stars-input .fa-star').forEach(star => {
+    star.addEventListener('mouseenter', function() {
+        const score = parseInt(this.getAttribute('data-score'));
+        document.querySelectorAll('#rating-stars-input .fa-star').forEach((s, idx) => {
+            s.classList.toggle('fas', idx < score);
+            s.classList.toggle('far', idx >= score);
+        });
+    });
+    star.addEventListener('mouseleave', function() {
+        const rated = document.querySelector('#rating-stars-input').getAttribute('data-rated');
+        if (rated) {
+            document.querySelectorAll('#rating-stars-input .fa-star').forEach((s, idx) => {
+                s.classList.toggle('fas', idx < rated);
+                s.classList.toggle('far', idx >= rated);
+            });
+        } else {
+            document.querySelectorAll('#rating-stars-input .fa-star').forEach(s => {
+                s.classList.remove('fas');
+                s.classList.add('far');
+            });
+        }
+    });
+    star.addEventListener('click', function() {
+        const score = parseInt(this.getAttribute('data-score'));
+        fetch('{{ route('posts.rating', $post->id) }}', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ score })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.success) {
+                document.getElementById('rating-message').innerText = 'Đã đánh giá!';
+                document.querySelector('#rating-stars-input').setAttribute('data-rated', score);
+                document.querySelectorAll('#rating-stars-input .fa-star').forEach((s, idx) => {
+                    s.classList.toggle('fas', idx < score);
+                    s.classList.toggle('far', idx >= score);
+                });
+                document.querySelector('.post-rating .rating-stars').innerHTML =
+                    [...Array(5)].map((_,i) =>
+                        `<i class="fas fa-star${i < Math.round(data.average_rating) ? '' : '-o'}"></i>`
+                    ).join('');
+                document.querySelector('.post-rating .rating-text').innerText =
+                    `${data.average_rating}/5 (cập nhật)`;
+            } else if(data.error) {
+                alert(data.error);
+            }
+        });
+    });
+});
+@endauth
+
+@if(!Auth::check())
+document.querySelectorAll('#rating-stars-input .fa-star').forEach(star => {
+    star.addEventListener('click', function() {
+        alert('Bạn cần đăng nhập để đánh giá!');
+    });
+});
+@endif
   </script>
 @endsection

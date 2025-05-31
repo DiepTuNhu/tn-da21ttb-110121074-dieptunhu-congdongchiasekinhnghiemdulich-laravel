@@ -43,4 +43,9 @@ class Post extends Model
         }
         return $this->likes()->where('user_id', auth()->id())->exists();
     }
+
+    public function ratings()
+    {
+        return $this->hasMany(\App\Models\Rating::class);
+    }
 }

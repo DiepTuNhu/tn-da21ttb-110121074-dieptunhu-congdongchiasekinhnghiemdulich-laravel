@@ -3262,7 +3262,7 @@ textarea {
     transition: box-shadow 0.2s;
 }
 #destinationCards .card:hover {
-    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
 }
 #destinationCards {
     display: flex;
@@ -3289,7 +3289,7 @@ textarea {
     height: 100%;
 }
 .card:hover {
-    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
 }
 .card-img-top {
     width: 100%;
@@ -3326,13 +3326,19 @@ textarea {
     border-color: #007bff;
 }
 @media (max-width: 1200px) {
-    .destination-card { width: calc(33.333% - 14px); }
+    .destination-card {
+        width: calc(33.333% - 14px);
+    }
 }
 @media (max-width: 900px) {
-    .destination-card { width: calc(50% - 10px); }
+    .destination-card {
+        width: calc(50% - 10px);
+    }
 }
 @media (max-width: 600px) {
-    .destination-card { width: 100%; }
+    .destination-card {
+        width: 100%;
+    }
 }
 #facilityDestinationCards {
     display: flex;
@@ -3343,13 +3349,19 @@ textarea {
     padding-right: 100px;
 }
 @media (max-width: 1200px) {
-    #facilityDestinationCards .destination-card { width: calc(33.333% - 14px); }
+    #facilityDestinationCards .destination-card {
+        width: calc(33.333% - 14px);
+    }
 }
 @media (max-width: 900px) {
-    #facilityDestinationCards .destination-card { width: calc(50% - 10px); }
+    #facilityDestinationCards .destination-card {
+        width: calc(50% - 10px);
+    }
 }
 @media (max-width: 600px) {
-    #facilityDestinationCards .destination-card { width: 100%; }
+    #facilityDestinationCards .destination-card {
+        width: 100%;
+    }
 }
 #utilityCards {
     display: flex;
@@ -3360,12 +3372,54 @@ textarea {
     padding-right: 100px;
 }
 @media (max-width: 1200px) {
-    #utilityCards .destination-card { width: calc(33.333% - 14px); }
+    #utilityCards .destination-card {
+        width: calc(33.333% - 14px);
+    }
 }
 @media (max-width: 900px) {
-    #utilityCards .destination-card { width: calc(50% - 10px); }
+    #utilityCards .destination-card {
+        width: calc(50% - 10px);
+    }
 }
 @media (max-width: 600px) {
-    #utilityCards .destination-card { width: 100%; }
+    #utilityCards .destination-card {
+        width: 100%;
+    }
 }
 
+.rating-stars .fa-star,
+.rating-stars-input .fa-star {
+    color: #ffd700 !important; /* Màu vàng */
+    font-size: 22px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.rating-stars-input .fa-star.far {
+    color: #ccc !important; /* Màu xám cho sao rỗng */
+}
+.rating-stars-input .fa-star.fas {
+    color: #ffd700 !important; /* Màu vàng cho sao đầy */
+}
+
+.avg-rating-box {
+    display: flex;
+    align-items: center;
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+.avg-star i {
+    color: #ffd700;
+    font-size: 32px;
+    margin-right: 6px;
+}
+.avg-score {
+    font-weight: bold;
+    color: #222;
+    font-size: 32px;
+    margin-right: 2px;
+}
+.avg-outof {
+    font-size: 20px;
+    color: #888;
+    margin-left: 2px;
+}

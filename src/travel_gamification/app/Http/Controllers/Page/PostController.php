@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Notifications\NewPostSubmitted;
 use App\Models\User;
+use App\Models\Rating;
 
 class PostController extends Controller
 {
@@ -568,6 +569,35 @@ public function postArticles(Request $request, $id)
         'selectedUtility' => $selectedUtility,
         'destinations' => $destinations,
         'selectedDestination' => $selectedDestination,
+    ]);
+}
+public function rate(Request $request, $id)
+{
+    if (!auth()->check()) {
+        return response()->json(['error' => 'Bạn cần đăng nhập!'], 401);
+    }
+
+    $request->validate([
+        'score' => 'required|integer|min:1|max:5',
+    ]);
+
+    $user = auth()->user();
+    $post = Post::findOrFail($id);
+
+    // Cập nhật hoặc tạo mới đánh giá
+    $rating = Rating::updateOrCreate(
+        ['user_id' => $user->id, 'post_id' => $post->id],
+        ['score' => $request->score]
+    );
+
+    // Tính lại điểm trung bình
+
+    $avg = Rating::where('post_id', $post->id)->avg('score');
+    $post->average_rating = $avg ?? 0; // Nếu $avg là null thì gán 0
+    $post->save();
+    return response()->json([
+        'success' => true,
+        'average_rating' => round($avg, 1),
     ]);
 }
 }
