@@ -24,6 +24,7 @@ use App\Http\Controllers\Page\PostController;
 use App\Http\Controllers\Page\ProfileController;
 use App\Http\Controllers\Page\CreateDestinationController;
 use App\Http\Controllers\Page\CreateUtilityController;
+use App\Http\Controllers\Page\UserFollowController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -98,6 +99,10 @@ Route::post('/notifications/mark-as-read', function () {
     auth()->user()->unreadNotifications->markAsRead();
     return back();
 })->name('notifications.markAsRead');
+
+Route::post('/user/{user}/follow', [UserFollowController::class, 'follow'])->name('user.follow');
+Route::post('/user/{user}/unfollow', [UserFollowController::class, 'unfollow'])->name('user.unfollow');
+
 
 //REGISTER
 Route::get('/register',[RegisterController::class,'index'])->name('register');

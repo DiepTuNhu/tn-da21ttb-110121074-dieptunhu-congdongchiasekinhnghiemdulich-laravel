@@ -162,7 +162,20 @@ class PostController extends Controller
             ->limit(5)
             ->get();
 
-        return view('user.layout.detail_post', compact('post', 'comments', 'relatedPosts', 'relatedUtilityPosts'));
+        $ratingCounts = [];
+        $totalRatings = $post->ratings->count();
+        for ($i = 1; $i <= 5; $i++) {
+            $ratingCounts[$i] = $post->ratings->where('score', $i)->count();
+        }
+
+        return view('user.layout.detail_post', compact(
+            'post',
+            'comments',
+            'relatedPosts',
+            'relatedUtilityPosts',
+            'ratingCounts',
+            'totalRatings'
+        ));
     }
 
     public function like($id)
@@ -548,56 +561,56 @@ class PostController extends Controller
         $str = preg_replace('/[^a-z0-9 ]/', '', $str); // chỉ giữ chữ, số, khoảng trắng
         return $str;
     }
-public function postArticles(Request $request, $id)
-{
-    $postType = $request->get('postType', 'location'); // <-- Đúng tên biến trên URL
-    $utilities = [];
-    $selectedUtility = null;
+    public function postArticles(Request $request, $id)
+    {
+        $postType = $request->get('postType', 'location'); // <-- Đúng tên biến trên URL
+        $utilities = [];
+        $selectedUtility = null;
 
-    if ($postType === 'utility') {
-        $utilities = \App\Models\Utility::where('status', 0)->get();
-        $selectedUtility = $id;
+        if ($postType === 'utility') {
+            $utilities = \App\Models\Utility::where('status', 0)->get();
+            $selectedUtility = $id;
+        }
+
+        // Các biến khác như $destinations, $selectedDestination...
+        $destinations = \App\Models\Destination::where('status', 0)->get();
+        $selectedDestination = $postType === 'location' ? $id : null;
+
+        return view('user.layout.post_articles', [
+            'postType' => $postType,
+            'utilities' => $utilities,
+            'selectedUtility' => $selectedUtility,
+            'destinations' => $destinations,
+            'selectedDestination' => $selectedDestination,
+        ]);
     }
+    public function rate(Request $request, $id)
+    {
+        if (!auth()->check()) {
+            return response()->json(['error' => 'Bạn cần đăng nhập!'], 401);
+        }
 
-    // Các biến khác như $destinations, $selectedDestination...
-    $destinations = \App\Models\Destination::where('status', 0)->get();
-    $selectedDestination = $postType === 'location' ? $id : null;
+        $request->validate([
+            'score' => 'required|integer|min:1|max:5',
+        ]);
 
-    return view('user.layout.post_articles', [
-        'postType' => $postType,
-        'utilities' => $utilities,
-        'selectedUtility' => $selectedUtility,
-        'destinations' => $destinations,
-        'selectedDestination' => $selectedDestination,
-    ]);
-}
-public function rate(Request $request, $id)
-{
-    if (!auth()->check()) {
-        return response()->json(['error' => 'Bạn cần đăng nhập!'], 401);
+        $user = auth()->user();
+        $post = Post::findOrFail($id);
+
+        // Cập nhật hoặc tạo mới đánh giá
+        $rating = Rating::updateOrCreate(
+            ['user_id' => $user->id, 'post_id' => $post->id],
+            ['score' => $request->score]
+        );
+
+        // Tính lại điểm trung bình
+
+        $avg = Rating::where('post_id', $post->id)->avg('score');
+        $post->average_rating = $avg ?? 0; // Nếu $avg là null thì gán 0
+        $post->save();
+        return response()->json([
+            'success' => true,
+            'average_rating' => round($avg, 1),
+        ]);
     }
-
-    $request->validate([
-        'score' => 'required|integer|min:1|max:5',
-    ]);
-
-    $user = auth()->user();
-    $post = Post::findOrFail($id);
-
-    // Cập nhật hoặc tạo mới đánh giá
-    $rating = Rating::updateOrCreate(
-        ['user_id' => $user->id, 'post_id' => $post->id],
-        ['score' => $request->score]
-    );
-
-    // Tính lại điểm trung bình
-
-    $avg = Rating::where('post_id', $post->id)->avg('score');
-    $post->average_rating = $avg ?? 0; // Nếu $avg là null thì gán 0
-    $post->save();
-    return response()->json([
-        'success' => true,
-        'average_rating' => round($avg, 1),
-    ]);
-}
 }

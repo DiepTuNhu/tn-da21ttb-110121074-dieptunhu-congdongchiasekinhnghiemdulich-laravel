@@ -70,4 +70,14 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Mission::class, 'user_missions'); // hoặc hasMany nếu phù hợp với cấu trúc DB của bạn
     }
+
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'follows', 'following_id', 'follower_id');
+    }
+
+    public function followings()
+    {
+        return $this->belongsToMany(User::class, 'follows', 'follower_id', 'following_id');
+    }
 }

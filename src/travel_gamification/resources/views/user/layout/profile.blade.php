@@ -12,7 +12,7 @@
                             {{ asset('storage/avatars/' . $user->avatar) }}
                         @endif
                     @else
-                        {{ asset('default-avatar.png') }}
+                        {{ asset('storage/avatars/default.jpg') }}
                     @endif"
                 alt="avatar" />
         <div>
@@ -29,7 +29,9 @@
             <div class="profile-stats">
                 <span><i class="fas fa-file-alt"></i> {{ $user->posts_count ?? 0 }} bài viết</span>
                 <span><i class="fas fa-heart"></i> {{ $user->likes_count ?? 0 }} lượt thích</span>
-                <span><i class="fas fa-check-circle"></i> {{ $user->missions_count ?? 0 }} nhiệm vụ</span>
+                {{-- <span><i class="fas fa-check-circle"></i> {{ $user->missions_count ?? 0 }} nhiệm vụ</span> --}}
+                <span><i class="fas fa-user-friends"></i> {{ $followers->count() }} người theo dõi</span>
+                <span><i class="fas fa-user-plus"></i> {{ $followings->count() }} đang theo dõi</span>
             </div>
         </div>
       </div>
@@ -157,47 +159,66 @@
       </div>
 
       <!-- Nội dung: Người theo dõi -->
-      <div class="profile-tab-content" id="followers">
-        <div class="follower-list">
-          <div class="follower-item">
-            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="" />
-            <div class="follower-info">
-              <h4>Trần Thị B</h4>
-              <p>Đã theo dõi bạn từ 15/03/2024</p>
+
+{{-- filepath: resources/views/user/layout/profile.blade.php --}}
+<div class="profile-tab-content" id="followers">
+    <div class="follower-list">
+        @forelse($followers as $follower)
+            <div class="follower-item">
+                <a href="{{ route('detail_user_follow', $follower->id) }}" style="display: flex; align-items: center; text-decoration: none; color: inherit;">
+                    <img 
+                        src="@if($follower->avatar)
+                                @if(Str::startsWith($follower->avatar, ['http://', 'https://']))
+                                    {{ $follower->avatar }}
+                                @else
+                                    {{ asset('storage/avatars/' . $follower->avatar) }}
+                                @endif
+                            @else
+                                {{ asset('storage/avatars/default.jpg') }}
+                            @endif"
+                        alt="avatar" />
+                    <div class="follower-info">
+                        <h4>{{ $follower->username }}</h4>
+                        <p>Đã theo dõi bạn từ {{ \Carbon\Carbon::parse($follower->pivot->created_at)->format('d/m/Y') }}</p>
+                    </div>
+                </a>
+
             </div>
-          </div>
-          <div class="follower-item">
-            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="" />
-            <div class="follower-info">
-              <h4>Lê Văn C</h4>
-              <p>Đã theo dõi bạn từ 28/03/2024</p>
-            </div>
-          </div>
-        </div>
-      </div>
+        @empty
+            <p>Chưa có ai theo dõi bạn.</p>
+        @endforelse
+    </div>
+</div>
       
 
 <!-- Nội dung: Đang theo dõi -->
 <div class="profile-tab-content" id="following">
   <div class="follower-list">
-    <div class="follower-item">
-      <img src="https://randomuser.me/api/portraits/women/55.jpg" alt="" />
-      <div class="follower-info">
-        <h4>Nguyễn Thị D</h4>
-        <p>Bạn theo dõi từ 05/04/2024</p>
+    {{-- Followings --}}
+    @forelse($followings as $following)
+      <div class="follower-item">
+        <a href="{{ route('detail_user_follow', $following->id) }}" style="display: flex; align-items: center; text-decoration: none; color: inherit;">
+            <img 
+                src="@if($following->avatar)
+                        @if(Str::startsWith($following->avatar, ['http://', 'https://']))
+                            {{ $following->avatar }}
+                        @else
+                            {{ asset('storage/avatars/' . $following->avatar) }}
+                        @endif
+                    @else
+                        {{ asset('storage/avatars/default.jpg') }}
+                    @endif"
+                alt="avatar" />
+            <div class="follower-info">
+                <h4>{{ $following->username }}</h4>
+                <p>Bạn theo dõi từ {{ \Carbon\Carbon::parse($following->pivot->created_at)->format('d/m/Y') }}</p>
+            </div>
+        </a>
+        <button class="unfollow-btn" data-user="{{ $following->id }}">Hủy theo dõi</button>
       </div>
-      <button class="unfollow-btn">Hủy theo dõi</button>
-    </div>
-    
-    <div class="follower-item">
-      <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="" />
-      <div class="follower-info">
-        <h4>Phạm Văn E</h4>
-        <p>Bạn theo dõi từ 20/04/2024</p>
-      </div>
-      <button class="unfollow-btn">Hủy theo dõi</button>
-    </div>
-    
+    @empty
+      <p>Bạn chưa theo dõi ai.</p>
+    @endforelse
   </div>
 </div>
 
@@ -215,5 +236,27 @@
           document.getElementById(tab.dataset.tab).classList.add("active");
         });
       });
+      
     </script>
+
+    <script>
+document.querySelectorAll('.unfollow-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const userId = this.dataset.user;
+        fetch(`/user/${userId}/unfollow`, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.status === 'unfollowed') {
+                this.closest('.follower-item').remove();
+            }
+        });
+    });
+});
+</script>
     @endsection

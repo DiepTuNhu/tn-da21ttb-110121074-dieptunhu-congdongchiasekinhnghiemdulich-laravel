@@ -31,7 +31,11 @@ class ProfileController extends Controller
         ->latest()
         ->get();
 
-        return view('user.layout.profile', compact('user', 'posts', 'likedPosts'));
+        // Lấy danh sách followers và followings
+        $followers = $user->followers()->withPivot('created_at')->get();
+        $followings = $user->followings()->withPivot('created_at')->get();
+
+        return view('user.layout.profile', compact('user', 'posts', 'likedPosts', 'followers', 'followings'));
     }
 
     public function detail($id)

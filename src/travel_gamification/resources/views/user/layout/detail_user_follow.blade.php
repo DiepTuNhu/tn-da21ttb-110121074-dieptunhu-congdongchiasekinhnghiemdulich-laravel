@@ -12,7 +12,7 @@
                             {{ asset('storage/avatars/' . $user->avatar) }}
                         @endif
                     @else
-                        {{ asset('default-avatar.png') }}
+                        {{ asset('storage/avatars/default.jpg') }}
                     @endif"
                 alt="avatar" />
                 <div>
@@ -35,7 +35,12 @@
                 </div>
             </div>
         </div>
-        <button class="follow-btn following">Đang theo dõi</button>
+        <button 
+            class="follow-btn {{ auth()->user()->followings->contains($user->id) ? 'following' : '' }}" 
+            id="followBtn"
+            data-user="{{ $user->id }}">
+            {{ auth()->user()->followings->contains($user->id) ? 'Đang theo dõi' : 'Theo dõi' }}
+        </button>
     </div>
 
     <!-- Tabs -->
@@ -97,16 +102,7 @@
       </div>
 </div>
 
-<script>
-  // Toggle theo dõi
-  const followBtn = document.querySelector(".follow-btn");
-  followBtn.addEventListener("click", () => {
-    followBtn.classList.toggle("following");
-    followBtn.textContent = followBtn.classList.contains("following")
-      ? "Đang theo dõi"
-      : "Theo dõi";
-  });
-</script>
+
 <script>
   const tabs = document.querySelectorAll(".profile-tab");
   const contents = document.querySelectorAll(".profile-tab-content");
@@ -119,5 +115,24 @@
       document.getElementById(tab.dataset.tab).classList.add("active");
     });
   });
+</script>
+<script>
+document.getElementById('followBtn').addEventListener('click', function() {
+    const btn = this;
+    const userId = btn.dataset.user;
+    const isFollowing = btn.classList.contains('following');
+    fetch(`/user/${userId}/${isFollowing ? 'unfollow' : 'follow'}`, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Accept': 'application/json'
+        }
+    })
+    .then(res => res.json())
+    .then(data => {
+        btn.classList.toggle('following');
+        btn.textContent = btn.classList.contains('following') ? 'Đang theo dõi' : 'Theo dõi';
+    });
+});
 </script>
 @endsection

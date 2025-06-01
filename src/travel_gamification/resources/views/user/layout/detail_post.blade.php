@@ -202,73 +202,73 @@
   <!-- Sidebar -->
   <div class="sidebar">
 
-<div class="author-box">
-    <div class="post-interact">
-        <!-- Nút hành động -->
-        <div class="post-actions">
-            <button class="btn action-btn like" id="like-btn" data-post="{{ $post->id }}">
-                <i id="like-icon" class="{{ $post->likedByCurrentUser() ? 'fas' : 'far' }} fa-heart"></i> Thích
-                <span id="like-count">{{ $post->likes->count() }}</span>
-            </button>
-            <button class="btn action-btn save">
-                <i class="fas fa-bookmark"></i> Chia sẻ
-            </button>
-            <button class="btn action-btn report">
-                <i class="fas fa-flag"></i> Báo cáo
-            </button>
-        </div>
+    <div class="author-box">
+        <div class="post-interact">
+            <!-- Nút hành động -->
+            <div class="post-actions">
+                <button class="btn action-btn like" id="like-btn" data-post="{{ $post->id }}">
+                    <i id="like-icon" class="{{ $post->likedByCurrentUser() ? 'fas' : 'far' }} fa-heart"></i> Thích
+                    <span id="like-count">{{ $post->likes->count() }}</span>
+                </button>
+                <button class="btn action-btn save">
+                    <i class="fas fa-bookmark"></i> Chia sẻ
+                </button>
+                <button class="btn action-btn report">
+                    <i class="fas fa-flag"></i> Báo cáo
+                </button>
+            </div>
 
-        <!-- Phần đánh giá -->
-        {{-- <div class="post-rating">
-            <span class="rating-stars">
+            <!-- Phần đánh giá -->
+            {{-- <div class="post-rating">
+                <span class="rating-stars">
+                    @php
+                        $fullStars = floor($post->average_rating);
+                        $halfStar = ($post->average_rating - $fullStars) >= 0.5;
+                    @endphp
+                    @for ($i = 1; $i <= 5; $i++)
+                        @if ($i <= $fullStars)
+                            <i class="fas fa-star" style="color:#FFA500"></i>
+                        @elseif ($i == $fullStars + 1 && $halfStar)
+                            <i class="fas fa-star-half-alt" style="color:#FFA500"></i>
+                        @else
+                            <i class="far fa-star" style="color:#FFA500"></i>
+                        @endif
+                    @endfor
+                </span>
+                <span class="rating-text">
+                    {{ number_format($post->average_rating, 1) }}/5
+                    ({{ $post->ratings->count() }} đánh giá)
+                </span>
+            </div> --}}
+
+            <!-- Huy hiệu -->
+            <div class="post-badges">
+                {{-- <span class="badge-item">
+                    <i class="fas fa-star"></i> 120 XP
+                </span> --}}
+                <span class="badge-item">
+                    <i class="fas fa-medal"></i> Top 10 bài viết tuần
+                </span>
+            </div>
+            <div class="post-rating-input">
+                <span class="rating-label">Đánh giá của bạn:</span>
+                <div class="rating-stars-input" id="rating-stars-input">
+                    @for ($i = 1; $i <= 5; $i++)
+                        <i class="fa-star {{ $post->ratings->where('user_id', Auth::id())->first()?->score >= $i ? 'fas' : 'far' }}" data-score="{{ $i }}"></i>
+                    @endfor
+                </div>
+                    <!-- Hiển thị điểm trung bình -->
+                <div class="avg-rating-box">
+                    <span class="avg-star"><i class="fas fa-star"></i></span>
+                    <span class="avg-score">{{ number_format($post->average_rating, 1) }}</span>
+                    <span class="avg-outof">/5 ({{ $post->ratings->count() }} đánh giá)</span>
+                </div>
+                <div class="avg-stars-row">
                 @php
                     $fullStars = floor($post->average_rating);
                     $halfStar = ($post->average_rating - $fullStars) >= 0.5;
                 @endphp
                 @for ($i = 1; $i <= 5; $i++)
-                    @if ($i <= $fullStars)
-                        <i class="fas fa-star" style="color:#FFA500"></i>
-                    @elseif ($i == $fullStars + 1 && $halfStar)
-                        <i class="fas fa-star-half-alt" style="color:#FFA500"></i>
-                    @else
-                        <i class="far fa-star" style="color:#FFA500"></i>
-                    @endif
-                @endfor
-            </span>
-            <span class="rating-text">
-                {{ number_format($post->average_rating, 1) }}/5
-                ({{ $post->ratings->count() }} đánh giá)
-            </span>
-        </div> --}}
-
-        <!-- Huy hiệu -->
-        <div class="post-badges">
-            {{-- <span class="badge-item">
-                <i class="fas fa-star"></i> 120 XP
-            </span> --}}
-            <span class="badge-item">
-                <i class="fas fa-medal"></i> Top 10 bài viết tuần
-            </span>
-        </div>
-        <div class="post-rating-input">
-    <span class="rating-label">Đánh giá của bạn:</span>
-    <div class="rating-stars-input" id="rating-stars-input">
-        @for ($i = 1; $i <= 5; $i++)
-            <i class="fa-star {{ $post->ratings->where('user_id', Auth::id())->first()?->score >= $i ? 'fas' : 'far' }}" data-score="{{ $i }}"></i>
-        @endfor
-    </div>
-      <!-- Hiển thị điểm trung bình -->
-<div class="avg-rating-box">
-    <span class="avg-star"><i class="fas fa-star"></i></span>
-    <span class="avg-score">{{ number_format($post->average_rating, 1) }}</span>
-    <span class="avg-outof">/5 ({{ $post->ratings->count() }} đánh giá)</span>
-</div>
-<div class="avg-stars-row">
-                    @php
-                    $fullStars = floor($post->average_rating);
-                    $halfStar = ($post->average_rating - $fullStars) >= 0.5;
-                @endphp
- @for ($i = 1; $i <= 5; $i++)
                     @if ($i <= $fullStars)
                         <i class="fas fa-star" style="color: #ffd700"></i>
                     @elseif ($i == $fullStars + 1 && $halfStar)
@@ -277,13 +277,28 @@
                         <i class="far fa-star" style="color:#ffd700"></i>
                     @endif
                 @endfor
-</div>
-    <span id="rating-message" style="margin-left:8px;color:green;"></span>
-    
-    @guest
-        <div style="color: #f00; margin-top: 8px;">Bạn cần <a href="{{ route('login') }}">đăng nhập</a> để đánh giá!</div>
-    @endguest
-</div>
+            </div>
+            <span id="rating-message" style="margin-left:8px;color:green;"></span>
+            <div class="rating-distribution" style="margin-top:16px;">
+                @for ($i = 5; $i >= 1; $i--)
+                    @php
+                        $count = $ratingCounts[$i] ?? 0;
+                        $percent = $totalRatings > 0 ? round($count / $totalRatings * 100, 1) : 0;
+                    @endphp
+                    <div style="display: flex; align-items: center; margin-bottom: 4px;">
+                        <span style="width: 18px; text-align: right;">{{ $i }}</span>
+                        <i class="fas fa-star" style="color: #FFA500; margin: 0 4px;"></i>
+                        <div style="flex:1; background: #eee; height: 8px; border-radius: 4px; margin: 0 6px; position:relative;">
+                            <div style="background: #4da3ff; height: 100%; border-radius: 4px; width: {{ $percent }}%;"></div>
+                        </div>
+                        <span style="width: 45px; text-align: right;">{{ $count }}</span>
+                    </div>
+                @endfor
+    </div>
+            @guest
+                <div style="color: #f00; margin-top: 8px;">Bạn cần <a href="{{ route('login') }}">đăng nhập</a> để đánh giá!</div>
+            @endguest
+        </div>
     </div>
 </div>
 
@@ -610,6 +625,9 @@ bindCommentEvents(); // Gọi khi trang load và sau khi thêm bình luận mớ
 const ratingStarsInput = document.getElementById('rating-stars-input');
 const ratingMessage = document.getElementById('rating-message');
 let userRating = {{ $post->ratings->where('user_id', Auth::id())->first()?->score ?? 0 }};
+if (userRating > 0) {
+    document.getElementById('rating-stars-input').setAttribute('data-rated', userRating);
+}
 
 
 @auth
