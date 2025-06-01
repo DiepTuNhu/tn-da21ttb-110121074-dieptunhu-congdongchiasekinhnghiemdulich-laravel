@@ -35,10 +35,10 @@
                     <label for="opening_hours" class="form-label">Giờ phục vụ</label>
                     <input type="text" id="opening_hours" name="opening_hours" class="form-control" placeholder="Nhập giờ phục vụ (ví dụ: 8:00 - 22:00)" />
                 </div>
-                {{-- <div class="form-group">
+                <div class="form-group">
                     <label for="phone" class="form-label">Số điện thoại</label>
                     <input type="number" id="phone" name="phone" class="form-control" placeholder="Nhập số điện thoại liên hệ" />
-                </div> --}}
+                </div>
                 <button type="submit" class="btn-submit">Đăng tiện ích</button>
             </form>
         </section>

@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('password', 255)->nullable();
             $table->string('avatar', 255)->nullable();
             $table->text('description')->nullable();
+            $table->integer('total_points')->default(0);
+            $table->integer('redeemable_points')->default(0);
             $table->integer('user_rank')->default(0);
             $table->string('status', 5)->nullable();
             $table->unsignedInteger('role_id')->nullable();

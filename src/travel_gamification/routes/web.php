@@ -12,9 +12,6 @@ use App\Http\Controllers\Admin\UtilityTypeController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SlideController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\ProvinceController;
-use App\Http\Controllers\Admin\DistrictsController;
-use App\Http\Controllers\Admin\WardsController;
 use App\Http\Controllers\Admin\BadgesController;
 use App\Http\Controllers\Admin\MissionsController;
 use App\Http\Controllers\Admin\UtilitiesController;
@@ -36,14 +33,13 @@ use App\Http\Controllers\Page\UserFollowController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('user.index');
-// });
 
 Route::get('/', [PageController::class, 'index'])->name('page.index');
 Route::get('/search', [PageController::class, 'search'])->name('user.search');
+
+
 Route::get('/community', [PageController::class, 'getCommunity'])->name('page.community');
-// Route::post('/community/post', [PostController::class, 'store'])->name('community.post');
+
 Route::get('/community/post-share', [PostController::class, 'showPostShare'])->name('page.post_share');
 Route::get('/community/post-articles', [PostController::class, 'create'])->name('post_articles');
 Route::post('/community/post-articles', [PostController::class, 'store'])->name('post_articles.store');
@@ -56,18 +52,21 @@ Route::get('/ajax/filter-posts', [PageController::class, 'ajaxFilterPosts'])->na
 
 Route::get('/explore', [PageController::class, 'getExplore'])->name('page.explore');
 Route::get('/ajax/destinations', [PageController::class, 'ajaxDestinations'])->name('ajax.destinations');
-Route::get('/ajax/post-share-destinations', [\App\Http\Controllers\Page\PostController::class, 'ajaxDestinations'])->name('ajax.post_share_destinations');
-Route::get('/ajax/post-share-utilities', [\App\Http\Controllers\Page\PostController::class, 'ajaxUtilities'])->name('ajax.post_share_utilities');
+Route::get('/destination/{id}', [PageController::class, 'getDetailDestination'])->name('destination.detail');
+
+Route::get('/ajax/post-share-destinations', [PostController::class, 'ajaxDestinations'])->name('ajax.post_share_destinations');
+Route::get('/ajax/post-share-utilities', [PostController::class, 'ajaxUtilities'])->name('ajax.post_share_utilities');
 Route::get('post_articles/{id}', [PostController::class, 'postArticles'])->name('post_articles');
 Route::get('/mission', [PageController::class, 'getMission'])->name('page.mission');
+Route::post('/missions/claim/{id}', [PageController::class, 'claimMission'])->name('missions.claim');
+
+
 Route::get('/ranking', [PageController::class, 'getRanking'])->name('page.ranking');
 
 Route::get('/profile', [PageController::class, 'getProfile'])->name('page.profile');
 Route::get('/profile', [ProfileController::class, 'show'])->name('page.profile')->middleware('auth');
 Route::get('/user/{id}/detail', [ProfileController::class, 'detail'])->name('detail_user_follow');
 
-// Route::get('/detailDestination', [PageController::class, 'getDetailDestination'])->name('destination.detailDestination');
-Route::get('/destination/{id}', [PageController::class, 'getDetailDestination'])->name('destination.detail');
 Route::get('/post/{id}', [PostController::class, 'showDetailPost'])->name('post.detail');
 Route::post('/posts/{id}/like', [PostController::class, 'like'])->name('posts.like');
 Route::post('/posts/{id}/comment', [PostController::class, 'comment'])->name('posts.comment');
@@ -75,7 +74,7 @@ Route::post('/comments/like/{id}', [PostController::class, 'likeComment'])->name
 Route::post('comments/update/{id}', [PostController::class, 'updateComment'])->name('comments.update');
 Route::post('/comments/delete/{id}', [PostController::class, 'deleteComment'])->name('comments.delete');
 Route::post('/posts/{id}/rate', [PostController::class, 'rate'])->name('posts.rating');
-// Route::post('/post/{post}/share', [PostController::class, 'share'])->name('post.share');
+
 Route::post('/post/{post}/share', [PostController::class, 'share'])->name('post.share')->middleware('auth');
 Route::post('/user/destination/store', [CreateDestinationController::class, 'store'])->name('user.destination.store');
 Route::get('/user/destination/create', function() {
@@ -84,11 +83,11 @@ Route::get('/user/destination/create', function() {
 
 Route::get('/utility/create', [CreateUtilityController::class, 'create'])->name('user.utility.create');
 Route::post('/utility/store', [CreateUtilityController::class, 'store'])->name('user.utility.store');
+Route::get('/utility/{id}', [PageController::class, 'getDetailUtility'])->name('utility.detail');
+
 //LOGIN
 Route::get('/login',[LoginController::class,'index'])->name('login');
 Route::post('/login/store',[LoginController::class,'store'])->name('login.store');
-
-Route::get('/utility/{id}', [PageController::class, 'getDetailUtility'])->name('utility.detail');
 
 Route::post('/notifications/mark-as-read/{id}', function ($id) {
     $notification = auth()->user()->notifications()->find($id);

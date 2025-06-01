@@ -399,7 +399,12 @@
 
 
   <script>
+var isCurrentUser = {{ Auth::check() && Auth::id() === $post->user_id ? 'true' : 'false' }};
 document.getElementById('like-btn').onclick = function() {
+    if(isCurrentUser) {
+        alert('Bạn không thể tự thích bài viết của mình!');
+        return;
+    }
     fetch('{{ route('posts.like', $post->id) }}', {
         method: 'POST',
         headers: {
@@ -426,6 +431,7 @@ document.getElementById('like-btn').onclick = function() {
         }
     });
 };
+
 
 document.getElementById('comment-form').onsubmit = function(e) {
     e.preventDefault();

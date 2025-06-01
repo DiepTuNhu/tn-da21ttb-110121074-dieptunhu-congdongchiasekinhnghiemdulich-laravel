@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('user_missions', function (Blueprint $table) {
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('mission_id');
+            $table->boolean('claimed')->default(0);
             $table->dateTime('completion_date')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('mission_id')->references('id')->on('missions')->onDelete('cascade')->onUpdate('cascade');

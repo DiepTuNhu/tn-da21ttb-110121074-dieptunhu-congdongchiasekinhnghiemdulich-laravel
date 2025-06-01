@@ -454,23 +454,78 @@ class PageController extends Controller
     public function getMission(Request $request)
     {
         $userId = Auth::id();
+
+        // Reset nhiệm vụ ngày
+        $today = now()->toDateString();
+        DB::table('user_missions')
+            ->join('missions', 'user_missions.mission_id', '=', 'missions.id')
+            ->where('user_missions.user_id', $userId)
+            ->where('missions.frequency', 'daily')
+            ->whereDate('user_missions.updated_at', '<', $today)
+            ->update(['claimed' => 0]);
+
+        // Reset nhiệm vụ tuần
+        $startOfWeek = now()->copy()->startOfWeek()->toDateString();
+        DB::table('user_missions')
+            ->join('missions', 'user_missions.mission_id', '=', 'missions.id')
+            ->where('user_missions.user_id', $userId)
+            ->where('missions.frequency', 'weekly')
+            ->whereDate('user_missions.updated_at', '<', $startOfWeek)
+            ->update(['claimed' => 0]);
+
+        // Reset nhiệm vụ tháng
+        $startOfMonth = now()->copy()->startOfMonth()->toDateString();
+        DB::table('user_missions')
+            ->join('missions', 'user_missions.mission_id', '=', 'missions.id')
+            ->where('user_missions.user_id', $userId)
+            ->where('missions.frequency', 'monthly')
+            ->whereDate('user_missions.updated_at', '<', $startOfMonth)
+            ->update(['claimed' => 0]);
+
+        $userId = Auth::id();
         $missions = Mission::where('status', 0)->get();
 
-        // Thêm tiến độ cho từng nhiệm vụ
         foreach ($missions as $mission) {
+            $done = 0;
+            $now = now();
+
             switch ($mission->condition_type) {
                 case 'like':
-                    $done = \App\Models\Like::where('user_id', $userId)->count();
+                    $query = \App\Models\Like::where('user_id', $userId)
+                        ->whereHas('post', function($q) use ($userId) {
+                            $q->where('user_id', '!=', $userId);
+                        });
                     break;
                 case 'comment':
-                    $done = \App\Models\Comment::where('user_id', $userId)->count();
+                    $query = \App\Models\Comment::where('user_id', $userId)
+                        ->whereHas('post', function($q) use ($userId) {
+                            $q->where('user_id', '!=', $userId);
+                        });
                     break;
                 case 'post':
-                    $done = \App\Models\Post::where('user_id', $userId)->count();
+                    $query = \App\Models\Post::where('user_id', $userId);
                     break;
                 default:
-                    $done = 0;
+                    $query = null;
             }
+
+            // Lọc theo chu kỳ
+            if ($query) {
+                if ($mission->frequency === 'daily') {
+                    $done = $query->whereDate('created_at', $now->toDateString())->count();
+                } elseif ($mission->frequency === 'weekly') {
+                    $startOfWeek = $now->copy()->startOfWeek();
+                    $endOfWeek = $now->copy()->endOfWeek();
+                    $done = $query->whereBetween('created_at', [$startOfWeek, $endOfWeek])->count();
+                } elseif ($mission->frequency === 'monthly') {
+                    $done = $query->whereYear('created_at', $now->year)
+                                  ->whereMonth('created_at', $now->month)
+                                  ->count();
+                } else {
+                    $done = $query->count();
+                }
+            }
+
             $mission->progress_done = $done;
             $mission->progress_total = $mission->condition_value ?? 1;
         }
@@ -478,13 +533,25 @@ class PageController extends Controller
         $dailyMissions = $missions->where('frequency', 'daily');
         $weeklyMissions = $missions->where('frequency', 'weekly');
         $monthlyMissions = $missions->where('frequency', 'monthly');
-        // Nhiệm vụ đặc biệt: frequency = 'once' hoặc null
         $onceMissions = $missions->filter(function($mission) {
             return $mission->frequency === 'once' || is_null($mission->frequency);
         });
+        $specialMissions = $missions->where('frequency', 'special')
+        ->merge($missions->where('is_special', true)); // nếu có trường is_special
 
-        // Trả về view cùng với danh sách nhiệm vụ đã phân loại
-        return view('user.layout.mission', compact('dailyMissions', 'weeklyMissions', 'monthlyMissions', 'onceMissions'));
+        $claimedMissions = DB::table('user_missions')
+            ->where('user_id', Auth::id())
+            ->where('claimed', 1)
+            ->pluck('mission_id')
+            ->toArray();
+
+        return view('user.layout.mission', compact(
+            'dailyMissions',
+            'weeklyMissions',
+            'monthlyMissions',
+            'specialMissions',
+            'claimedMissions'
+        ));
     }
 
     // public function checkAttendanceStreak($userId, $days = 7)
@@ -525,8 +592,12 @@ class PageController extends Controller
                 return $mission->condition_value ? $likeCount >= $mission->condition_value : $likeCount > 0;
 
             case 'comment':
-                // Đếm số lượt comment của user
-                $commentCount = \App\Models\Comment::where('user_id', $userId)->count();
+                // Chỉ đếm comment của user trên bài viết của người khác
+                $commentCount = \App\Models\Comment::where('user_id', $userId)
+                    ->whereHas('post', function($q) use ($userId) {
+                        $q->where('user_id', '!=', $userId);
+                    })
+                    ->count();
                 return $mission->condition_value ? $commentCount >= $mission->condition_value : $commentCount > 0;
 
             case 'post':
@@ -541,10 +612,51 @@ class PageController extends Controller
         }
 
     }
+
+    public function claimMission($id)
+    {
+        $user = Auth::user();
+        $mission = \App\Models\Mission::findOrFail($id);
+
+        // Kiểm tra đã hoàn thành nhiệm vụ chưa (tùy logic của bạn)
+        // Ví dụ: $mission->progress_done >= $mission->progress_total
+
+        // Kiểm tra đã nhận thưởng chưa
+        $claimed = DB::table('user_missions')
+            ->where('user_id', $user->id)
+            ->where('mission_id', $mission->id)
+            ->where('claimed', 1)
+            ->exists();
+        if ($claimed) {
+            return response()->json(['success' => false, 'message' => 'Bạn đã nhận thưởng nhiệm vụ này rồi!']);
+        }
+
+        // Cộng điểm
+        $user->total_points += $mission->points_reward;
+        $user->redeemable_points += $mission->points_reward;
+        $user->save();
+
+        // Đánh dấu đã nhận thưởng
+        DB::table('user_missions')->updateOrInsert(
+            ['user_id' => $user->id, 'mission_id' => $mission->id],
+            ['claimed' => 1, 'updated_at' => now()]
+        );
+
+        return response()->json(['success' => true, 'points' => $mission->points_reward]);
+    }
     public function like($id)
     {
         $post = Post::findOrFail($id);
         $user = Auth::user();
+
+        // Không cho tự thích bài của mình
+        if ($post->user_id == $user->id) {
+            return response()->json([
+                'success' => false,
+                'error' => 'Bạn không thể tự thích bài viết của mình.'
+            ]);
+        }
+
         $liked = $post->likes()->where('user_id', $user->id)->exists();
 
         if ($liked) {
@@ -554,8 +666,9 @@ class PageController extends Controller
         }
 
         return response()->json([
+            'success' => true,
             'liked' => !$liked,
-            'count' => $post->likes()->count()
+            'like_count' => $post->likes()->count()
         ]);
     }
 

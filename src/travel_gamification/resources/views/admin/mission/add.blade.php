@@ -71,6 +71,7 @@
                             <option value="daily">Hàng ngày</option>
                             <option value="weekly">Hàng tuần</option>
                             <option value="monthly">Hàng tháng</option>
+                            <option value="special">Đặc biệt</option>
                         </select>
                     </div>
                 </div>
