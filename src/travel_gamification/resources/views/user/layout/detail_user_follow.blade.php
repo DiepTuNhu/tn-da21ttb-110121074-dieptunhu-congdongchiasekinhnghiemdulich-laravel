@@ -82,24 +82,39 @@
     </div>
 
     <!-- Nội dung: Đã chia sẻ -->
-    <div class="profile-tab-content" id="shared">
-        <div class="profile-card-grid">
-          <div class="profile-card-item">
-            <img class="profile-card-img" src="../5.png" alt="" />
-            <div class="profile-card-content">
-              <h4>Cẩm nang du lịch miền Tây</h4>
-              <p>📤 Đã chia sẻ từ TravelShare · ❤️ 80 lượt thích</p>
+<div class="profile-tab-content" id="shared">
+    <div class="profile-card-grid">
+        @php
+            // Lọc các bài chia sẻ công khai (is_public = 1, status = 0)
+            $publicShares = $sharedPosts->where('pivot.is_public', 1)->where('pivot.status', 0);
+        @endphp
+        @forelse($publicShares as $post)
+            @php
+                // Lấy ảnh đầu tiên trong content
+                $firstImage = null;
+                if ($post->content) {
+                    preg_match('/<img[^>]+src="([^">]+)"/i', $post->content, $matches);
+                    $firstImage = $matches[1] ?? null;
+                }
+            @endphp
+            <div class="profile-card-item">
+                <a href="{{ route('post.detail', $post->id) }}">
+                    @if ($firstImage)
+                        <img class="profile-card-img" src="{{ $firstImage }}" alt="{{ $post->title }}" />
+                    @else
+                        <img class="profile-card-img" src="{{ asset('canh.png') }}" alt="Default Image" />
+                    @endif
+                    <div class="profile-card-content">
+                        <h4>{{ $post->title }}</h4>
+                        <p>📤 Đã chia sẻ · ❤️ {{ $post->likes_count ?? $post->likes->count() }} lượt thích</p>
+                    </div>
+                </a>
             </div>
-          </div>
-          <div class="profile-card-item">
-            <img class="profile-card-img" src="../6.png" alt="" />
-            <div class="profile-card-content">
-              <h4>Top 5 địa điểm ngắm hoàng hôn</h4>
-              <p>📤 Chia sẻ từ Hương Giang · ❤️ 92 lượt thích</p>
-            </div>
-          </div>
-        </div>
-      </div>
+        @empty
+            <p>Chưa có bài viết chia sẻ công khai nào.</p>
+        @endforelse
+    </div>
+</div>
 </div>
 
 

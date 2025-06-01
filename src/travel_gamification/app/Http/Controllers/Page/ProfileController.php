@@ -35,16 +35,26 @@ class ProfileController extends Controller
         $followers = $user->followers()->withPivot('created_at')->get();
         $followings = $user->followings()->withPivot('created_at')->get();
 
-        return view('user.layout.profile', compact('user', 'posts', 'likedPosts', 'followers', 'followings'));
+        // Lấy các bài viết đã chia sẻ (có pivot is_public, status)
+        $sharedPosts = $user->sharedPosts()
+            ->with(['likes'])
+            ->withPivot('is_public', 'status')
+            ->get();
+
+        return view('user.layout.profile', compact(
+            'user', 'posts', 'likedPosts', 'followers', 'followings', 'sharedPosts'
+        ));
     }
 
     public function detail($id)
     {
-        $user = \App\Models\User::withCount(['posts', 'likes'])->findOrFail($id);
-        // Nếu có điểm (score), truyền thêm
-        // Nếu muốn lấy các bài viết của user:
+        $user = \App\Models\User::findOrFail($id);
         $posts = $user->posts()->withCount('likes', 'comments')->latest()->get();
+        $sharedPosts = $user->sharedPosts()
+            ->with(['likes'])
+            ->withPivot('is_public', 'status')
+            ->get();
 
-        return view('user.layout.detail_user_follow', compact('user', 'posts'));
+        return view('user.layout.detail_user_follow', compact('user', 'posts', 'sharedPosts'));
     }
 }

@@ -12,6 +12,8 @@ use Illuminate\Support\Str;
 use App\Notifications\NewPostSubmitted;
 use App\Models\User;
 use App\Models\Rating;
+use Illuminate\Support\Facades\DB;
+
 
 class PostController extends Controller
 {
@@ -36,7 +38,37 @@ class PostController extends Controller
         $isLoggedIn = Auth::check();
         return view('user.layout.community', compact('destinations','posts', 'isLoggedIn'));
     }
+public function share(Request $request, Post $post)
+{
+    // Không cho phép người đăng bài tự chia sẻ bài của mình
+    if (auth()->id() == $post->user_id) {
+        return back()->with('error', 'Bạn không thể tự chia sẻ bài viết của mình!');
+    }
 
+    $request->validate([
+        'is_public' => 'required|boolean',
+    ]);
+    // Kiểm tra đã chia sẻ chưa
+    $exists = DB::table('shares')
+        ->where('user_id', auth()->id())
+        ->where('post_id', $post->id)
+        ->exists();
+
+    if ($exists) {
+        return back()->with('error', 'Bạn đã chia sẻ bài viết này rồi!');
+    }
+    // Lưu vào bảng shares với status = 0
+    DB::table('shares')->insert([
+        'user_id' => auth()->id(),
+        'post_id' => $post->id,
+        'is_public' => $request->is_public,
+        'status' => 0,
+        'created_at' => now(),
+        'updated_at' => now(),
+    ]);
+
+    return back()->with('success', 'Chia sẻ bài viết thành công!');
+}
     public function showPostShare(Request $request)
     {
         $destinations = \App\Models\Destination::where('status', 0)->get();
@@ -177,7 +209,6 @@ class PostController extends Controller
             'totalRatings'
         ));
     }
-
     public function like($id)
     {
         if (!auth()->check()) {

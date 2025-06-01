@@ -1,5 +1,6 @@
 @extends('user.master')
 @section('content')
+
 <div class="container-dtp">
   <div class="main">
     <h1>{{ $post->title }}</h1>
@@ -210,36 +211,55 @@
                     <i id="like-icon" class="{{ $post->likedByCurrentUser() ? 'fas' : 'far' }} fa-heart"></i> Thích
                     <span id="like-count">{{ $post->likes->count() }}</span>
                 </button>
-                <button class="btn action-btn save">
+                <!-- Nút chia sẻ -->
+                <button class="btn action-btn save" id="share-btn">
                     <i class="fas fa-bookmark"></i> Chia sẻ
                 </button>
+
+                <!-- Modal chọn chế độ chia sẻ -->
+                <div id="share-modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.3); z-index:9999; align-items:center; justify-content:center;">
+    <div style="
+        background: #fff;
+        padding: 32px 28px 24px 28px;
+        border-radius: 16px;
+        min-width: 320px;
+        max-width: 95vw;
+        margin:auto;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+    ">
+        <button type="button" id="close-share-modal" style="
+            position: absolute;
+            top: 12px; right: 16px;
+            background: none;
+            border: none;
+            font-size: 22px;
+            color: #888;
+            cursor: pointer;
+        " title="Đóng">&times;</button>
+        <h3 style="margin-bottom: 18px; color: #1a202c;">Chia sẻ bài viết</h3>
+        <form id="share-form" method="POST" action="{{ route('post.share', $post->id) }}" style="width:100%; text-align:center;">
+            @csrf
+            <div style="margin-bottom:18px;">
+                <label style="margin-right:20px; font-weight:500;">
+                    <input type="radio" name="is_public" value="1" checked style="margin-right:6px;"> Công khai
+                </label>
+                <label style="font-weight:500;">
+                    <input type="radio" name="is_public" value="0" style="margin-right:6px;"> Riêng tư
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary" style="padding: 8px 22px; border-radius: 6px;">Chia sẻ</button>
+        </form>
+    </div>
+</div>
+
                 <button class="btn action-btn report">
                     <i class="fas fa-flag"></i> Báo cáo
                 </button>
             </div>
-
-            <!-- Phần đánh giá -->
-            {{-- <div class="post-rating">
-                <span class="rating-stars">
-                    @php
-                        $fullStars = floor($post->average_rating);
-                        $halfStar = ($post->average_rating - $fullStars) >= 0.5;
-                    @endphp
-                    @for ($i = 1; $i <= 5; $i++)
-                        @if ($i <= $fullStars)
-                            <i class="fas fa-star" style="color:#FFA500"></i>
-                        @elseif ($i == $fullStars + 1 && $halfStar)
-                            <i class="fas fa-star-half-alt" style="color:#FFA500"></i>
-                        @else
-                            <i class="far fa-star" style="color:#FFA500"></i>
-                        @endif
-                    @endfor
-                </span>
-                <span class="rating-text">
-                    {{ number_format($post->average_rating, 1) }}/5
-                    ({{ $post->ratings->count() }} đánh giá)
-                </span>
-            </div> --}}
 
             <!-- Huy hiệu -->
             <div class="post-badges">
@@ -287,7 +307,7 @@
                     @endphp
                     <div style="display: flex; align-items: center; margin-bottom: 4px;">
                         <span style="width: 18px; text-align: right;">{{ $i }}</span>
-                        <i class="fas fa-star" style="color: #FFA500; margin: 0 4px;"></i>
+                        <i class="fas fa-star" style="color: #ffd700; margin: 0 4px;"></i>
                         <div style="flex:1; background: #eee; height: 8px; border-radius: 4px; margin: 0 6px; position:relative;">
                             <div style="background: #4da3ff; height: 100%; border-radius: 4px; width: {{ $percent }}%;"></div>
                         </div>
@@ -694,5 +714,35 @@ document.querySelectorAll('#rating-stars-input .fa-star').forEach(star => {
     });
 });
 @endif
+
+document.getElementById('share-btn').onclick = function() {
+    document.getElementById('share-modal').style.display = 'flex';
+};
+document.getElementById('close-share-modal').onclick = function() {
+    document.getElementById('share-modal').style.display = 'none';
+};
+// Đóng modal khi click ra ngoài
+document.getElementById('share-modal').onclick = function(e) {
+    if(e.target === this) this.style.display = 'none';
+};
+document.getElementById('share-btn').onclick = function() {
+    // Kiểm tra có phải bài của mình không (Laravel sẽ render biến này)
+    var isCurrentUser = {{ Auth::check() && Auth::id() === $post->user_id ? 'true' : 'false' }};
+    if(isCurrentUser) {
+        alert('Bạn không thể tự chia sẻ bài viết của mình!');
+        return;
+    }
+    document.getElementById('share-modal').style.display = 'flex';
+};
   </script>
+  @if(session('success'))
+<script>
+    alert("{{ session('success') }}");
+</script>
+@endif
+@if(session('error'))
+<script>
+    alert("{{ session('error') }}");
+</script>
+@endif
 @endsection

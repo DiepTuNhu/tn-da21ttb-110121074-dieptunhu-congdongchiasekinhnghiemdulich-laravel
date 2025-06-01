@@ -80,4 +80,11 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(User::class, 'follows', 'follower_id', 'following_id');
     }
+
+    public function sharedPosts()
+    {
+        return $this->belongsToMany(Post::class, 'shares', 'user_id', 'post_id')
+            ->withPivot('is_public', 'status', 'created_at')
+            ->withTimestamps();
+    }
 }

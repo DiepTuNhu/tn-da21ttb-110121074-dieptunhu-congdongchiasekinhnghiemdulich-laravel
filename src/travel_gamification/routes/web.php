@@ -75,7 +75,8 @@ Route::post('/comments/like/{id}', [PostController::class, 'likeComment'])->name
 Route::post('comments/update/{id}', [PostController::class, 'updateComment'])->name('comments.update');
 Route::post('/comments/delete/{id}', [PostController::class, 'deleteComment'])->name('comments.delete');
 Route::post('/posts/{id}/rate', [PostController::class, 'rate'])->name('posts.rating');
-
+// Route::post('/post/{post}/share', [PostController::class, 'share'])->name('post.share');
+Route::post('/post/{post}/share', [PostController::class, 'share'])->name('post.share')->middleware('auth');
 Route::post('/user/destination/store', [CreateDestinationController::class, 'store'])->name('user.destination.store');
 Route::get('/user/destination/create', function() {
     return view('user.layout.create_destination');
