@@ -35,8 +35,11 @@
             <li><a class="{{request() -> is('mission') ? 'active' : ''}}" href="{{ route('page.mission') }}">Nhiệm vụ</a></li>
             <li><a class="{{request() -> is('ranking') ? 'active' : ''}}" href="{{ route('page.ranking') }}">Xếp hạng</a></li>
             <li><a class="{{request() -> is('profile') ? 'active' : ''}}" href="{{ route('page.profile') }}">Hồ sơ</a></li>
+            <li><a class="{{request() -> is('rewards') ? 'active' : ''}}" href="{{ route('user.rewards') }}">Đổi thưởng</a></li>
+
         @else
             <li><a class="{{request() -> is('ranking') ? 'active' : ''}}" href="{{ route('page.ranking') }}">Xếp hạng</a></li>
+            <li><a class="{{request() -> is('rewards') ? 'active' : ''}}" href="{{ route('user.rewards') }}">Đổi thưởng</a></li>
         @endauth
       </ul>
     </div>

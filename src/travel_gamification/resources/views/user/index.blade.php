@@ -15,7 +15,7 @@
   <div class="overlay">
     <div class="content">
       <h1>Du lịch không chỉ đi, mà còn chơi và chia sẻ!</h1>
-      <p>Chia sẻ niềm vui du lịch – tích điểm mỗi ngày cùng cộng đồng mê khám phá!</p>
+      <p>Chia sẻ niềm vui du lịch – tích điểm và đổi quà mỗi ngày cùng cộng đồng đam mê khám phá!</p>
 
       <form action="{{ route('user.search') }}" method="GET">
           <div class="search-form">

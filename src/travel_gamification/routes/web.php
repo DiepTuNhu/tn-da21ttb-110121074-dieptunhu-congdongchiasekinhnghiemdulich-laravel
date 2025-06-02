@@ -24,6 +24,8 @@ use App\Http\Controllers\Page\ProfileController;
 use App\Http\Controllers\Page\CreateDestinationController;
 use App\Http\Controllers\Page\CreateUtilityController;
 use App\Http\Controllers\Page\UserFollowController;
+use App\Http\Controllers\Page\RewardRedeemController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -82,6 +84,11 @@ Route::post('/user/destination/store', [CreateDestinationController::class, 'sto
 Route::get('/user/destination/create', function() {
     return view('user.layout.create_destination');
 })->name('user.destination.create');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/rewards', [RewardRedeemController::class, 'index'])->name('user.rewards');
+    Route::post('/rewards/redeem/{id}', [RewardRedeemController::class, 'redeem'])->name('user.redeem_reward');
+});
 
 Route::get('/utility/create', [CreateUtilityController::class, 'create'])->name('user.utility.create');
 Route::post('/utility/store', [CreateUtilityController::class, 'store'])->name('user.utility.store');

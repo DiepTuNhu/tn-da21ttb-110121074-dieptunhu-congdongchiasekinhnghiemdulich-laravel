@@ -19,7 +19,10 @@ return new class extends Migration
 
             $table->timestamp('redeemed_at')->useCurrent(); // Thời gian đổi
             $table->boolean('delivered')->default(0); // Nếu là quà vật lý → đã giao chưa
-
+            $table->string('receiver_name')->nullable();
+            $table->string('receiver_phone')->nullable();
+            $table->text('receiver_address')->nullable();
+            $table->string('shipping_note')->nullable();
             $table->timestamps();
 
             // Liên kết khóa ngoại

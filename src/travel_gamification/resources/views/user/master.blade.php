@@ -29,7 +29,7 @@
     @include('user.header')
     @yield('content')
     @include('user.footer')
-    
+    @stack('scripts')
   </body>
 </html>
 <script>

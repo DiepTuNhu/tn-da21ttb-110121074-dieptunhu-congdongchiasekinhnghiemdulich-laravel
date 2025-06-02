@@ -87,4 +87,11 @@ class User extends Authenticatable
             ->withPivot('is_public', 'status', 'created_at')
             ->withTimestamps();
     }
+
+    public function rewards()
+    {
+        return $this->belongsToMany(Reward::class, 'user_reward')
+            ->withPivot(['redeemed_at', 'delivered'])
+            ->withTimestamps();
+    }
 }
