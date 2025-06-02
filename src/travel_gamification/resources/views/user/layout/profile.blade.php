@@ -1,9 +1,42 @@
 @extends('user.master')
 @section('content')
 
+    {{-- Thêm style cho profile-info --}}
+    <style>
+    .profile-info {
+        position: relative;
+    }
+    .profile-reward-btn {
+        position: absolute;
+        margin: 10px;
+        top: 0;
+        right: 0;
+        font-weight: 600;
+        font-size: 0.98rem;
+        color: #fff;
+        background: linear-gradient(90deg,#e67e22 60%,#f6c177 100%);
+        border: none;
+        border-radius: 6px;
+        padding: 7px 18px;
+        box-shadow: 0 2px 8px rgba(230,126,34,0.08);
+        display: inline-block;
+        z-index: 2;
+    }
+    @media (max-width: 600px) {
+        .profile-reward-btn {
+            font-size: 0.92rem;
+            padding: 6px 10px;
+        }
+    }
+    </style>
+
     <div class="profile-container">
       <!-- Thông tin cá nhân -->
       <div class="profile-info">
+            {{-- Nút đổi thưởng nằm góc phải --}}
+            <a href="{{ route('user.rewards') }}" class="btn btn-warning profile-reward-btn">
+                🎁 Đổi thưởng
+            </a>
             <img 
                 src="@if($user->avatar)
                         @if(Str::startsWith($user->avatar, ['http://', 'https://']))
@@ -29,7 +62,6 @@
             <div class="profile-stats">
                 <span><i class="fas fa-file-alt"></i> {{ $user->posts_count ?? 0 }} bài viết</span>
                 <span><i class="fas fa-heart"></i> {{ $user->likes_count ?? 0 }} lượt thích</span>
-                {{-- <span><i class="fas fa-check-circle"></i> {{ $user->missions_count ?? 0 }} nhiệm vụ</span> --}}
                 <span><i class="fas fa-user-friends"></i> {{ $followers->count() }} người theo dõi</span>
                 <span><i class="fas fa-user-plus"></i> {{ $followings->count() }} đang theo dõi</span>
             </div>
@@ -203,7 +235,7 @@
                     $firstImage = $matches[1] ?? null;
                 }
             @endphp
-            <div class="profile-card-item">
+            <div class="profile-card-item" data-share-id="{{ $post->pivot->id }}">
                 <a href="{{ route('post.detail', $post->id) }}">
                     @if ($firstImage)
                         <img class="profile-card-img" src="{{ $firstImage }}" alt="{{ $post->title }}" />
@@ -215,6 +247,10 @@
                         <p>📤 Đã chia sẻ công khai · ❤️ {{ $post->likes->count() }} lượt thích</p>
                     </div>
                 </a>
+                <div class="share-actions" style="margin-top:8px;">
+                    <button class="btn-toggle-share" data-share-id="{{ $post->pivot->id }}" data-current="public">Chuyển thành riêng tư</button>
+                    <button class="btn-delete-share" data-share-id="{{ $post->pivot->id }}">Xóa chia sẻ</button>
+                </div>
             </div>
         @empty
             <p>Bạn chưa chia sẻ bài viết công khai nào.</p>
@@ -235,7 +271,7 @@
                     $firstImage = $matches[1] ?? null;
                 }
             @endphp
-            <div class="profile-card-item">
+            <div class="profile-card-item" data-share-id="{{ $post->pivot->id }}">
                 <a href="{{ route('post.detail', $post->id) }}">
                     @if ($firstImage)
                         <img class="profile-card-img" src="{{ $firstImage }}" alt="{{ $post->title }}" />
@@ -247,6 +283,10 @@
                         <p>📤 Đã chia sẻ riêng tư · ❤️ {{ $post->likes->count() }} lượt thích</p>
                     </div>
                 </a>
+                <div class="share-actions" style="margin-top:8px;">
+                    <button class="btn-toggle-share" data-share-id="{{ $post->pivot->id }}" data-current="private">Chuyển thành công khai</button>
+                    <button class="btn-delete-share" data-share-id="{{ $post->pivot->id }}">Xóa chia sẻ</button>
+                </div>
             </div>
         @empty
             <p>Bạn chưa chia sẻ bài viết riêng tư nào.</p>
@@ -350,6 +390,49 @@ document.querySelectorAll('.unfollow-btn').forEach(btn => {
         .then(data => {
             if(data.status === 'unfollowed') {
                 this.closest('.follower-item').remove();
+            }
+        });
+    });
+});
+</script>
+
+<script>
+document.querySelectorAll('.btn-toggle-share').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const shareId = this.dataset.shareId;
+        const current = this.dataset.current;
+        fetch(`/user/share/${shareId}/toggle`, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.status === 'updated') {
+                // Reload tab or move card to other section
+                location.reload();
+            }
+        });
+    });
+});
+
+document.querySelectorAll('.btn-delete-share').forEach(btn => {
+    btn.addEventListener('click', function() {
+        if(!confirm('Bạn có chắc muốn xóa chia sẻ này?')) return;
+        const shareId = this.dataset.shareId;
+        fetch(`/user/share/${shareId}/delete`, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.status === 'deleted') {
+                document.querySelector(`.profile-card-item[data-share-id="${shareId}"]`).remove();
             }
         });
     });

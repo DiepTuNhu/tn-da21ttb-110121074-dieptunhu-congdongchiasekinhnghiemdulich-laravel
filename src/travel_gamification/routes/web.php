@@ -25,6 +25,7 @@ use App\Http\Controllers\Page\CreateDestinationController;
 use App\Http\Controllers\Page\CreateUtilityController;
 use App\Http\Controllers\Page\UserFollowController;
 use App\Http\Controllers\Page\RewardRedeemController;
+use App\Http\Controllers\Page\NotificationActionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +37,17 @@ use App\Http\Controllers\Page\RewardRedeemController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+// Like bài viết
+Route::post('/post/{post}/like', [NotificationActionController::class, 'like'])->middleware('auth');
 
+// Comment bài viết
+Route::post('/post/{post}/comment', [NotificationActionController::class, 'comment'])->middleware('auth');
+
+// Follow người dùng
+Route::post('/user/{user}/follow-user', [NotificationActionController::class, 'follow'])->middleware('auth');
+
+// Unfollow người dùng (nếu có)
+Route::post('/user/{user}/unfollow', [NotificationActionController::class, 'unfollow'])->middleware('auth');
 
 Route::get('/', [PageController::class, 'index'])->name('page.index');
 Route::get('/search', [PageController::class, 'search'])->name('user.search');
@@ -49,6 +60,7 @@ Route::get('/community/post-articles', [PostController::class, 'create'])->name(
 Route::post('/community/post-articles', [PostController::class, 'store'])->name('post_articles.store');
 Route::get('/community/post-articles/{id}/edit', [PostController::class, 'edit'])->name('post.edit');
 Route::post('/community/post-articles/{id}/update', [PostController::class, 'update'])->name('post.update');
+Route::delete('/post/{id}', [PostController::class, 'destroy'])->name('post.delete');
 
 Route::post('/post/{id}/like', [PostController::class, 'like'])->middleware('auth');
 Route::get('/ajax/filter-posts', [PageController::class, 'ajaxFilterPosts'])->name('filter.posts.by.traveltype');
@@ -70,6 +82,8 @@ Route::get('/ranking', [PageController::class, 'getRanking'])->name('page.rankin
 Route::get('/profile', [PageController::class, 'getProfile'])->name('page.profile');
 Route::get('/profile', [ProfileController::class, 'show'])->name('page.profile')->middleware('auth');
 Route::get('/user/{id}/detail', [ProfileController::class, 'detail'])->name('detail_user_follow');
+Route::post('/user/share/{id}/toggle', [ProfileController::class, 'toggleShareStatus'])->middleware('auth');
+Route::post('/user/share/{id}/delete', [ProfileController::class, 'deleteShare'])->middleware('auth');
 
 Route::get('/post/{id}', [PostController::class, 'showDetailPost'])->name('post.detail');
 Route::post('/posts/{id}/like', [PostController::class, 'like'])->name('posts.like');

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Page;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Post;
+use App\Models\Share;
 use App\Models\Like;
 use App\Models\Mission;
 
@@ -35,10 +35,10 @@ class ProfileController extends Controller
         $followers = $user->followers()->withPivot('created_at')->get();
         $followings = $user->followings()->withPivot('created_at')->get();
 
-        // Lấy các bài viết đã chia sẻ (có pivot is_public, status)
+        // Lấy các bài viết đã chia sẻ (có pivot id, is_public, status)
         $sharedPosts = $user->sharedPosts()
             ->with(['likes'])
-            ->withPivot('is_public', 'status')
+            ->withPivot('id', 'is_public', 'status')
             ->get();
 
         return view('user.layout.profile', compact(
@@ -52,9 +52,30 @@ class ProfileController extends Controller
         $posts = $user->posts()->withCount('likes', 'comments')->latest()->get();
         $sharedPosts = $user->sharedPosts()
             ->with(['likes'])
-            ->withPivot('is_public', 'status')
+            ->withPivot('id','is_public', 'status')
             ->get();
 
         return view('user.layout.detail_user_follow', compact('user', 'posts', 'sharedPosts'));
     }
+
+    public function toggleShareStatus($id)
+{
+    $share = Share::findOrFail($id);
+    if ($share->user_id !== auth()->id()) {
+        return response()->json(['status' => 'forbidden'], 403);
+    }
+    $share->is_public = !$share->is_public;
+    $share->save();
+    return response()->json(['status' => 'updated']);
+}
+
+public function deleteShare($id)
+{
+    $share = Share::findOrFail($id);
+    if ($share->user_id !== auth()->id()) {
+        return response()->json(['status' => 'forbidden'], 403);
+    }
+    $share->delete();
+    return response()->json(['status' => 'deleted']);
+}
 }

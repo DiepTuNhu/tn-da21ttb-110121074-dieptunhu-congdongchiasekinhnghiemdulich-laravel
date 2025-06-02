@@ -35,12 +35,16 @@
                 </div>
             </div>
         </div>
-        <button 
-            class="follow-btn {{ auth()->user()->followings->contains($user->id) ? 'following' : '' }}" 
-            id="followBtn"
-            data-user="{{ $user->id }}">
-            {{ auth()->user()->followings->contains($user->id) ? 'Đang theo dõi' : 'Theo dõi' }}
-        </button>
+        @auth
+            <button 
+                class="follow-btn {{ auth()->user()->followings->contains($user->id) ? 'following' : '' }}" 
+                id="followBtn"
+                data-user="{{ $user->id }}">
+                {{ auth()->user()->followings->contains($user->id) ? 'Đang theo dõi' : 'Theo dõi' }}
+            </button>
+        @else
+            <a href="{{ route('login') }}" class="btn btn-warning">Đăng nhập để theo dõi</a>
+        @endauth
     </div>
 
     <!-- Tabs -->

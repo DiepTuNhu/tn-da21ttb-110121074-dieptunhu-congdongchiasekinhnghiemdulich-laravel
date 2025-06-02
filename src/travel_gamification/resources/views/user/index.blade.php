@@ -36,12 +36,23 @@
           </div>
       </form>
 
-      <div class="highlight-box">
-        <h4>Top Chia Sẻ Nổi Bật</h4>
-        <p><strong>🏆 Ngọc Hii:</strong> Hành trình khám phá Đà Lạt cực chill 🌸</p>
-        <p><strong>🥈 Anh Khoa:</strong> Ăn gì ở Phú Quốc? Trọn bộ list!</p>
-        <p><strong>🥉 Minh Trang:</strong> Chinh phục Fansipan 2 ngày 1 đêm ⛰️</p>
-      </div>
+          <div class="highlight-box">
+              <h4>Top Chia Sẻ Nổi Bật</h4>
+              @foreach($topPosts as $index => $post)
+                  <p>
+                      <strong>
+                          @if($index == 0) 🏆
+                          @elseif($index == 1) 🥈
+                          @elseif($index == 2) 🥉
+                          @endif
+                          {{ $post->user->username ?? 'Ẩn danh' }}:
+                      </strong>
+          <a href="{{ route('post.detail', $post->id) }}" style="color:#e67e22;">
+              {{ Str::limit($post->title, 60) }}
+          </a>
+        </p>
+    @endforeach
+</div>
     </div>
   </div>
   <div class="slider-dots">
@@ -78,18 +89,19 @@
 <section class="top-user-section">
   <h3>Top Thành Viên Tháng Này 🔥</h3>
   <div class="top-users">
-    <div class="user-card">
-      <img src="https://i.pravatar.cc/100?img=1" alt="User 1" />
-      <p><strong>Ngọc Hii</strong><br />🏆 5200 điểm</p>
-    </div>
-    <div class="user-card">
-      <img src="https://i.pravatar.cc/100?img=2" alt="User 2" />
-      <p><strong>Minh Trang</strong><br />🥈 4300 điểm</p>
-    </div>
-    <div class="user-card">
-      <img src="https://i.pravatar.cc/100?img=3" alt="User 3" />
-      <p><strong>Hải Đăng</strong><br />🥉 3900 điểm</p>
-    </div>
+    @foreach($topUsers as $index => $user)
+      <div class="user-card">
+        <img src="{{ $user->avatar ? (Str::startsWith($user->avatar, ['http://', 'https://']) ? $user->avatar : asset('storage/avatars/' . $user->avatar)) : 'https://i.pravatar.cc/100?u=' . $user->id }}" alt="{{ $user->username }}" />
+        <p>
+          <strong>{{ $user->username ?? 'Ẩn danh' }}</strong><br />
+          @if($index == 0) 🏆
+          @elseif($index == 1) 🥈
+          @elseif($index == 2) 🥉
+          @endif
+          {{ number_format($user->redeemable_points) }} điểm
+        </p>
+      </div>
+    @endforeach
   </div>
 </section>
 

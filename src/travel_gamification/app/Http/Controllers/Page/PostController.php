@@ -413,7 +413,15 @@ public function share(Request $request, Post $post)
 
         return redirect()->route('page.community')->with('success', 'Cập nhật bài viết thành công!');
     }
-    
+    public function destroy($id)
+{
+    $post = Post::findOrFail($id);
+    if (auth()->id() !== $post->user_id) {
+        abort(403, 'Bạn không có quyền xóa bài viết này.');
+    }
+    $post->delete();
+    return redirect()->route('page.community')->with('success', 'Đã xóa bài viết!');
+}
     public function deleteComment($id)
     {
         $comment = \App\Models\Comment::findOrFail($id);
@@ -644,4 +652,6 @@ public function share(Request $request, Post $post)
             'average_rating' => round($avg, 1),
         ]);
     }
+
+    
 }

@@ -3424,3 +3424,44 @@ textarea {
     color: #888;
     margin-left: 2px;
 }
+.share-actions {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+    justify-content: center;
+}
+
+.btn-toggle-share,
+.btn-delete-share {
+    padding: 6px 14px;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.96rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+    outline: none;
+}
+
+.btn-toggle-share {
+    background: linear-gradient(90deg, #3498db 60%, #6dd5fa 100%);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(52,152,219,0.08);
+}
+
+.btn-toggle-share:hover {
+    background: linear-gradient(90deg, #2980b9 60%, #48c6ef 100%);
+    color: #fff;
+}
+
+.btn-delete-share {
+    background: linear-gradient(90deg, #e74c3c 60%, #f7971e 100%);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(231,76,60,0.08);
+}
+
+.btn-delete-share:hover {
+    background: linear-gradient(90deg, #c0392b 60%, #f7971e 100%);
+    color: #fff;
+}
+

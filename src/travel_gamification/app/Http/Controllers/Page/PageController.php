@@ -47,8 +47,8 @@ class PageController extends Controller
         
         $destinations = Destination::where('status', 0)
             ->with(['destinationImages' => function ($query) {
-            $query->where('status', 2);
-        }])
+                $query->where('status', 2);
+            }])
             ->orderBy('updated_at', 'desc')
             ->paginate(8, ['*'], 'destinations_page'); // Phân trang bài viết admin
 
@@ -56,7 +56,23 @@ class PageController extends Controller
         // $travelTypes = TravelType::all();
         $travelTypes = TravelType::where('status', 0)->get();
 
-        return view('user.index', compact('travelTypes', 'destinations', 'posts', 'isLoggedIn', 'slides'));
+        // Lấy top 3 bài viết nổi bật (ví dụ: nhiều lượt thích nhất tháng này)
+        $startOfMonth = now()->startOfMonth();
+        $endOfMonth = now()->endOfMonth();
+        $topPosts = Post::with('user')
+            ->where('status', 0)
+            ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
+            ->withCount('likes')
+            ->orderByDesc('likes_count')
+            ->orderByDesc('created_at')
+            ->take(3)
+            ->get();
+        $topUsers = \App\Models\User::whereBetween('updated_at', [$startOfMonth, $endOfMonth])
+            ->orderByDesc('redeemable_points')
+            ->take(3)
+            ->get();
+
+        return view('user.index', compact('slides', 'travelTypes', 'posts', 'destinations', 'topPosts', 'topUsers'));
     }
 
     public function ajaxFilterPosts(Request $request)

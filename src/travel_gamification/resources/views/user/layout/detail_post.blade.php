@@ -33,13 +33,22 @@
         </span>
     </div>
 </div>
-        @auth
-            @if(Auth::id() === $post->user_id)
-                <a href="{{ route('post.edit', $post->id) }}" class="btn edit edit-post-btn" style="margin-left:12px;">
-                    <i class="fas fa-pen"></i> Sửa bài viết
-                </a>
-            @endif
-        @endauth
+@auth
+    @if(Auth::id() === $post->user_id)
+        <div style="display: flex; gap: 10px; align-items: center;">
+            <a href="{{ route('post.edit', $post->id) }}" class="btn edit edit-post-btn" style="background: #f6c177; color: #fff; border: none; border-radius: 6px; padding: 7px 18px; font-weight: 600;">
+                <i class="fas fa-pen"></i> Sửa bài viết
+            </a>
+            <form action="{{ route('post.delete', $post->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Bạn có chắc muốn xóa bài viết này không?');">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger" style="background: #e74c3c; color: #fff; border: none; border-radius: 6px; padding: 7px 18px; font-weight: 600;">
+                    <i class="fas fa-trash"></i> Xóa bài viết
+                </button>
+            </form>
+        </div>
+    @endif
+@endauth
     </div>
 <div>
     @if($post->post_type == 'destination')

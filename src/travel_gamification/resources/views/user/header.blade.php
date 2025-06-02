@@ -35,11 +35,11 @@
             <li><a class="{{request() -> is('mission') ? 'active' : ''}}" href="{{ route('page.mission') }}">Nhiệm vụ</a></li>
             <li><a class="{{request() -> is('ranking') ? 'active' : ''}}" href="{{ route('page.ranking') }}">Xếp hạng</a></li>
             <li><a class="{{request() -> is('profile') ? 'active' : ''}}" href="{{ route('page.profile') }}">Hồ sơ</a></li>
-            <li><a class="{{request() -> is('rewards') ? 'active' : ''}}" href="{{ route('user.rewards') }}">Đổi thưởng</a></li>
+            {{-- <li><a class="{{request() -> is('rewards') ? 'active' : ''}}" href="{{ route('user.rewards') }}">Đổi thưởng</a></li> --}}
 
         @else
             <li><a class="{{request() -> is('ranking') ? 'active' : ''}}" href="{{ route('page.ranking') }}">Xếp hạng</a></li>
-            <li><a class="{{request() -> is('rewards') ? 'active' : ''}}" href="{{ route('user.rewards') }}">Đổi thưởng</a></li>
+            {{-- <li><a class="{{request() -> is('rewards') ? 'active' : ''}}" href="{{ route('user.rewards') }}">Đổi thưởng</a></li> --}}
         @endauth
       </ul>
     </div>
@@ -78,9 +78,16 @@
                 $allNotifications = auth()->user()->notifications()->orderBy('created_at', 'desc')->get();
             @endphp
             @forelse($allNotifications as $notification)
+                @php
+                    // Nếu là thông báo liên quan đến bài viết thì có post_id
+                    $link = isset($notification->data['post_id'])
+                        ? route('post.detail', $notification->data['post_id'])
+                        : '#';
+                @endphp
                 <a class="notification-item {{ $notification->read_at ? 'read' : 'unread' }}"
-                   href="{{ route('post.detail', $notification->data['post_id']) }}"
-                   onclick="markNotificationRead('{{ $notification->id }}', this)">
+                   href="{{ $link }}"
+                   @if($link !== '#') onclick="markNotificationRead('{{ $notification->id }}', this)" @endif
+                   style="{{ $link === '#' ? 'pointer-events:none;opacity:0.7;' : '' }}">
                     <div>
                         <span>{{ $notification->data['message'] }}</span>
                         <small class="text-muted d-block">{{ $notification->created_at->diffForHumans() }}</small>
