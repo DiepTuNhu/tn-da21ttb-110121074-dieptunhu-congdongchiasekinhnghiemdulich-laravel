@@ -23,7 +23,7 @@
 
             <div class="profile-meta">
                 <p><i class="fas fa-calendar-alt"></i> Tham gia từ: {{ $user->created_at->format('d/m/Y') }}</p>
-                <p><i class="fas fa-star"></i> Điểm tích lũy: <strong>{{ number_format($user->score ?? 0, 0, ',', '.') }}</strong></p>
+                <p><i class="fas fa-star"></i> Điểm tích lũy: <strong>{{ number_format($user->total_points ?? 0, 0, ',', '.') }}</strong></p>
             </div>
 
             <div class="profile-stats">
@@ -39,7 +39,7 @@
       <!-- Tabs -->
       <div class="profile-tabs">
         <div class="profile-tab active" data-tab="posts">📄 Bài viết</div>
-        <div class="profile-tab" data-tab="missions">🎯 Nhiệm vụ</div>
+        {{-- <div class="profile-tab" data-tab="missions">🎯 Nhiệm vụ</div> --}}
         <div class="profile-tab" data-tab="likes">❤️ Đã thích</div>
         <div class="profile-tab" data-tab="shared">📢 Đã chia sẻ</div>
         <div class="profile-tab" data-tab="followers">👥 Người theo dõi</div>
@@ -133,7 +133,7 @@
       </div>
 
       <!-- Nội dung: Nhiệm vụ -->
-      <div class="profile-tab-content" id="missions">
+      {{-- <div class="profile-tab-content" id="missions">
         <div class="profile-card-grid">
           <div class="profile-card-item">
             <div class="profile-card-content">
@@ -148,7 +148,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> --}}
 
       <!-- Nội dung: Đã thích -->
       <div class="profile-tab-content" id="likes">

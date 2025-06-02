@@ -114,6 +114,13 @@
         <h3>{{ $mission->name }}</h3>
         <p>{{ $mission->description }}</p>
         <div class="reward">🎁 +{{ $mission->points_reward }} điểm</div>
+        <div style="font-size:13px;color:#888;margin-bottom:6px;">
+            🗓️
+            Bắt đầu: {{ \Carbon\Carbon::parse($mission->start_date)->format('d/m/Y') }}
+            <br>
+            🗓️
+            Kết thúc: {{ \Carbon\Carbon::parse($mission->end_date)->format('d/m/Y') }}
+        </div>
         {{-- Thanh tiến độ --}}
         <div class="progress" style="height: 18px; background: #eee; border-radius: 8px; margin-bottom: 8px;">
           <div style="width: {{ min(100, round($mission->progress_done / $mission->progress_total * 100)) }}%; background: #4caf50; height: 100%; border-radius: 8px; text-align: center; color: #fff; font-size: 13px;">
@@ -121,7 +128,6 @@
           </div>
         </div>
         @php
-            // Kiểm tra đã hoàn thành và đã nhận thưởng chưa (giả sử có biến $claimedMissions là mảng id nhiệm vụ đã nhận thưởng)
             $isCompleted = $mission->progress_done >= $mission->progress_total;
             $isClaimed = in_array($mission->id, $claimedMissions ?? []);
         @endphp

@@ -4,10 +4,83 @@
 <header class="ranking-header">
   <h1 class="ranking-title">🏆 Bảng Xếp Hạng</h1>
   <p class="ranking-description">Khám phá người dùng và bài viết nổi bật nhất trong cộng đồng!</p>
+  <div class="ranking-criteria" style="background: rgba(248, 249, 250, 0.5); border-radius: 8px; padding: 14px 18px; margin: 16px 0 24px 0; color:#333; font-size:15px;">
+      <strong>🔎 Cách tính điểm xếp hạng bài viết:</strong>
+      <ul style="margin: 8px 0 0 22px; padding: 0; font-size:14px; list-style: none;">
+          <li>
+              <b>Điểm tổng hợp</b> = Sự kết hợp giữa:
+              <ul style="margin: 4px 0 0 18px; list-style: none;">
+                  <li><b>Điểm sao trung bình</b> do cộng đồng đánh giá</li>
+                  <li><b>Số lượt đánh giá</b> (nhiều đánh giá sẽ công bằng hơn)</li>
+                  <li><b>Lượt thích</b> và <b>bình luận</b></li>
+              </ul>
+          </li>
+          <li>
+              <b>Công thức công bằng:</b>
+              <code>score = (v/(v+m)) × R + (m/(v+m)) × C</code>
+              <br>
+              <span style="font-size:13px; color:#888;">
+                  <b>v</b>: số lượt đánh giá của bài viết, <b>R</b>: điểm trung bình bài viết, <b>m</b>: ngưỡng tin cậy, <b>C</b>: điểm trung bình toàn hệ thống.
+              </span>
+          </li>
+          <li>
+              Nếu điểm tổng hợp bằng nhau, ưu tiên bài nhiều like, nhiều bình luận và mới hơn.
+          </li>
+      </ul>
+  </div>
 </header>
 
 <section class="ranking-section">
-  <h2 class="ranking-subtitle">📋 Top Người Dùng</h2>
+  <h2 class="ranking-subtitle">📝 Top 10 Bài Viết Tháng</h2>
+  <table class="ranking-table">
+    <thead class="ranking-table-head">
+      <tr>
+        <th>Hạng</th>
+        <th>Bài viết</th>
+        <th>Tác giả</th>
+        <th>Lượt thích</th>
+        <th>Bình luận</th>
+        <th>Ngày</th>
+        <th>Điểm tổng hợp</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach($topPosts as $i => $post)
+      <tr>
+        <td>
+          @if($i == 0) 🥇 @elseif($i == 1) 🥈 @elseif($i == 2) 🥉 @else {{ $i+1 }} @endif
+        </td>
+        <td style="text-align:left;">
+          {{-- <img src="{{ $post->thumbnail ?? '/default.png' }}" class="ranking-thumb" /> --}}
+          {{ $post->title }}
+        </td>
+        <td style="text-align:left;">
+          <img
+            src="{{
+                $post->user && $post->user->avatar
+                    ? (Str::startsWith($post->user->avatar, 'http')
+                        ? $post->user->avatar
+                        : (file_exists(public_path('storage/avatars/' . $post->user->avatar))
+                            ? asset('storage/avatars/' . $post->user->avatar)
+                            : asset('storage/default.jpg')))
+                    : asset('storage/default.jpg')
+            }}"
+            class="ranking-avatar"
+          />
+          {{ $post->user->username ?? 'Ẩn danh' }}
+        </td>
+        <td>{{ $post->like_count }}</td>
+        <td>{{ $post->comment_count }}</td>
+        <td>{{ \Carbon\Carbon::parse($post->created_at)->format('d/m/Y') }}</td>
+        <td>{{ round($post->score, 2) }}</td>
+      </tr>
+      @endforeach
+    </tbody>
+  </table>
+</section>
+
+<section class="ranking-section">
+  <h2 class="ranking-subtitle">📋 Top 10 Người Dùng</h2>
   <table class="ranking-table">
     <thead class="ranking-table-head">
       <tr>
@@ -19,69 +92,45 @@
       </tr>
     </thead>
     <tbody>
+      @foreach($topUsers as $i => $user)
       <tr>
-        <td><i class="fas fa-crown ranking-icon rank-1"></i> 1</td>
-        <td><img src="https://i.pravatar.cc/36?img=1" class="ranking-avatar" /> Hưng Phạm</td>
-        <td>1250</td>
-        <td>25</td>
-        <td>980</td>
+        <td>
+          @if($i == 0)
+              <i class="fas fa-crown ranking-icon rank-1"></i> 1
+          @elseif($i == 1)
+              <i class="fas fa-crown ranking-icon rank-2"></i> 2
+          @elseif($i == 2)
+              <i class="fas fa-crown ranking-icon rank-3"></i> 3
+          @else
+              {{ $i+1 }}
+          @endif
+        </td>
+        <td style="text-align:left;">
+          <img
+            src="{{
+                $user->avatar
+                    ? (Str::startsWith($user->avatar, 'http')
+                        ? $user->avatar
+                        : (file_exists(public_path('storage/avatars/' . $user->avatar))
+                            ? asset('storage/avatars/' . $user->avatar)
+                            : asset('storage/default.jpg')))
+                    : asset('storage/default.jpg')
+            }}"
+            class="ranking-avatar"
+          />
+          {{ $user->username }}
+        </td>
+        <td>{{ $user->total_points }}</td>
+        <td>{{ $user->posts()->count() }}</td>
+        <td>
+            {{
+                $user->posts->reduce(function($carry, $post) {
+                    return $carry + $post->likes->count();
+                }, 0)
+            }}
+        </td>
       </tr>
-      <tr>
-        <td><i class="fas fa-crown ranking-icon rank-2"></i> 2</td>
-        <td><img src="https://i.pravatar.cc/36?img=2" class="ranking-avatar" /> Linh Lê</td>
-        <td>1120</td>
-        <td>22</td>
-        <td>870</td>
-      </tr>
-      <tr>
-        <td><i class="fas fa-crown ranking-icon rank-3"></i> 3</td>
-        <td><img src="https://i.pravatar.cc/36?img=3" class="ranking-avatar" /> Trường Vũ</td>
-        <td>1050</td>
-        <td>20</td>
-        <td>820</td>
-      </tr>
-    </tbody>
-  </table>
-</section>
-
-<section class="ranking-section">
-  <h2 class="ranking-subtitle">📝 Top Bài Viết</h2>
-  <table class="ranking-table">
-    <thead class="ranking-table-head">
-      <tr>
-        <th>Hạng</th>
-        <th>Bài viết</th>
-        <th>Tác giả</th>
-        <th>Lượt thích</th>
-        <th>Bình luận</th>
-        <th>Ngày</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>🥇 1</td>
-        <td><img src="../1.png" class="ranking-thumb" /> 10 bãi biển đẹp nhất VN</td>
-        <td><img src="https://i.pravatar.cc/36?img=1" class="ranking-avatar" /> Hưng Phạm</td>
-        <td>135</td>
-        <td>24</td>
-        <td>10/04/2025</td>
-      </tr>
-      <tr>
-        <td>🥈 2</td>
-        <td><img src="../2.png" class="ranking-thumb" /> Du lịch Hội An cổ kính</td>
-        <td><img src="https://i.pravatar.cc/36?img=2" class="ranking-avatar" /> Linh Lê</td>
-        <td>120</td>
-        <td>18</td>
-        <td>09/04/2025</td>
-      </tr>
-      <tr>
-        <td>🥉 3</td>
-        <td><img src="../3.png" class="ranking-thumb" /> Trekking Tà Năng – Phan Dũng</td>
-        <td><img src="https://i.pravatar.cc/36?img=3" class="ranking-avatar" /> Vũ Trường</td>
-        <td>110</td>
-        <td>15</td>
-        <td>08/04/2025</td>
-      </tr>
+      @endforeach
     </tbody>
   </table>
 </section>

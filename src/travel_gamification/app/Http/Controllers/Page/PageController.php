@@ -376,10 +376,46 @@ class PageController extends Controller
     }
 
     public function getRanking(Request $request)
-    {
-        // Trả về view cùng với danh sách nhiệm vụ
-        return view('user.layout.ranking');
-    }
+{
+    // Trung bình điểm sao toàn hệ thống
+    $C = DB::table('ratings')->avg('score');
+    $m = 5; // Số lượt đánh giá tối thiểu để "đáng tin" (có thể lấy trung bình hoặc đặt cố định)
+
+    $startOfMonth = now()->startOfMonth();
+$endOfMonth = now()->endOfMonth();
+
+$topPosts = \App\Models\Post::with('user')
+    ->whereBetween('posts.created_at', [$startOfMonth, $endOfMonth])
+    ->leftJoin('ratings', 'posts.id', '=', 'ratings.post_id')
+    ->leftJoin('likes', 'posts.id', '=', 'likes.post_id')
+    ->leftJoin('comments', 'posts.id', '=', 'comments.post_id')
+    ->select(
+        'posts.id',
+        'posts.title',
+        'posts.user_id',
+        'posts.created_at',
+        DB::raw('AVG(ratings.score) as average_rating'),
+        DB::raw('COUNT(DISTINCT ratings.id) as rating_count'),
+        DB::raw('COUNT(DISTINCT likes.id) as like_count'),
+        DB::raw('COUNT(DISTINCT comments.id) as comment_count'),
+        DB::raw("((COUNT(DISTINCT ratings.id) / (COUNT(DISTINCT ratings.id) + $m)) * AVG(ratings.score) + ($m / (COUNT(DISTINCT ratings.id) + $m)) * $C) as score")
+    )
+    ->groupBy('posts.id', 'posts.title', 'posts.user_id', 'posts.created_at')
+    ->orderByDesc('score')
+    ->orderByDesc('like_count')
+    ->orderByDesc('comment_count')
+    ->orderByDesc('posts.created_at')
+    ->take(10)
+    ->get();
+
+    // Top người dùng như cũ
+    $topUsers = \App\Models\User::with(['posts.likes'])
+        ->orderByDesc('total_points')
+        ->take(10)
+        ->get();
+
+    return view('user.layout.ranking', compact('topPosts', 'topUsers'));
+}
     public function getProfile(Request $request)
     {
         // Trả về view cùng với danh sách nhiệm vụ

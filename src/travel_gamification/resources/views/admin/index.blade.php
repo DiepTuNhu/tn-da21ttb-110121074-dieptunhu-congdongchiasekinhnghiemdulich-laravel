@@ -96,6 +96,7 @@
 
 <li class="nav-item"><a class="nav-link" href="{{route('badges.index')}}" onclick="loadPage(event, this)"><i class="bi bi-award"></i> Huy hiệu</a></li>
 <li class="nav-item"><a class="nav-link" href="{{route('missions.index')}}" onclick="loadPage(event, this)"><i class="bi bi-flag"></i> Nhiệm vụ</a></li>
+<li class="nav-item"><a class="nav-link" href="{{route('rewards.index')}}" onclick="loadPage(event, this)"><i class="bi bi-flag"></i> Quà tặng</a></li>
 <li class="nav-item"><a class="nav-link" href="{{route('roles.index')}}" onclick="loadPage(event, this)"><i class="bi bi-person-lock"></i> Phân quyền</a></li>
 <li class="nav-item"><a class="nav-link" href="{{route('users.index')}}" onclick="loadPage(event, this)"><i class="bi bi-people"></i> Người dùng</a></li>
 <li class="nav-item"><a class="nav-link" href="{{route('posts.index')}}" onclick="loadPage(event, this)"><i class="bi bi-journal-text"></i> Bài viết</a></li>

@@ -17,6 +17,8 @@ use App\Http\Controllers\Admin\MissionsController;
 use App\Http\Controllers\Admin\UtilitiesController;
 use App\Http\Controllers\Admin\DestinationsController;
 use App\Http\Controllers\Admin\DestinationImagesController;
+use App\Http\Controllers\Admin\RewardController;
+
 use App\Http\Controllers\Page\PostController;
 use App\Http\Controllers\Page\ProfileController;
 use App\Http\Controllers\Page\CreateDestinationController;
@@ -221,3 +223,12 @@ Route::prefix('admin')->group(function () {
 
 });
 
+
+Route::prefix('admin/rewards')->name('rewards.')->group(function () {
+    Route::get('/', [RewardController::class, 'index'])->name('index');
+    Route::get('/create', [RewardController::class, 'create'])->name('create');
+    Route::post('/store', [RewardController::class, 'store'])->name('store');
+    Route::get('/edit/{id}', [RewardController::class, 'edit'])->name('edit');
+    Route::post('/update/{id}', [RewardController::class, 'update'])->name('update');
+    Route::delete('/destroy/{id}', [RewardController::class, 'destroy'])->name('destroy');
+});
