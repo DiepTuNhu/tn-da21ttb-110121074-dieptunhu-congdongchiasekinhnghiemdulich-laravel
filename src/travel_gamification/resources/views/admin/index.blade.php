@@ -230,6 +230,35 @@
         .catch(err => console.error('Lỗi khi tải trang:', err));
     }
     </script>
+    <!-- Ví dụ đặt ở góc trên bên phải -->
+<div class="dropdown" style="position: absolute; top: 20px; right: 30px;">
+    <a href="#" id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bi bi-bell" style="font-size: 1.7rem; position: relative;">
+            @if(Auth::user()->unreadNotifications->count() > 0)
+                <span class="badge-pending" style="position: absolute; top: -8px; right: -8px;">
+                    {{ Auth::user()->unreadNotifications->count() }}
+                </span>
+            @endif
+        </i>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown" style="width: 350px; max-height: 400px; overflow-y: auto;">
+        @forelse(Auth::user()->unreadNotifications as $notification)
+            <li>
+                @php
+                    $type = $notification->data['type'] ?? 'destination';
+                    $label = $type === 'utility' ? 'Bài viết về tiện ích' : 'Bài viết về địa điểm';
+                @endphp
+                <a class="dropdown-item" href="{{ route('admin.notification.read', $notification->id) }}">
+                    <b>{{ $notification->data['name'] }}</b> - {{ $label }} mới<br>
+                    <small class="text-muted">Bởi: {{ $notification->data['user_name'] ?? 'Người dùng' }}</small><br>
+                    <small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
+                </a>
+            </li>
+        @empty
+            <li><span class="dropdown-item text-muted">Không có thông báo mới</span></li>
+        @endforelse
+    </ul>
+</div>
     </div>
   
   </body>

@@ -9,6 +9,9 @@ use App\Models\Destination;
 use App\Models\UtilityType;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use App\Notifications\NewUtilityCreated;
 
 class CreateUtilityController extends Controller
 {
@@ -61,6 +64,17 @@ class CreateUtilityController extends Controller
                 'status'         => 'nearby',
                 'distance'       => $request->distance,
             ]);
+
+            // Gửi thông báo cho admin khi có tiện ích mới (chỉ khi user không phải quản trị)
+            $userRole = mb_strtolower(Auth::user()->role->name ?? '');
+            if ($userRole !== 'quản trị') {
+                $admins = User::whereHas('role', function($q) {
+                    $q->whereRaw('LOWER(name) = ?', ['quản trị']);
+                })->get();
+                foreach ($admins as $admin) {
+                    $admin->notify(new NewUtilityCreated($utility, Auth::user()->username));
+                }
+            }
 
             DB::commit();
             return redirect()->route('page.post_share')->with('success', 'Tạo tiện ích thành công!');

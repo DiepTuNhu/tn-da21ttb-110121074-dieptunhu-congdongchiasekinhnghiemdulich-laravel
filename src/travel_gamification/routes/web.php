@@ -144,7 +144,17 @@ Route::get('password/forgot', [ForgotPasswordController::class, 'showLinkRequest
 Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
 Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
 Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
-// ...existing code...
+
+Route::get('/admin/notification/read/{id}', function ($id) {
+    $notification = auth()->user()->notifications()->findOrFail($id);
+    $notification->markAsRead();
+    // Chuyển hướng đến trang phù hợp, ví dụ:
+    $data = $notification->data;
+    if (($data['type'] ?? '') === 'utility') {
+        return redirect()->route('utilities.index', ['highlight' => $data['utility_id']]);
+    }
+    return redirect()->route('destinations.index', ['highlight' => $data['location_id']]);
+})->name('admin.notification.read');
 // ADMIN=======================================================================================================================================
 
 Route::middleware(['auth', 'is_admin'])->prefix('admin')->group(function () {

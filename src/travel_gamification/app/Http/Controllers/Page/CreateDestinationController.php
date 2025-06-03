@@ -9,6 +9,8 @@ use App\Models\DestinationImage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Models\User;
+use App\Notifications\NewLocationCreated; // Thêm dòng này
 
 class CreateDestinationController extends Controller
 {
@@ -37,6 +39,17 @@ class CreateDestinationController extends Controller
                         'status' => 2,
                         'destination_id' => $destination->id,
                     ]);
+                }
+            }
+
+            // Gửi thông báo cho admin khi có địa điểm mới (chỉ khi user không phải quản trị)
+            $userRole = mb_strtolower(Auth::user()->role->name ?? '');
+            if ($userRole !== 'quản trị') {
+                $admins = User::whereHas('role', function($q) {
+                    $q->whereRaw('LOWER(name) = ?', ['quản trị']);
+                })->get();
+                foreach ($admins as $admin) {
+                    $admin->notify(new NewLocationCreated($destination, Auth::user()->username));
                 }
             }
 
