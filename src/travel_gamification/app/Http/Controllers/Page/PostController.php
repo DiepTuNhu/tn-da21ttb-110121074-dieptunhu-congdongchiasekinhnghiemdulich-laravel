@@ -654,6 +654,11 @@ public function share(Request $request, Post $post)
         $user = auth()->user();
         $post = Post::findOrFail($id);
 
+        // Không cho phép tự đánh giá bài viết của mình
+        if ($post->user_id == $user->id) {
+            return response()->json(['error' => 'Bạn không thể tự đánh giá bài viết của mình!'], 403);
+        }
+
         // Cập nhật hoặc tạo mới đánh giá
         $rating = Rating::updateOrCreate(
             ['user_id' => $user->id, 'post_id' => $post->id],
@@ -661,10 +666,10 @@ public function share(Request $request, Post $post)
         );
 
         // Tính lại điểm trung bình
-
         $avg = Rating::where('post_id', $post->id)->avg('score');
         $post->average_rating = $avg ?? 0; // Nếu $avg là null thì gán 0
         $post->save();
+
         return response()->json([
             'success' => true,
             'average_rating' => round($avg, 1),

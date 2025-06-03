@@ -49,13 +49,31 @@ class ProfileController extends Controller
     public function detail($id)
     {
         $user = \App\Models\User::findOrFail($id);
+
+        // Đếm số bài viết
+        $user->posts_count = $user->posts()->count();
+
+        // Đếm tổng lượt thích nhận được từ tất cả bài viết của user
+        $user->likes_count = \App\Models\Like::whereIn('post_id', $user->posts()->pluck('id'))->count();
+
+        // Nếu có cột score trong bảng users thì giữ nguyên, nếu không thì tự tính ở đây
+        $user->score = $user->score ?? 0;
+
         $posts = $user->posts()->withCount('likes', 'comments')->latest()->get();
         $sharedPosts = $user->sharedPosts()
             ->with(['likes'])
             ->withPivot('id','is_public', 'status')
             ->get();
+        $followingUsers = $user->followings()->get();
+        $followerUsers = $user->followers()->get();
 
-        return view('user.layout.detail_user_follow', compact('user', 'posts', 'sharedPosts'));
+        // Thêm biến đếm
+        $following_count = $followingUsers->count();
+        $follower_count = $followerUsers->count();
+
+        return view('user.layout.detail_user_follow', compact(
+            'user', 'posts', 'sharedPosts', 'followingUsers', 'followerUsers', 'following_count', 'follower_count'
+        ));
     }
 
     public function toggleShareStatus($id)
