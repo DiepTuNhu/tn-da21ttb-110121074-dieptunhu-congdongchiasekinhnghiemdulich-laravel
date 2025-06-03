@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: localhost:3306
--- Thời gian đã tạo: Th6 02, 2025 lúc 11:10 AM
+-- Thời gian đã tạo: Th6 03, 2025 lúc 01:32 PM
 -- Phiên bản máy phục vụ: 8.0.30
 -- Phiên bản PHP: 8.1.10
 
@@ -81,12 +81,11 @@ INSERT INTO `comments` (`id`, `content`, `status`, `user_id`, `post_id`, `parent
 (100, 'Đúng rồi bạn, ở đây nhiều cây xanh mát mẻ lắm', '0', 3, 25, 99, '2025-05-26 13:32:18', '2025-05-26 13:32:18'),
 (101, 'Gần Ao Bà Om có quán bún nước lèo nào không vậy mọi người', '0', 3, 25, NULL, '2025-05-26 13:34:50', '2025-05-26 13:34:50'),
 (102, 'Khung cảnh trên chợ nổi cực kì nhộn nhịp, hàng hóa thì đa dạng', '0', 22, 59, NULL, '2025-06-01 13:23:38', '2025-06-01 13:23:38'),
-(103, 'hmm', '0', 22, 72, NULL, '2025-06-01 13:35:46', '2025-06-01 13:35:46'),
-(104, 'â', '0', 22, 72, 103, '2025-06-01 13:35:52', '2025-06-01 13:35:52'),
 (105, 'hmm', '0', 3, 25, NULL, '2025-06-01 13:47:21', '2025-06-01 13:47:21'),
-(106, 'hmm', '0', 3, 72, NULL, '2025-06-01 13:47:42', '2025-06-01 13:47:42'),
 (107, 'Khung cảnh nơi đây bình yên cùng với các món ăn cũng như các hoạt động đáng để thử 1 lần', '0', 22, 57, NULL, '2025-06-02 01:58:00', '2025-06-02 01:58:00'),
-(108, 'sdsa', '0', 3, 72, NULL, '2025-06-02 02:01:21', '2025-06-02 02:01:21');
+(109, 'Chỗ này ở chất lượng nhé mọi người, phòng óc sạch sẻ thoải mái', '0', 22, 61, NULL, '2025-06-02 14:28:43', '2025-06-02 14:28:43'),
+(110, 'mhh', '0', 22, 74, NULL, '2025-06-03 02:22:54', '2025-06-03 02:22:54'),
+(111, 'hmm', '0', 22, 74, NULL, '2025-06-03 02:23:01', '2025-06-03 02:23:01');
 
 -- --------------------------------------------------------
 
@@ -798,7 +797,9 @@ CREATE TABLE `follows` (
 
 INSERT INTO `follows` (`id`, `follower_id`, `following_id`, `created_at`, `updated_at`) VALUES
 (4, 3, 13, '2025-06-01 01:59:16', '2025-06-01 01:59:16'),
-(6, 13, 3, '2025-06-01 02:20:10', '2025-06-01 02:20:10');
+(6, 13, 3, '2025-06-01 02:20:10', '2025-06-01 02:20:10'),
+(11, 22, 3, '2025-06-03 02:32:16', '2025-06-03 02:32:16'),
+(12, 22, 13, '2025-06-03 03:26:36', '2025-06-03 03:26:36');
 
 -- --------------------------------------------------------
 
@@ -823,11 +824,14 @@ INSERT INTO `likes` (`id`, `user_id`, `post_id`, `comment_id`, `created_at`, `up
 (37, 3, 25, NULL, '2025-05-26 13:07:10', '2025-05-26 13:07:10'),
 (48, 22, 26, NULL, '2025-05-30 00:27:17', '2025-05-30 00:27:17'),
 (51, 13, 25, NULL, '2025-05-31 15:17:35', '2025-05-31 15:17:35'),
-(52, 3, 59, NULL, '2025-06-01 01:51:07', '2025-06-01 01:51:07'),
 (53, 22, 59, NULL, '2025-06-01 13:23:01', '2025-06-01 13:23:01'),
-(54, 22, 25, NULL, '2025-06-01 13:26:27', '2025-06-01 13:26:27'),
 (67, 22, 57, NULL, '2025-06-02 01:20:53', '2025-06-02 01:20:53'),
-(69, 3, 72, NULL, '2025-06-02 02:11:30', '2025-06-02 02:11:30');
+(70, 22, 61, NULL, '2025-06-02 14:27:57', '2025-06-02 14:27:57'),
+(71, 13, 74, NULL, '2025-06-02 14:40:44', '2025-06-02 14:40:44'),
+(72, 3, 59, NULL, '2025-06-02 14:42:31', '2025-06-02 14:42:31'),
+(73, 3, 57, NULL, '2025-06-02 14:59:12', '2025-06-02 14:59:12'),
+(75, 22, 25, NULL, '2025-06-03 01:02:07', '2025-06-03 01:02:07'),
+(83, 22, 74, NULL, '2025-06-03 02:11:45', '2025-06-03 02:11:45');
 
 -- --------------------------------------------------------
 
@@ -875,7 +879,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (65, '2025_05_27_091950_create_notifications_table', 20),
 (66, '2025_06_01_211813_add_timestamps_to_user_missions_table', 21),
 (67, '2025_06_02_103030_create_rewards_table', 22),
-(68, '2025_06_02_103031_create_user_reward_table', 22);
+(68, '2025_06_02_103031_create_user_reward_table', 22),
+(69, '2025_06_03_184943_add_remember_token_to_users_table', 23);
 
 -- --------------------------------------------------------
 
@@ -937,14 +942,26 @@ CREATE TABLE `notifications` (
 --
 
 INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `data`, `read_at`, `created_at`, `updated_at`) VALUES
+('0269542f-b3f4-49a4-90c6-4b324e00035e', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 13, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"1\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":75}', '2025-06-03 04:12:47', '2025-06-03 03:38:23', '2025-06-03 04:12:47'),
 ('1466e83e-5505-4250-96bd-a8e9248b2b3c', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 13, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"B\\u1ebfp X\\u01b0a Nam B\\u1ed9 \\u2013 Homestay C\\u00f4 V\\u00e2n\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":60}', '2025-05-28 03:37:26', '2025-05-28 03:01:35', '2025-05-28 03:37:26'),
 ('1898cead-b1c2-40ca-874b-37be6dad715a', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 13, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"\\u0110\\u1ebfn B\\u1ebfn Ninh Ki\\u1ec1u ng\\u1eafm v\\u1ebb \\u0111\\u1eb9p c\\u1ee7a T\\u00e2y \\u0110\\u00f4 l\\u1ed9ng l\\u1eaby v\\u1ec1 \\u0111\\u00eam\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":58}', '2025-05-28 02:36:47', '2025-05-28 02:36:16', '2025-05-28 02:36:47'),
+('1fd976fe-c0bd-467b-a545-591b424eacf6', 'App\\Notifications\\PostSharedNotification', 'App\\Models\\User', 13, '{\"message\":\"linh nguy\\u1ec5n \\u0111\\u00e3 chia s\\u1ebb b\\u00e0i vi\\u1ebft c\\u1ee7a b\\u1ea1n: 1\",\"post_id\":75,\"sharer_id\":22}', '2025-06-03 04:12:47', '2025-06-03 03:39:26', '2025-06-03 04:12:47'),
+('27082da6-c839-4b6d-a137-d427b5f46714', 'App\\Notifications\\PostCommentedNotification', 'App\\Models\\User', 3, '{\"message\":\"linh nguy\\u1ec5n \\u0111\\u00e3 b\\u00ecnh lu\\u1eadn b\\u00e0i vi\\u1ebft c\\u1ee7a b\\u1ea1n: 1\",\"post_id\":74,\"commenter_id\":22}', '2025-06-03 02:23:10', '2025-06-03 02:22:56', '2025-06-03 02:23:10'),
+('3115e867-c441-47fc-9692-cd579dd9853a', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 13, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"1\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":76}', '2025-06-03 04:12:47', '2025-06-03 04:03:16', '2025-06-03 04:12:47'),
 ('43a7bbd2-b0ce-486a-a130-87985b928315', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 13, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"Kh\\u00e1m ph\\u00e1 Ch\\u1ee3 n\\u1ed5i C\\u00e1i R\\u0103ng v\\u1edbi n\\u00e9t \\u0111\\u1eb7c s\\u1eafc ch\\u1ed1n T\\u00e2y \\u0110\\u00f4\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":59}', '2025-05-28 02:36:47', '2025-05-28 02:36:18', '2025-05-28 02:36:47'),
+('46d18eef-4241-44fe-bdc1-33ab4738503a', 'App\\Notifications\\UserFollowedNotification', 'App\\Models\\User', 13, '{\"message\":\"linh nguy\\u1ec5n \\u0111\\u00e3 theo d\\u00f5i b\\u1ea1n.\",\"follower_id\":22}', '2025-06-03 04:12:47', '2025-06-03 03:26:35', '2025-06-03 04:12:47'),
 ('5cb9bd98-11c2-4df8-8c93-1fd2956fcb23', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 13, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"Malis Homestay\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":61}', '2025-05-28 03:37:26', '2025-05-28 03:01:35', '2025-05-28 03:37:26'),
 ('632c4a28-2a4a-4c90-ac28-b735f9d57575', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 13, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"V\\u1ec1 C\\u1ed3n Chim Tr\\u00e0 Vinh kh\\u00e1m ph\\u00e1 s\\u00f4ng n\\u01b0\\u1edbc mi\\u1ec7t v\\u01b0\\u1eddn mi\\u1ec1n T\\u00e2y\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":57}', '2025-05-28 02:36:47', '2025-05-28 02:36:17', '2025-05-28 02:36:47'),
+('6af97297-c728-4a38-ab3f-47d9c5784215', 'App\\Notifications\\PostLikedNotification', 'App\\Models\\User', 3, '{\"message\":\"linh nguy\\u1ec5n \\u0111\\u00e3 th\\u00edch b\\u00e0i vi\\u1ebft c\\u1ee7a b\\u1ea1n: 1\",\"post_id\":74,\"liker_id\":22}', '2025-06-03 02:23:18', '2025-06-03 02:11:45', '2025-06-03 02:23:18'),
+('8c68104e-832c-47ea-a007-a8c437e8b9ad', 'App\\Notifications\\UserFollowedNotification', 'App\\Models\\User', 3, '{\"message\":\"linh nguy\\u1ec5n \\u0111\\u00e3 theo d\\u00f5i b\\u1ea1n.\",\"follower_id\":22}', NULL, '2025-06-03 02:32:16', '2025-06-03 02:32:16'),
+('a54375f9-cb3e-4b83-8b27-4e8bd3081c1b', 'App\\Notifications\\UserFollowedNotification', 'App\\Models\\User', 13, '{\"message\":\"linh nguy\\u1ec5n \\u0111\\u00e3 theo d\\u00f5i b\\u1ea1n.\",\"follower_id\":22}', '2025-06-03 04:12:47', '2025-06-03 03:26:36', '2025-06-03 04:12:47'),
+('af3d7a88-468a-43fa-8dae-b3833d718c65', 'App\\Notifications\\PostCommentedNotification', 'App\\Models\\User', 3, '{\"message\":\"linh nguy\\u1ec5n \\u0111\\u00e3 b\\u00ecnh lu\\u1eadn b\\u00e0i vi\\u1ebft c\\u1ee7a b\\u1ea1n: 1\",\"post_id\":74,\"commenter_id\":22}', '2025-06-03 02:23:18', '2025-06-03 02:23:01', '2025-06-03 02:23:18'),
 ('c328ad36-ffd1-4789-ba35-88e22efc5450', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 13, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"B\\u00e1nh x\\u00e8o S\\u00e1u Gi\\u00e0u\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":62}', '2025-05-28 03:37:26', '2025-05-28 03:01:37', '2025-05-28 03:37:26'),
+('c3fddb9b-7dfe-4b3d-bc81-0a595dfb56b9', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 3, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"1\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":74}', '2025-06-02 14:36:48', '2025-06-02 14:36:40', '2025-06-02 14:36:48'),
 ('d2eb1a5e-f6c3-40c9-8d75-23ec023ae398', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 13, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"Qu\\u00e1n \\u0102n T\\u00e2n K\\u00fd 79\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":56}', '2025-05-28 01:56:08', '2025-05-28 01:55:58', '2025-05-28 01:56:08'),
 ('e45526b7-277f-48b7-bec4-7255e9ae73fd', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 22, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"111\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":72}', '2025-06-01 13:21:41', '2025-06-01 13:21:21', '2025-06-01 13:21:41'),
+('e8d71a52-b797-426f-a714-f4e7c41caca1', 'App\\Notifications\\PostSharedNotification', 'App\\Models\\User', 13, '{\"message\":\"linh nguy\\u1ec5n \\u0111\\u00e3 chia s\\u1ebb b\\u00e0i vi\\u1ebft c\\u1ee7a b\\u1ea1n: Qu\\u00e1n \\u0102n T\\u00e2n K\\u00fd 79\",\"post_id\":56,\"sharer_id\":22}', '2025-06-03 04:12:47', '2025-06-03 03:32:03', '2025-06-03 04:12:47'),
+('edab8474-2f48-4ec2-9e1f-52f2f83c22b1', 'App\\Notifications\\UserFollowedNotification', 'App\\Models\\User', 3, '{\"message\":\"linh nguy\\u1ec5n \\u0111\\u00e3 theo d\\u00f5i b\\u1ea1n.\",\"follower_id\":22}', NULL, '2025-06-03 02:27:19', '2025-06-03 02:27:19'),
 ('fa311c54-63ef-42c7-a963-ae4195a7fab6', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 13, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"Qu\\u00e1n C\\u01a1m Thanh H\\u00e0\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":63}', '2025-05-28 03:37:26', '2025-05-28 03:03:09', '2025-05-28 03:37:26');
 
 -- --------------------------------------------------------
@@ -1014,10 +1031,12 @@ INSERT INTO `posts` (`id`, `title`, `content`, `address`, `status`, `average_rat
 (56, 'Quán Ăn Tân Ký 79', '<h2>Quán Ăn Tân Ký 79</h2>', 'Xã Tân Thành, Huyện Mộc Hóa, Tỉnh Long An', '0', 0.00, 13, NULL, '2025-05-28 01:55:34', '2025-05-28 01:55:58', NULL, 'utility', NULL, NULL, 48),
 (57, 'Về Cồn Chim Trà Vinh khám phá sông nước miệt vườn miền Tây', '<h2>Ốc đảo xanh yên bình tại tỉnh Trà Vinh</h2><p><strong>Địa chỉ:</strong> xã Hòa Minh, huyện Châu Thành, Trà Vinh.</p><p><strong>Giờ mở cửa:</strong> Mở cửa cả ngày</p><p>Cồn Chim là một trong những điểm <a href=\"https://mia.vn/cam-nang-du-lich/du-lich-tra-vinh-12533\">du lịch Trà Vinh</a> nổi tiếng, được ví như ốc đảo xanh yên bình. Nơi đây sở hữu mô hình thuận thiên góp phần bảo vệ môi trường, song song đó gìn giữ văn hóa mộc mạc, chân chất. Với khẩu hiệu “Về Cồn Chim, người quê chỉ có tấm lòng”, ốc đảo sinh thái mang lại trải nghiệm khám phá sông nước, miệt vườn đầy thú vị, thu hút khách du lịch gần xa.</p><p>Tên gọi của cồn đất này khá đặc biệt, khi nhắc đến khiến người ta tưởng tượng ra một dải đất nằm giữa con sông lớn với đủ các loài chim. Trên thực tế, người dân thường đặt tên cho địa danh bằng vị trí địa lý và đặc điểm nổi bật. Và đúng như tên gọi, cù lao này là vùng đất mà các đàn chim bay về trú ngụ vào lúc chiều tối sau một ngày đi kiếm ăn.</p><p>Vào ngày 9/1, Sở Văn hóa, Thể thao và Du lịch tỉnh Trà Vinh chính thức ra mắt điểm du lịch cộng đồng Cồn Chim, giúp cuộc sống kinh tế của người địa phương có sự cải thiện rõ rệt. Cồn đất ôm ấp hương vị thiên nhiên và giữ gìn nền văn hóa “sạch”, do đó thỏa mãn những đôi chân mỏi mệt muốn tìm về cuộc sống bình dị, an yên.</p><p><img src=\"https://mia.vn/media/uploads/blog-du-lich/vui-choi-tai-con-chim-01-1703991633.jpeg\" alt=\"Về Cồn Chim Trà Vinh khám phá sông nước miệt vườn miền Tây 2\"></p><h3><strong>Khám phá làng quê Nam Bộ thu nhỏ</strong></h3><p>Dù có kinh nghiệm du lịch Cồn Chim hay chưa, cách tiếp đón nồng hậu mà thân thiện, gần gũi của người dân địa phương vẫn khiến bạn cảm thấy ấm lòng như lần đầu ghé đến. Điều này đúng như câu khẩu hiệu tại Trung tâm sinh hoạt cộng đồng của ấp, đó là “Về Cồn Chim, người quê chỉ có tấm lòng”.</p><p>Sau khi di chuyển qua cổng, khách du lịch sẽ được nhận một chiếc xe đạp để thuận tiện cho việc tham quan, ngắm cảnh. Đây là phương tiện giúp dễ dàng di chuyển trên con đường nhỏ, với hai bên là luống hoa mười giờ đua nhau khoe sắc. Dọc theo đó là cánh đồng lúa đang thì mạ non xanh rì, thoang thoảng hương thơm.</p><p>Cho đến khi nhìn thấy những nếp nhà làm bằng lá dừa nước, hàng lu khạp da bò, sàn rửa chén cạnh bờ ao, chiếc xuồng ba lá neo đậu dưới gốc dừa… bạn biết ngay mình đã có mặt tại một làng quê Nam Bộ nào. Vì tất cả sự mộc mạc, chân phương và bình yên đến lạ này chỉ có thể tìm thấy tại nơi đó.</p><p><img src=\"https://mia.vn/media/uploads/blog-du-lich/vui-choi-tai-con-chim-03-1703991633.jpeg\" alt=\"Về Cồn Chim Trà Vinh khám phá sông nước miệt vườn miền Tây 4\"></p><h3><strong>Thử sức với các trò chơi dân gian tại Cồn Chim</strong></h3><p>Ngoài tham quan ngắm cảnh, hành trình du lịch Cồn Chim còn mang bạn trở về tuổi thơ với những trò chơi dân gian thú vị như u, ô ăn quan, chọi lon, nhảy dây… Tuy những trò này đều không mấy xa lạ đối với thế hệ 9X trở về trước, nhưng việc thỏa sức trải nghiệm chúng trong cuộc sống hiện đại là rất hiếm hoi. Bên cạnh đó, tại Cồn Chim còn có các hoạt động như câu cua, đua cua có thưởng giúp bạn hóa thân thành người nông dân của làng quê miền Tây.</p><p><img src=\"https://mia.vn/media/uploads/blog-du-lich/vui-choi-tai-con-chim-05-1703991633.jpeg\" alt=\"Về Cồn Chim Trà Vinh khám phá sông nước miệt vườn miền Tây 6\"></p><h3><strong>Thưởng thức đa dạng món ngon đặc sản</strong></h3><p>Vui chơi thả ga rồi, mời bạn thưởng thức đa dạng món ngon đậm chất Nam Bộ tại các điểm ẩm thực trong khu du lịch Cồn Chim Trà Vinh.</p><p>- Bếp xưa Cô Vân: đây là nơi khách du lịch có thể nhâm nhi chén sương sâm vò bằng tay, ăn miếng mứt dừa ngọt thanh hay thưởng thức ngụm trà hoa đậu biếc.</p><p><img src=\"https://mia.vn/media/uploads/blog-du-lich/vui-choi-tai-con-chim-07-1703991633.jpeg\" alt=\"Về Cồn Chim Trà Vinh khám phá sông nước miệt vườn miền Tây 8\"></p><p>- Vườn dừa Bé Thảo: trải nghiệm uống dừa trái bằng ống hút cỏ, cảm nhận hương vị tươi mát, ngọt ngào tựa tình cảm của bà con cù lao.</p><p><img src=\"https://mia.vn/media/uploads/blog-du-lich/vui-choi-tai-con-chim-08-1703991638.jpeg\" alt=\"Về Cồn Chim Trà Vinh khám phá sông nước miệt vườn miền Tây 9\"></p><p>- Nhà Vảy Rồng: nổi bật với món bánh dừa lá mơ của Cô Ba Sữa được làm hoàn toàn thủ công, cùng nước mát lá dứa đường phèn giải khát.</p><p>Không dừng lại ở đó, nơi đây còn tiếp đãi khách du lịch với các món đặc sản thơm ngon, hấp dẫn như gỏi hương thủy liễu, canh chua trái bần nấu cá bông lau, tôm hấp dừa, cua hấp, gỏi cá sặc trộn xoài… Tuy không quá đa dạng nhưng món nào cũng đều chất lượng vì được chế biến từ nguyên liệu tươi ngon có sẵn tại vườn nhà gia chủ.</p><p><img src=\"https://mia.vn/media/uploads/blog-du-lich/vui-choi-tai-con-chim-09-1703991638.jpeg\" alt=\"Về Cồn Chim Trà Vinh khám phá sông nước miệt vườn miền Tây 10\"></p>', 'Xã Hòa Minh, Huyện Châu Thành, Tỉnh Trà Vinh', '0', 0.00, 13, 65, '2025-05-28 02:32:33', '2025-05-28 02:36:17', 'Tùy thuộc vào tour du lịch', 'destination', NULL, NULL, NULL),
 (58, 'Đến Bến Ninh Kiều ngắm vẻ đẹp của Tây Đô lộng lẫy về đêm', '<p>Xe đạp hoặc xe điện chính là hai phương tiện chủ yếu để bạn di chuyển đi lại tại Bến Ninh Kiều. Tùy vào điểm xuất phát mà giá cả thuê xe có thể dao động trong khoảng từ 30.000 VNĐ - 50.000 VNĐ. Tuy nhiên nếu như đến đây vào buổi tối thì bạn nên cân nhắc đi bộ để thoải mái check-in cùng cảnh đẹp Cần Thơ và dễ dàng ghé lại ven đường thưởng thức các món ăn đường phố.</p><p><img src=\"https://mia.vn/media/uploads/blog-du-lich/den-ben-ninh-kieu-ngam-ve-dep-cua-tay-do-long-lay-ve-dem-03-1649167496.jpeg\" alt=\"Đến Bến Ninh Kiều ngắm vẻ đẹp của Tây Đô lộng lẫy về đêm 4\"></p><h3><strong>Check-in trên cầu Tình Yêu tại Bến Ninh Kiều</strong></h3><p>Cầu Tình Yêu hay còn gọi là cầu đi bộ là một trong những điểm check-in \"sống ảo\" tuyệt đẹp tại Cần Thơ. Cầu Tình Yêu được thiết kế uốn lượn với dáng hình chữ S và hệ thống đèn LED nghệ thuật vô cùng lung linh. Hai bên cầu được thiết kế hai đài sen lớn tạo điểm nhấn đặc sắc. Đây chính là điểm check-in thu hút đông đảo giới trẻ Cần Thơ và khách du lịch đến đây vào mỗi buổi tối. Đứng từ trên cầu, bạn có thể phóng tầm mắt ra xa ngắm nhìn toàn cảnh Cần Thơ về đêm lung linh, huyền ảo.</p><p><img src=\"https://mia.vn/media/uploads/blog-du-lich/den-ben-ninh-kieu-ngam-ve-dep-cua-tay-do-long-lay-ve-dem-04-1649167497.jpeg\" alt=\"Đến Bến Ninh Kiều ngắm vẻ đẹp của Tây Đô lộng lẫy về đêm 5\"></p><h3><strong>Điểm ngắm toàn cảnh Cần Thơ tuyệt đẹp</strong></h3><p>Từ Bến Ninh Kiều, bạn có thể đi lên Cầu Tình Yêu hoặc thuê du thuyền để ngắm được toàn cảnh Cần Thơ thanh bình, yên ả về đêm. Có thể nói rằng bên cạnh <a href=\"https://mia.vn/cam-nang-du-lich/kham-pha-net-dac-sac-cua-cho-noi-cai-rang-chon-mien-tay-song-nuoc-4769\">Chợ nổi Cái Răng</a>&nbsp;thì Bến Ninh Kiều cũng chính là điểm nhấn đặc sắc cho nền văn hóa của miền Tây sông nước. Vẻ đẹo của Bến Ninh Kiều cũng dịu dàng, chân chất như chính tính cách của con người trên mảnh đất này.</p><p><img src=\"https://mia.vn/media/uploads/blog-du-lich/den-ben-ninh-kieu-ngam-ve-dep-cua-tay-do-long-lay-ve-dem-05-1649167497.jpeg\" alt=\"Đến Bến Ninh Kiều ngắm vẻ đẹp của Tây Đô lộng lẫy về đêm 6\"></p>', 'Phường Tân An, Quận Ninh Kiều, Thành phố Cần Thơ', '0', 0.00, 13, 59, '2025-05-28 02:33:51', '2025-05-28 02:36:16', 'Miễn phí', 'destination', NULL, NULL, NULL),
-(59, 'Khám phá Chợ nổi Cái Răng với nét đặc sắc chốn Tây Đô', '<h3><strong>Thời điểm lý tưởng để khám phá chợ nổi&nbsp;Cần Thơ</strong></h3><p>Thời điểm thích hợp để bạn đến Chợ nổi Cái Răng Cần Thơ&nbsp;khám phá là từ tháng 12 đến tháng 4 năm sau vì lúc nào trời nắng ráo, ít mưa nên dễ dàng để tham quan phiên chợ. Đây cũng là lúc hoa quả vào mùa thu hoạch nên bạn có thể thỏa thích mua hoa trái đặc sản của miền Tây trên chợ nổi. Vào tháng 5 đến tháng 12, Cần Thơ vào mùa mưa nên các hoạt động buôn bán trên chợ đôi khi phải tạm ngừng.&nbsp;</p><p>Chợ nổi Cái Răng họp chợ từ rất sớm nên bạn có thể bắt đầu chuyến tham quan phiên chợ độc đáo này từ 4 giờ sáng trở đi. Thời điểm này đã xuất hiện rất nhiều ghe xuồng tập trung lại tạo nên bầu không khí náo nhiệt, vui tươi. Đặc biệt là bạn còn có cơ hội ngắm nhìn khung cảnh bình minh đẹp tuyệt ngay trên dòng sông thơ mộng.</p><p><img src=\"https://mia.vn/media/uploads/blog-du-lich/kham-pha-net-dac-sac-cua-cho-noi-cai-rang-chon-mien-tay-song-nuoc-02-1649149954.jpeg\" alt=\"Khám phá Chợ nổi Cái Răng với nét đặc sắc chốn Tây Đô 3\"></p><h2>Hướng dẫn di chuyển đến Chợ nổi Cái Răng</h2><p>Ngày nay, tại Cần Thơ xuất hiện rất nhiều tuyến phục vụ khám phá Chợ nổi Cần Thơ&nbsp;Cái Răng xuất phát từ Bến Ninh Kiều. Để có thể đến được nơi đây, bạn nên thuê tàu, thuyền hay ghe di chuyển tùy theo số lượng người. Nếu đoàn ít người thì nên đi ghe/thuyền nhỏ. Đông người thì lựa chọn đi ghé tàu thuyền thì sẽ tiết kiệm được kha khá chi phí. Đừng quên xem thêm&nbsp;<a href=\"https://mia.vn/cam-nang-du-lich\">Cẩm nang du lịch</a>&nbsp;để bỏ túi nhiều kinh nghiệm khám phá Cần Thơ bạn nhé!</p><p>Dưới đây là mức giá thuê tàu tham khảo tại <a href=\"https://mia.vn/cam-nang-du-lich/den-ben-ninh-kieu-ngam-ve-dep-cua-tay-do-long-lay-ve-dem-4776\">Bến Ninh Kiều</a> mà bạn có thể xem qua và cân nhắc lựa chọn. Mức giá có thể thay đổi tùy theo thời điểm, đặc biệt là vào các ngày lễ, Tết.</p><p>- Từ 1 - 7 khách:&nbsp; 500.000 VNĐ/tàu</p><p>- Từ 8 - 15 khách: 600.000 VNĐ/tàu</p><p>- Từ 16 - 30 khách: 700.000 VNĐ/tàu</p><p>- Từ 31 - 40 khách: 800.000 VNĐ/tàu</p><p>- Từ 40 khách trở lên: 900.000 VNĐ/tàu</p><p><img src=\"https://mia.vn/media/uploads/blog-du-lich/kham-pha-net-dac-sac-cua-cho-noi-cai-rang-chon-mien-tay-song-nuoc-03-1649149954.jpeg\" alt=\"Khám phá Chợ nổi Cái Răng với nét đặc sắc chốn Tây Đô 4\"></p><h3><strong>Phương thức \"4 treo\" độc đáo tại chợ nổi&nbsp;Cần Thơ</strong>&nbsp;</h3><p>Với sự đa dạng về mặt hàng hóa, việc buôn bán trên sông Cần Thơ từng gặp nhiều khó khăn khi chợ có không gian quá rộng, tiếng máy và tiếng người hòa lẫn vào nhau làm lấn át đi tiếng rao. Chính vì thế, phương thứ \"4 treo\" xuất hiện nhằm giúp cho người bán lẫn người mua dễ dàng nhận biết được ghe xuồng gần đó đang buôn bán gì.</p><p>Trong đó, \"4 treo\" có nghĩa là:</p><p>- Treo gì bán nấy: Chủ ghe buôn bán gì thì sẽ treo thứ đó lên cây bẹo (còn gọi là cây nêu) để ghe xuồng đối diện có thể dễ dàng nhận biết được mặt hàng.</p><p>- Treo mà không bán: Quần áo của các hộ gia đình sinh sống ngay trên ghe thuyền.</p><p>- Không treo mà bán: Đây chính là những chiếc ghe phục vụ ẩm thực trên sông cho mọi người như bún, hủ tiếu, cà phê kho, bánh mì thịt...</p><p>- Treo cái này nhưng bán khác: Khi chủ ghe muốn bán đi chiếc ghe của họ thì sẽ treo một tấm lá lợp nhà lên cây bẹo.</p><p><img src=\"https://mia.vn/media/uploads/blog-du-lich/kham-pha-net-dac-sac-cua-cho-noi-cai-rang-chon-mien-tay-song-nuoc-04-1649149954.jpeg\" alt=\"Khám phá Chợ nổi Cái Răng với nét đặc sắc chốn Tây Đô 5\"></p><h3><strong>Tham quan, khám phá và thưởng thức đờn ca tài tử</strong></h3><p>Đến với Chợ nổi Cái Răng, bạn sẽ được thỏa thích tham quan, khám phá vẻ đẹp độc đáo của phiên chợ này. Sự nhộn nhịp, vui tươi của bầu không khí nơi đây đem đến những phút giây vui chơi, thư giãn tuyệt vời. Không chỉ vậy, người dân nơi đây cực kỳ thân thiện nên khi mua hàng hoặc ăn uống trên ghe, bạn còn có thể lắng nghe họ kể dăm ba câu chuyện đời thường của người dân miền Tây sông nước.</p><p>Tại Chợ nổi Cái Rằng vào mỗi tối cuối tuần thường sẽ xuất hiện một thuyền đờn ca tài tử. Thuyền sẽ đi dọc khắp con sông và phục vụ bà con cũng như mọi người gần xa những màn biểu diễn độc đáo. Tất cả sẽ mang đến một ấn tượng khó phai trong hành trình khám phá Cần Thơ.</p><p><img src=\"https://mia.vn/media/uploads/blog-du-lich/kham-pha-net-dac-sac-cua-cho-noi-cai-rang-chon-mien-tay-song-nuoc-05-1649149954.jpeg\" alt=\"Khám phá Chợ nổi Cái Răng với nét đặc sắc chốn Tây Đô 6\"></p>', 'Phường Lê Bình, Quận Cái Răng, Thành phố Cần Thơ', '0', 5.00, 13, 62, '2025-05-28 02:35:41', '2025-06-01 03:05:21', 'Phí tàu tùy số lượng người đi', 'destination', NULL, NULL, NULL),
+(59, 'Khám phá Chợ nổi Cái Răng với nét đặc sắc chốn Tây Đô', '<h3><strong>Thời điểm lý tưởng để khám phá chợ nổi&nbsp;Cần Thơ</strong></h3><p>Thời điểm thích hợp để bạn đến Chợ nổi Cái Răng Cần Thơ&nbsp;khám phá là từ tháng 12 đến tháng 4 năm sau vì lúc nào trời nắng ráo, ít mưa nên dễ dàng để tham quan phiên chợ. Đây cũng là lúc hoa quả vào mùa thu hoạch nên bạn có thể thỏa thích mua hoa trái đặc sản của miền Tây trên chợ nổi. Vào tháng 5 đến tháng 12, Cần Thơ vào mùa mưa nên các hoạt động buôn bán trên chợ đôi khi phải tạm ngừng.&nbsp;</p><p>Chợ nổi Cái Răng họp chợ từ rất sớm nên bạn có thể bắt đầu chuyến tham quan phiên chợ độc đáo này từ 4 giờ sáng trở đi. Thời điểm này đã xuất hiện rất nhiều ghe xuồng tập trung lại tạo nên bầu không khí náo nhiệt, vui tươi. Đặc biệt là bạn còn có cơ hội ngắm nhìn khung cảnh bình minh đẹp tuyệt ngay trên dòng sông thơ mộng.</p><p><img src=\"https://mia.vn/media/uploads/blog-du-lich/kham-pha-net-dac-sac-cua-cho-noi-cai-rang-chon-mien-tay-song-nuoc-02-1649149954.jpeg\" alt=\"Khám phá Chợ nổi Cái Răng với nét đặc sắc chốn Tây Đô 3\"></p><h2>Hướng dẫn di chuyển đến Chợ nổi Cái Răng</h2><p>Ngày nay, tại Cần Thơ xuất hiện rất nhiều tuyến phục vụ khám phá Chợ nổi Cần Thơ&nbsp;Cái Răng xuất phát từ Bến Ninh Kiều. Để có thể đến được nơi đây, bạn nên thuê tàu, thuyền hay ghe di chuyển tùy theo số lượng người. Nếu đoàn ít người thì nên đi ghe/thuyền nhỏ. Đông người thì lựa chọn đi ghé tàu thuyền thì sẽ tiết kiệm được kha khá chi phí. Đừng quên xem thêm&nbsp;<a href=\"https://mia.vn/cam-nang-du-lich\">Cẩm nang du lịch</a>&nbsp;để bỏ túi nhiều kinh nghiệm khám phá Cần Thơ bạn nhé!</p><p>Dưới đây là mức giá thuê tàu tham khảo tại <a href=\"https://mia.vn/cam-nang-du-lich/den-ben-ninh-kieu-ngam-ve-dep-cua-tay-do-long-lay-ve-dem-4776\">Bến Ninh Kiều</a> mà bạn có thể xem qua và cân nhắc lựa chọn. Mức giá có thể thay đổi tùy theo thời điểm, đặc biệt là vào các ngày lễ, Tết.</p><p>- Từ 1 - 7 khách:&nbsp; 500.000 VNĐ/tàu</p><p>- Từ 8 - 15 khách: 600.000 VNĐ/tàu</p><p>- Từ 16 - 30 khách: 700.000 VNĐ/tàu</p><p>- Từ 31 - 40 khách: 800.000 VNĐ/tàu</p><p>- Từ 40 khách trở lên: 900.000 VNĐ/tàu</p><p><img src=\"https://mia.vn/media/uploads/blog-du-lich/kham-pha-net-dac-sac-cua-cho-noi-cai-rang-chon-mien-tay-song-nuoc-03-1649149954.jpeg\" alt=\"Khám phá Chợ nổi Cái Răng với nét đặc sắc chốn Tây Đô 4\"></p><h3><strong>Phương thức \"4 treo\" độc đáo tại chợ nổi&nbsp;Cần Thơ</strong>&nbsp;</h3><p>Với sự đa dạng về mặt hàng hóa, việc buôn bán trên sông Cần Thơ từng gặp nhiều khó khăn khi chợ có không gian quá rộng, tiếng máy và tiếng người hòa lẫn vào nhau làm lấn át đi tiếng rao. Chính vì thế, phương thứ \"4 treo\" xuất hiện nhằm giúp cho người bán lẫn người mua dễ dàng nhận biết được ghe xuồng gần đó đang buôn bán gì.</p><p>Trong đó, \"4 treo\" có nghĩa là:</p><p>- Treo gì bán nấy: Chủ ghe buôn bán gì thì sẽ treo thứ đó lên cây bẹo (còn gọi là cây nêu) để ghe xuồng đối diện có thể dễ dàng nhận biết được mặt hàng.</p><p>- Treo mà không bán: Quần áo của các hộ gia đình sinh sống ngay trên ghe thuyền.</p><p>- Không treo mà bán: Đây chính là những chiếc ghe phục vụ ẩm thực trên sông cho mọi người như bún, hủ tiếu, cà phê kho, bánh mì thịt...</p><p>- Treo cái này nhưng bán khác: Khi chủ ghe muốn bán đi chiếc ghe của họ thì sẽ treo một tấm lá lợp nhà lên cây bẹo.</p><p><img src=\"https://mia.vn/media/uploads/blog-du-lich/kham-pha-net-dac-sac-cua-cho-noi-cai-rang-chon-mien-tay-song-nuoc-04-1649149954.jpeg\" alt=\"Khám phá Chợ nổi Cái Răng với nét đặc sắc chốn Tây Đô 5\"></p><h3><strong>Tham quan, khám phá và thưởng thức đờn ca tài tử</strong></h3><p>Đến với Chợ nổi Cái Răng, bạn sẽ được thỏa thích tham quan, khám phá vẻ đẹp độc đáo của phiên chợ này. Sự nhộn nhịp, vui tươi của bầu không khí nơi đây đem đến những phút giây vui chơi, thư giãn tuyệt vời. Không chỉ vậy, người dân nơi đây cực kỳ thân thiện nên khi mua hàng hoặc ăn uống trên ghe, bạn còn có thể lắng nghe họ kể dăm ba câu chuyện đời thường của người dân miền Tây sông nước.</p><p>Tại Chợ nổi Cái Rằng vào mỗi tối cuối tuần thường sẽ xuất hiện một thuyền đờn ca tài tử. Thuyền sẽ đi dọc khắp con sông và phục vụ bà con cũng như mọi người gần xa những màn biểu diễn độc đáo. Tất cả sẽ mang đến một ấn tượng khó phai trong hành trình khám phá Cần Thơ.</p><p><img src=\"https://mia.vn/media/uploads/blog-du-lich/kham-pha-net-dac-sac-cua-cho-noi-cai-rang-chon-mien-tay-song-nuoc-05-1649149954.jpeg\" alt=\"Khám phá Chợ nổi Cái Răng với nét đặc sắc chốn Tây Đô 6\"></p>', 'Phường Lê Bình, Quận Cái Răng, Thành phố Cần Thơ', '0', 5.00, 13, 62, '2025-05-28 02:35:41', '2025-06-02 13:45:05', 'Phí tàu tùy số lượng người đi', 'destination', NULL, NULL, NULL),
 (60, 'Bếp Xưa Nam Bộ – Homestay Cô Vân', '<p>Với mô hình du lịch Cồn Chim kết hợp nghỉ dưỡng, Bếp Xưa Nam Bộ – Homestay Cô Vân luôn là điểm dừng chân không thể bỏ lỡ của nhiều du khách khi đến Trà Vinh. Tại homestay bạn sẽ được trải nghiệm những món ăn dân dã và thư giãn với những bản dân ca đậm chất Nam Bộ.</p><p><img src=\"https://mia.vn/media/uploads/blog-du-lich/homestay-tra-vinh-6-1705737429.jpg\" alt=\"Top 6 homestay Trà Vinh view đẹp, chất lượng và giá tốt nhất 2024 11\">Phòng ngủ ở đây được thiết kế bắt mắt với màu sắc giản dị và nhiều nội thất cơ bản. Đặc biệt, phòng tắm riêng được trang bị bồn tắm và các vật dụng cá nhân cần thiết, tạo cảm giác thoải mái như ở nhà. Homestay Trà Vinh này cũng cung cấp dịch vụ đưa đón và buffet sáng.</p><p><img src=\"https://mia.vn/media/uploads/blog-du-lich/homestay-tra-vinh-8-1705737433.jpg\" alt=\"Top 6 homestay Trà Vinh view đẹp, chất lượng và giá tốt nhất 2024 12\"><img src=\"https://mia.vn/media/uploads/blog-du-lich/homestay-tra-vinh-9-1705737435.jpg\" alt=\"Top 6 homestay Trà Vinh view đẹp, chất lượng và giá tốt nhất 2024 13\"></p>', 'Xã Hòa Minh, Huyện Châu Thành, Tỉnh Trà Vinh', '0', 0.00, 13, NULL, '2025-05-28 02:54:10', '2025-05-28 03:01:35', '400.000 VND/ đêm', 'utility', '0333783180', '24/7', 90),
 (61, 'Malis Homestay', '<p>Malis Homestay được xây dựng theo phong cách hiện đại và độc đáo. Mỗi căn phòng được thiết kế riêng biệt, tạo không gian thoải mái và bảo đảm sự riêng tư. Homestay Trà Vinh này có gam màu sáng chiếm chủ đạo, kết hợp tinh tế giữa các gam màu xanh và trắng từ sơn, trang trí, cây cỏ... tạo nên không khí tươi mới, trẻ trung và năng động.</p><p><img src=\"https://mia.vn/media/uploads/blog-du-lich/homestay-tra-vinh-2-1705737421.jpg\" alt=\"Top 6 homestay Trà Vinh view đẹp, chất lượng và giá tốt nhất 2024 2\">Với khuôn viên rộng, Malis Homestay còn có bể bơi và quầy bar ngoài trời, tiện lợi cho các hoạt động giải trí. Khoảng không gian xung quanh từng phòng được sử dụng để tạo ra những khu vực thư giãn lý tưởng, giúp bạn hòa mình vào thiên nhiên.</p><p><img src=\"https://mia.vn/media/uploads/blog-du-lich/homestay-tra-vinh-5-1705737427.jpg\" alt=\"Top 6 homestay Trà Vinh view đẹp, chất lượng và giá tốt nhất 2024 3\">Khi lưu trú tại Malis Homestay bạn có thể thuận lợi di chuyển đến <a href=\"https://mia.vn/cam-nang-du-lich\">các điểm du lịch nổi tiếng</a> như Chùa Âng, Ao Bà Om... Nơi đây cũng có nhiều nhà hàng và địa điểm ẩm thực để bạn khám phá đặc sản địa phương.</p><p>Homestay cung cấp các bungalow có diện tích 19m2 với một giường đôi lớn và đầy đủ tiện nghi cơ bản. Hiện tại, có 2 loại phòng chính: phòng tiêu chuẩn (kèm theo café sáng) và phòng dịch vụ (kèm theo ăn sáng, café sáng và bữa chiều cùng cocktail) với mức giá từ 760.000 VND - 960.000 VND mỗi đêm.</p><p><img src=\"https://mia.vn/media/uploads/blog-du-lich/homestay-tra-vinh-4-1705737424.jpg\" alt=\"Top 6 homestay Trà Vinh view đẹp, chất lượng và giá tốt nhất 2024 4\">Ngoài ra, Malis Homestay còn tổ chức sinh nhật và liên hoan theo yêu cầu của bạn tại sân vườn với sức chứa từ 2-40 người. Với chi phí 500,000 VND/người, bạn sẽ được phục vụ đầy đủ theo yêu cầu và trang trí theo sở thích cá nhân.</p>', 'Phường 1, Thành phố Trà Vinh, Tỉnh Trà Vinh', '0', 0.00, 13, NULL, '2025-05-28 02:56:25', '2025-05-28 03:01:35', '760.000 VND – 960.000 VND/ đêm (bao gồm ăn sáng tùy loại phòng)', 'utility', '0934563457', '24/7', 87),
-(72, '111', '<p>111</p>', 'Xã Hòa Minh, Huyện Châu Thành, Tỉnh Trà Vinh', '0', 5.00, 22, 65, '2025-06-01 13:20:29', '2025-06-02 03:09:14', '111', 'destination', NULL, NULL, NULL);
+(74, '1', '<p>1</p>', 'Xã Hàm Tân, Huyện Trà Cú, Tỉnh Trà Vinh', '0', 4.00, 3, 64, '2025-06-02 14:36:13', '2025-06-03 03:17:12', '1', 'destination', NULL, NULL, NULL),
+(75, '1', '<p>1</p>', 'Xã Hàm Tân, Huyện Trà Cú, Tỉnh Trà Vinh', '0', 0.00, 13, 64, '2025-06-03 03:37:26', '2025-06-03 03:38:23', '1', 'destination', NULL, NULL, NULL),
+(76, '1', '<p>1</p>', 'Xã Hòa Minh, Huyện Châu Thành, Tỉnh Trà Vinh', '1', 0.00, 13, 65, '2025-06-03 04:03:09', '2025-06-03 04:03:27', '1', 'destination', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1042,8 +1061,8 @@ INSERT INTO `ratings` (`id`, `score`, `user_id`, `post_id`, `created_at`, `updat
 (4, 5, 22, 25, '2025-05-31 14:52:41', '2025-06-01 01:30:35'),
 (5, 5, 3, 25, '2025-05-31 15:00:45', '2025-05-31 15:00:45'),
 (6, 2, 13, 25, '2025-05-31 15:16:10', '2025-05-31 15:16:16'),
-(7, 5, 13, 59, '2025-06-01 03:05:21', '2025-06-01 03:05:21'),
-(9, 5, 3, 72, '2025-06-02 03:09:14', '2025-06-02 03:09:14');
+(7, 5, 13, 59, '2025-06-01 03:05:21', '2025-06-02 13:45:05'),
+(10, 4, 3, 74, '2025-06-03 03:10:29', '2025-06-03 03:17:12');
 
 -- --------------------------------------------------------
 
@@ -1085,7 +1104,7 @@ CREATE TABLE `rewards` (
 
 INSERT INTO `rewards` (`id`, `name`, `description`, `cost_points`, `type`, `stock`, `image`, `active`, `created_at`, `updated_at`) VALUES
 (1, 'Móc khóa bản đồ Việt Nam', 'Móc khóa in hình bản đồ đất nước Việt Nam', 200, 'physical', 97, 'seFyJRoncm4DINjWm6GrhXzgbxSYK24va2qim0SO.jpg', 1, '2025-06-02 04:12:59', '2025-06-02 10:48:05'),
-(3, 'Kỷ niệm chương pha lê hình bản đồ Việt Nam', 'Kỷ niệm chương pha lê hình bản đồ Việt Nam', 500, 'physical', 100, 'wopqqVQ6OidnlNrGduLPKfZ8LaDooEwHTUQeNROi.webp', 1, '2025-06-02 10:59:58', '2025-06-02 10:59:58');
+(3, 'Kỷ niệm chương pha lê hình bản đồ Việt Nam', 'Kỷ niệm chương pha lê hình bản đồ Việt Nam', 500, 'physical', 97, 'wopqqVQ6OidnlNrGduLPKfZ8LaDooEwHTUQeNROi.webp', 1, '2025-06-02 10:59:58', '2025-06-02 11:45:16');
 
 -- --------------------------------------------------------
 
@@ -1129,11 +1148,13 @@ CREATE TABLE `shares` (
 --
 
 INSERT INTO `shares` (`id`, `is_public`, `status`, `user_id`, `post_id`, `created_at`, `updated_at`) VALUES
-(2, 1, '0', 13, 25, '2025-06-01 03:05:37', '2025-06-01 03:05:37'),
 (3, 1, '0', 22, 59, '2025-06-01 03:07:21', '2025-06-01 03:07:21'),
-(4, 1, '0', 3, 59, '2025-06-01 03:10:52', '2025-06-01 03:10:52'),
-(5, 0, '0', 3, 57, '2025-06-01 03:13:56', '2025-06-01 03:13:56'),
-(6, 1, '0', 3, 61, '2025-06-02 02:16:37', '2025-06-02 02:16:37');
+(8, 1, '0', 22, 61, '2025-06-02 14:27:59', '2025-06-02 14:27:59'),
+(10, 1, '0', 13, 25, '2025-06-02 14:35:35', '2025-06-02 14:35:35'),
+(12, 0, '0', 13, 74, '2025-06-02 14:46:32', '2025-06-03 03:58:47'),
+(13, 1, '0', 3, 57, '2025-06-02 14:59:15', '2025-06-02 14:59:15'),
+(14, 0, '0', 22, 56, '2025-06-03 03:32:03', '2025-06-03 03:44:55'),
+(15, 0, '0', 22, 75, '2025-06-03 03:39:26', '2025-06-03 03:45:00');
 
 -- --------------------------------------------------------
 
@@ -1196,6 +1217,7 @@ CREATE TABLE `users` (
   `username` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `avatar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` text COLLATE utf8mb4_unicode_ci,
   `user_rank` int NOT NULL DEFAULT '0',
@@ -1211,13 +1233,13 @@ CREATE TABLE `users` (
 -- Đang đổ dữ liệu cho bảng `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `email`, `password`, `avatar`, `description`, `user_rank`, `total_points`, `redeemable_points`, `status`, `role_id`, `created_at`, `updated_at`) VALUES
-(3, 'nhudiep', 'nhudiep@gmail.com', '$2y$12$nQMyNPNqN87cY.6aI/jSXuEtVYpAljlpr5wuWJgQVo1qOVhKs0Tne', '1746716932.jpg', NULL, 0, 200, 1600, '0', 3, '2025-05-04 01:41:29', '2025-06-02 10:48:05'),
-(4, 'admin', 'admin@gmail.com', '$2y$12$MyKYKCyx9ZJ8tnj4NNQzW.fnCoX1xneuUPPjlob9VN5afgtpkXaCa', '1746716717.jpg', NULL, 0, 0, 0, '0', 2, '2025-05-04 01:42:35', '2025-05-08 15:05:17'),
-(13, 'NhuDiep', 'nhinhi@gmail.com', '$2y$12$5YXurp1ympMG/uXy8pQNK.GWO2uOX6ELYg0CwQCnXPWa2AuWaFuve', NULL, NULL, 0, 0, 0, '0', 3, '2025-05-19 16:17:52', '2025-05-19 16:17:52'),
-(21, 'Nga Diep', 'dieptunga25@gmail.com', '$2y$12$0wvVyqIdn0zpgZ9Gikt8Aeu1xSVxebueoieLRXMYpcWoAS7mPasma', 'https://lh3.googleusercontent.com/a/ACg8ocK9owzB-JhcQcFNDhjZkwmY5LSePsRKXpwKCPc9jDkVqyKc-w=s96-c', NULL, 0, 0, 0, '0', 3, '2025-05-21 13:31:55', '2025-05-21 13:31:55'),
-(22, 'linh nguyễn', 'nguyenlinh200409@gmail.com', '$2y$12$NL4r..xfEzcQMiq8m9GQf.vq8m3BYQOiI/fbFqSbd1c0qViT5yE6O', 'https://lh3.googleusercontent.com/a/ACg8ocLurUr84nggrd5E_I6-3UBvRJwAH_-awCMB4dd3YBRQA97GyTU=s96-c', NULL, 0, 35, 35, '0', 3, '2025-05-21 13:32:38', '2025-06-02 01:58:28'),
-(23, 'Như Diệp', 'dieptunhu2003@gmail.com', '$2y$12$KDypwqCBp258D2AIqiRW/.hDgi8/hAnR7Mxdl5rQHtKPGcthQtlKC', 'https://lh3.googleusercontent.com/a/ACg8ocJohG4YerNT9DxW5GTiAK8Z8ZbuzRFTx9BTF6vMN8Ym5pLdoVCK=s96-c', NULL, 0, 0, 0, '0', 3, '2025-05-26 12:22:20', '2025-05-26 12:22:20');
+INSERT INTO `users` (`id`, `username`, `email`, `password`, `remember_token`, `avatar`, `description`, `user_rank`, `total_points`, `redeemable_points`, `status`, `role_id`, `created_at`, `updated_at`) VALUES
+(3, 'nhudiep', 'nhudiep@gmail.com', '$2y$12$nQMyNPNqN87cY.6aI/jSXuEtVYpAljlpr5wuWJgQVo1qOVhKs0Tne', NULL, '1746716932.jpg', NULL, 0, 200, 100, '0', 3, '2025-05-04 01:41:29', '2025-06-02 11:45:16'),
+(4, 'admin', 'admin@gmail.com', '$2y$12$MyKYKCyx9ZJ8tnj4NNQzW.fnCoX1xneuUPPjlob9VN5afgtpkXaCa', NULL, '1746716717.jpg', NULL, 0, 0, 0, '0', 2, '2025-05-04 01:42:35', '2025-05-08 15:05:17'),
+(13, 'NhuDiep', 'nhinhi@gmail.com', '$2y$12$5YXurp1ympMG/uXy8pQNK.GWO2uOX6ELYg0CwQCnXPWa2AuWaFuve', NULL, NULL, NULL, 0, 0, 0, '0', 3, '2025-05-19 16:17:52', '2025-05-19 16:17:52'),
+(21, 'Nga Diep', 'dieptunga25@gmail.com', '$2y$12$0wvVyqIdn0zpgZ9Gikt8Aeu1xSVxebueoieLRXMYpcWoAS7mPasma', NULL, 'https://lh3.googleusercontent.com/a/ACg8ocK9owzB-JhcQcFNDhjZkwmY5LSePsRKXpwKCPc9jDkVqyKc-w=s96-c', NULL, 0, 0, 0, '0', 3, '2025-05-21 13:31:55', '2025-05-21 13:31:55'),
+(22, 'linh nguyễn', 'nguyenlinh200409@gmail.com', '$2y$12$Ubfn5RzC0b8Zn6KejQcoTeibvwX.Y5jIMFe/tR5J4Q10nV8gP9F2y', '0CvR40XOYeASeM7O8nXl34rsBIMHC5EJVn1auPIQSxyjuEQKgkEMFg3rqPe7', 'https://lh3.googleusercontent.com/a/ACg8ocLurUr84nggrd5E_I6-3UBvRJwAH_-awCMB4dd3YBRQA97GyTU=s96-c', NULL, 0, 35, 35, '0', 3, '2025-05-21 13:32:38', '2025-06-03 11:50:23'),
+(23, 'Như Diệp', 'dieptunhu2003@gmail.com', '$2y$12$KDypwqCBp258D2AIqiRW/.hDgi8/hAnR7Mxdl5rQHtKPGcthQtlKC', NULL, 'https://lh3.googleusercontent.com/a/ACg8ocJohG4YerNT9DxW5GTiAK8Z8ZbuzRFTx9BTF6vMN8Ym5pLdoVCK=s96-c', NULL, 0, 0, 0, '0', 3, '2025-05-26 12:22:20', '2025-05-26 12:22:20');
 
 -- --------------------------------------------------------
 
@@ -1271,7 +1293,10 @@ CREATE TABLE `user_reward` (
 INSERT INTO `user_reward` (`id`, `user_id`, `reward_id`, `redeemed_at`, `delivered`, `created_at`, `updated_at`, `receiver_name`, `receiver_phone`, `receiver_address`, `shipping_note`) VALUES
 (1, 3, 1, '2025-06-02 09:43:31', 0, '2025-06-02 09:43:31', '2025-06-02 09:43:31', NULL, NULL, NULL, NULL),
 (2, 3, 1, '2025-06-02 10:46:49', 0, '2025-06-02 10:46:49', '2025-06-02 10:46:49', NULL, NULL, NULL, NULL),
-(3, 3, 1, '2025-06-02 10:48:05', 0, '2025-06-02 10:48:05', '2025-06-02 10:48:05', NULL, NULL, NULL, NULL);
+(3, 3, 1, '2025-06-02 10:48:05', 0, '2025-06-02 10:48:05', '2025-06-02 10:48:05', NULL, NULL, NULL, NULL),
+(4, 3, 3, '2025-06-02 11:45:14', 0, '2025-06-02 11:45:14', '2025-06-02 11:45:14', 'Diệp Tú Như', '0345154491', 'Ấp Ô Đùng, xã Hiếu Tử, huyện Tiểu Cần, tỉnh Trà Vinh', NULL),
+(5, 3, 3, '2025-06-02 11:45:15', 0, '2025-06-02 11:45:15', '2025-06-02 11:45:15', 'Diệp Tú Như', '0345154491', 'Ấp Ô Đùng, xã Hiếu Tử, huyện Tiểu Cần, tỉnh Trà Vinh', NULL),
+(6, 3, 3, '2025-06-02 11:45:16', 0, '2025-06-02 11:45:16', '2025-06-02 11:45:16', 'Diệp Tú Như', '0345154491', 'Ấp Ô Đùng, xã Hiếu Tử, huyện Tiểu Cần, tỉnh Trà Vinh', NULL);
 
 -- --------------------------------------------------------
 
@@ -1604,7 +1629,7 @@ ALTER TABLE `badges`
 -- AUTO_INCREMENT cho bảng `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
 
 --
 -- AUTO_INCREMENT cho bảng `custom_notifications`
@@ -1634,19 +1659,19 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT cho bảng `follows`
 --
 ALTER TABLE `follows`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT cho bảng `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- AUTO_INCREMENT cho bảng `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT cho bảng `missions`
@@ -1664,13 +1689,13 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT cho bảng `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT cho bảng `ratings`
 --
 ALTER TABLE `ratings`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT cho bảng `reports`
@@ -1694,7 +1719,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT cho bảng `shares`
 --
 ALTER TABLE `shares`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT cho bảng `slides`
@@ -1718,7 +1743,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT cho bảng `user_reward`
 --
 ALTER TABLE `user_reward`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT cho bảng `utilities`

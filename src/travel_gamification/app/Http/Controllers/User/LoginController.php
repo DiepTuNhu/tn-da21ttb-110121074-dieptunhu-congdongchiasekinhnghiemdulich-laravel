@@ -34,16 +34,9 @@ class LoginController extends Controller
 
         // Kiểm tra thông tin người dùng với email và mật khẩu
         $credentials = ['email' => $req->email, 'password' => $req->password];
-        // Thực hiện xác thực người dùng
-        // if (Auth::check()) {
-        //     // Đã đăng nhập
-        //     $user = Auth::user(); // Lấy thông tin người dùng
-        //     dd('Đã đăng nhập với email: ' . $user->email);
-        // } else {
-        //     // Chưa đăng nhập
-        //     dd('Chưa đăng nhập');
-        // }
-        if (Auth::attempt($credentials)) {
+        $remember = $req->has('remember'); // Lấy giá trị checkbox
+
+        if (Auth::attempt($credentials, $remember)) {
             // Kiểm tra vai trò của người dùng sau khi xác thực
             $user = Auth::user();
             Session::put('userEmail', $user->email);

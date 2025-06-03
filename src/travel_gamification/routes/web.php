@@ -27,6 +27,10 @@ use App\Http\Controllers\Page\UserFollowController;
 use App\Http\Controllers\Page\RewardRedeemController;
 use App\Http\Controllers\Page\NotificationActionController;
 
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -136,6 +140,11 @@ Route::post('/logout',[LoginController::class,'logout'])->name('logout');
 Route::get('auth/google', [LoginController::class, 'redirectToGoogle'])->name('login.google');
 Route::get('auth/google/callback', [LoginController::class, 'handleGoogleCallback']);
 
+Route::get('password/forgot', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+// ...existing code...
 // ADMIN=======================================================================================================================================
 
 Route::middleware(['auth', 'is_admin'])->prefix('admin')->group(function () {

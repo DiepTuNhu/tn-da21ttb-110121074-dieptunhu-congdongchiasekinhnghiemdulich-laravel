@@ -202,7 +202,7 @@
           <label>
             <input type="checkbox" id="remember" /> Ghi nhớ
           </label>
-          <a href="#">Quên mật khẩu?</a>
+          <a href="{{ route('password.request') }}">Quên mật khẩu?</a>
         </div>
         <div id="loginError" class="error"></div>
         <button type="submit" class="login-btn">Đăng nhập</button>
