@@ -67,6 +67,11 @@ public function share(Request $request, Post $post)
         'updated_at' => now(),
     ]);
 
+    // Gửi notify cho chủ bài viết
+    if ($post->user && $post->user_id != auth()->id()) {
+        $post->user->notify(new \App\Notifications\PostSharedNotification($post, auth()->user()));
+    }
+
     return back()->with('success', 'Chia sẻ bài viết thành công!');
 }
     public function showPostShare(Request $request)
@@ -229,6 +234,11 @@ public function share(Request $request, Post $post)
                 'post_id' => $id,
             ]);
             $likedStatus = true;
+
+            // Gửi notify cho chủ bài viết (nếu không phải tự like)
+            if ($post->user_id != $user->id && $post->user) {
+                $post->user->notify(new \App\Notifications\PostLikedNotification($post, $user));
+            }
         }
 
         // Đếm lại số lượt thích
@@ -251,13 +261,21 @@ public function share(Request $request, Post $post)
             return response()->json(['error' => 'Bạn cần đăng nhập!'], 401);
         }
 
+        $user = auth()->user();
+        $post = Post::findOrFail($id);
+
         $comment = \App\Models\Comment::create([
-            'user_id' => auth()->id(),
+            'user_id' => $user->id,
             'post_id' => $id,
             'content' => $request->content,
             'parent_comment_id' => $request->parent_comment_id ?? null,
-            'status' => '0', // Thêm dòng này để mặc định trạng thái là 0
+            'status' => '0',
         ]);
+
+        // Gửi notify cho chủ bài viết (nếu không phải tự comment)
+        if ($post->user_id != $user->id && $post->user) {
+            $post->user->notify(new \App\Notifications\PostCommentedNotification($post, $user, $comment));
+        }
 
         // Trả về dữ liệu bình luận mới để render lên giao diện
         return response()->json([
@@ -272,7 +290,7 @@ public function share(Request $request, Post $post)
             'content' => $comment->content,
             'created_at' => $comment->created_at->format('d/m/Y H:i'),
             'like_count' => $comment->likes->count(),
-            'can_edit' => auth()->id() === $comment->user_id, // Thêm dòng này để JS biết có hiển thị nút Sửa/Xóa không
+            'can_edit' => auth()->id() === $comment->user_id,
         ]);
     }
 

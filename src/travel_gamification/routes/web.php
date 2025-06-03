@@ -37,17 +37,12 @@ use App\Http\Controllers\Page\NotificationActionController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-// Like bài viết
-Route::post('/post/{post}/like', [NotificationActionController::class, 'like'])->middleware('auth');
-
-// Comment bài viết
-Route::post('/post/{post}/comment', [NotificationActionController::class, 'comment'])->middleware('auth');
 
 // Follow người dùng
-Route::post('/user/{user}/follow-user', [NotificationActionController::class, 'follow'])->middleware('auth');
+Route::post('/user/{id}/follow-user', [NotificationActionController::class, 'followUser'])->middleware('auth');
 
 // Unfollow người dùng (nếu có)
-Route::post('/user/{user}/unfollow', [NotificationActionController::class, 'unfollow'])->middleware('auth');
+Route::post('/user/{id}/unfollow-user', [NotificationActionController::class, 'unfollowUser'])->middleware('auth');
 
 Route::get('/', [PageController::class, 'index'])->name('page.index');
 Route::get('/search', [PageController::class, 'search'])->name('user.search');

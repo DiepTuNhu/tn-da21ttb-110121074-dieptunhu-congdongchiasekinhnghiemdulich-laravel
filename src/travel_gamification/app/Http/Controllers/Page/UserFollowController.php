@@ -13,6 +13,12 @@ class UserFollowController extends Controller
         auth()->user()->followings()->syncWithoutDetaching([
             $user->id => ['created_at' => now(), 'updated_at' => now()]
         ]);
+
+        // Gửi notify cho người được follow (nếu không phải tự follow chính mình)
+        if ($user->id != auth()->id()) {
+            $user->notify(new \App\Notifications\UserFollowedNotification(auth()->user()));
+        }
+
         return response()->json(['status' => 'following']);
     }
 
