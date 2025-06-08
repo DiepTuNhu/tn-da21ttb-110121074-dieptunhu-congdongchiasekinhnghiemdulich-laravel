@@ -47,7 +47,7 @@
                           @endif
                           {{ $post->user->username ?? 'Ẩn danh' }}:
                       </strong>
-          <a href="{{ route('post.detail', $post->id) }}" style="color:#e67e22;">
+          <a href="{{ route('post.detail', $post->id) }}" style="color:#a1ef48;">
               {{ Str::limit($post->title, 60) }}
           </a>
         </p>

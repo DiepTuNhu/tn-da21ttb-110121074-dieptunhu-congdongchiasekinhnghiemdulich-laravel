@@ -22,11 +22,11 @@ class RegisterController extends Controller
             'password' => [
                 'required',
                 'string',
-                // 'min:8', // ít nhất 8 ký tự
-                // 'regex:/[a-z]/', // ít nhất một chữ cái viết thường
-                // 'regex:/[A-Z]/', // ít nhất một chữ cái viết hoa
-                // 'regex:/[0-9]/', // ít nhất một chữ số
-                // 'regex:/[@$!%*?&#]/' // ít nhất một ký tự đặc biệt
+                'min:8', // ít nhất 8 ký tự
+                'regex:/[a-z]/', // ít nhất một chữ cái viết thường
+                'regex:/[A-Z]/', // ít nhất một chữ cái viết hoa
+                'regex:/[0-9]/', // ít nhất một chữ số
+                'regex:/[@$!%*?&#]/' // ít nhất một ký tự đặc biệt
             ],
             // 'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validate ảnh (nếu có)
         ],[

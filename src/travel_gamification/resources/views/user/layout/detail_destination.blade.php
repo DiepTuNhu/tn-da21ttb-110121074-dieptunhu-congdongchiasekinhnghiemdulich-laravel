@@ -39,6 +39,7 @@
               <p><strong>Giá:</strong> {{ $destination->price }}</p>
               <p><strong>Bản đồ:</strong></p>
           </div>
+          
           <iframe
               src="{{ $mapUrl }}"
               width="600"

@@ -425,7 +425,10 @@ $topPosts = \App\Models\Post::with('user')
     ->get();
 
     // Top người dùng như cũ
-    $topUsers = \App\Models\User::with(['posts.likes'])
+    $topUsers = \App\Models\User::with(['posts.likes', 'role'])
+        ->whereHas('role', function($q) {
+            $q->whereRaw('LOWER(name) != ?', ['quản trị']);
+        })
         ->orderByDesc('total_points')
         ->take(10)
         ->get();

@@ -212,7 +212,7 @@
           errorEl.textContent = "Mật khẩu không khớp.";
         } else {
           errorEl.textContent = "";
-          alert("Đăng ký thành công!");
+          // alert("Đăng ký thành công!");
           // Gửi form nếu cần
         }
       });

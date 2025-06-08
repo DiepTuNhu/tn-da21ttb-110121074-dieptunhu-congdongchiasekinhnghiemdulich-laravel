@@ -1,5 +1,14 @@
 @extends('user.master')
 @section('content')
+<style>
+    .ranking-table a {
+        color: #222 !important;
+        text-decoration: none;
+    }
+    .ranking-table a:hover {
+        text-decoration: underline;
+    }
+</style>
 <div class="ranking-page">
 <header class="ranking-header">
   <h1 class="ranking-title">🏆 Bảng Xếp Hạng</h1>
@@ -51,8 +60,9 @@
           @if($i == 0) 🥇 @elseif($i == 1) 🥈 @elseif($i == 2) 🥉 @else {{ $i+1 }} @endif
         </td>
         <td style="text-align:left;">
-          {{-- <img src="{{ $post->thumbnail ?? '/default.png' }}" class="ranking-thumb" /> --}}
-          {{ $post->title }}
+          <a href="{{ route('post.detail', $post->id) }}">
+            {{ $post->title }}
+          </a>
         </td>
         <td style="text-align:left;">
           <img
@@ -67,7 +77,9 @@
             }}"
             class="ranking-avatar"
           />
-          {{ $post->user->username ?? 'Ẩn danh' }}
+          <a href="{{ route('detail_user_follow', ['id' => $post->user->id]) }}">
+            {{ $post->user->username ?? 'Ẩn danh' }}
+          </a>
         </td>
         <td>{{ $post->like_count }}</td>
         <td>{{ $post->comment_count }}</td>
@@ -118,7 +130,9 @@
             }}"
             class="ranking-avatar"
           />
-          {{ $user->username }}
+          <a href="{{ route('detail_user_follow', ['id' => $user->id]) }}">
+            {{ $user->username }}
+          </a>
         </td>
         <td>{{ $user->total_points }}</td>
         <td>{{ $user->posts()->count() }}</td>

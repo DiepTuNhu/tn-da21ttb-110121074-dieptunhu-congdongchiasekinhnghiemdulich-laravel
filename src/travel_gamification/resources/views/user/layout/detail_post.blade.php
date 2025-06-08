@@ -1,6 +1,13 @@
 @extends('user.master')
 @section('content')
-
+<style>
+    img.centered {
+text-align: center
+}
+    .post-content {
+        text-align: justify;
+    }
+</style>
 <div class="container-dtp">
   <div class="main">
     <h1>{{ $post->title }}</h1>
@@ -73,9 +80,9 @@
         </div>
     @endif
 </div>
-    <p>
+    <div class="post-content">
       {!! $post->content !!}
-    </p>
+    </div>
 
     {{-- @if($post->destination && $post->destination->destinationImages && $post->destination->destinationImages->isNotEmpty())
       <img src="{{ $post->destination->destinationImages->first()->image_url }}" alt="ảnh minh họa" />
