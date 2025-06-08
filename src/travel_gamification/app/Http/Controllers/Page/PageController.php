@@ -180,7 +180,24 @@ class PageController extends Controller
             ->distinct()
             ->pluck('province');
 
-        return view('user.index', compact('travelTypes', 'destinations', 'posts', 'slides', 'provinces'));
+        // Lấy top 3 bài viết nổi bật (ví dụ: nhiều lượt thích nhất tháng này)
+        $startOfMonth = now()->startOfMonth();
+        $endOfMonth = now()->endOfMonth();
+        $topPosts = Post::with('user')
+            ->where('status', 0)
+            ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
+            ->withCount('likes')
+            ->orderByDesc('likes_count')
+            ->orderByDesc('created_at')
+            ->take(3)
+            ->get();
+        // Lấy top 3 người dùng nổi bật (ví dụ: nhiều điểm nhất tháng này)
+        $topUsers = \App\Models\User::whereBetween('updated_at', [$startOfMonth, $endOfMonth])
+            ->orderByDesc('redeemable_points')
+            ->take(3)
+            ->get();
+
+        return view('user.index', compact('travelTypes', 'destinations', 'posts', 'slides', 'provinces', 'topPosts', 'topUsers'));
     }
 
     public function getCommunity(Request $request)

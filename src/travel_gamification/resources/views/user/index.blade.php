@@ -91,7 +91,14 @@
   <div class="top-users">
     @foreach($topUsers as $index => $user)
       <div class="user-card">
-        <img src="{{ $user->avatar ? (Str::startsWith($user->avatar, ['http://', 'https://']) ? $user->avatar : asset('storage/avatars/' . $user->avatar)) : 'https://i.pravatar.cc/100?u=' . $user->id }}" alt="{{ $user->username }}" />
+<img src="{{ 
+    $user->avatar 
+        ? (Str::startsWith($user->avatar, ['http://', 'https://']) 
+            ? $user->avatar 
+            : asset('storage/avatars/' . $user->avatar)
+        ) 
+        : asset('storage/default.jpg') 
+}}" alt="{{ $user->username }}" />
         <p>
           <strong>{{ $user->username ?? 'Ẩn danh' }}</strong><br />
           @if($index == 0) 🏆
