@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: localhost:3306
--- Thời gian đã tạo: Th6 08, 2025 lúc 09:03 AM
+-- Thời gian đã tạo: Th6 09, 2025 lúc 03:49 AM
 -- Phiên bản máy phục vụ: 8.0.30
 -- Phiên bản PHP: 8.1.10
 
@@ -87,7 +87,9 @@ INSERT INTO `comments` (`id`, `content`, `status`, `user_id`, `post_id`, `parent
 (112, 'Không gian cổ kính cùng nét xa hoa rất cuốn hút khi xem', '0', 22, 79, NULL, '2025-06-08 08:57:15', '2025-06-08 08:57:15'),
 (113, 'Buổi họp chợ sáng sớm nhộn nhịp cùng những mặt hàng tươi ngon', '0', 22, 77, NULL, '2025-06-08 08:58:07', '2025-06-08 08:58:07'),
 (114, 'Chợ bắt đầu vào lúc mấy giờ đến mất giờ vậy ạ', '0', 24, 77, NULL, '2025-06-08 09:00:19', '2025-06-08 09:00:19'),
-(115, 'Vẻ đẹp hút hồn với khung cảnh mang đậm chất dân tộc', '0', 24, 81, NULL, '2025-06-08 09:01:48', '2025-06-08 09:01:48');
+(115, 'Vẻ đẹp hút hồn với khung cảnh mang đậm chất dân tộc', '0', 24, 81, NULL, '2025-06-08 09:01:48', '2025-06-08 09:01:48'),
+(117, 'Khi đến với Bạc Liêu thì hãy ghé thăm nơi đây 1 lần, nó sẽ làm bạn bất ngờ', '0', 3, 79, NULL, '2025-06-09 02:50:54', '2025-06-09 02:50:54'),
+(118, 'Mua sắm trên sông nước rất thú vị', '0', 22, 77, NULL, '2025-06-09 03:47:19', '2025-06-09 03:47:19');
 
 -- --------------------------------------------------------
 
@@ -815,7 +817,9 @@ INSERT INTO `likes` (`id`, `user_id`, `post_id`, `comment_id`, `created_at`, `up
 (72, 3, 59, NULL, '2025-06-02 14:42:31', '2025-06-02 14:42:31'),
 (73, 3, 57, NULL, '2025-06-02 14:59:12', '2025-06-02 14:59:12'),
 (75, 22, 25, NULL, '2025-06-03 01:02:07', '2025-06-03 01:02:07'),
-(84, 24, 77, NULL, '2025-06-08 09:00:33', '2025-06-08 09:00:33');
+(84, 24, 77, NULL, '2025-06-08 09:00:33', '2025-06-08 09:00:33'),
+(88, 3, 81, NULL, '2025-06-09 02:28:20', '2025-06-09 02:28:20'),
+(89, 22, 77, NULL, '2025-06-09 03:47:38', '2025-06-09 03:47:38');
 
 -- --------------------------------------------------------
 
@@ -864,7 +868,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (66, '2025_06_01_211813_add_timestamps_to_user_missions_table', 21),
 (67, '2025_06_02_103030_create_rewards_table', 22),
 (68, '2025_06_02_103031_create_user_reward_table', 22),
-(69, '2025_06_03_184943_add_remember_token_to_users_table', 23);
+(69, '2025_06_03_184943_add_remember_token_to_users_table', 23),
+(70, '2025_06_09_101921_add_main_badge_id_to_users_table', 24);
 
 -- --------------------------------------------------------
 
@@ -927,6 +932,7 @@ CREATE TABLE `notifications` (
 
 INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `data`, `read_at`, `created_at`, `updated_at`) VALUES
 ('0269542f-b3f4-49a4-90c6-4b324e00035e', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 13, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"1\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":75}', '2025-06-03 04:12:47', '2025-06-03 03:38:23', '2025-06-03 04:12:47'),
+('088c24d4-976c-4ba3-ae9a-71d5fc2d10f1', 'App\\Notifications\\PostLikedNotification', 'App\\Models\\User', 22, '{\"message\":\"nhudiep \\u0111\\u00e3 th\\u00edch b\\u00e0i vi\\u1ebft c\\u1ee7a b\\u1ea1n: Ch\\u00f9a \\u00c2ng Tr\\u00e0 Vinh, v\\u1ebb \\u0111\\u1eb9p Khmer c\\u1ed5 \\u0111\\u01b0\\u1ee3c l\\u01b0u gi\\u1eef h\\u01a1n 1000 n\\u0103m\",\"post_id\":81,\"liker_id\":3}', NULL, '2025-06-09 02:28:19', '2025-06-09 02:28:19'),
 ('1466e83e-5505-4250-96bd-a8e9248b2b3c', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 13, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"B\\u1ebfp X\\u01b0a Nam B\\u1ed9 \\u2013 Homestay C\\u00f4 V\\u00e2n\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":60}', '2025-05-28 03:37:26', '2025-05-28 03:01:35', '2025-05-28 03:37:26'),
 ('15fc04cc-3033-4cda-af5c-066d208d3e3b', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 3, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"1\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":78}', '2025-06-08 03:16:41', '2025-06-08 03:10:17', '2025-06-08 03:16:41'),
 ('1898cead-b1c2-40ca-874b-37be6dad715a', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 13, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"\\u0110\\u1ebfn B\\u1ebfn Ninh Ki\\u1ec1u ng\\u1eafm v\\u1ebb \\u0111\\u1eb9p c\\u1ee7a T\\u00e2y \\u0110\\u00f4 l\\u1ed9ng l\\u1eaby v\\u1ec1 \\u0111\\u00eam\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":58}', '2025-05-28 02:36:47', '2025-05-28 02:36:16', '2025-05-28 02:36:47'),
@@ -936,9 +942,12 @@ INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `
 ('3115e867-c441-47fc-9692-cd579dd9853a', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 13, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"1\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":76}', '2025-06-03 04:12:47', '2025-06-03 04:03:16', '2025-06-03 04:12:47'),
 ('42517843-8369-4aa4-b362-29be35067009', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 24, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"T\\u1eadn h\\u01b0\\u1edfng du l\\u1ecbch t\\u1ea1i B\\u1ebfp nam b\\u1ed9 x\\u01b0a HOMESTAY\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":80}', '2025-06-08 08:28:08', '2025-06-08 08:27:59', '2025-06-08 08:28:08'),
 ('435e1612-4317-4dba-a2ce-b1e54bdf595e', 'App\\Notifications\\PostCommentedNotification', 'App\\Models\\User', 24, '{\"message\":\"linh nguy\\u1ec5n \\u0111\\u00e3 b\\u00ecnh lu\\u1eadn b\\u00e0i vi\\u1ebft c\\u1ee7a b\\u1ea1n: Nh\\u00e0 C\\u00f4ng T\\u1eed B\\u1ea1c Li\\u00eau \\u2013 \\u0110i\\u1ec3m tham quan kh\\u00f4ng th\\u1ec3 b\\u1ecf qua khi \\u0111\\u1ebfn B\\u1ea1c Li\\u00eau\",\"post_id\":79,\"commenter_id\":22}', '2025-06-08 08:58:54', '2025-06-08 08:57:15', '2025-06-08 08:58:54'),
+('435f346e-ca96-43d3-a33d-9aab2925de33', 'App\\Notifications\\PostCommentedNotification', 'App\\Models\\User', 24, '{\"message\":\"nhudiep \\u0111\\u00e3 b\\u00ecnh lu\\u1eadn b\\u00e0i vi\\u1ebft c\\u1ee7a b\\u1ea1n: Nh\\u00e0 C\\u00f4ng T\\u1eed B\\u1ea1c Li\\u00eau \\u2013 \\u0110i\\u1ec3m tham quan kh\\u00f4ng th\\u1ec3 b\\u1ecf qua khi \\u0111\\u1ebfn B\\u1ea1c Li\\u00eau\",\"post_id\":79,\"commenter_id\":3}', NULL, '2025-06-09 02:50:54', '2025-06-09 02:50:54'),
 ('43a7bbd2-b0ce-486a-a130-87985b928315', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 13, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"Kh\\u00e1m ph\\u00e1 Ch\\u1ee3 n\\u1ed5i C\\u00e1i R\\u0103ng v\\u1edbi n\\u00e9t \\u0111\\u1eb7c s\\u1eafc ch\\u1ed1n T\\u00e2y \\u0110\\u00f4\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":59}', '2025-05-28 02:36:47', '2025-05-28 02:36:18', '2025-05-28 02:36:47'),
 ('46d18eef-4241-44fe-bdc1-33ab4738503a', 'App\\Notifications\\UserFollowedNotification', 'App\\Models\\User', 13, '{\"message\":\"linh nguy\\u1ec5n \\u0111\\u00e3 theo d\\u00f5i b\\u1ea1n.\",\"follower_id\":22}', '2025-06-03 04:12:47', '2025-06-03 03:26:35', '2025-06-03 04:12:47'),
+('4a1e78b7-957e-4161-9cff-c911aa20d955', 'App\\Notifications\\PostLikedNotification', 'App\\Models\\User', 22, '{\"message\":\"nhudiep \\u0111\\u00e3 th\\u00edch b\\u00e0i vi\\u1ebft c\\u1ee7a b\\u1ea1n: Ch\\u00f9a \\u00c2ng Tr\\u00e0 Vinh, v\\u1ebb \\u0111\\u1eb9p Khmer c\\u1ed5 \\u0111\\u01b0\\u1ee3c l\\u01b0u gi\\u1eef h\\u01a1n 1000 n\\u0103m\",\"post_id\":81,\"liker_id\":3}', NULL, '2025-06-09 02:28:19', '2025-06-09 02:28:19'),
 ('56460f79-d140-4bad-a338-e370e03536bd', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 22, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"Ch\\u00f9a \\u00c2ng Tr\\u00e0 Vinh, v\\u1ebb \\u0111\\u1eb9p Khmer c\\u1ed5 \\u0111\\u01b0\\u1ee3c l\\u01b0u gi\\u1eef h\\u01a1n 1000 n\\u0103m\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":81}', '2025-06-08 08:46:33', '2025-06-08 08:46:22', '2025-06-08 08:46:33'),
+('5bb73a21-8da0-4fb0-a04c-664c49e249fb', 'App\\Notifications\\PostCommentedNotification', 'App\\Models\\User', 3, '{\"message\":\"linh nguy\\u1ec5n \\u0111\\u00e3 b\\u00ecnh lu\\u1eadn b\\u00e0i vi\\u1ebft c\\u1ee7a b\\u1ea1n: Kh\\u00e1m ph\\u00e1 Ch\\u1ee3 n\\u1ed5i C\\u00e1i R\\u0103ng v\\u1edbi n\\u00e9t \\u0111\\u1eb7c s\\u1eafc ch\\u1ed1n T\\u00e2y \\u0110\\u00f4\",\"post_id\":77,\"commenter_id\":22}', NULL, '2025-06-09 03:47:19', '2025-06-09 03:47:19'),
 ('5cb9bd98-11c2-4df8-8c93-1fd2956fcb23', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 13, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"Malis Homestay\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":61}', '2025-05-28 03:37:26', '2025-05-28 03:01:35', '2025-05-28 03:37:26'),
 ('632c4a28-2a4a-4c90-ac28-b735f9d57575', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 13, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"V\\u1ec1 C\\u1ed3n Chim Tr\\u00e0 Vinh kh\\u00e1m ph\\u00e1 s\\u00f4ng n\\u01b0\\u1edbc mi\\u1ec7t v\\u01b0\\u1eddn mi\\u1ec1n T\\u00e2y\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":57}', '2025-05-28 02:36:47', '2025-05-28 02:36:17', '2025-05-28 02:36:47'),
 ('6af97297-c728-4a38-ab3f-47d9c5784215', 'App\\Notifications\\PostLikedNotification', 'App\\Models\\User', 3, '{\"message\":\"linh nguy\\u1ec5n \\u0111\\u00e3 th\\u00edch b\\u00e0i vi\\u1ebft c\\u1ee7a b\\u1ea1n: 1\",\"post_id\":74,\"liker_id\":22}', '2025-06-03 02:23:18', '2025-06-03 02:11:45', '2025-06-03 02:23:18'),
@@ -946,18 +955,21 @@ INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `
 ('7fa1f4dd-69fc-472d-b320-00aacd4162e2', 'App\\Notifications\\NewLocationCreated', 'App\\Models\\User', 4, '{\"location_id\":75,\"name\":\"2\",\"user_name\":\"Ng\\u01b0\\u1eddi d\\u00f9ng\"}', '2025-06-03 14:35:53', '2025-06-03 14:07:36', '2025-06-03 14:35:53'),
 ('8c68104e-832c-47ea-a007-a8c437e8b9ad', 'App\\Notifications\\UserFollowedNotification', 'App\\Models\\User', 3, '{\"message\":\"linh nguy\\u1ec5n \\u0111\\u00e3 theo d\\u00f5i b\\u1ea1n.\",\"follower_id\":22}', '2025-06-08 03:05:36', '2025-06-03 02:32:16', '2025-06-08 03:05:36'),
 ('8ea62fe6-8071-48ec-a3c4-1e44037adb60', 'App\\Notifications\\NewLocationCreated', 'App\\Models\\User', 4, '{\"location_id\":74,\"name\":\"1\"}', '2025-06-03 14:35:59', '2025-06-03 14:04:06', '2025-06-03 14:35:59'),
-('93f8f75c-6cae-48dd-b653-4a9bde8b06fe', 'App\\Notifications\\PostCommentedNotification', 'App\\Models\\User', 3, '{\"message\":\"T\\u00fa Nga \\u0111\\u00e3 b\\u00ecnh lu\\u1eadn b\\u00e0i vi\\u1ebft c\\u1ee7a b\\u1ea1n: Kh\\u00e1m ph\\u00e1 Ch\\u1ee3 n\\u1ed5i C\\u00e1i R\\u0103ng v\\u1edbi n\\u00e9t \\u0111\\u1eb7c s\\u1eafc ch\\u1ed1n T\\u00e2y \\u0110\\u00f4\",\"post_id\":77,\"commenter_id\":24}', NULL, '2025-06-08 09:00:19', '2025-06-08 09:00:19'),
-('95828c2b-cfda-4dc7-b227-6f400db72eaf', 'App\\Notifications\\PostCommentedNotification', 'App\\Models\\User', 3, '{\"message\":\"linh nguy\\u1ec5n \\u0111\\u00e3 b\\u00ecnh lu\\u1eadn b\\u00e0i vi\\u1ebft c\\u1ee7a b\\u1ea1n: Kh\\u00e1m ph\\u00e1 Ch\\u1ee3 n\\u1ed5i C\\u00e1i R\\u0103ng v\\u1edbi n\\u00e9t \\u0111\\u1eb7c s\\u1eafc ch\\u1ed1n T\\u00e2y \\u0110\\u00f4\",\"post_id\":77,\"commenter_id\":22}', NULL, '2025-06-08 08:58:07', '2025-06-08 08:58:07'),
+('93f8f75c-6cae-48dd-b653-4a9bde8b06fe', 'App\\Notifications\\PostCommentedNotification', 'App\\Models\\User', 3, '{\"message\":\"T\\u00fa Nga \\u0111\\u00e3 b\\u00ecnh lu\\u1eadn b\\u00e0i vi\\u1ebft c\\u1ee7a b\\u1ea1n: Kh\\u00e1m ph\\u00e1 Ch\\u1ee3 n\\u1ed5i C\\u00e1i R\\u0103ng v\\u1edbi n\\u00e9t \\u0111\\u1eb7c s\\u1eafc ch\\u1ed1n T\\u00e2y \\u0110\\u00f4\",\"post_id\":77,\"commenter_id\":24}', '2025-06-09 03:14:01', '2025-06-08 09:00:19', '2025-06-09 03:14:01'),
+('95828c2b-cfda-4dc7-b227-6f400db72eaf', 'App\\Notifications\\PostCommentedNotification', 'App\\Models\\User', 3, '{\"message\":\"linh nguy\\u1ec5n \\u0111\\u00e3 b\\u00ecnh lu\\u1eadn b\\u00e0i vi\\u1ebft c\\u1ee7a b\\u1ea1n: Kh\\u00e1m ph\\u00e1 Ch\\u1ee3 n\\u1ed5i C\\u00e1i R\\u0103ng v\\u1edbi n\\u00e9t \\u0111\\u1eb7c s\\u1eafc ch\\u1ed1n T\\u00e2y \\u0110\\u00f4\",\"post_id\":77,\"commenter_id\":22}', '2025-06-09 03:14:01', '2025-06-08 08:58:07', '2025-06-09 03:14:01'),
 ('990d2a22-7e25-4d95-ad35-217066780a8e', 'App\\Notifications\\NewLocationCreated', 'App\\Models\\User', 4, '{\"location_id\":76,\"name\":\"3\",\"user_name\":\"linh nguy\\u1ec5n\"}', '2025-06-03 14:35:57', '2025-06-03 14:16:42', '2025-06-03 14:35:57'),
 ('a2f6e3cb-728a-40a7-8173-38c7ba071436', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 24, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"Nh\\u00e0 C\\u00f4ng T\\u1eed B\\u1ea1c Li\\u00eau \\u2013 \\u0110i\\u1ec3m tham quan kh\\u00f4ng th\\u1ec3 b\\u1ecf qua khi \\u0111\\u1ebfn B\\u1ea1c Li\\u00eau\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":79}', '2025-06-08 08:12:07', '2025-06-08 08:11:48', '2025-06-08 08:12:07'),
 ('a54375f9-cb3e-4b83-8b27-4e8bd3081c1b', 'App\\Notifications\\UserFollowedNotification', 'App\\Models\\User', 13, '{\"message\":\"linh nguy\\u1ec5n \\u0111\\u00e3 theo d\\u00f5i b\\u1ea1n.\",\"follower_id\":22}', '2025-06-03 04:12:47', '2025-06-03 03:26:36', '2025-06-03 04:12:47'),
+('a57a4261-7032-4d35-a5eb-4b33bee92027', 'App\\Notifications\\PostLikedNotification', 'App\\Models\\User', 3, '{\"message\":\"linh nguy\\u1ec5n \\u0111\\u00e3 th\\u00edch b\\u00e0i vi\\u1ebft c\\u1ee7a b\\u1ea1n: Kh\\u00e1m ph\\u00e1 Ch\\u1ee3 n\\u1ed5i C\\u00e1i R\\u0103ng v\\u1edbi n\\u00e9t \\u0111\\u1eb7c s\\u1eafc ch\\u1ed1n T\\u00e2y \\u0110\\u00f4\",\"post_id\":77,\"liker_id\":22}', NULL, '2025-06-09 03:47:38', '2025-06-09 03:47:38'),
 ('af3d7a88-468a-43fa-8dae-b3833d718c65', 'App\\Notifications\\PostCommentedNotification', 'App\\Models\\User', 3, '{\"message\":\"linh nguy\\u1ec5n \\u0111\\u00e3 b\\u00ecnh lu\\u1eadn b\\u00e0i vi\\u1ebft c\\u1ee7a b\\u1ea1n: 1\",\"post_id\":74,\"commenter_id\":22}', '2025-06-03 02:23:18', '2025-06-03 02:23:01', '2025-06-03 02:23:18'),
+('be2e4f21-daeb-4b72-83c8-af05a50038f8', 'App\\Notifications\\PostLikedNotification', 'App\\Models\\User', 22, '{\"message\":\"nhudiep \\u0111\\u00e3 th\\u00edch b\\u00e0i vi\\u1ebft c\\u1ee7a b\\u1ea1n: Ch\\u00f9a \\u00c2ng Tr\\u00e0 Vinh, v\\u1ebb \\u0111\\u1eb9p Khmer c\\u1ed5 \\u0111\\u01b0\\u1ee3c l\\u01b0u gi\\u1eef h\\u01a1n 1000 n\\u0103m\",\"post_id\":81,\"liker_id\":3}', NULL, '2025-06-09 02:28:18', '2025-06-09 02:28:18'),
 ('c328ad36-ffd1-4789-ba35-88e22efc5450', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 13, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"B\\u00e1nh x\\u00e8o S\\u00e1u Gi\\u00e0u\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":62}', '2025-05-28 03:37:26', '2025-05-28 03:01:37', '2025-05-28 03:37:26'),
 ('c3fddb9b-7dfe-4b3d-bc81-0a595dfb56b9', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 3, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"1\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":74}', '2025-06-02 14:36:48', '2025-06-02 14:36:40', '2025-06-02 14:36:48'),
 ('cfdfb461-f0bb-4d36-a899-f282934680e0', 'App\\Notifications\\PostCommentedNotification', 'App\\Models\\User', 22, '{\"message\":\"T\\u00fa Nga \\u0111\\u00e3 b\\u00ecnh lu\\u1eadn b\\u00e0i vi\\u1ebft c\\u1ee7a b\\u1ea1n: Ch\\u00f9a \\u00c2ng Tr\\u00e0 Vinh, v\\u1ebb \\u0111\\u1eb9p Khmer c\\u1ed5 \\u0111\\u01b0\\u1ee3c l\\u01b0u gi\\u1eef h\\u01a1n 1000 n\\u0103m\",\"post_id\":81,\"commenter_id\":24}', NULL, '2025-06-08 09:01:48', '2025-06-08 09:01:48'),
 ('d2eb1a5e-f6c3-40c9-8d75-23ec023ae398', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 13, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"Qu\\u00e1n \\u0102n T\\u00e2n K\\u00fd 79\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":56}', '2025-05-28 01:56:08', '2025-05-28 01:55:58', '2025-05-28 01:56:08'),
+('d6066e2f-f7a7-4066-a2e6-e4b0be0109c5', 'App\\Notifications\\PostLikedNotification', 'App\\Models\\User', 22, '{\"message\":\"nhudiep \\u0111\\u00e3 th\\u00edch b\\u00e0i vi\\u1ebft c\\u1ee7a b\\u1ea1n: Ch\\u00f9a \\u00c2ng Tr\\u00e0 Vinh, v\\u1ebb \\u0111\\u1eb9p Khmer c\\u1ed5 \\u0111\\u01b0\\u1ee3c l\\u01b0u gi\\u1eef h\\u01a1n 1000 n\\u0103m\",\"post_id\":81,\"liker_id\":3}', NULL, '2025-06-09 02:28:20', '2025-06-09 02:28:20'),
 ('e45526b7-277f-48b7-bec4-7255e9ae73fd', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 22, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"111\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":72}', '2025-06-01 13:21:41', '2025-06-01 13:21:21', '2025-06-01 13:21:41'),
-('e6b90350-009d-4498-b04c-09894ebea245', 'App\\Notifications\\PostLikedNotification', 'App\\Models\\User', 3, '{\"message\":\"T\\u00fa Nga \\u0111\\u00e3 th\\u00edch b\\u00e0i vi\\u1ebft c\\u1ee7a b\\u1ea1n: Kh\\u00e1m ph\\u00e1 Ch\\u1ee3 n\\u1ed5i C\\u00e1i R\\u0103ng v\\u1edbi n\\u00e9t \\u0111\\u1eb7c s\\u1eafc ch\\u1ed1n T\\u00e2y \\u0110\\u00f4\",\"post_id\":77,\"liker_id\":24}', NULL, '2025-06-08 09:00:33', '2025-06-08 09:00:33'),
+('e6b90350-009d-4498-b04c-09894ebea245', 'App\\Notifications\\PostLikedNotification', 'App\\Models\\User', 3, '{\"message\":\"T\\u00fa Nga \\u0111\\u00e3 th\\u00edch b\\u00e0i vi\\u1ebft c\\u1ee7a b\\u1ea1n: Kh\\u00e1m ph\\u00e1 Ch\\u1ee3 n\\u1ed5i C\\u00e1i R\\u0103ng v\\u1edbi n\\u00e9t \\u0111\\u1eb7c s\\u1eafc ch\\u1ed1n T\\u00e2y \\u0110\\u00f4\",\"post_id\":77,\"liker_id\":24}', '2025-06-09 03:14:01', '2025-06-08 09:00:33', '2025-06-09 03:14:01'),
 ('e8d71a52-b797-426f-a714-f4e7c41caca1', 'App\\Notifications\\PostSharedNotification', 'App\\Models\\User', 13, '{\"message\":\"linh nguy\\u1ec5n \\u0111\\u00e3 chia s\\u1ebb b\\u00e0i vi\\u1ebft c\\u1ee7a b\\u1ea1n: Qu\\u00e1n \\u0102n T\\u00e2n K\\u00fd 79\",\"post_id\":56,\"sharer_id\":22}', '2025-06-03 04:12:47', '2025-06-03 03:32:03', '2025-06-03 04:12:47'),
 ('edab8474-2f48-4ec2-9e1f-52f2f83c22b1', 'App\\Notifications\\UserFollowedNotification', 'App\\Models\\User', 3, '{\"message\":\"linh nguy\\u1ec5n \\u0111\\u00e3 theo d\\u00f5i b\\u1ea1n.\",\"follower_id\":22}', '2025-06-08 03:05:36', '2025-06-03 02:27:19', '2025-06-08 03:05:36'),
 ('fa311c54-63ef-42c7-a963-ae4195a7fab6', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 13, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"Qu\\u00e1n C\\u01a1m Thanh H\\u00e0\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":63}', '2025-05-28 03:37:26', '2025-05-28 03:03:09', '2025-05-28 03:37:26');
@@ -1215,6 +1227,7 @@ INSERT INTO `travel_types` (`id`, `name`, `status`, `created_at`, `updated_at`) 
 
 CREATE TABLE `users` (
   `id` int UNSIGNED NOT NULL,
+  `main_badge_id` bigint UNSIGNED DEFAULT NULL,
   `username` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -1234,12 +1247,13 @@ CREATE TABLE `users` (
 -- Đang đổ dữ liệu cho bảng `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `email`, `password`, `remember_token`, `avatar`, `description`, `user_rank`, `total_points`, `redeemable_points`, `status`, `role_id`, `created_at`, `updated_at`) VALUES
-(3, 'nhudiep', 'nhudiep@gmail.com', '$2y$12$nQMyNPNqN87cY.6aI/jSXuEtVYpAljlpr5wuWJgQVo1qOVhKs0Tne', NULL, '1746716932.jpg', NULL, 0, 200, 100, '0', 3, '2025-05-04 01:41:29', '2025-06-02 11:45:16'),
-(4, 'admin', 'admin@gmail.com', '$2y$12$MyKYKCyx9ZJ8tnj4NNQzW.fnCoX1xneuUPPjlob9VN5afgtpkXaCa', NULL, '1746716717.jpg', NULL, 0, 0, 0, '0', 2, '2025-05-04 01:42:35', '2025-05-08 15:05:17'),
-(13, 'NhuDiep', 'nhinhi@gmail.com', '$2y$12$5YXurp1ympMG/uXy8pQNK.GWO2uOX6ELYg0CwQCnXPWa2AuWaFuve', NULL, NULL, NULL, 0, 0, 0, '0', 3, '2025-05-19 16:17:52', '2025-05-19 16:17:52'),
-(22, 'linh nguyễn', 'nguyenlinh200409@gmail.com', '$2y$12$Ubfn5RzC0b8Zn6KejQcoTeibvwX.Y5jIMFe/tR5J4Q10nV8gP9F2y', '9nKwF7LIIUFPYx9RkVdKlCQTnBCfsElPAU1Iuq8eqbZ369StiNNjDYdGI4R4', 'https://lh3.googleusercontent.com/a/ACg8ocLurUr84nggrd5E_I6-3UBvRJwAH_-awCMB4dd3YBRQA97GyTU=s96-c', NULL, 0, 35, 35, '0', 3, '2025-05-21 13:32:38', '2025-06-03 11:50:23'),
-(24, 'Tú Nga', 'dieptunga25@gmail.com', '$2y$12$xwOUF1F3ok59sK8NwnWgT.3LU4Agk4UU0hmi2vAONpwoVj2b4AyrG', NULL, NULL, NULL, 0, 30, 30, '0', 3, '2025-06-08 08:04:29', '2025-06-08 08:59:07');
+INSERT INTO `users` (`id`, `main_badge_id`, `username`, `email`, `password`, `remember_token`, `avatar`, `description`, `user_rank`, `total_points`, `redeemable_points`, `status`, `role_id`, `created_at`, `updated_at`) VALUES
+(3, 10, 'nhudiep', 'nhudiep@gmail.com', '$2y$12$nQMyNPNqN87cY.6aI/jSXuEtVYpAljlpr5wuWJgQVo1qOVhKs0Tne', NULL, '1746716932.jpg', NULL, 0, 212, 112, '0', 3, '2025-05-04 01:41:29', '2025-06-09 03:44:37'),
+(4, NULL, 'admin', 'admin@gmail.com', '$2y$12$MyKYKCyx9ZJ8tnj4NNQzW.fnCoX1xneuUPPjlob9VN5afgtpkXaCa', NULL, '1746716717.jpg', NULL, 0, 0, 0, '0', 2, '2025-05-04 01:42:35', '2025-05-08 15:05:17'),
+(13, NULL, 'NhuDiep', 'nhinhi@gmail.com', '$2y$12$5YXurp1ympMG/uXy8pQNK.GWO2uOX6ELYg0CwQCnXPWa2AuWaFuve', NULL, NULL, NULL, 0, 0, 0, '0', 3, '2025-05-19 16:17:52', '2025-05-19 16:17:52'),
+(22, NULL, 'linh nguyễn', 'nguyenlinh200409@gmail.com', '$2y$12$Ubfn5RzC0b8Zn6KejQcoTeibvwX.Y5jIMFe/tR5J4Q10nV8gP9F2y', '9nKwF7LIIUFPYx9RkVdKlCQTnBCfsElPAU1Iuq8eqbZ369StiNNjDYdGI4R4', 'https://lh3.googleusercontent.com/a/ACg8ocLurUr84nggrd5E_I6-3UBvRJwAH_-awCMB4dd3YBRQA97GyTU=s96-c', NULL, 0, 47, 47, '0', 3, '2025-05-21 13:32:38', '2025-06-09 03:47:48'),
+(24, NULL, 'Tú Nga', 'dieptunga25@gmail.com', '$2y$12$xwOUF1F3ok59sK8NwnWgT.3LU4Agk4UU0hmi2vAONpwoVj2b4AyrG', NULL, NULL, NULL, 0, 30, 30, '0', 3, '2025-06-08 08:04:29', '2025-06-08 08:59:07'),
+(25, NULL, 'Như Diệp', 'dieptunhu2003@gmail.com', '$2y$12$osb.58d2RkT07mdWTJMfbORxwZp7bl0fW6sqkL1GRA10MuNtYSU8W', NULL, 'https://lh3.googleusercontent.com/a/ACg8ocJohG4YerNT9DxW5GTiAK8Z8ZbuzRFTx9BTF6vMN8Ym5pLdoVCK=s96-c', NULL, 0, 0, 0, '0', 3, '2025-06-09 02:24:44', '2025-06-09 02:24:44');
 
 -- --------------------------------------------------------
 
@@ -1261,10 +1275,10 @@ CREATE TABLE `user_missions` (
 --
 
 INSERT INTO `user_missions` (`user_id`, `mission_id`, `completion_date`, `claimed`, `created_at`, `updated_at`) VALUES
-(3, 6, NULL, 0, NULL, '2025-06-02 02:00:59'),
-(3, 7, NULL, 0, NULL, '2025-06-02 02:01:27'),
-(22, 6, NULL, 0, NULL, '2025-06-02 01:26:44'),
-(22, 7, NULL, 0, NULL, '2025-06-02 01:58:28'),
+(3, 6, NULL, 1, NULL, '2025-06-09 02:28:25'),
+(3, 7, NULL, 1, NULL, '2025-06-09 02:51:03'),
+(22, 6, NULL, 1, NULL, '2025-06-09 03:47:48'),
+(22, 7, NULL, 1, NULL, '2025-06-09 03:47:29'),
 (24, 8, NULL, 1, NULL, '2025-06-08 08:59:02'),
 (24, 11, NULL, 1, NULL, '2025-06-08 08:59:07');
 
@@ -1623,7 +1637,7 @@ ALTER TABLE `badges`
 -- AUTO_INCREMENT cho bảng `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
 
 --
 -- AUTO_INCREMENT cho bảng `destinations`
@@ -1653,13 +1667,13 @@ ALTER TABLE `follows`
 -- AUTO_INCREMENT cho bảng `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
 -- AUTO_INCREMENT cho bảng `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT cho bảng `missions`
@@ -1677,7 +1691,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT cho bảng `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT cho bảng `ratings`
@@ -1725,7 +1739,7 @@ ALTER TABLE `travel_types`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT cho bảng `user_reward`

@@ -49,10 +49,27 @@
                     @endif"
                 alt="avatar" />
         <div>
-            <h2>
-                {{ $user->username }}
-                <span class="profile-badge">🥇 Nhà chinh phục</span>
-            </h2>
+<h2>
+    {{ $user->username }}
+    @php
+        // Nếu user chưa chọn, lấy badge mới nhất (theo id lớn nhất hoặc updated_at mới nhất)
+        $mainBadge = null;
+        if ($user->main_badge_id) {
+            $mainBadge = $badges->where('id', $user->main_badge_id)->first();
+        }
+        if (!$mainBadge && $badges->count()) {
+            // Lấy badge mới nhất (id lớn nhất)
+            $mainBadge = $badges->sortByDesc('id')->first();
+        }
+    @endphp
+    @if($mainBadge)
+        <span class="profile-badge" title="{{ $mainBadge->description }}">
+            <img src="{{ $mainBadge->icon_url }}" alt="{{ $mainBadge->name }}" style="width:20px;height:20px;vertical-align:middle;margin-right:2px;">
+            {{ $mainBadge->name }}
+        </span>
+    @endif
+</h2>
+<button id="show-badges-btn" class="btn btn-info" style="margin-left: 12px;">🏅 Xem huy hiệu</button>
 
             <div class="profile-meta">
                 <p><i class="fas fa-calendar-alt"></i> Tham gia từ: {{ $user->created_at->format('d/m/Y') }}</p>
@@ -67,6 +84,13 @@
             </div>
         </div>
       </div>
+
+      {{-- Hiển thị huy hiệu trên profile --}}
+{{-- <div class="user-badges">
+    @foreach($badges as $badge)
+        <img src="{{ $badge->icon_url }}" alt="{{ $badge->name }}" title="{{ $badge->name }}" class="badge-icon" />
+    @endforeach
+</div> --}}
 
       <!-- Tabs -->
       <div class="profile-tabs">
@@ -442,6 +466,31 @@
 
 
     </div>
+<div id="badge-modal">
+    <div class="badge-modal-content">
+        <h3>🎖️ Bộ sưu tập huy hiệu</h3>
+        <div class="badge-list">
+            @foreach($badges as $badge)
+                <div class="badge-item">
+                    <img src="{{ $badge->icon_url }}" alt="{{ $badge->name }}">
+                    <div class="badge-name">{{ $badge->name }}</div>
+                    <div class="badge-desc">{{ $badge->description }}</div>
+                    <form method="POST" action="{{ route('user.set-main-badge') }}">
+                        @csrf
+                        <input type="hidden" name="badge_id" value="{{ $badge->id }}">
+                        <button type="submit">Sử dụng</button>
+                    </form>
+                </div>
+            @endforeach
+        </div>
+        <button class="close-btn" onclick="document.getElementById('badge-modal').style.display='none'">&times;</button>
+    </div>
+</div>
+<script>
+document.getElementById('show-badges-btn').onclick = function() {
+    document.getElementById('badge-modal').style.display = 'block';
+};
+</script>
     <script>
       const tabs = document.querySelectorAll(".profile-tab");
       const contents = document.querySelectorAll(".profile-tab-content");

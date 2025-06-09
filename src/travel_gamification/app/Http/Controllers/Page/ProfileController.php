@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Share;
 use App\Models\Like;
 use App\Models\Mission;
+use Illuminate\Support\Facades\DB;
+
 
 class ProfileController extends Controller
 {
@@ -17,6 +19,17 @@ class ProfileController extends Controller
         $user->posts_count = $user->posts()->count();
         $user->likes_count = $user->likes()->count();
         $user->missions_count = $user->missions()->count();
+
+        // Lấy danh sách huy hiệu đã nhận (mới nhất trước)
+        $claimedMissionIds = DB::table('user_missions')
+            ->where('user_id', $user->id)
+            ->where('claimed', 1)
+            ->orderByDesc('updated_at') // hoặc orderByDesc('id')
+            ->pluck('mission_id');
+
+        $badges = \App\Models\Badge::whereIn('id', function($q) use ($claimedMissionIds) {
+            $q->select('badge_id')->from('missions')->whereIn('id', $claimedMissionIds);
+        })->get();
 
         // Bài viết của user
         $posts = $user->posts()->withCount('likes', 'comments')->latest()->get();
@@ -42,7 +55,7 @@ class ProfileController extends Controller
             ->get();
 
         return view('user.layout.profile', compact(
-            'user', 'posts', 'likedPosts', 'followers', 'followings', 'sharedPosts'
+            'user', 'badges', 'posts', 'likedPosts', 'followers', 'followings', 'sharedPosts'
         ));
     }
 
@@ -95,5 +108,12 @@ public function deleteShare($id)
     }
     $share->delete();
     return response()->json(['status' => 'deleted']);
+}
+public function setMainBadge(Request $request)
+{
+    $user = Auth::user();
+    $user->main_badge_id = $request->badge_id;
+    $user->save();
+    return back()->with('success', 'Đã chọn huy hiệu hiển thị!');
 }
 }

@@ -94,4 +94,21 @@ class User extends Authenticatable
             ->withPivot(['redeemed_at', 'delivered'])
             ->withTimestamps();
     }
+    public function badges()
+{
+    return $this->belongsToMany(\App\Models\Badge::class, 'user_badges', 'user_id', 'badge_id');
+}
+public function earnedBadges()
+{
+    return \App\Models\Badge::whereIn('id', function($q) {
+        $q->select('badge_id')
+          ->from('missions')
+          ->whereIn('id', function($q2) {
+              $q2->select('mission_id')
+                 ->from('user_missions')
+                 ->where('user_id', $this->id)
+                 ->where('claimed', 1);
+          });
+    })->get();
+}
 }

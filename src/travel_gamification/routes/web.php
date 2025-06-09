@@ -75,7 +75,7 @@ Route::get('post_articles/{id}', [PostController::class, 'postArticles'])->name(
 Route::get('/mission', [PageController::class, 'getMission'])->name('page.mission');
 Route::post('/missions/claim/{id}', [PageController::class, 'claimMission'])->name('missions.claim');
 
-
+Route::post('/user/set-main-badge', [ProfileController::class, 'setMainBadge'])->name('user.set-main-badge');
 Route::get('/ranking', [PageController::class, 'getRanking'])->name('page.ranking');
 
 Route::get('/profile', [PageController::class, 'getProfile'])->name('page.profile');
