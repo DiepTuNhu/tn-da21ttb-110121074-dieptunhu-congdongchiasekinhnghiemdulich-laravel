@@ -82,6 +82,8 @@
         
 
         <li class="nav-item">
+<li class="nav-item"><a class="nav-link" href="{{route('admin.overview')}}" onclick="loadPage(event, this)"><i class="bi bi-award"></i> Tổng quan</a></li>
+
   <a class="nav-link" href="#" onclick="toggleDropdown(event, 'locationDropdown1')">
     <i class="bi bi-geo-alt"></i> Quản lý địa điểm
   </a>

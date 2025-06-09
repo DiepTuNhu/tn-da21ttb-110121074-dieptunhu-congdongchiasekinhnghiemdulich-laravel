@@ -77,7 +77,6 @@ Route::post('/missions/claim/{id}', [PageController::class, 'claimMission'])->na
 
 Route::post('/user/set-main-badge', [ProfileController::class, 'setMainBadge'])->name('user.set-main-badge');
 Route::get('/ranking', [PageController::class, 'getRanking'])->name('page.ranking');
-
 Route::get('/profile', [PageController::class, 'getProfile'])->name('page.profile');
 Route::get('/profile', [ProfileController::class, 'show'])->name('page.profile')->middleware('auth');
 Route::get('/user/{id}/detail', [ProfileController::class, 'detail'])->name('detail_user_follow');
@@ -156,6 +155,7 @@ Route::get('/admin/notification/read/{id}', function ($id) {
     return redirect()->route('destinations.index', ['highlight' => $data['location_id']]);
 })->name('admin.notification.read');
 // ADMIN=======================================================================================================================================
+Route::get('admin/overview', [\App\Http\Controllers\Page\OverviewController::class, 'index'])->name('admin.overview');
 
 Route::middleware(['auth', 'is_admin'])->prefix('admin')->group(function () {
     Route::get('/posts/pending', [\App\Http\Controllers\Admin\PostController::class, 'pending'])->name('admin.posts.pending');

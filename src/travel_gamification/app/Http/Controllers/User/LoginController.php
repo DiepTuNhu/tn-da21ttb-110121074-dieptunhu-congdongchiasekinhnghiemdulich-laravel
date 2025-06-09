@@ -59,7 +59,7 @@ class LoginController extends Controller
             // Điều hướng tùy theo vai trò
             if (strtolower($user->role->name) == 'quản trị') {
                 // Nếu là admin, chuyển đến trang quản trị
-                return redirect()->route('travel_types.index')->with(['flag' => 'success', 'message' => 'Đăng nhập thành công']);
+                return redirect()->route('admin.overview')->with(['flag' => 'success', 'message' => 'Đăng nhập thành công']);
             } elseif (strtolower($user->role->name) == 'người dùng') {
                 // Nếu là người dùng thường, chuyển đến trang người dùng
                 return redirect()->route('page.index')->with(['flag' => 'success', 'message' => 'Đăng nhập thành công']);
