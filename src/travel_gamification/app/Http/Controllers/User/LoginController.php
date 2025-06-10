@@ -131,7 +131,11 @@ class LoginController extends Controller
         Session::put('userEmail', $user->email);
         Session::put('userID', $user->id);
 
-        // Điều hướng về trang người dùng
-        return redirect()->route('page.index')->with(['flag' => 'success', 'message' => 'Đăng nhập thành công bằng Google']);
+        // Điều hướng tùy theo vai trò
+        if (str_contains(mb_strtolower($user->role->name), 'quản trị')) {
+            return redirect()->route('admin.overview')->with(['flag' => 'success', 'message' => 'Đăng nhập thành công bằng Google']);
+        } else {
+            return redirect()->route('page.index')->with(['flag' => 'success', 'message' => 'Đăng nhập thành công bằng Google']);
+        }
     }
 }

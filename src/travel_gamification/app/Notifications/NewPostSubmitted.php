@@ -29,7 +29,7 @@ class NewPostSubmitted extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail']; // Có thể thêm 'database' nếu muốn lưu vào DB
+        return ['mail', 'database']; // Thêm 'database' để lưu vào DB
     }
 
     /**
@@ -52,7 +52,10 @@ class NewPostSubmitted extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            //
+            'name' => $this->post->title,
+            'user_name' => $this->post->user->username ?? 'Người dùng',
+            'type' => $this->post->post_type ?? 'destination',
+            'post_id' => $this->post->id,
         ];
     }
 }

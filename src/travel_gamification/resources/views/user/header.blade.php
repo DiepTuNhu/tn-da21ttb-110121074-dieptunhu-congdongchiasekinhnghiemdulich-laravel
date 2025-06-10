@@ -79,17 +79,18 @@
             @endphp
             @forelse($allNotifications as $notification)
                 @php
-                    // Nếu là thông báo liên quan đến bài viết thì có post_id
                     $link = isset($notification->data['post_id'])
                         ? route('post.detail', $notification->data['post_id'])
                         : '#';
+                    $message = $notification->data['message']
+                        ?? ($notification->data['name'] ?? '[Không xác định]');
                 @endphp
                 <a class="notification-item {{ $notification->read_at ? 'read' : 'unread' }}"
                    href="{{ $link }}"
                    @if($link !== '#') onclick="markNotificationRead('{{ $notification->id }}', this)" @endif
                    style="{{ $link === '#' ? 'pointer-events:none;opacity:0.7;' : '' }}">
                     <div>
-                        <span>{{ $notification->data['message'] }}</span>
+                        <span>{{ $message }}</span>
                         <small class="text-muted d-block">{{ $notification->created_at->diffForHumans() }}</small>
                     </div>
                 </a>

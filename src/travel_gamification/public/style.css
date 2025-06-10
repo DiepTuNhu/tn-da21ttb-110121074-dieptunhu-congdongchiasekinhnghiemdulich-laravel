@@ -3607,3 +3607,102 @@ textarea {
     border: 2px solid #ffd700;
     background: #fff;
 }
+
+#report-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.35);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+#report-modal .modal-content {
+    background: #fff;
+    padding: 32px 28px 24px 28px;
+    border-radius: 18px;
+    min-width: 320px;
+    max-width: 95vw;
+    margin: auto;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    animation: modalFadeIn 0.25s;
+}
+@keyframes modalFadeIn {
+    from { transform: translateY(40px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+#report-modal h3 {
+    margin-bottom: 18px;
+    color: #1a202c;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+#close-report-modal {
+    position: absolute;
+    top: 12px; right: 18px;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #bbb;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+#close-report-modal:hover {
+    color: #e74c3c;
+}
+#report-form label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    gap: 7px;
+}
+#report-form input[type="radio"] {
+    accent-color: #e74c3c;
+    width: 18px;
+    height: 18px;
+}
+#other-reason {
+    margin-left: 8px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    outline: none;
+    transition: border 0.2s;
+}
+#other-reason:focus {
+    border: 1.5px solid #e74c3c;
+}
+#report-form .btn-danger {
+    background: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 28px;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-top: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+#report-form .btn-danger:hover {
+    background: #c0392b;
+}
+@media (max-width: 480px) {
+    #report-modal .modal-content {
+        min-width: 90vw;
+        padding: 18px 6vw 16px 6vw;
+    }
+    #report-modal h3 {
+        font-size: 1.1rem;
+    }
+}

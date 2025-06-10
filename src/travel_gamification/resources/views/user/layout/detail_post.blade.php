@@ -570,11 +570,9 @@ document.querySelectorAll('.reply-btn').forEach(btn => {
 document.querySelectorAll('.report-comment').forEach(btn => {
     btn.onclick = function(e) {
         e.preventDefault();
-        const commentId = this.getAttribute('data-id');
-        if(confirm('Bạn có chắc muốn báo cáo bình luận này không?')) {
-            // Gửi AJAX hoặc chuyển hướng đến route báo cáo
-            alert('Đã gửi báo cáo cho quản trị viên!');
-        }
+        reportType = 'comment';
+        reportId = this.getAttribute('data-id');
+        document.getElementById('report-modal').style.display = 'flex';
     }
 });
 
@@ -641,6 +639,7 @@ function bindCommentEvents() {
             }
         }
     });
+
 }
 
 // Hiện menu khi bấm vào nút 3 chấm
@@ -767,4 +766,126 @@ document.getElementById('share-btn').onclick = function() {
     alert("{{ session('error') }}");
 </script>
 @endif
+<script>
+document.querySelector('.post-actions .report').onclick = function(e) {
+    e.preventDefault();
+    reportType = 'post';
+    reportId = {{ $post->id }};
+    document.getElementById('report-modal').style.display = 'flex';
+};
+</script>
+
+<!-- Thêm vào sau nút báo cáo trong .post-actions -->
+<!-- Popup báo cáo -->
+<div id="report-modal">
+    <div class="modal-content">
+        <button type="button" id="close-report-modal" title="Đóng">&times;</button>
+        <h3 style="margin-bottom: 16px; color: #1a202c;">Lý do bạn muốn báo cáo?</h3>
+        <form id="report-form" style="width:100%; text-align:center;">
+            <div style="margin-bottom:14px; text-align:left;">
+                <label><input type="radio" name="reason" value="Nội dung không phù hợp" required> Nội dung không phù hợp</label>
+                <label><input type="radio" name="reason" value="Spam/quảng cáo"> Spam/quảng cáo</label>
+                <label><input type="radio" name="reason" value="Thông tin sai sự thật"> Thông tin sai sự thật</label>
+                <label>
+                    <input type="radio" name="reason" value="other"> Khác:
+                    <input type="text" id="other-reason" name="other_reason" placeholder="Nhập lý do khác..." disabled>
+                </label>
+            </div>
+            <button type="submit" class="btn btn-danger">Gửi báo cáo</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    let reportType = null; // 'post' hoặc 'comment'
+let reportId = null;
+// Hiện popup khi bấm nút báo cáo
+document.querySelector('.post-actions .report').onclick = function(e) {
+    e.preventDefault();
+    reportType = 'post';
+    reportId = {{ $post->id }};
+    document.getElementById('report-modal').style.display = 'flex';
+};
+// Đóng popup
+document.getElementById('close-report-modal').onclick = function() {
+    document.getElementById('report-modal').style.display = 'none';
+};
+// Đóng khi click ra ngoài
+document.getElementById('report-modal').onclick = function(e) {
+    if(e.target === this) this.style.display = 'none';
+};
+// Enable/disable input khi chọn "Khác"
+document.querySelectorAll('input[name="reason"]').forEach(radio => {
+    radio.onchange = function() {
+        document.getElementById('other-reason').disabled = this.value !== 'other';
+        if(this.value !== 'other') document.getElementById('other-reason').value = '';
+    }
+});
+// Gửi báo cáo
+document.getElementById('report-form').onsubmit = function(e) {
+    e.preventDefault();
+    let reason = document.querySelector('input[name="reason"]:checked').value;
+    if(reason === 'other') {
+        reason = document.getElementById('other-reason').value.trim();
+        if(!reason) {
+            alert('Vui lòng nhập lý do báo cáo!');
+            return;
+        }
+    }
+    let url = '';
+    if(reportType === 'post') {
+        url = '{{ route('posts.report', ':id') }}'.replace(':id', reportId);
+    } else if(reportType === 'comment') {
+        url = '{{ route('comments.report', ':id') }}'.replace(':id', reportId);
+    }
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ reason })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.success) {
+            alert(data.message || 'Đã gửi báo cáo cho quản trị viên!');
+            document.getElementById('report-modal').style.display = 'none';
+        } else if(data.error) {
+            alert(data.error);
+        }
+    });
+};
+
+function resetReportModal() {
+    // Reset radio
+    document.querySelectorAll('#report-form input[name="reason"]').forEach(radio => {
+        radio.checked = false;
+    });
+    // Reset input khác
+    document.getElementById('other-reason').value = '';
+    document.getElementById('other-reason').disabled = true;
+}
+
+// Mở modal báo cáo bài viết
+document.querySelector('.post-actions .report').onclick = function(e) {
+    e.preventDefault();
+    reportType = 'post';
+    reportId = {{ $post->id }};
+    resetReportModal();
+    document.getElementById('report-modal').style.display = 'flex';
+};
+
+// Mở modal báo cáo bình luận
+document.querySelectorAll('.report-comment').forEach(btn => {
+    btn.onclick = function(e) {
+        e.preventDefault();
+        reportType = 'comment';
+        reportId = this.getAttribute('data-id');
+        resetReportModal();
+        document.getElementById('report-modal').style.display = 'flex';
+    }
+});
+</script>
 @endsection

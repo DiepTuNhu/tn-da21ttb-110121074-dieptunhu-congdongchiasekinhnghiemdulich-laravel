@@ -84,11 +84,17 @@
     <!-- Sidebar -->
     <div class="sidebar">
       <div class="text-center mb-4">
-        <img src="{{ Auth::user()->avatar ? asset('storage/avatars/' . Auth::user()->avatar) : asset('default-avatar.png') }}" 
-             alt="Avatar" 
-             class="rounded-circle mb-2" 
-             width="80" 
-             height="80" />
+        <img src="{{
+    Auth::user()->avatar
+        ? (Str::startsWith(Auth::user()->avatar, 'http')
+            ? Auth::user()->avatar
+            : asset('storage/avatars/' . Auth::user()->avatar))
+        : asset('storage/default.jpg')
+}}"
+alt="Avatar"
+class="rounded-circle mb-2"
+width="80"
+height="80" />
         <h6 class="mb-0">{{ Auth::user()->username }}</h6>
         <small class="text-muted">{{ Auth::user()->role->name ?? 'Quản trị viên' }}</small>
       </div>
@@ -133,6 +139,9 @@
     <i class="bi bi-box-arrow-right"></i> <b>Đăng xuất</b>
   </a>
 </li>
+<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    @csrf
+</form>
       </ul> 
     </div>
 
@@ -264,17 +273,39 @@
     </button>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown" style="width: 350px; max-height: 400px; overflow-y: auto;">
         @forelse(Auth::user()->unreadNotifications as $notification)
-            <li>
-                @php
-                    $type = $notification->data['type'] ?? 'destination';
-                    $label = $type === 'utility' ? 'Bài viết về tiện ích' : 'Bài viết về địa điểm';
-                @endphp
+            @php
+                $type = $notification->data['type'] ?? '';
+            @endphp
+@if($type === 'post')
+    <a class="dropdown-item"
+       href="{{ route('posts.index', ['highlight' => $notification->data['object_id']]) }}"
+       onclick="loadPage(event, this)">
+        <b>Bài viết bị báo cáo</b><br>
+        <small>Lý do: {{ $notification->data['reason'] ?? '' }}</small><br>
+        <small>Người báo cáo: {{ $notification->data['user_name'] ?? '' }}</small><br>
+        <small>Tiêu đề: {{ $notification->data['object_title'] ?? '' }}</small><br>
+        <small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
+    </a>
+@elseif($type === 'comment')
+    <a class="dropdown-item"
+       href="{{ route('comments.index', ['highlight' => $notification->data['object_id']]) }}"
+       onclick="loadPage(event, this)">
+        <b>Bình luận bị báo cáo</b><br>
+        <small>Lý do: {{ $notification->data['reason'] ?? '' }}</small><br>
+        <small>Người báo cáo: {{ $notification->data['user_name'] ?? '' }}</small><br>
+        <small>Nội dung: {{ $notification->data['object_title'] ?? '' }}</small><br>
+        <small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
+    </a>
+
+            @else
+                {{-- Thông báo khác (ví dụ: bài viết mới) --}}
                 <a class="dropdown-item" href="{{ route('admin.notification.read', $notification->id) }}">
-                    <b>{{ $notification->data['name'] }}</b> - {{ $label }} mới<br>
+                    <b>{{ $notification->data['name'] ?? '[Không xác định]' }}</b> - 
+                    {{ $type === 'utility' ? 'Tiện ích được tạo' : 'Địa điểm được tạo' }} mới<br>
                     <small class="text-muted">Bởi: {{ $notification->data['user_name'] ?? 'Người dùng' }}</small><br>
                     <small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
                 </a>
-            </li>
+            @endif
         @empty
             <li><span class="dropdown-item text-muted">Không có thông báo mới</span></li>
         @endforelse

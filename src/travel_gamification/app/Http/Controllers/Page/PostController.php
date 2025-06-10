@@ -13,6 +13,7 @@ use App\Notifications\NewPostSubmitted;
 use App\Models\User;
 use App\Models\Rating;
 use Illuminate\Support\Facades\DB;
+use App\Notifications\ReportSubmitted;
 
 
 class PostController extends Controller
@@ -675,6 +676,101 @@ public function share(Request $request, Post $post)
             'average_rating' => round($avg, 1),
         ]);
     }
+    public function reportComment(Request $request, $id)
+    {
+        if (!auth()->check()) {
+            return response()->json(['error' => 'Bạn cần đăng nhập để báo cáo!'], 401);
+        }
 
-    
+        $comment = \App\Models\Comment::findOrFail($id);
+
+        // Không cho phép tự báo cáo bình luận của mình
+        if ($comment->user_id == auth()->id()) {
+            return response()->json(['error' => 'Bạn không thể tự báo cáo bình luận của mình!'], 403);
+        }
+
+        // Kiểm tra đã báo cáo chưa
+        $exists = DB::table('reports')
+            ->where('user_id', auth()->id())
+            ->where('comment_id', $id)
+            ->exists();
+
+        if ($exists) {
+            return response()->json(['error' => 'Bạn đã báo cáo bình luận này rồi!']);
+        }
+
+        // Lưu báo cáo, thêm reason
+        DB::table('reports')->insert([
+            'user_id' => auth()->id(),
+            'comment_id' => $id,
+            'reason' => $request->input('reason'),
+            'created_at' => now(),
+            'updated_at' => now(),
+            'status' => 0,
+        ]);
+
+        // Gửi notify cho admin
+        $adminUsers = \App\Models\User::whereHas('role', function($query) {
+            $query->whereRaw('LOWER(name) = ?', ['quản trị']);
+        })->get();
+        foreach ($adminUsers as $admin) {
+            $admin->notify(new \App\Notifications\ReportSubmitted([
+                'type' => 'comment', // hoặc 'post'
+                'id' => $id,
+                'reason' => $request->input('reason'),
+                'user_name' => auth()->user()->username,
+                'object_title' => $comment->content, // hoặc $post->title
+            ]));
+        }
+
+        return response()->json(['success' => true, 'message' => 'Đã gửi báo cáo cho quản trị viên!']);
+    }
+    public function reportPost(Request $request, $id)
+    {
+        if (!auth()->check()) {
+            return response()->json(['error' => 'Bạn cần đăng nhập để báo cáo!'], 401);
+        }
+
+        $post = \App\Models\Post::findOrFail($id);
+
+        // Không cho phép tự báo cáo bài viết của mình
+        if ($post->user_id == auth()->id()) {
+            return response()->json(['error' => 'Bạn không thể tự báo cáo bài viết của mình!'], 403);
+        }
+
+        // Kiểm tra đã báo cáo chưa (giả sử có bảng reports)
+        $exists = DB::table('reports')
+            ->where('user_id', auth()->id())
+            ->where('post_id', $id)
+            ->exists();
+
+        if ($exists) {
+            return response()->json(['error' => 'Bạn đã báo cáo bài viết này rồi!']);
+        }
+
+        // Lưu báo cáo
+        DB::table('reports')->insert([
+            'user_id' => auth()->id(),
+            'post_id' => $id,
+            'reason' => $request->input('reason'),
+            'created_at' => now(),
+            'updated_at' => now(),
+            'status' => 0,
+        ]);
+
+        // Gửi notify cho admin về báo cáo
+        $adminUsers = User::where('role_id', 1)->get(); // Giả sử role_id=1 là admin
+
+        foreach ($adminUsers as $admin) {
+            $admin->notify(new ReportSubmitted([
+                'type' => 'post', // hoặc 'comment'
+                'id' => $id,
+                'reason' => $request->input('reason'),
+                'user_name' => auth()->user()->username,
+                'object_title' => $post->title ?? null, // hoặc $comment->content
+            ]));
+        }
+
+        return response()->json(['success' => true, 'message' => 'Đã gửi báo cáo cho quản trị viên!']);
+    }
 }

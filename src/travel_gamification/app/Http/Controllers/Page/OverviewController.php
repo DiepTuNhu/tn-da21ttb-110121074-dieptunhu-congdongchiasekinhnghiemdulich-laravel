@@ -83,15 +83,26 @@ class OverviewController extends Controller
         $statusCounts = $postStatus->pluck('count');
 
         // Tỉ lệ địa điểm theo loại hình
-        $destinationTypes = \App\Models\Destination::selectRaw('travel_type_id, COUNT(*) as count')
-            ->groupBy('travel_type_id')
-            ->with('travel_types')
-            ->get();
+        $destinationTypes = \App\Models\TravelType::pluck('name', 'id')->toArray();
+        $destinationTypeCounts = [];
+        $destinationTypeLabels = [];
 
-        $destinationTypeLabels = $destinationTypes->map(function($item) {
-            return optional($item->travel_types)->name ?? 'Không xác định';
-        });
-        $destinationTypeCounts = $destinationTypes->pluck('count');
+        foreach ($destinationTypes as $id => $name) {
+            $count = \App\Models\Destination::where('travel_type_id', $id)->count();
+            if ($count > 0) {
+                $destinationTypeLabels[] = $name ?? 'Không xác định';
+                $destinationTypeCounts[] = $count;
+            }
+        }
+
+        // Đếm các địa điểm không có travel_type_id hoặc không khớp
+        $unknownCount = \App\Models\Destination::whereNull('travel_type_id')
+            ->orWhereNotIn('travel_type_id', array_keys($destinationTypes))
+            ->count();
+        if ($unknownCount > 0) {
+            $destinationTypeLabels[] = 'Không xác định';
+            $destinationTypeCounts[] = $unknownCount;
+        }
 
         // Lấy tổng số lượt chia sẻ từ database
         $shareCount = Share::count();

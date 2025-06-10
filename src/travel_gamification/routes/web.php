@@ -90,6 +90,8 @@ Route::post('/comments/like/{id}', [PostController::class, 'likeComment'])->name
 Route::post('comments/update/{id}', [PostController::class, 'updateComment'])->name('comments.update');
 Route::post('/comments/delete/{id}', [PostController::class, 'deleteComment'])->name('comments.delete');
 Route::post('/posts/{id}/rate', [PostController::class, 'rate'])->name('posts.rating');
+Route::post('/posts/report/{id}', [\App\Http\Controllers\Page\PostController::class, 'reportPost'])->name('posts.report');
+Route::post('/comments/report/{id}', [\App\Http\Controllers\Page\PostController::class, 'reportComment'])->name('comments.report');
 
 Route::post('/post/{post}/share', [PostController::class, 'share'])->name('post.share')->middleware('auth');
 Route::post('/user/destination/store', [CreateDestinationController::class, 'store'])->name('user.destination.store');
