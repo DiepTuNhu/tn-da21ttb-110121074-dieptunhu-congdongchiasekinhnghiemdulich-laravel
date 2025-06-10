@@ -11,6 +11,8 @@ use App\Models\Comment;
 use App\Models\Like;
 use App\Models\Mission;
 use App\Models\Badge;
+use App\Models\Share; // Thêm dòng này
+use App\Models\Report; // Thêm dòng này
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
@@ -31,6 +33,9 @@ class OverviewController extends Controller
 
         // Top user tích cực
         $topUsers = User::withCount('posts')
+            ->whereDoesntHave('role', function($q) {
+                $q->whereRaw("LOWER(name) LIKE ?", ['%quản trị%']);
+            })
             ->orderByDesc('posts_count')
             ->take(5)
             ->get();
@@ -56,10 +61,51 @@ class OverviewController extends Controller
                                   ->count();
         }
 
+        // Lấy user mới tạo trong 12 tháng gần nhất, group theo tháng
+        $recentUsers = User::where('created_at', '>=', now()->subMonths(12))
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->groupBy(function($user) {
+                return $user->created_at->format('m/Y');
+            });
+
+        $postTypes = \App\Models\Post::selectRaw('post_type, COUNT(*) as count')
+            ->groupBy('post_type')
+            ->get();
+        $typeLabels = $postTypes->pluck('post_type');
+        $typeCounts = $postTypes->pluck('count');
+
+        // Tỉ lệ bài viết theo trạng thái
+        $postStatus = \App\Models\Post::selectRaw('status, COUNT(*) as count')
+            ->groupBy('status')
+            ->get();
+        $statusLabels = $postStatus->pluck('status');
+        $statusCounts = $postStatus->pluck('count');
+
+        // Tỉ lệ địa điểm theo loại hình
+        $destinationTypes = \App\Models\Destination::selectRaw('travel_type_id, COUNT(*) as count')
+            ->groupBy('travel_type_id')
+            ->with('travel_types')
+            ->get();
+
+        $destinationTypeLabels = $destinationTypes->map(function($item) {
+            return optional($item->travel_types)->name ?? 'Không xác định';
+        });
+        $destinationTypeCounts = $destinationTypes->pluck('count');
+
+        // Lấy tổng số lượt chia sẻ từ database
+        $shareCount = Share::count();
+
+        // Lấy tổng số lượt báo cáo từ database
+        $reportCount = Report::count();
+
         return view('admin.overview.overview', compact(
             'userCount', 'postCount', 'destinationCount', 'utilityCount',
             'commentCount', 'likeCount', 'missionCompleted', 'badgeAwarded',
-            'topUsers', 'topPosts', 'months', 'monthlyUsers', 'monthlyPosts'
+            'topUsers', 'topPosts', 'months', 'monthlyUsers', 'monthlyPosts', 'recentUsers',
+            'typeLabels', 'typeCounts', 'statusLabels', 'statusCounts',
+            'destinationTypeLabels', 'destinationTypeCounts', 'shareCount',
+            'reportCount' // Thêm dòng này
         ));
     }
 }

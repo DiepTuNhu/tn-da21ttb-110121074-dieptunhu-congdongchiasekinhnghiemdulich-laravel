@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
     <!-- DataTables JS -->
     {{-- <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script> --}}
     
@@ -27,7 +29,23 @@
         width: 250px;
         background-color: oklch(92.3% 0.003 48.717);
         padding-top: 20px;
+        left: 0;
+        top: 0;
+        z-index: 1052;
+        transition: transform 0.3s;
       }
+      @media (max-width: 767.98px) {
+        .sidebar {
+          transform: translateX(-100%);
+        }
+        .sidebar.show {
+          transform: translateX(0);
+        }
+        .main-content {
+          margin-left: 0 !important;
+        }
+      }
+
       .nav-link {
         color: #000
       }
@@ -82,48 +100,49 @@
         
 
         <li class="nav-item">
-<li class="nav-item"><a class="nav-link" href="{{route('admin.overview')}}" onclick="loadPage(event, this)"><i class="bi bi-award"></i> Tổng quan</a></li>
+<li class="nav-item"><a class="nav-link" href="{{route('admin.overview')}}" onclick="loadPage(event, this)"><i class="bi bi-speedometer2"></i> Tổng quan</a></li>
 
-  <a class="nav-link" href="#" onclick="toggleDropdown(event, 'locationDropdown1')">
-    <i class="bi bi-geo-alt"></i> Quản lý địa điểm
-  </a>
-  <ul class="nav flex-column px-3 collapse" id="locationDropdown1">
-    <li class="nav-item"><a class="nav-link" href="{{route('travel_types.index')}}" onclick="loadPage(event, this)"><i class="bi bi-map"></i> Loại hình du lịch</a></li>
-    <li class="nav-item"><a class="nav-link" href="{{route('destinations.index')}}" onclick="loadPage(event, this)"><i class="bi bi-building"></i> Địa điểm du lịch</a></li>
-    <li class="nav-item"><a class="nav-link" href="{{route('utility_types.index')}}" onclick="loadPage(event, this)"><i class="bi bi-box"></i> Loại tiện ích</a></li>
-    <li class="nav-item"><a class="nav-link" href="{{route('utilities.index')}}" onclick="loadPage(event, this)"><i class="bi bi-plug"></i> Tiện ích</a></li>
-  </ul>
-</li>
+<a class="nav-link" href="#" onclick="toggleDropdown(event, 'locationDropdown1')">
+  <i class="bi bi-geo-alt"></i> Quản lý địa điểm
+</a>
+<ul class="nav flex-column px-3 collapse" id="locationDropdown1">
+  <li class="nav-item"><a class="nav-link" href="{{route('travel_types.index')}}" onclick="loadPage(event, this)"><i class="bi bi-signpost"></i> Loại hình du lịch</a></li>
+  <li class="nav-item"><a class="nav-link" href="{{route('destinations.index')}}" onclick="loadPage(event, this)"><i class="bi bi-building"></i> Địa điểm du lịch</a></li>
+  <li class="nav-item"><a class="nav-link" href="{{route('utility_types.index')}}" onclick="loadPage(event, this)"><i class="bi bi-box"></i> Loại tiện ích</a></li>
+  <li class="nav-item"><a class="nav-link" href="{{route('utilities.index')}}" onclick="loadPage(event, this)"><i class="bi bi-plug"></i> Tiện ích</a></li>
+</ul>
 
-
-<li class="nav-item"><a class="nav-link" href="{{route('badges.index')}}" onclick="loadPage(event, this)"><i class="bi bi-award"></i> Huy hiệu</a></li>
+<li class="nav-item"><a class="nav-link" href="{{route('badges.index')}}" onclick="loadPage(event, this)"><i class="bi bi-patch-check"></i> Huy hiệu</a></li>
 <li class="nav-item"><a class="nav-link" href="{{route('missions.index')}}" onclick="loadPage(event, this)"><i class="bi bi-flag"></i> Nhiệm vụ</a></li>
-<li class="nav-item"><a class="nav-link" href="{{route('rewards.index')}}" onclick="loadPage(event, this)"><i class="bi bi-flag"></i> Quà tặng</a></li>
+<li class="nav-item"><a class="nav-link" href="{{route('rewards.index')}}" onclick="loadPage(event, this)"><i class="bi bi-gift"></i> Quà tặng</a></li>
 <li class="nav-item"><a class="nav-link" href="{{route('roles.index')}}" onclick="loadPage(event, this)"><i class="bi bi-person-lock"></i> Phân quyền</a></li>
 <li class="nav-item"><a class="nav-link" href="{{route('users.index')}}" onclick="loadPage(event, this)"><i class="bi bi-people"></i> Người dùng</a></li>
 <li class="nav-item"><a class="nav-link" href="{{route('posts.index')}}" onclick="loadPage(event, this)"><i class="bi bi-journal-text"></i> Bài viết</a></li>
 <li class="nav-item">
   <a class="nav-link" href="{{route('admin.posts.pending') }}" onclick="loadPage(event, this)">
-    <i class="bi bi-journal-check"></i> Duyệt bài đăng
+    <i class="bi bi-hourglass-split"></i> Duyệt bài đăng
     @if(isset($pendingCount) && $pendingCount > 0)
       <span class="badge-pending">{{ $pendingCount }}</span>
     @endif
   </a>
 </li>
-<li class="nav-item"><a class="nav-link" href="{{route('comments.index')}}" onclick="loadPage(event, this)"><i class="bi bi-chat-left-text"></i> Đánh giá</a></li>
-<li class="nav-item"><a class="nav-link" href="{{route('slides.index')}}" onclick="loadPage(event, this)"><i class="bi bi-sliders"></i> Trình chiếu</a></li>
-{{-- <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-graph-up"></i> Báo cáo & Đánh giá</a></li> --}}
-<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-  @csrf
-</form>
+<li class="nav-item"><a class="nav-link" href="{{route('comments.index')}}" onclick="loadPage(event, this)"><i class="bi bi-chat-dots"></i> Đánh giá</a></li>
+<li class="nav-item"><a class="nav-link" href="{{route('slides.index')}}" onclick="loadPage(event, this)"><i class="bi bi-images"></i> Trình chiếu</a></li>
 <li class="nav-item">
   <a class="nav-link text-danger" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
     <i class="bi bi-box-arrow-right"></i> <b>Đăng xuất</b>
   </a>
 </li>
-
       </ul> 
     </div>
+
+    <!-- Nút menu cho mobile: Đặt ở đây, ngoài main-content -->
+    <div class="d-md-none w-100 px-2 py-2 bg-white" style="position:sticky;top:0;z-index:1051;">
+      <button class="btn btn-outline-secondary" id="sidebarToggle">
+        <i class="bi bi-list" style="font-size:1.8rem"></i>
+      </button>
+    </div>
+
     <div class="main-content" id="main-content">
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -234,7 +253,7 @@
     </script>
     <!-- Ví dụ đặt ở góc trên bên phải -->
 <div class="dropdown" style="position: absolute; top: 20px; right: 30px;">
-    <a href="#" id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+    <button class="btn btn-link p-0" id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="box-shadow:none;">
         <i class="bi bi-bell" style="font-size: 1.7rem; position: relative;">
             @if(Auth::user()->unreadNotifications->count() > 0)
                 <span class="badge-pending" style="position: absolute; top: -8px; right: -8px;">
@@ -242,7 +261,7 @@
                 </span>
             @endif
         </i>
-    </a>
+    </button>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown" style="width: 350px; max-height: 400px; overflow-y: auto;">
         @forelse(Auth::user()->unreadNotifications as $notification)
             <li>
@@ -261,7 +280,30 @@
         @endforelse
     </ul>
 </div>
-    </div>
-  
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document.getElementById('sidebarToggle').onclick = function() {
+        document.querySelector('.sidebar').classList.toggle('show');
+      };
+      // Đóng sidebar khi click ngoài (mobile)
+      document.addEventListener('click', function(e) {
+        const sidebar = document.querySelector('.sidebar');
+        const toggle = document.getElementById('sidebarToggle');
+        if (window.innerWidth < 768 && sidebar.classList.contains('show')) {
+          if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
+            sidebar.classList.remove('show');
+          }
+        }
+      });
+
+      document.querySelectorAll('.sidebar .nav-link').forEach(function(link) {
+        link.addEventListener('click', function() {
+          if (window.innerWidth < 768) {
+            document.querySelector('.sidebar').classList.remove('show');
+          }
+        });
+      });
+    </script>
   </body>
 </html>
