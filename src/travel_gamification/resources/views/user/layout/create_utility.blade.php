@@ -1,5 +1,20 @@
 @extends('user.master')
 @section('content')
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul style="margin-bottom:0;">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+@if(session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
+@endif
+@if(session('error'))
+    <div class="alert alert-danger">{{ session('error') }}</div>
+@endif
 <div class="submit-section" style="max-width: 700px; margin-top: 100px;">
     <h2>Thêm tiện ích mới</h2>
     <form action="{{ route('user.utility.store') }}" method="POST" enctype="multipart/form-data">
@@ -172,6 +187,11 @@ $(function() {
         updateAddress();
     });
 
+    // Khi chọn tỉnh, huyện, xã thì cập nhật address
+    $('#province, #district, #ward').on('change', function() {
+        updateAddress();
+    });
+
     function updateAddress() {
         let ward = $('#ward').val();
         let district = $('#district option:selected').data('name');
@@ -188,7 +208,6 @@ $(function() {
     const destinationId = urlParams.get('destination_id');
     if (destinationId) {
         function trySetDestination() {
-            // Nếu option đã render thì set value, nếu chưa thì thử lại sau 100ms
             if ($('#destinationSelect option[value="' + destinationId + '"]').length) {
                 $('#destinationSelect').val(destinationId);
             } else {

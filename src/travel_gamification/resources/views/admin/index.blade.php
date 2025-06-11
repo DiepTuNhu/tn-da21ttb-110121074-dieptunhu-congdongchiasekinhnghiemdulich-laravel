@@ -121,19 +121,21 @@ height="80" />
 <li class="nav-item"><a class="nav-link" href="{{route('badges.index')}}" onclick="loadPage(event, this)"><i class="bi bi-patch-check"></i> Huy hiệu</a></li>
 <li class="nav-item"><a class="nav-link" href="{{route('missions.index')}}" onclick="loadPage(event, this)"><i class="bi bi-flag"></i> Nhiệm vụ</a></li>
 <li class="nav-item"><a class="nav-link" href="{{route('rewards.index')}}" onclick="loadPage(event, this)"><i class="bi bi-gift"></i> Quà tặng</a></li>
-<li class="nav-item"><a class="nav-link" href="{{route('roles.index')}}" onclick="loadPage(event, this)"><i class="bi bi-person-lock"></i> Phân quyền</a></li>
-<li class="nav-item"><a class="nav-link" href="{{route('users.index')}}" onclick="loadPage(event, this)"><i class="bi bi-people"></i> Người dùng</a></li>
+<li class="nav-item"><a class="nav-link" href="{{route('admin.user_rewards.index')}}" onclick="loadPage(event, this)"><i class="bi bi-trophy"></i> Đổi thưởng</a></li>
+
 <li class="nav-item"><a class="nav-link" href="{{route('posts.index')}}" onclick="loadPage(event, this)"><i class="bi bi-journal-text"></i> Bài viết</a></li>
 <li class="nav-item">
   <a class="nav-link" href="{{route('admin.posts.pending') }}" onclick="loadPage(event, this)">
-    <i class="bi bi-hourglass-split"></i> Duyệt bài đăng
+    <i class="bi bi-hourglass-split"></i> Duyệt bài viết
     @if(isset($pendingCount) && $pendingCount > 0)
       <span class="badge-pending">{{ $pendingCount }}</span>
     @endif
   </a>
 </li>
-<li class="nav-item"><a class="nav-link" href="{{route('comments.index')}}" onclick="loadPage(event, this)"><i class="bi bi-chat-dots"></i> Đánh giá</a></li>
+<li class="nav-item"><a class="nav-link" href="{{route('comments.index')}}" onclick="loadPage(event, this)"><i class="bi bi-chat-dots"></i> Bình luận</a></li>
 <li class="nav-item"><a class="nav-link" href="{{route('slides.index')}}" onclick="loadPage(event, this)"><i class="bi bi-images"></i> Trình chiếu</a></li>
+<li class="nav-item"><a class="nav-link" href="{{route('roles.index')}}" onclick="loadPage(event, this)"><i class="bi bi-person-lock"></i> Phân quyền</a></li>
+<li class="nav-item"><a class="nav-link" href="{{route('users.index')}}" onclick="loadPage(event, this)"><i class="bi bi-people"></i> Người dùng</a></li>
 <li class="nav-item">
   <a class="nav-link text-danger" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
     <i class="bi bi-box-arrow-right"></i> <b>Đăng xuất</b>

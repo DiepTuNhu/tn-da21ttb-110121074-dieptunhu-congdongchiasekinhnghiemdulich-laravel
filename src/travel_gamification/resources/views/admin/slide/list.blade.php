@@ -1,6 +1,6 @@
 @extends('admin.index')
 @section('title_name')
-    Silde
+    Hình ảnh trình chiếu
 @endsection
 
 @section('content')

@@ -1,6 +1,6 @@
 @extends('admin.index')
 @section('title_name')
-    Đánh giá người dùng
+    Bình luận từ người dùng
 @endsection
 
 @section('content')

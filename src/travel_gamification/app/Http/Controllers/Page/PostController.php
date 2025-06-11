@@ -170,9 +170,9 @@ public function share(Request $request, Post $post)
             $query->whereRaw('LOWER(name) = ?', ['quản trị']);
         })->get();
 
-        foreach ($admins as $admin) {
-            $admin->notify(new NewPostSubmitted($post));
-        }
+        // foreach ($admins as $admin) {
+        //     $admin->notify(new NewPostSubmitted($post));
+        // }
 
         return redirect()->route('page.community')->with('success', 'Bài viết của bạn đã được gửi và đang chờ duyệt bởi quản trị viên.');
     }

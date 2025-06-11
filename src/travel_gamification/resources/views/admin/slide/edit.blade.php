@@ -1,6 +1,6 @@
 @extends('admin.index')
 @section('title_name')
-    Sửa slide
+    Sửa hình ảnh
 @endsection
 
 @section('content')

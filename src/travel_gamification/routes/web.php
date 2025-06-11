@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\UtilitiesController;
 use App\Http\Controllers\Admin\DestinationsController;
 use App\Http\Controllers\Admin\DestinationImagesController;
 use App\Http\Controllers\Admin\RewardController;
+use App\Http\Controllers\Admin\UserRewardController;
 
 use App\Http\Controllers\Page\PostController;
 use App\Http\Controllers\Page\ProfileController;
@@ -258,7 +259,11 @@ Route::prefix('admin')->group(function () {
   Route::post('/reviews/{id}/toggle-status', [App\Http\Controllers\Admin\CommentController::class, 'toggleStatus'])->name('reviews.toggleStatus');
   Route::delete('/reviews/{id}', [App\Http\Controllers\Admin\CommentController::class, 'destroy'])->name('reviews.destroy');
 
+
+   Route::get('user-rewards', [UserRewardController::class, 'index'])->name('admin.user_rewards.index');
+    Route::post('user-rewards/{id}/delivered', [UserRewardController::class, 'updateDelivered'])->name('admin.user_rewards.updateDelivered');
 });
+
 
 
 Route::prefix('admin/rewards')->name('rewards.')->group(function () {

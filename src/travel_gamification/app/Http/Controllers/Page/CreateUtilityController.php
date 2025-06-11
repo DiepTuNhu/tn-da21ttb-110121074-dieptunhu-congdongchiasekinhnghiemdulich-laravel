@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Notifications\NewUtilityCreated;
+use Illuminate\Support\Facades\Log;
 
 class CreateUtilityController extends Controller
 {
@@ -46,7 +47,7 @@ class CreateUtilityController extends Controller
             $utility->time        = $request->time;
             $utility->description = $request->description;
             $utility->utility_type_id = $request->utility_type_id;
-            $utility->distance = $request->distance;
+            // $utility->distance = $request->distance;
 
             if ($request->hasFile('image')) {
                 $imageName = time() . '-' . $request->file('image')->getClientOriginalName();
@@ -54,7 +55,7 @@ class CreateUtilityController extends Controller
                 $utility->image = $imageName;
             }
 
-            $utility->status = 0;
+            $utility->status = '0';
             $utility->save();
 
             // Lưu vào bảng phát sinh
@@ -62,7 +63,7 @@ class CreateUtilityController extends Controller
                 'destination_id' => $request->destination_id,
                 'utility_id'     => $utility->id,
                 'status'         => 'nearby',
-                'distance'       => $request->distance,
+                'distance'       => $request->distance !== null ? (float) $request->distance : null,
             ]);
 
             // Gửi thông báo cho admin khi có tiện ích mới (chỉ khi user không phải quản trị)
@@ -79,6 +80,11 @@ class CreateUtilityController extends Controller
             DB::commit();
             return redirect()->route('page.post_share')->with('success', 'Tạo tiện ích thành công!');
         } catch (\Exception $e) {
+            Log::error('Utility store error', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'request' => $request->all()
+            ]);
             DB::rollBack();
             return back()->with('error', 'Có lỗi xảy ra: ' . $e->getMessage());
         }

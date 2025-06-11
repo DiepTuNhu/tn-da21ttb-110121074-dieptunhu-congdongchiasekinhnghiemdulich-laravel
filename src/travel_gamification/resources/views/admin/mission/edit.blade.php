@@ -1,6 +1,6 @@
 @extends('admin.index')
 @section('title_name')
-    Sửa huyện / quận
+    Sửa nhiệm vụ
 @endsection
 
 @section('content')

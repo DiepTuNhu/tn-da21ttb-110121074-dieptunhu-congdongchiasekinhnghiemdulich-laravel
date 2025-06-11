@@ -1,6 +1,6 @@
 @extends('admin.index')
 @section('title_name')
-    Thêm slide
+    Thêm hình ảnh
 @endsection
 
 @section('content')
