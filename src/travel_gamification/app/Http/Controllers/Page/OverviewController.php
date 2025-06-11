@@ -110,13 +110,27 @@ class OverviewController extends Controller
         // Lấy tổng số lượt báo cáo từ database
         $reportCount = Report::count();
 
+        $likeData = [];
+        $commentData = [];
+        $shareData = [];
+        for ($i = 11; $i >= 0; $i--) {
+            $month = Carbon::now()->subMonths($i)->format('Y-m');
+            $likeData[] = \App\Models\Like::whereYear('created_at', substr($month, 0, 4))
+                ->whereMonth('created_at', substr($month, 5, 2))->count();
+            $commentData[] = \App\Models\Comment::whereYear('created_at', substr($month, 0, 4))
+                ->whereMonth('created_at', substr($month, 5, 2))->count();
+            $shareData[] = \App\Models\Share::whereYear('created_at', substr($month, 0, 4))
+                ->whereMonth('created_at', substr($month, 5, 2))->count();
+        }
+
         return view('admin.overview.overview', compact(
             'userCount', 'postCount', 'destinationCount', 'utilityCount',
             'commentCount', 'likeCount', 'missionCompleted', 'badgeAwarded',
             'topUsers', 'topPosts', 'months', 'monthlyUsers', 'monthlyPosts', 'recentUsers',
             'typeLabels', 'typeCounts', 'statusLabels', 'statusCounts',
             'destinationTypeLabels', 'destinationTypeCounts', 'shareCount',
-            'reportCount' // Thêm dòng này
+            'reportCount', // Thêm dòng này
+            'likeData', 'commentData', 'shareData'
         ));
     }
 }

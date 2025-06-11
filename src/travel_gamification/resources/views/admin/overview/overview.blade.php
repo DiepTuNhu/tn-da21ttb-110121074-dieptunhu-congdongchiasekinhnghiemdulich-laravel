@@ -263,7 +263,13 @@
         </div>
     </div>
 
-    
+    {{-- Biểu đồ cột lượt tương tác theo tháng --}}
+    <div class="card border-0 shadow-sm mb-5">
+        <div class="card-body">
+            <h5 class="card-title">Biểu đồ lượt tương tác (Like, Comment, Share) theo tháng</h5>
+            <canvas id="interactionChart" width="800" height="300"></canvas>
+        </div>
+    </div>
 </div>
 
 {{-- Debug dữ liệu --}}
@@ -399,6 +405,43 @@
             responsive: false,
             maintainAspectRatio: false,
             plugins: { legend: { display: false } }
+        }
+    });
+
+    // Biểu đồ cột lượt tương tác theo tháng
+    const interactionCtx = document.getElementById('interactionChart').getContext('2d');
+    new Chart(interactionCtx, {
+        type: 'bar',
+        data: {
+            labels: {!! json_encode($months) !!},
+            datasets: [
+                {
+                    label: 'Like',
+                    backgroundColor: '#4e73df',
+                    data: {!! json_encode($likeData ?? []) !!},
+                },
+                {
+                    label: 'Comment',
+                    backgroundColor: '#1cc88a',
+                    data: {!! json_encode($commentData ?? []) !!},
+                },
+                {
+                    label: 'Share',
+                    backgroundColor: '#f6c23e',
+                    data: {!! json_encode($shareData ?? []) !!},
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'top' },
+                title: { display: false }
+            },
+            scales: {
+                x: { stacked: true },
+                y: { stacked: true, beginAtZero: true }
+            }
         }
     });
 </script>
