@@ -368,7 +368,7 @@ html {
     font-weight: bold;
     color: var(--text-black);
     text-align: center;
-    margin: 40px auto 20px;
+    margin: 20px auto 20px;
     padding: 20px 30px;
     max-width: 1000px;
     /* background-color: rgba(0, 0, 0, 0.3); */
@@ -428,7 +428,7 @@ html {
 /* Top Users */
 .top-user-section {
     padding: 40px 20px;
-    background: var(--background-light);
+    /* background: var(--background-light); */
     text-align: center;
 }
 
@@ -814,6 +814,175 @@ html {
 
 .signup-btn:hover {
     background: var(--primary-dark);
+}
+
+/* Features Section */
+.features-section {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin: 32px;
+    flex-wrap: wrap;
+}
+.feature-box {
+    background: linear-gradient(135deg, #e0ffe9 0%, #e6f7ff 100%);
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(72, 198, 239, 0.1);
+    padding: 28px 22px;
+    min-width: 200px;
+    /* max-width: 260px; */
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+.feature-box i {
+    font-size: 2.3rem;
+    margin-bottom: 10px;
+    background: linear-gradient(90deg, #48c6ef, #a1ef48);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.feature-box:hover {
+    transform: translateY(-8px) scale(1.04);
+    box-shadow: 0 8px 32px rgba(72, 198, 239, 0.18);
+}
+
+/* Stats Section */
+.stats-section {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    margin: 36px 200px;
+    /* background: rgba(255,255,255,0.92); */
+    border-radius: 18px;
+    /* box-shadow: 0 4px 24px rgba(72, 198, 239, 0.3); */
+    padding: 18px 0;
+}
+.stats-section i {
+    transition: transform 0.2s;
+}
+.stats-section i:hover {
+    transform: scale(1.2) rotate(-8deg);
+}
+.stats-section > div {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px #92dcf4;
+    padding: 18px 28px 14px 28px;
+    margin: 0 8px;
+    min-width: 200px;
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+.stats-section > div:hover {
+    box-shadow: 0 8px 32px #040c0e30;
+    transform: translateY(-6px) scale(1.04);
+}
+.stats-section {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+}
+
+.stat-box {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.75);
+    padding: 20px 30px;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4px);
+    transition: 0.3s;
+    min-width: 120px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-box:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.icon {
+    font-size: 2.4rem;
+    margin-bottom: 8px;
+}
+
+.number {
+    font-size: 2.2rem;
+    font-weight: bold;
+}
+
+.label {
+    font-size: 1rem;
+    margin-top: 4px;
+}
+
+.blue {
+    color: #48c6ef;
+}
+
+.green {
+    color: #a1ef48;
+}
+
+/* Top User Section */
+.top-user-section {
+    /* background: linear-gradient(135deg, #e6f7ff 0%, #f6fff7 100%); */
+    border-radius: 18px;
+    /* box-shadow: 0 4px 24px rgba(161,239,72,0.1); */
+    /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); */
+
+    padding: 28px 0 18px 0;
+    margin-bottom: 36px;
+}
+.top-user-section h3 {
+    text-align: center;
+    color: var(--primary-dark);
+    font-weight: bold;
+    margin-bottom: 24px;
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+}
+.top-users {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+}
+.user-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px #a1ef4840;
+    padding: 18px 22px 12px 22px;
+    min-width: 200px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+}
+.user-card img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #48c6ef;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 8px #48c6ef30;
+    background: #f6fff7;
+}
+.user-card strong {
+    color: #48c6ef;
+    font-size: 1.08rem;
+}
+.user-card:hover {
+    transform: translateY(-6px) scale(1.04);
+    box-shadow: 0 8px 32px rgba(161, 239, 72, 0.18);
+    background: linear-gradient(135deg, #e0ffe9 0%, #e6f7ff 100%);
+}
+.user-card p {
+    margin: 0;
+    font-size: 1rem;
+    color: #222;
 }
 
 @media (max-width: 768px) {
@@ -1544,7 +1713,6 @@ img.thumb {
 .profile-card-content {
     padding: 16px;
 }
-
 
 .profile-card-content h4 {
     margin: 0 0 6px;
@@ -2702,7 +2870,6 @@ textarea {
     padding: 14px;
 }
 
-
 .profile-card-content p {
     font-size: 13px;
     color: #666;
@@ -3449,7 +3616,7 @@ textarea {
 .btn-toggle-share {
     background: linear-gradient(90deg, #3498db 60%, #6dd5fa 100%);
     color: #fff;
-    box-shadow: 0 2px 8px rgba(52,152,219,0.08);
+    box-shadow: 0 2px 8px rgba(52, 152, 219, 0.08);
 }
 
 .btn-toggle-share:hover {
@@ -3460,7 +3627,7 @@ textarea {
 .btn-delete-share {
     background: linear-gradient(90deg, #e74c3c 60%, #f7971e 100%);
     color: #fff;
-    box-shadow: 0 2px 8px rgba(231,76,60,0.08);
+    box-shadow: 0 2px 8px rgba(231, 76, 60, 0.08);
 }
 
 .btn-delete-share:hover {
@@ -3492,9 +3659,11 @@ textarea {
     display: none;
     position: fixed;
     z-index: 9999;
-    left: 0; top: 0;
-    width: 100vw; height: 100vh;
-    background: rgba(0,0,0,0.35);
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.35);
 }
 #badge-modal .badge-modal-content {
     background: #fff;
@@ -3503,7 +3672,7 @@ textarea {
     border-radius: 16px;
     padding: 32px 28px 24px 28px;
     position: relative;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
     animation: fadeInDown 0.25s;
 }
 #badge-modal h3 {
@@ -3523,15 +3692,15 @@ textarea {
 }
 .badge-item {
     text-align: center;
-    width: 110px;
+    /* width: 110px; */
     background: #fffbe7;
     border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(255,193,7,0.07);
+    box-shadow: 0 2px 8px rgba(255, 193, 7, 0.07);
     padding: 10px 8px 10px 8px;
     transition: box-shadow 0.2s, transform 0.2s;
 }
 .badge-item:hover {
-    box-shadow: 0 4px 16px rgba(255,193,7,0.18);
+    box-shadow: 0 4px 16px rgba(255, 193, 7, 0.18);
     transform: translateY(-2px) scale(1.04);
 }
 .badge-item img {
@@ -3573,7 +3742,8 @@ textarea {
 }
 #badge-modal .close-btn {
     position: absolute;
-    top: 12px; right: 18px;
+    top: 12px;
+    right: 18px;
     font-size: 28px;
     background: none;
     border: none;
@@ -3597,7 +3767,7 @@ textarea {
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    box-shadow: 0 2px 8px rgba(255,193,7,0.08);
+    box-shadow: 0 2px 8px rgba(255, 193, 7, 0.08);
 }
 .profile-badge img {
     width: 22px;
@@ -3611,9 +3781,11 @@ textarea {
 #report-modal {
     display: none;
     position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    background: rgba(0,0,0,0.35);
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.35);
     z-index: 9999;
     align-items: center;
     justify-content: center;
@@ -3626,7 +3798,7 @@ textarea {
     min-width: 320px;
     max-width: 95vw;
     margin: auto;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -3634,8 +3806,14 @@ textarea {
     animation: modalFadeIn 0.25s;
 }
 @keyframes modalFadeIn {
-    from { transform: translateY(40px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+    from {
+        transform: translateY(40px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 #report-modal h3 {
     margin-bottom: 18px;
@@ -3646,7 +3824,8 @@ textarea {
 }
 #close-report-modal {
     position: absolute;
-    top: 12px; right: 18px;
+    top: 12px;
+    right: 18px;
     background: none;
     border: none;
     font-size: 2rem;

@@ -33,7 +33,7 @@
   </select>
 
   <select id="destinationDropdown" class="form-select" style="width: 400px !important;">
-    <option value="">🔍 Tìm địa điểm du lịch...</option>
+    <option value="">Tìm địa điểm du lịch...</option>
     @foreach($allDestinations as $destination)
       <option value="{{ route('destination.detail', ['id' => $destination->id]) }}">
         {{ $destination->name }}
@@ -41,7 +41,7 @@
     @endforeach
   </select>
 
-    {{-- <input type="text" class="search-input" placeholder="🔍 Tìm địa điểm, bài viết..." /> --}}
+    {{-- <input type="text" class="search-input" placeholder=" Tìm địa điểm, bài viết..." /> --}}
 
   </div>
 
@@ -201,7 +201,7 @@
 
         // Khởi tạo Select2 cho dropdown địa điểm
         $('#destinationDropdown').select2({
-            placeholder: "🔍 Tìm địa điểm du lịch...",
+            placeholder: "Tìm địa điểm du lịch...",
             allowClear: true,
             ajax: {
                 url: '{{ route('ajax.destinations') }}',

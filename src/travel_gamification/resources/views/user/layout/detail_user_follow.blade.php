@@ -42,10 +42,13 @@
                 class="follow-btn {{ auth()->user()->followings->contains($user->id) ? 'following' : '' }}" 
                 id="followBtn"
                 data-user="{{ $user->id }}">
-                {{ auth()->user()->followings->contains($user->id) ? 'Đang theo dõi' : 'Theo dõi' }}
+                {{ auth()->user()->followings->contains($user->id) ? 'Hủy theo dõi' : 'Theo dõi' }}
             </button>
         @else
-            <a href="{{ route('login') }}" class="btn btn-warning">Đăng nhập để theo dõi</a>
+            <a href="{{ route('login') }}" class="btn btn-warning"
+   onclick="localStorage.setItem('intended_url', window.location.href)">
+   Đăng nhập để theo dõi
+</a>
         @endauth
     </div>
 
@@ -201,6 +204,14 @@
 </script>
 <script>
 document.getElementById('followBtn').addEventListener('click', function() {
+    @if(!Auth::check())
+        if (confirm('Bạn cần đăng nhập để theo dõi người dùng này!')) {
+            localStorage.setItem('intended_url', window.location.href);
+            window.location.href = '{{ route('login') }}';
+        }
+        return;
+    @endif
+
     const btn = this;
     const userId = btn.dataset.user;
     const isFollowing = btn.classList.contains('following');
@@ -214,7 +225,7 @@ document.getElementById('followBtn').addEventListener('click', function() {
     .then(res => res.json())
     .then(data => {
         btn.classList.toggle('following');
-        btn.textContent = btn.classList.contains('following') ? 'Đang theo dõi' : 'Theo dõi';
+        btn.textContent = btn.classList.contains('following') ? 'Hủy theo dõi' : 'Theo dõi';
     });
 });
 </script>

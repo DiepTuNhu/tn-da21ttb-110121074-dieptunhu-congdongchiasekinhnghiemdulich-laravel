@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/styles.css">
     {{-- <link rel="icon" type="image/png" href="{{ asset('logo/logo_trang_full.png') }}" /> --}}
     <title>Cộng đồng chia sẻ kinh nghiệm du lịch</title>
-    <style>
+    {{-- <style>
       body .container-index{
         background-image: url("https://external-preview.redd.it/TSpXTYLRJTPeS9xy468Jj20MVf0EC0mke38TcJDKoEY.jpg?auto=webp&s=cec93075daae2c45d033833c88d5bcbeffb5252d");
         background-repeat: no-repeat;
@@ -22,7 +22,7 @@
         padding: 0;
         font-family: "Segoe UI", sans-serif;
       }
-    </style>
+    </style> --}}
   </head>
   <body>
     

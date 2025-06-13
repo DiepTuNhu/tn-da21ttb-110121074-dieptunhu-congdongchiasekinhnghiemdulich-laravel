@@ -62,7 +62,9 @@ Route::get('/community/post-articles/{id}/edit', [PostController::class, 'edit']
 Route::post('/community/post-articles/{id}/update', [PostController::class, 'update'])->name('post.update');
 Route::delete('/post/{id}', [PostController::class, 'destroy'])->name('post.delete');
 
-Route::post('/post/{id}/like', [PostController::class, 'like'])->middleware('auth');
+Route::post('/post/{id}/like', [PostController::class, 'like'])->middleware('auth')->name('post.like');
+Route::post('/post/{id}/comment', [PostController::class, 'comment'])->middleware('auth')->name('post.comment');
+Route::post('/post/{id}/report', [PostController::class, 'reportPost'])->middleware('auth')->name('post.report');
 Route::get('/ajax/filter-posts', [PageController::class, 'ajaxFilterPosts'])->name('filter.posts.by.traveltype');
 
 
@@ -274,3 +276,8 @@ Route::prefix('admin/rewards')->name('rewards.')->group(function () {
     Route::post('/update/{id}', [RewardController::class, 'update'])->name('update');
     Route::delete('/destroy/{id}', [RewardController::class, 'destroy'])->name('destroy');
 });
+
+Route::get('/after-login', function() {
+    $intended = session('url.intended') ?? url('/');
+    return redirect($intended);
+})->name('after.login');

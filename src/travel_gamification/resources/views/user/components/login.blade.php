@@ -206,6 +206,7 @@
         </div>
         <div id="loginError" class="error"></div>
         <button type="submit" class="login-btn">Đăng nhập</button>
+        <input type="hidden" name="intended" id="intended-url" value="">
       </form>
 
       <div class="login-google" onclick="window.location.href='{{ route('login.google') }}'">
@@ -268,6 +269,11 @@
         document.getElementById("email").value = remembered;
         document.getElementById("remember").checked = true;
       }
+
+      if(localStorage.getItem('intended_url')) {
+        document.getElementById('intended-url').value = localStorage.getItem('intended_url');
+        localStorage.removeItem('intended_url');
+    }
     };
   </script>
 </body>

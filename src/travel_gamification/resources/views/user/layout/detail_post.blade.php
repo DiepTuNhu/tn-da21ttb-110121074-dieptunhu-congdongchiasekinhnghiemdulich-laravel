@@ -57,6 +57,29 @@ text-align: center
     @endif
 @endauth
     </div>
+        <p>Bạn có thể xem bản đồ bên dưới để biết thêm chi tiết:</p>
+    {{-- @php
+      $googleMapsApiKey = env('GOOGLE_MAPS_API_KEY');
+      $mapUrl = "https://www.google.com/maps/embed/v1/place?key={$googleMapsApiKey}&q=" . urlencode(($post->destination->name ?? '') . ', ' . ($post->destination->address ?? ''));
+    @endphp
+    <iframe src="{{ $mapUrl }}" allowfullscreen="" loading="lazy"></iframe> --}}
+@php
+    $googleMapsApiKey = env('GOOGLE_MAPS_API_KEY');
+    if ($post->post_type == 'destination') {
+        $placeName = $post->destination->name ?? '';
+        $placeAddress = $post->destination->address ?? '';
+    } elseif ($post->post_type == 'utility') {
+        // Lấy tên tiện ích từ quan hệ utility
+        $placeName = $post->utility->name ?? '';
+        $placeAddress = $post->utility->address ?? '';
+    } else {
+        $placeName = '';
+        $placeAddress = '';
+    }
+    $mapUrl = "https://www.google.com/maps/embed/v1/place?key={$googleMapsApiKey}&q=" . urlencode($placeName . ', ' . $placeAddress);
+@endphp
+<iframe src="{{ $mapUrl }}" allowfullscreen="" loading="lazy"></iframe>
+
 <div>
     @if($post->post_type == 'destination')
         {{-- Bài viết về địa điểm --}}
@@ -88,28 +111,6 @@ text-align: center
       <img src="{{ $post->destination->destinationImages->first()->image_url }}" alt="ảnh minh họa" />
     @endif --}}
 
-    <p>Bạn có thể xem bản đồ bên dưới để biết thêm chi tiết:</p>
-    {{-- @php
-      $googleMapsApiKey = env('GOOGLE_MAPS_API_KEY');
-      $mapUrl = "https://www.google.com/maps/embed/v1/place?key={$googleMapsApiKey}&q=" . urlencode(($post->destination->name ?? '') . ', ' . ($post->destination->address ?? ''));
-    @endphp
-    <iframe src="{{ $mapUrl }}" allowfullscreen="" loading="lazy"></iframe> --}}
-@php
-    $googleMapsApiKey = env('GOOGLE_MAPS_API_KEY');
-    if ($post->post_type == 'destination') {
-        $placeName = $post->destination->name ?? '';
-        $placeAddress = $post->destination->address ?? '';
-    } elseif ($post->post_type == 'utility') {
-        // Lấy tên tiện ích từ quan hệ utility
-        $placeName = $post->utility->name ?? '';
-        $placeAddress = $post->utility->address ?? '';
-    } else {
-        $placeName = '';
-        $placeAddress = '';
-    }
-    $mapUrl = "https://www.google.com/maps/embed/v1/place?key={$googleMapsApiKey}&q=" . urlencode($placeName . ', ' . $placeAddress);
-@endphp
-<iframe src="{{ $mapUrl }}" allowfullscreen="" loading="lazy"></iframe>
 
       <!-- Bình luận -->
     <div class="comment-section">
@@ -228,9 +229,9 @@ text-align: center
                     <span id="like-count">{{ $post->likes->count() }}</span>
                 </button>
                 <!-- Nút chia sẻ -->
-                <button class="btn action-btn save" id="share-btn">
+                {{-- <button class="btn action-btn save" id="share-btn">
                     <i class="fas fa-bookmark"></i> Chia sẻ
-                </button>
+                </button> --}}
 
                 <!-- Modal chọn chế độ chia sẻ -->
                 <div id="share-modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.3); z-index:9999; align-items:center; justify-content:center;">
@@ -282,9 +283,12 @@ text-align: center
                 {{-- <span class="badge-item">
                     <i class="fas fa-star"></i> 120 XP
                 </span> --}}
-                <span class="badge-item">
-                    <i class="fas fa-medal"></i> Top 10 bài viết tuần
-                </span>
+@if(isset($rank))
+    <span class="badge-item">
+        <i class="fas fa-medal"></i>
+        Top {{ $rank }} bài viết tháng
+    </span>
+@endif
             </div>
             <div class="post-rating-input">
                 <span class="rating-label">Đánh giá của bạn:</span>
@@ -426,10 +430,19 @@ document.getElementById('like-btn').onclick = function() {
         headers: {
             'X-CSRF-TOKEN': '{{ csrf_token() }}',
             'Accept': 'application/json'
-        }   
+        }
     })
-    .then(res => res.json())
+    .then(res => {
+        if (res.status === 401) {
+            // Lưu lại trang hiện tại rồi chuyển hướng login
+            localStorage.setItem('intended_url', window.location.href);
+            window.location.href = '{{ route('login') }}';
+            return;
+        }
+        return res.json();
+    })
     .then(data => {
+        if(!data) return;
         if(data.success) {
             document.getElementById('like-count').innerText = data.like_count;
             const icon = document.getElementById('like-icon');
@@ -442,8 +455,6 @@ document.getElementById('like-btn').onclick = function() {
             }
         } else if(data.error) {
             alert(data.error);
-        } else if(data.message) {
-            alert(data.message);
         }
     });
 };
@@ -468,8 +479,17 @@ document.getElementById('comment-form').onsubmit = function(e) {
             parent_comment_id: this.parent_comment_id.value
         })
     })
-    .then(res => res.json())
+    .then(res => {
+        if (res.status === 401) {
+            // Nếu chưa đăng nhập, lưu lại trang hiện tại rồi chuyển hướng login
+            localStorage.setItem('intended_url', window.location.href);
+            window.location.href = '{{ route('login') }}';
+            return;
+        }
+        return res.json();
+    })
     .then(data => {
+        if(!data) return;
         if(data.success) {
             if(editId) {
                 // Cập nhật lại nội dung comment trên giao diện
@@ -705,8 +725,17 @@ document.querySelectorAll('#rating-stars-input .fa-star').forEach(star => {
             },
             body: JSON.stringify({ score })
         })
-        .then(res => res.json())
+        .then(res => {
+            if (res.status === 401) {
+                // Nếu chưa đăng nhập, lưu lại trang hiện tại rồi chuyển hướng login
+                localStorage.setItem('intended_url', window.location.href);
+                window.location.href = '{{ route('login') }}';
+                return;
+            }
+            return res.json();
+        })
         .then(data => {
+            if(!data) return;
             if(data.success) {
                 document.getElementById('rating-message').innerText = 'Đã đánh giá!';
                 document.querySelector('#rating-stars-input').setAttribute('data-rated', score);
@@ -731,7 +760,10 @@ document.querySelectorAll('#rating-stars-input .fa-star').forEach(star => {
 @if(!Auth::check())
 document.querySelectorAll('#rating-stars-input .fa-star').forEach(star => {
     star.addEventListener('click', function() {
-        alert('Bạn cần đăng nhập để đánh giá!');
+        if (confirm('Bạn cần đăng nhập để đánh giá!')) {
+            localStorage.setItem('intended_url', window.location.href);
+            window.location.href = '{{ route('login') }}';
+        }
     });
 });
 @endif
@@ -847,8 +879,17 @@ document.getElementById('report-form').onsubmit = function(e) {
         },
         body: JSON.stringify({ reason })
     })
-    .then(res => res.json())
+    .then(res => {
+        if (res.status === 401) {
+            // Nếu chưa đăng nhập, lưu lại trang hiện tại rồi chuyển hướng login
+            localStorage.setItem('intended_url', window.location.href);
+            window.location.href = '{{ route('login') }}';
+            return;
+        }
+        return res.json();
+    })
     .then(data => {
+        if(!data) return;
         if(data.success) {
             alert(data.message || 'Đã gửi báo cáo cho quản trị viên!');
             document.getElementById('report-modal').style.display = 'none';

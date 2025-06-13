@@ -32,7 +32,7 @@
         @endforeach
     </select>
     <select id="destinationDropdown" class="form-select destination-dropdown-select2">
-        <option value="">🔍 Tìm địa điểm du lịch...</option>
+        <option value="">Tìm địa điểm du lịch...</option>
     </select>
     
     @if($isLoggedIn)
@@ -336,7 +336,7 @@
             allowClear: true
         });
         $('#destinationDropdown').select2({
-            placeholder: "🔍 Tìm địa điểm du lịch...",
+            placeholder: "Tìm địa điểm du lịch...",
             allowClear: true,
             width: '100%',
             ajax: {

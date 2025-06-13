@@ -28,9 +28,11 @@
             <div class="location-info">
               <h2>{{ $destination->name }}</h2>
               <div class="mb-3" style="display: flex; gap: 10px;">
-                <a href="{{ route('post_articles', ['id' => $destination->id]) }}?type=destination" class="btn btn-primary">
-                    <i class="fa fa-pen"></i>Thêm bài viết
-                </a>
+                <a href="{{ route('post_articles', ['id' => $destination->id]) }}?type=destination"
+   class="btn btn-primary"
+   id="create-post-btn">
+    <i class="fa fa-pen"></i>Thêm bài viết
+</a>
                 <a href="{{ route('page.community', ['destination_id' => $destination->id]) }}" class="btn btn-outline-secondary">
                     <i class="fa fa-book-open"></i>Xem bài viết
                 </a>
@@ -225,4 +227,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
+@if(!Auth::check())
+<script>
+document.getElementById('create-post-btn')?.addEventListener('click', function(e) {
+    e.preventDefault();
+    if (confirm('Bạn cần đăng nhập để đăng bài!')) {
+        localStorage.setItem('intended_url', window.location.href);
+        window.location.href = '{{ route('login') }}';
+    }
+});
+</script>
+@endif
 @endsection

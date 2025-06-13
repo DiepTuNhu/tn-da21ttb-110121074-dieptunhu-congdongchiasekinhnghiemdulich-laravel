@@ -71,8 +71,10 @@ class PageController extends Controller
             ->orderByDesc('redeemable_points')
             ->take(3)
             ->get();
-
-        return view('user.index', compact('slides', 'travelTypes', 'posts', 'destinations', 'topPosts', 'topUsers'));
+        $userCount = \App\Models\User::count();
+        $postCount = \App\Models\Post::count();
+        $destinationCount = \App\Models\Destination::count();
+        return view('user.index', compact('slides', 'travelTypes', 'posts', 'destinations', 'topPosts', 'topUsers', 'userCount', 'postCount', 'destinationCount'));
     }
 
     public function ajaxFilterPosts(Request $request)
@@ -110,6 +112,9 @@ class PageController extends Controller
 
     public function search(Request $request)
     {
+        $userCount = \App\Models\User::count();
+$postCount = \App\Models\Post::count();
+$destinationCount = \App\Models\Destination::count();
         $keyword = trim($request->input('keyword'));
         $keywordNoSign = $this->stripSpecial($this->stripVN($keyword));
         $travelTypeId = $request->input('travel_type_id');
@@ -197,7 +202,19 @@ class PageController extends Controller
             ->take(3)
             ->get();
 
-        return view('user.index', compact('travelTypes', 'destinations', 'posts', 'slides', 'provinces', 'topPosts', 'topUsers'));
+        // Tìm người dùng theo tên hoặc username
+        $users = [];
+        if ($keyword) {
+            $users = \App\Models\User::where('username', 'like', "%$keyword%")
+                ->take(10)
+                ->get();
+        }
+
+        return view('user.index', compact(
+            'travelTypes', 'destinations', 'posts', 'slides', 'provinces',
+            'topPosts', 'topUsers', 'users', // Thêm biến users vào đây
+            'userCount', 'postCount', 'destinationCount'
+        ));
     }
 
     public function getCommunity(Request $request)

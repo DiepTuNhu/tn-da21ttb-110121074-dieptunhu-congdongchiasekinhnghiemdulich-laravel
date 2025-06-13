@@ -37,24 +37,19 @@ class LoginController extends Controller
         $remember = $req->has('remember'); // Lấy giá trị checkbox
 
         if (Auth::attempt($credentials, $remember)) {
-            // Kiểm tra vai trò của người dùng sau khi xác thực
             $user = Auth::user();
             Session::put('userEmail', $user->email);
             Session::put('userID', $user->id);
-            
-            // dd(session()->all());
 
-            // Điều hướng tùy theo vai trò
-            // if ($user->role_id == 1) {
-            //     // Nếu là admin, chuyển đến trang quản trị
-            //     return redirect()->route('travel_types.index')->with(['flag' => 'success', 'message' => 'Đăng nhập thành công']);
-            // } elseif ($user->role_id == 2) {
-            //     // Nếu là người dùng thường, chuyển đến trang người dùng
-            //     return redirect()->route('page.index')->with(['flag' => 'success', 'message' => 'Đăng nhập thành công']);
-            // } else {
-            //     // Nếu không có vai trò hợp lệ
-            //     return redirect()->route('login')->with(['flag' => 'danger', 'message' => 'Vai trò không hợp lệ']);
-            // }
+            // Lấy intended_url từ localStorage (gửi qua form hoặc query string)
+            $intended = $req->input('intended') ?? $req->session()->pull('url.intended');
+
+            // Nếu dùng localStorage, bạn cần truyền intended qua form khi submit login
+            // hoặc dùng JS sau khi đăng nhập thành công để redirect
+
+            if ($intended) {
+                return redirect($intended)->with(['flag' => 'success', 'message' => 'Đăng nhập thành công']);
+            }
 
             // Điều hướng tùy theo vai trò
             if (strtolower($user->role->name) == 'quản trị') {
@@ -71,6 +66,14 @@ class LoginController extends Controller
             // Nếu đăng nhập thất bại
             return redirect()->back()->with(['flag' => 'danger', 'message' => 'Đăng nhập thất bại']);
         }
+    }
+
+    public function authenticated(Request $request, $user)
+    {
+        if ($request->has('intended')) {
+            return redirect($request->input('intended'));
+        }
+        return redirect()->intended('/');
     }
 
     public function logout(Request $request)
@@ -100,20 +103,13 @@ class LoginController extends Controller
     public function handleGoogleCallback()
     {
         $googleUser = Socialite::driver('google')->user();
-// dd($googleUser);
-        // Tìm user theo email
         $user = \App\Models\User::where('email', $googleUser->getEmail())->first();
 
         if (!$user) {
-            // Lấy role_id của "người dùng" (không phân biệt hoa thường)
             $role = \App\Models\Role::whereRaw('LOWER(name) = ?', [mb_strtolower('người dùng')])->first();
-
-            // Nếu không tìm thấy role, báo lỗi
             if (!$role) {
                 return redirect()->route('login')->with(['flag' => 'danger', 'message' => 'Không tìm thấy vai trò "người dùng"']);
             }
-
-            // Tạo user mới
             $user = \App\Models\User::create([
                 'username'    => $googleUser->getName(),
                 'email'       => $googleUser->getEmail(),
@@ -123,13 +119,16 @@ class LoginController extends Controller
                 'role_id'     => $role->id,
             ]);
         }
-// dd($user);
-        // Đăng nhập user
         Auth::login($user);
-
-        // Lưu session
         Session::put('userEmail', $user->email);
         Session::put('userID', $user->id);
+
+        // Lấy intended từ session hoặc query string
+        $intended = session('url.intended') ?? request('intended');
+        if ($intended) {
+            session()->forget('url.intended');
+            return redirect($intended)->with(['flag' => 'success', 'message' => 'Đăng nhập thành công bằng Google']);
+        }
 
         // Điều hướng tùy theo vai trò
         if (str_contains(mb_strtolower($user->role->name), 'quản trị')) {

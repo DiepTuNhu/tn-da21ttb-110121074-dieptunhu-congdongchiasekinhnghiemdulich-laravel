@@ -206,13 +206,47 @@ public function share(Request $request, Post $post)
             $ratingCounts[$i] = $post->ratings->where('score', $i)->count();
         }
 
+        // ==== Thêm đoạn này để xác định thứ hạng ====
+        $startOfMonth = now()->startOfMonth();
+        $endOfMonth = now()->endOfMonth();
+        $topPosts = \App\Models\Post::with('user')
+            ->whereBetween('posts.created_at', [$startOfMonth, $endOfMonth])
+            ->leftJoin('ratings', 'posts.id', '=', 'ratings.post_id')
+            ->leftJoin('likes', 'posts.id', '=', 'likes.post_id')
+            ->leftJoin('comments', 'posts.id', '=', 'comments.post_id')
+            ->select(
+                'posts.*',
+                DB::raw('AVG(ratings.score) as average_rating'),
+                DB::raw('COUNT(DISTINCT ratings.id) as rating_count'),
+                DB::raw('COUNT(DISTINCT likes.id) as like_count'),
+                DB::raw('COUNT(DISTINCT comments.id) as comment_count'),
+                DB::raw("((COUNT(DISTINCT ratings.id) / (COUNT(DISTINCT ratings.id) + 5)) * AVG(ratings.score) + (5 / (COUNT(DISTINCT ratings.id) + 5)) * (SELECT AVG(score) FROM ratings)) as score")
+            )
+            ->groupBy('posts.id')
+            ->orderByDesc('score')
+            ->orderByDesc('like_count')
+            ->orderByDesc('comment_count')
+            ->orderByDesc('posts.created_at')
+            ->take(10)
+            ->get();
+
+        $rank = null;
+        foreach ($topPosts as $i => $item) {
+            if ($item->id == $post->id) {
+                $rank = $i + 1;
+                break;
+            }
+        }
+        // ==== Kết thúc đoạn thêm ====
+
         return view('user.layout.detail_post', compact(
             'post',
             'comments',
             'relatedPosts',
             'relatedUtilityPosts',
             'ratingCounts',
-            'totalRatings'
+            'totalRatings',
+            'rank' // truyền thêm biến này sang view
         ));
     }
     public function like($id)

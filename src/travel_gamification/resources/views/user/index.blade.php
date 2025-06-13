@@ -36,23 +36,32 @@
           </div>
       </form>
 
-          <div class="highlight-box">
-              <h4>Top Chia Sẻ Nổi Bật</h4>
-              @foreach($topPosts as $index => $post)
-                  <p>
-                      <strong>
-                          @if($index == 0) 🏆
-                          @elseif($index == 1) 🥈
-                          @elseif($index == 2) 🥉
-                          @endif
-                          {{ $post->user->username ?? 'Ẩn danh' }}:
-                      </strong>
-          <a href="{{ route('post.detail', $post->id) }}" style="color:#a1ef48;">
-              {{ Str::limit($post->title, 60) }}
-          </a>
-        </p>
-    @endforeach
-</div>
+        <div class="highlight-box">
+          <h4>Top Chia Sẻ Nổi Bật</h4>
+          @foreach($topPosts as $index => $post)
+            <p>
+              <strong>
+@if($index == 0)
+  <span style="font-size:1.2em;font-weight:bold;color:#ffd700;">
+    <i class="fas fa-crown"></i> 
+  </span>
+@elseif($index == 1)
+  <span style="font-size:1.2em;font-weight:bold;color:#b0c4de;">
+    <i class="fas fa-medal"></i> 
+  </span>
+@elseif($index == 2)
+  <span style="font-size:1.2em;font-weight:bold;color:#cd7f32;">
+    <i class="fas fa-award"></i> 
+  </span>
+@endif
+                  {{ $post->user->username ?? 'Ẩn danh' }}:
+              </strong>
+              <a href="{{ route('post.detail', $post->id) }}" style="color:#a1ef48;">
+                  {{ Str::limit($post->title, 60) }}
+              </a>
+            </p>
+          @endforeach
+        </div>
     </div>
   </div>
   <div class="slider-dots">
@@ -67,15 +76,15 @@
 <!-- Font Awesome 6 CDN -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-<section class="intro-section">
+{{-- <section class="intro-section">
   <h2>Chào mừng đến với Cộng Đồng Du Lịch Trải Nghiệm!</h2>
   <p>
     Viết về những nơi bạn đã đi qua - Gửi gắm cảm hứng đến hàng ngàn người đam mê du lịch - Tích lũy điểm thưởng và mở ra những trải nghiệm mới mỗi ngày!
   </p>
   <a href="{{ route('register') }}" class="join-btn">Tham Gia Ngay</a>
-</section>
+</section> --}}
 
-<section class="category-section">
+{{-- <section class="category-section">
   <h3>Khám phá theo loại hình du lịch</h3>
   <div class="categories">
     @foreach ($travelTypes as $type)
@@ -84,57 +93,161 @@
       </div>
     @endforeach
   </div>
-</section>
+</section> --}}
 
-<section class="top-user-section">
-  <h3>Top Thành Viên Tháng Này 🔥</h3>
-  <div class="top-users">
-    @foreach($topUsers as $index => $user)
-      <div class="user-card">
-<img src="{{ 
-    $user->avatar 
-        ? (Str::startsWith($user->avatar, ['http://', 'https://']) 
-            ? $user->avatar 
-            : asset('storage/avatars/' . $user->avatar)
-        ) 
-        : asset('storage/default.jpg') 
-}}" alt="{{ $user->username }}" />
-        <p>
-          <strong>{{ $user->username ?? 'Ẩn danh' }}</strong><br />
-          @if($index == 0) 🏆
-          @elseif($index == 1) 🥈
-          @elseif($index == 2) 🥉
-          @endif
-          {{ number_format($user->redeemable_points) }} điểm
-        </p>
-      </div>
-    @endforeach
-  </div>
-</section>
+
 
 <section class="latest-posts-section">
     <div class="section-heading">Thông tin địa điểm du lịch</div>
-    <div id="admin-posts-wrapper">
-        @include('user.layout.partials.admin_posts_list', ['posts' => $posts])
-    </div>
+      <div id="admin-posts-wrapper">
+          @include('user.layout.partials.admin_posts_list', ['posts' => $posts])
+      </div>
     
-    <div class="pagination-wrapper" id="destinations-pagination">
-      {!! $destinations->appends(request()->except('destinations_page'))->links() !!}
-    </div>
-  <div class="section-heading">Bài chia sẻ từ cộng đồng</div>
+      <div class="pagination-wrapper" id="destinations-pagination">
+        {!! $destinations->appends(request()->except('destinations_page'))->links() !!}
+      </div>
 
-    <div id="user-posts-wrapper">
-      @include('user.layout.partials.user_posts_list', ['posts' => $posts])
-    </div>
+      <hr style="margin: 0 400px; border: 1px solid #ddd;">
 
-    <div class="pagination-wrapper" id="posts-pagination">
-      {!! $posts->appends(request()->except('posts_page'))->links() !!}
-    </div>
+      <div class="section-heading">Bài chia sẻ từ cộng đồng</div>
 
-</div>
+        <div id="user-posts-wrapper">
+          @include('user.layout.partials.user_posts_list', ['posts' => $posts])
+        </div>
+
+        <div class="pagination-wrapper" id="posts-pagination">
+        {!! $posts->appends(request()->except('posts_page'))->links() !!}
+      </div>
+
+      @if(isset($users) && count($users))
+          <div class="section-heading">Người dùng liên quan</div>
+          <div class="user-search-list" style="display:flex;gap:24px;flex-wrap:wrap;justify-content:center; margin: 20px;">
+              {{-- Hiển thị danh sách người dùng --}}
+              @foreach($users as $user)
+                  <a href="{{ route('detail_user_follow', $user->id) }}" style="text-decoration:none;">
+                      <div class="user-card" style="min-width:160px;text-align:center;">
+                          <img src="{{ $user->avatar 
+                              ? (Str::startsWith($user->avatar, ['http://', 'https://']) 
+                                  ? $user->avatar 
+                                  : asset('storage/avatars/' . $user->avatar)
+                              ) 
+                              : asset('storage/default.jpg') 
+                          }}" alt="{{ $user->username }}" style="width:64px;height:64px;border-radius:50%;object-fit:cover;margin-bottom:8px;">
+                          <div style="font-weight:bold;color:#48c6ef;">{{ $user->username ?? 'Ẩn danh' }}</div>
+                      </div>
+                  </a>
+              @endforeach
+          </div>
+      @endif
+    </div>
 {{-- <input type="hidden" id="selected-travel-type" value=""> --}}
     <!-- ... -->
   </div>
+</section>
+    <hr style="margin: 0 600px; border: 1px solid #ddd;">
+
+<section class="features-section" style="display:flex;justify-content:center;gap:32px;margin-bottom:32px;">
+    <div class="feature-box" style="background:#fff;border-radius:16px;box-shadow:0 2px 12px #a1ef4840;padding:24px 18px;min-width:180px;text-align:center;">
+        <i class="fas fa-gift" style="font-size:2rem;color:#a1ef48"></i>
+        <h4 style="margin:12px 0 6px;">Tích điểm đổi quà</h4>
+        <p style="font-size:0.98rem;">Đăng bài viết, nhận điểm thưởng và đổi lấy phần quà hấp dẫn.</p>
+    </div>
+    <div class="feature-box" style="background:#fff;border-radius:16px;box-shadow:0 2px 12px #48c6ef40;padding:24px 18px;min-width:180px;text-align:center;">
+        <i class="fas fa-trophy" style="font-size:2rem;color:#48c6ef"></i>
+        <h4 style="margin:12px 0 6px;">Thử thách du lịch</h4>
+        <p style="font-size:0.98rem;">Tham gia các thử thách, sự kiện và nhận huy hiệu thành tích.</p>
+    </div>
+    <div class="feature-box" style="background:#fff;border-radius:16px;box-shadow:0 2px 12px #a1ef4840;padding:24px 18px;min-width:180px;text-align:center;">
+        <i class="fas fa-users" style="font-size:2rem;color:#a1ef48"></i>
+        <h4 style="margin:12px 0 6px;">Kết nối bạn bè</h4>
+        <p style="font-size:0.98rem;">Giao lưu, kết bạn và chia sẻ hành trình cùng cộng đồng.</p>
+    </div>
+</section>
+    <hr style="margin: 0 600px; border: 1px solid #ddd;">
+
+<section class="top-user-section">
+<h3>Top Thành Viên Tháng Này <i class="fas fa-fire" style="color:#ff5722"></i></h3>
+  <div class="top-users">
+    @foreach($topUsers as $index => $user)
+    <a href="{{ route('detail_user_follow', $user->id) }}" style="text-decoration:none;">
+      <div class="user-card">
+          <img src="{{ 
+            $user->avatar 
+                ? (Str::startsWith($user->avatar, ['http://', 'https://']) 
+                    ? $user->avatar 
+                    : asset('storage/avatars/' . $user->avatar)
+                ) 
+                : asset('storage/default.jpg') 
+          }}" alt="{{ $user->username }}" />
+          <p>
+            <strong>{{ $user->username ?? 'Ẩn danh' }}</strong><br />
+            @if($index == 0)
+              <span style="font-size:1.2em;font-weight:bold;color:#ffd700;">
+                <i class="fas fa-crown"></i> 
+              </span>
+            @elseif($index == 1)
+              <span style="font-size:1.2em;font-weight:bold;color:#b0c4de;">
+                <i class="fas fa-medal"></i> 
+              </span>
+            @elseif($index == 2)
+              <span style="font-size:1.2em;font-weight:bold;color:#cd7f32;">
+                <i class="fas fa-award"></i> 
+              </span>
+            @endif
+            {{ number_format($user->redeemable_points) }} điểm
+          </p>
+        </div>
+      </a>
+        @endforeach
+  </div>
+</section>
+
+    <hr style="margin: 0 600px; border: 1px solid #ddd;">
+
+<section class="stats-section">
+    <div class="stat-box">
+        <i class="fas fa-users icon blue"></i>
+        <div class="number blue" data-count="{{ $userCount }}">0</div>
+        <div class="label">Thành viên</div>
+    </div>
+    <div class="stat-box">
+        <i class="fas fa-pen-nib icon green"></i>
+        <div class="number green" data-count="{{ $postCount }}">0</div>
+        <div class="label">Bài viết</div>
+    </div>
+    <div class="stat-box">
+        <i class="fas fa-map-marker-alt icon blue"></i>
+        <div class="number blue" data-count="{{ $destinationCount }}">0</div>
+        <div class="label">Địa điểm</div>
+    </div>
+</section>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const easeOut = t => 1 - Math.pow(1 - t, 3); // Cubic easing for smoothness
+    const duration = 1500; // 1.5s
+
+    document.querySelectorAll('.number').forEach(el => {
+        const target = parseInt(el.dataset.count);
+        const start = 0;
+        const startTime = performance.now();
+
+        const animate = (now) => {
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = easeOut(progress);
+            const current = Math.floor(start + (target - start) * eased);
+            el.textContent = current.toLocaleString();
+
+            if (progress < 1) requestAnimationFrame(animate);
+            else el.textContent = target.toLocaleString(); // fix rounding
+        };
+
+        requestAnimationFrame(animate);
+    });
+});
+</script>
+
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
 $(document).on('click', '#posts-pagination a', function(e) {
