@@ -99,7 +99,9 @@ class DestinationImagesController extends Controller
             }
         }
 
-        return redirect()->route('destinations.index')->with('success', 'Ảnh đã được lưu thành công');
+        // return redirect()->route('destination_images.index')->with('success', 'Ảnh đã được lưu thành công');
+        return redirect()->route('destination_images.index', ['id' => $destinationId])
+                         ->with('success', 'Ảnh đã được lưu thành công');
     }
 
     /**

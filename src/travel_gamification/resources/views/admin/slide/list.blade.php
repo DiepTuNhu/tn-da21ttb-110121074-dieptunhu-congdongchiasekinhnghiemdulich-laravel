@@ -21,7 +21,7 @@
                     <th width="105px" class="text-center">Thao tác</th>
                 </tr>
                 </thead>
-                <a href = "{{route('slides.create')}}" class="btn btn-primary mb-3">Thêm mới</a><br>
+                <a href = "{{route('slides.create')}}" class="btn btn-primary mb-3"><i class="fas fa-plus"></i> Thêm mới</a><br>
                 <tbody>
                     @foreach ($slides as $slide)
                     <tr>   
@@ -35,14 +35,22 @@
                         </td>
                         <td>
                           @if($slide->status == 0)
-                              <span class="text-success">Hiện</span>
+                              <span class="text-success" title="Hiện"><i class="fas fa-eye"></i></span>
                           @else
-                              <span class="text-danger">Ẩn</span>
+                              <span class="text-danger" title="Ẩn"><i class="fas fa-eye-slash"></i></span>
                           @endif
                         </td>
                         <td>
-                            <a class = "btn btn-primary" href = "{{route('slides.edit',['id'=>$slide->id])}}">Sửa</a>
-                            <a onclick = "return confirm('Bạn có thật sự muốn xóa không?')" class = "btn btn-danger" href = "{{route('slides.destroy',['id'=>$slide->id])}}">Xóa</a>
+                            <a class="btn btn-primary" title="Sửa" href="{{ route('slides.edit', ['id' => $slide->id]) }}">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <form action="{{ route('slides.destroy', ['id' => $slide->id]) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Bạn có thật sự muốn xóa không?')">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger" type="submit" title="Xóa">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </form>
                         </td>
                     </tr>
                   @endforeach

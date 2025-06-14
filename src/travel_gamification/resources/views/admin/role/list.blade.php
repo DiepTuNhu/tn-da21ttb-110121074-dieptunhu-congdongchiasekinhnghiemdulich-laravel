@@ -19,15 +19,23 @@
                     <th width="105px" class="text-center">Thao tác</th>
                   </tr>
                 </thead>
-                <a href = "{{route('roles.create')}}" class="btn btn-primary mb-3">Thêm mới</a><br>
+                <a href = "{{route('roles.create')}}" class="btn btn-primary mb-3"><i class="fas fa-plus"></i> Thêm mới</a><br>
                 <tbody>
                   @foreach ($roles as $role)
                   <tr>
                     <td>{{ $role->id }}</td>
                     <td>{{ $role->name }}</td>
                     <td>
-                      <a class="btn btn-primary" href="{{ route('roles.edit', ['id' => $role->id]) }}">Sửa</a>
-                      <a onclick="return confirm('Bạn có thật sự muốn xóa không?')" class="btn btn-danger" href="{{ route('roles.destroy', ['id' => $role->id]) }}">Xóa</a>
+                        <a class="btn btn-primary" title="Sửa" href="{{ route('roles.edit', ['id' => $role->id]) }}">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <form action="{{ route('roles.destroy', ['id' => $role->id]) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Bạn có thật sự muốn xóa không?')">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger" type="submit" title="Xóa">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </form>
                     </td>
                   </tr>
                   @endforeach

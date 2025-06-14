@@ -85,4 +85,9 @@ class RewardController extends Controller
         $reward->delete();
         return redirect()->route('rewards.index')->with('success', 'Xóa phần thưởng thành công!');
     }
+    public function show($id)
+    {
+        $reward = \App\Models\Reward::findOrFail($id);
+        return view('admin.rewards.show', compact('reward'));
+    }
 }

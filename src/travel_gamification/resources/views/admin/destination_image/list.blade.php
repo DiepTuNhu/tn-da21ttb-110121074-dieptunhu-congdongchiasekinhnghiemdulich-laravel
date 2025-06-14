@@ -21,7 +21,10 @@
                     <th width="105px">Thao tác</th>
                 </tr>
                 </thead>
-                {{-- <a href = "{{route('destination_images.create')}}" class="btn btn-primary mb-3">Thêm mới</a><br> --}}
+                <a href="{{ route('destination_images.create', ['destination_id' => request('id')]) }}" class="btn btn-primary mb-3">
+                  <i class="fas fa-plus"></i> Thêm mới
+                </a>
+                <br>
                 <tbody>
                   @foreach ($destination_images as $destination_image)
                   <tr>   
@@ -45,8 +48,16 @@
                           @endif
                       </td>
                       <td>
-                          <a class="btn btn-primary" href="{{ route('destination_images.edit', ['id' => $destination_image->id]) }}">Sửa</a>
-                          <a onclick="return confirm('Bạn có thật sự muốn xóa không?')" class="btn btn-danger" href="{{ route('destination_images.destroy', ['id' => $destination_image->id]) }}">Xóa</a>
+                          <a class="btn btn-primary" title="Sửa" href="{{ route('destination_images.edit', ['id' => $destination_image->id]) }}">
+                              <i class="fas fa-edit"></i>
+                          </a>
+                          <form action="{{ route('destination_images.destroy', ['id' => $destination_image->id]) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Bạn có thật sự muốn xóa không?')">
+                              @csrf
+                              @method('DELETE')
+                              <button class="btn btn-danger" type="submit" title="Xóa">
+                                  <i class="fas fa-trash-alt"></i>
+                              </button>
+                          </form>
                       </td>
                     </tr>
                   @endforeach

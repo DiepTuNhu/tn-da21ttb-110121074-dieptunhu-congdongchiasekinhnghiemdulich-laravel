@@ -58,7 +58,8 @@ class UtilityTypeController extends Controller
      */
     public function show(string $id)
     {
-       
+        $utilityType = \App\Models\UtilityType::findOrFail($id);
+        return view('admin.utility_type.show', compact('utilityType'));
     }
 
     /**

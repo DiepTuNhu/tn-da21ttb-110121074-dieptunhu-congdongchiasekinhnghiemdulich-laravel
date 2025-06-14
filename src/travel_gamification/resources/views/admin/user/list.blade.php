@@ -27,7 +27,7 @@
                     <th width="150px">Thao tác</th>
                 </tr>
                 </thead>
-                <a href = "{{route('users.create')}}" class="btn btn-primary mb-3">Thêm mới</a><br>
+                <a href = "{{route('users.create')}}" class="btn btn-primary mb-3"><i class="fas fa-plus"></i> Thêm mới</a><br>
                 <tbody>
                     @foreach ($users as $user)
                     <tr>   
@@ -50,14 +50,22 @@
                         <td>{{ $user->role->name }}</td>
                         <td>
                           @if($user->status == 0)
-                              <span class="text-success">Hiện</span>
+                              <span class="text-success" title="Hiện"><i class="fas fa-eye"></i></span>
                           @else
-                              <span class="text-danger">Ẩn</span>
+                              <span class="text-danger" title="Ẩn"><i class="fas fa-eye-slash"></i></span>
                           @endif
                         </td>
                         <td>
-                            <a class = "btn btn-primary" href = "{{route('users.edit',['id'=>$user->id])}}">Sửa</a>
-                            <a onclick = "return confirm('Bạn có thật sự muốn xóa không?')" class = "btn btn-danger" href = "{{route('users.destroy',['id'=>$user->id])}}">Xóa</a>
+                            <a class="btn btn-primary" title="Sửa" href="{{ route('users.edit', ['id' => $user->id]) }}">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <form action="{{ route('users.destroy', ['id' => $user->id]) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Bạn có thật sự muốn xóa không?')">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger" type="submit" title="Xóa">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </form>
                         </td>
                     </tr>
                   @endforeach

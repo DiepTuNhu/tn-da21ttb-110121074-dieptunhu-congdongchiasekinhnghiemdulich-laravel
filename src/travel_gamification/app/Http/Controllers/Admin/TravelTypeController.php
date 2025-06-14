@@ -59,7 +59,8 @@ class TravelTypeController extends Controller
      */
     public function show(string $id)
     {
-       
+        $travelType = \App\Models\TravelType::findOrFail($id);
+        return view('admin.travel_type.show', compact('travelType'));
     }
 
     /**

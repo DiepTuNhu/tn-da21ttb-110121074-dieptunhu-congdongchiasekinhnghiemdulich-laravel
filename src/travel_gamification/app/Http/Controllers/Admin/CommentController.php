@@ -41,4 +41,9 @@ class CommentController extends Controller
 
         return redirect()->back()->with('success', 'Xóa bình luận thành công!');
     }
+    public function show($id)
+    {
+        $comment = \App\Models\Comment::with(['user', 'post', 'parent'])->findOrFail($id);
+        return view('admin.comment.show', compact('comment'));
+    }
 }

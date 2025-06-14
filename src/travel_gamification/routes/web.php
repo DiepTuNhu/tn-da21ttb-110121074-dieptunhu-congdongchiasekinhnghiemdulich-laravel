@@ -170,13 +170,14 @@ Route::get('/admin/posts/pending', [\App\Http\Controllers\Admin\PostController::
 Route::post('/ckeditor/upload', [CKEditorController::class, 'upload'])->name('ckeditor.upload');
 Route::prefix('admin')->group(function () {
 
-//TYPE LOCATION------------------------------------------------------------------------------------------
+//TYPE DESTINATION------------------------------------------------------------------------------------------
   Route::get('/travel_types',[TravelTypeController::class,'index'])->name('travel_types.index');
   Route::get('/travel_types/create',[TravelTypeController::class,'create'])->name('travel_types.create');
   Route::post('/travel_types',[TravelTypeController::class,'store'])->name('travel_types.store');
   Route::get('/travel_types/{id}/edit',[TravelTypeController::class,'edit'])->name('travel_types.edit');
   Route::post('/travel_types/{id}',[TravelTypeController::class,'update'])->name('travel_types.update');
   Route::get('/travel_types/{id}',[TravelTypeController::class,'destroy'])->name('travel_types.destroy');
+  Route::get('admin/travel-types/{id}', [TravelTypeController::class, 'show'])->name('travel_types.show');
 
 
   //TYPE OF UTILITY------------------------------------------------------------------------------------------
@@ -185,7 +186,8 @@ Route::prefix('admin')->group(function () {
   Route::post('/utility_types',[UtilityTypeController::class,'store'])->name('utility_types.store');
   Route::get('/utility_types/{id}/edit',[UtilityTypeController::class,'edit'])->name('utility_types.edit');
   Route::post('/utility_types/{id}',[UtilityTypeController::class,'update'])->name('utility_types.update');
-  Route::get('/utility_types/{id}',[UtilityTypeController::class,'destroy'])->name('utility_types.destroy');
+  Route::delete('/utility_types/{id}',[UtilityTypeController::class,'destroy'])->name('utility_types.destroy');
+  Route::get('admin/utility-types/{id}', [UtilityTypeController::class, 'show'])->name('utility_types.show');
 
   //ROLE------------------------------------------------------------------------------------------
   Route::get('/roles',[RoleController::class,'index'])->name('roles.index');
@@ -193,7 +195,7 @@ Route::prefix('admin')->group(function () {
   Route::post('/roles',[RoleController::class,'store'])->name('roles.store');
   Route::get('/roles/{id}/edit',[RoleController::class,'edit'])->name('roles.edit');
   Route::post('/roles/{id}',[RoleController::class,'update'])->name('roles.update');
-  Route::get('/roles/{id}',[RoleController::class,'destroy'])->name('roles.destroy');
+  Route::delete('/roles/{id}',[RoleController::class,'destroy'])->name('roles.destroy');
 
   //SLIDE------------------------------------------------------------------------------------------
   Route::get('/slides',[SlideController::class,'index'])->name('slides.index');
@@ -201,7 +203,7 @@ Route::prefix('admin')->group(function () {
   Route::post('/slides',[SlideController::class,'store'])->name('slides.store');
   Route::get('/slides/{id}/edit',[SlideController::class,'edit'])->name('slides.edit');
   Route::post('/slides/{id}',[SlideController::class,'update'])->name('slides.update');
-  Route::get('/slides/{id}',[SlideController::class,'destroy'])->name('slides.destroy');
+  Route::delete('/slides/{id}',[SlideController::class,'destroy'])->name('slides.destroy');
 
   //USER------------------------------------------------------------------------------------------
   Route::get('/users',[UserController::class,'index'])->name('users.index');
@@ -209,7 +211,7 @@ Route::prefix('admin')->group(function () {
   Route::post('/users',[UserController::class,'store'])->name('users.store');
   Route::get('/users/{id}/edit',[UserController::class,'edit'])->name('users.edit');
   Route::post('/users/{id}',[UserController::class,'update'])->name('users.update');
-  Route::get('/users/{id}',[UserController::class,'destroy'])->name('users.destroy');
+  Route::delete('/users/{id}',[UserController::class,'destroy'])->name('users.destroy');
 
   //BADGE------------------------------------------------------------------------------------------
   Route::get('/badges',[BadgesController::class,'index'])->name('badges.index');
@@ -217,7 +219,8 @@ Route::prefix('admin')->group(function () {
   Route::post('/badges',[BadgesController::class,'store'])->name('badges.store');
   Route::get('/badges/{id}/edit',[BadgesController::class,'edit'])->name('badges.edit');
   Route::post('/badges/{id}',[BadgesController::class,'update'])->name('badges.update');
-  Route::get('/badges/{id}',[BadgesController::class,'destroy'])->name('badges.destroy');
+  Route::delete('/badges/{id}',[BadgesController::class,'destroy'])->name('badges.destroy');
+  Route::get('admin/badges/{id}', [BadgesController::class, 'show'])->name('badges.show');
 
   //MISSION------------------------------------------------------------------------------------------
   Route::get('/missions',[MissionsController::class,'index'])->name('missions.index');
@@ -225,7 +228,8 @@ Route::prefix('admin')->group(function () {
   Route::post('/missions',[MissionsController::class,'store'])->name('missions.store');
   Route::get('/missions/{id}/edit',[MissionsController::class,'edit'])->name('missions.edit');
   Route::post('/missions/{id}',[MissionsController::class,'update'])->name('missions.update');
-  Route::get('/missions/{id}',[MissionsController::class,'destroy'])->name('missions.destroy');
+  Route::delete('/missions/{id}',[MissionsController::class,'destroy'])->name('missions.destroy');
+  Route::get('admin/missions/{id}', [MissionsController::class, 'show'])->name('missions.show');
 
   //UTILITY------------------------------------------------------------------------------------------
   Route::get('/utilities',[UtilitiesController::class,'index'])->name('utilities.index');
@@ -233,7 +237,8 @@ Route::prefix('admin')->group(function () {
   Route::post('/utilities',[UtilitiesController::class,'store'])->name('utilities.store');
   Route::get('/utilities/{id}/edit',[UtilitiesController::class,'edit'])->name('utilities.edit');
   Route::post('/utilities/{id}',[UtilitiesController::class,'update'])->name('utilities.update');
-  Route::get('/utilities/{id}',[UtilitiesController::class,'destroy'])->name('utilities.destroy');
+  Route::delete('/utilities/{id}',[UtilitiesController::class,'destroy'])->name('utilities.destroy');
+  Route::get('admin/utilities/{id}', [UtilitiesController::class, 'show'])->name('utilities.show');
 
   //DESTINATION------------------------------------------------------------------------------------------
   Route::get('/destinations',[DestinationsController::class,'index'])->name('destinations.index');
@@ -241,7 +246,8 @@ Route::prefix('admin')->group(function () {
   Route::post('/destinations',[DestinationsController::class,'store'])->name('destinations.store');
   Route::get('/destinations/{id}/edit',[DestinationsController::class,'edit'])->name('destinations.edit');
   Route::post('/destinations/{id}',[DestinationsController::class,'update'])->name('destinations.update');
-  Route::get('/destinations/{id}',[DestinationsController::class,'destroy'])->name('destinations.destroy');
+  Route::delete('/destinations/{id}',[DestinationsController::class,'destroy'])->name('destinations.destroy');
+  Route::get('/destinations/{id}', [DestinationsController::class, 'showDetail'])->name('destinations.show');
 
   //DESTINATION IMAGE------------------------------------------------------------------------------------------
   Route::get('/destination_images',[DestinationImagesController::class,'index'])->name('destination_images.index');
@@ -249,25 +255,26 @@ Route::prefix('admin')->group(function () {
   Route::post('/destination_images',[DestinationImagesController::class,'store'])->name('destination_images.store');
   Route::get('/destination_images/{id}/edit',[DestinationImagesController::class,'edit'])->name('destination_images.edit');
   Route::post('/destination_images/{id}',[DestinationImagesController::class,'update'])->name('destination_images.update');
-  Route::get('/destination_images/{id}',[DestinationImagesController::class,'destroy'])->name('destination_images.destroy');
+  Route::delete('/destination_images/{id}',[DestinationImagesController::class,'destroy'])->name('destination_images.destroy');
   
   // POST-------------------------------------------------------------------------------------------------
   Route::get('/posts', [App\Http\Controllers\Admin\PostController::class, 'index'])->name('posts.index');
   Route::post('/posts/{id}/toggle-status', [App\Http\Controllers\Admin\PostController::class, 'toggleStatus'])->name('admin.posts.toggleStatus');
   Route::delete('/posts/{id}', [App\Http\Controllers\Admin\PostController::class, 'destroy'])->name('admin.posts.destroy');
+  Route::get('/posts/{id}', [App\Http\Controllers\Admin\PostController::class, 'show'])->name('admin.posts.show');
 
   // COMMENT-------------------------------------------------------------------------------------------------
   Route::get('/comments', [App\Http\Controllers\Admin\CommentController::class, 'index'])->name('comments.index');
   Route::post('/reviews/{id}/toggle-status', [App\Http\Controllers\Admin\CommentController::class, 'toggleStatus'])->name('reviews.toggleStatus');
   Route::delete('/reviews/{id}', [App\Http\Controllers\Admin\CommentController::class, 'destroy'])->name('reviews.destroy');
+  Route::get('admin/reviews/{id}', [App\Http\Controllers\Admin\CommentController::class, 'show'])->name('reviews.show');
 
-
-   Route::get('user-rewards', [UserRewardController::class, 'index'])->name('admin.user_rewards.index');
-    Route::post('user-rewards/{id}/delivered', [UserRewardController::class, 'updateDelivered'])->name('admin.user_rewards.updateDelivered');
+  Route::get('user-rewards', [UserRewardController::class, 'index'])->name('admin.user_rewards.index');
+  Route::post('user-rewards/{id}/delivered', [UserRewardController::class, 'updateDelivered'])->name('admin.user_rewards.updateDelivered');
 });
 
 
-
+// Route::get('admin/rewards/{id}', [RewardController::class, 'show'])->name('rewards.show');
 Route::prefix('admin/rewards')->name('rewards.')->group(function () {
     Route::get('/', [RewardController::class, 'index'])->name('index');
     Route::get('/create', [RewardController::class, 'create'])->name('create');
@@ -275,6 +282,8 @@ Route::prefix('admin/rewards')->name('rewards.')->group(function () {
     Route::get('/edit/{id}', [RewardController::class, 'edit'])->name('edit');
     Route::post('/update/{id}', [RewardController::class, 'update'])->name('update');
     Route::delete('/destroy/{id}', [RewardController::class, 'destroy'])->name('destroy');
+    Route::get('/{id}', [RewardController::class, 'show'])->name('show');
+    
 });
 
 Route::get('/after-login', function() {

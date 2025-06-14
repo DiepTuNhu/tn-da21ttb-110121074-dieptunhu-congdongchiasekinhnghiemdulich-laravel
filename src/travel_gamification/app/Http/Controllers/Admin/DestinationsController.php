@@ -157,7 +157,10 @@ class DestinationsController extends Controller
 
         return view('user.layout.detail_destination', compact('destination', 'nearbyUtilities'));
     }
-
+    public function showDetail($id){
+        $destination = Destination::with(['users', 'travel_types'])->findOrFail($id);
+        return view('admin.destination.show', compact('destination'));
+    }
     /**
      * Show the form for editing the specified resource.
      */

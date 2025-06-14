@@ -60,4 +60,9 @@ class PostController extends Controller
         $posts = Post::where('status', 1)->latest()->paginate(20);
         return view('admin.post.pending', compact('posts'));
     }
+    public function show($id)
+    {
+        $post = \App\Models\Post::with(['user', 'destination', 'utility'])->findOrFail($id);
+        return view('admin.post.show', compact('post'));
+    }
 }

@@ -265,4 +265,10 @@ class UtilitiesController extends Controller
 
         return redirect()->route('utilities.index')->with('success', 'Utility deleted successfully!');
     }
+
+    public function show($id)
+    {
+        $utility = \App\Models\Utility::with('utility_types')->findOrFail($id);
+        return view('admin.utility.show', compact('utility'));
+    }
 }
