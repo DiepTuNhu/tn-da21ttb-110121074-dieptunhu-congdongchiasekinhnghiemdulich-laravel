@@ -98,9 +98,10 @@ Route::post('/comments/report/{id}', [\App\Http\Controllers\Page\PostController:
 
 Route::post('/post/{post}/share', [PostController::class, 'share'])->name('post.share')->middleware('auth');
 Route::post('/user/destination/store', [CreateDestinationController::class, 'store'])->name('user.destination.store');
-Route::get('/user/destination/create', function() {
-    return view('user.layout.create_destination');
-})->name('user.destination.create');
+Route::get('user/destination/create', [CreateDestinationController::class, 'create'])->name('user.destination.create');
+// Route::get('/user/destination/create', function() {
+//     return view('user.layout.create_destination');
+// })->name('user.destination.create');
 
 Route::middleware('auth')->group(function () {
     Route::get('/rewards', [RewardRedeemController::class, 'index'])->name('user.rewards');

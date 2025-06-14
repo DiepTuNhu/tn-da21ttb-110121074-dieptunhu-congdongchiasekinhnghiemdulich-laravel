@@ -1,7 +1,76 @@
 @extends('user.master')
 @section('content')
 {{-- <link rel="stylesheet" href="{{ asset('style.css') }}"> --}}
-<div class="submit-section" style="margin-top: 120px">
+
+<div style="padding-top: 75px">
+    <div class="progress-steps-wrapper" style="margin: 0 auto; max-width: 500px; padding-top: 30px;">
+        <div class="progress-steps">
+            <div class="step {{ (isset($step) && $step == 1) ? 'active' : '' }}">
+                <div class="circle">1</div>
+                <div class="label">Tạo địa điểm</div>
+            </div>
+            <div class="line"></div>
+            <div class="step {{ isset($step) && $step == 2 ? 'active' : '' }}">
+                <div class="circle">2</div>
+                <div class="label">Đăng bài</div>
+            </div>
+        </div>
+    </div>
+    <style>
+    .progress-steps-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .progress-steps {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+    }
+    .progress-steps .step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 90px;
+    }
+    .progress-steps .circle {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #e0e0e0;
+        color: #888;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 20px;
+        margin-bottom: 6px;
+        transition: background 0.3s, color 0.3s;
+        border: 2px solid #e0e0e0;
+    }
+    .progress-steps .step.active .circle {
+        background: #007bff;
+        color: #fff;
+        border: 2px solid #007bff;
+        box-shadow: 0 0 8px #007bff55;
+    }
+    .progress-steps .label {
+        font-size: 15px;
+        color: #333;
+        font-weight: 500;
+        text-align: center;
+    }
+    .progress-steps .line {
+        flex: 1;
+        height: 3px;
+        background: linear-gradient(90deg, #e0e0e0 0%, #007bff 100%);
+        min-width: 40px;
+        border-radius: 2px;
+    }
+    </style>
+</div>
+<div class="submit-section">
+    
     <h2>Thêm Địa Điểm Mới</h2>
     <form id="createDestinationForm" class="submit-form" method="POST" action="{{ route('user.destination.store') }}" enctype="multipart/form-data">
         @csrf
@@ -34,6 +103,7 @@
         <button type="submit" class="btn-submit">Tạo địa điểm</button>
     </form>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function() {

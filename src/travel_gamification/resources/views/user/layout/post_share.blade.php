@@ -26,12 +26,18 @@
             </div>
             <div class="form-group">
                 <label for="destinationSelect">Địa điểm</label>
-                <select id="destinationSelect" class="form-control"></select>
+                <select id="destinationSelect" class="form-control">
+                    <option value="" selected disabled>-- Chọn địa điểm --</option>
+                    <option value="create_new">+ Tạo mới</option>
+                    @foreach($destinations as $destination)
+                        <option value="{{ $destination->id }}">{{ $destination->name }}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
-<a href="{{ route('user.destination.create') }}" class="text-primary">+ Địa điểm bạn cần chưa có? Tạo mới</a>
+{{-- <a href="{{ route('user.destination.create') }}" class="text-primary">+ Địa điểm bạn cần chưa có? Tạo mới</a> --}}
         <br>
-        <button id="goToPostLocation" class="btn btn-primary mt-3" disabled>Tiếp tục</button>
+        {{-- <button id="goToPostLocation" class="btn btn-primary mt-3" disabled>Tiếp tục</button> --}}
     </div>
 
     {{-- Tiện ích --}}
@@ -60,12 +66,14 @@
             </div>
             <div class="form-group" style="min-width:180px;">
                 <label for="utilitySelect">Tiện ích</label>
-                <select id="utilitySelect" class="form-control"></select>
+                <select id="utilitySelect" class="form-control">
+                    <option value="create_new">+ Tiện ích bạn muốn chia sẻ chưa có? Tạo mới</option>
+                </select>
             </div>
         </div>
         <a href="{{ route('user.utility.create') }}" class="text-primary" id="createUtilityLink" style="display:none;">+ Tiện ích bạn muốn chia sẻ chưa có? Tạo mới</a>
         <br>
-        <button id="goToPostFacility" class="btn btn-primary mt-3" disabled>Tiếp tục</button>
+        {{-- <button id="goToPostFacility" class="btn btn-primary mt-3" disabled>Tiếp tục</button> --}}
     </div>
 </div>
 </div>
@@ -80,6 +88,14 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
 $(document).ready(function() {
+    // Nếu có new_destination_id trong session (flash), tự động chuyển sang trang đăng bài
+    @if(session('new_destination_id'))
+        // Xóa tiến trình nếu có
+        localStorage.removeItem('post_share_progress');
+        // Chuyển sang trang đăng bài với id địa điểm vừa tạo
+        window.location.href = '{{ route('post_articles', ['id' => session('new_destination_id')]) }}';
+    @endif
+
     // Ẩn các phần khi mới vào
     $('#destinationCards').hide();
     $('#locationSection').hide();
@@ -282,7 +298,9 @@ $('#destinationSelect, #destinationSelect2, #utilitySelect').on('select2:open', 
             url: '{{ route('ajax.post_share_destinations') }}',
             data: { province: province, all: 1 },
             success: function(res) {
-                let selectHtml = '<option value="">Tìm kiếm địa điểm</option>';
+                // Luôn có option mặc định và option tạo mới ở đầu
+                let selectHtml = '<option value="" selected disabled>-- Chọn địa điểm --</option>';
+                selectHtml += '<option value="create_new">+ Tạo mới</option>';
                 (res.all_results || []).forEach(function(item) {
                     selectHtml += `<option value="${item.id}">${item.text}</option>`;
                 });
@@ -344,8 +362,17 @@ function goToPostArticles(id) {
 
 // Dropdown
 $('#destinationSelect').on('change', function() {
-    let destinationId = $(this).val();
-    if (destinationId) goToPostArticles(destinationId);
+    let val = $(this).val();
+    if (val === 'create_new') {
+        // Lưu tiến trình vào localStorage
+        localStorage.setItem('post_share_progress', JSON.stringify({
+            type: $('#shareType').val(),
+            // Lưu thêm các trường khác nếu cần
+        }));
+        window.location.href = '{{ route('user.destination.create') }}';
+        return;
+    }
+    if (val) goToPostArticles(val);
 });
 
 // Thẻ
@@ -377,9 +404,9 @@ $('#utilityTypeSelect').on('change', function() {
 function loadAllUtilitiesForDropdown(destinationId = '', utilityTypeId = '') {
     $.ajax({
         url: '{{ route('ajax.post_share_utilities') }}',
-        data: { destination_id: destinationId, utility_type_id: utilityTypeId, all: 1 }, // <-- thêm all: 1
+        data: { destination_id: destinationId, utility_type_id: utilityTypeId, all: 1 },
         success: function(res) {
-            let selectHtml = '<option value="">Tìm kiếm tiện ích</option>';
+            let selectHtml = '<option value="create_new">+ Tiện ích bạn muốn chia sẻ chưa có? Tạo mới</option>';
             (res.all_results || []).forEach(function(item) {
                 selectHtml += `<option value="${item.id}">${item.text}</option>`;
             });
@@ -479,9 +506,16 @@ function renderUtilityCards(destinationId = '', utilityTypeId = '', q = '') {
 }
 // Khi chọn tiện ích ở dropdown
 $('#utilitySelect').on('change', function() {
-    let utilityId = $(this).val();
-    if (utilityId) {
-        window.location.href = '{{ route('post_articles', ['id' => '___ID___', 'postType' => 'utility']) }}'.replace('___ID___', utilityId);
+    let val = $(this).val();
+    if (val === 'create_new') {
+        let destinationId = $('#destinationSelect2').val() || '';
+        let url = '{{ route('user.utility.create') }}';
+        if (destinationId) url += '?destination_id=' + destinationId;
+        window.location.href = url;
+        return;
+    }
+    if (val) {
+        window.location.href = '{{ route('post_articles', ['id' => '___ID___', 'postType' => 'utility']) }}'.replace('___ID___', val);
     }
 });
 
@@ -492,6 +526,17 @@ $(document).on('click', '#utilityCards .destination-card[data-type="utility"]', 
         window.location.href = '{{ route('post_articles', ['id' => '___ID___', 'postType' => 'utility']) }}'.replace('___ID___', utilityId);
     }
 });
+
+    // Nếu có tiến trình trong localStorage, tự động chọn lại loại bài đăng
+    let progress = localStorage.getItem('post_share_progress');
+    if (progress) {
+        progress = JSON.parse(progress);
+        if (progress.type) {
+            $('#shareType').val(progress.type).trigger('change');
+        }
+        // Xóa sau khi dùng
+        localStorage.removeItem('post_share_progress');
+    }
 });
 </script>
 @endsection

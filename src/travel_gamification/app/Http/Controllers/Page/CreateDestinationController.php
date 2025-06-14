@@ -14,6 +14,12 @@ use App\Notifications\NewLocationCreated; // Thêm dòng này
 
 class CreateDestinationController extends Controller
 {
+    public function create()
+    {
+$step = 1;
+return view('user.layout.create_destination', compact('step'));
+    }
+
     public function store(Request $request)
     {
         DB::beginTransaction();
@@ -55,7 +61,10 @@ class CreateDestinationController extends Controller
 
             DB::commit();
             // Redirect về trang post_share
-            return redirect()->route('page.post_share')->with('success', 'Tạo địa điểm thành công!');
+            return redirect()->route('page.post_share')->with([
+                'success' => 'Tạo địa điểm thành công!',
+                'new_destination_id' => $destination->id // Truyền id địa điểm vừa tạo
+            ]);
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Có lỗi xảy ra: ' . $e->getMessage());

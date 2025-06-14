@@ -108,6 +108,7 @@ public function share(Request $request, Post $post)
             'postType' => $postType,
             'utilities' => $utilities,
             'selectedUtility' => $selectedUtility, // <-- truyền về view
+            'step' => 2,
         ]);
     }
     
@@ -674,6 +675,7 @@ public function share(Request $request, Post $post)
             'selectedUtility' => $selectedUtility,
             'destinations' => $destinations,
             'selectedDestination' => $selectedDestination,
+            'step' => 2,
         ]);
     }
     public function rate(Request $request, $id)

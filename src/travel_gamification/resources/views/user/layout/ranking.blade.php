@@ -13,7 +13,7 @@
 <header class="ranking-header">
   <h1 class="ranking-title">🏆 Bảng Xếp Hạng</h1>
   <p class="ranking-description">Khám phá người dùng và bài viết nổi bật nhất trong cộng đồng!</p>
-  <div class="ranking-criteria" style="background: rgba(248, 249, 250, 0.5); border-radius: 8px; padding: 14px 18px; margin: 16px 0 24px 0; color:#333; font-size:15px;">
+  {{-- <div class="ranking-criteria" style="background: rgba(248, 249, 250, 0.5); border-radius: 8px; padding: 14px 18px; margin: 16px 0 24px 0; color:#333; font-size:15px;">
       <strong>🔎 Cách tính điểm xếp hạng bài viết:</strong>
       <ul style="margin: 8px 0 0 22px; padding: 0; font-size:14px; list-style: none;">
           <li>
@@ -36,7 +36,7 @@
               Nếu điểm tổng hợp bằng nhau, ưu tiên bài nhiều like, nhiều bình luận và mới hơn.
           </li>
       </ul>
-  </div>
+  </div> --}}
 </header>
 
 <section class="ranking-section">
