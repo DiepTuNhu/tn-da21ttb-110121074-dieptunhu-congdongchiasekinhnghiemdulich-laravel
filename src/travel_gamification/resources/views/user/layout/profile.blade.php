@@ -97,7 +97,7 @@
         <div class="profile-tab active" data-tab="posts">📄 Bài viết</div>
         {{-- <div class="profile-tab" data-tab="missions">🎯 Nhiệm vụ</div> --}}
         <div class="profile-tab" data-tab="likes">❤️ Đã thích</div>
-        <div class="profile-tab" data-tab="shared">📢 Đã chia sẻ</div>
+        {{-- <div class="profile-tab" data-tab="shared">📢 Đã chia sẻ</div> --}}
         <div class="profile-tab" data-tab="followers">👥 Người theo dõi</div>
         <div class="profile-tab" data-tab="following">🔍 Đang theo dõi</div>
       </div>
@@ -296,7 +296,7 @@
       </div>
 
       <!-- Nội dung: Đã chia sẻ -->
-      <div class="profile-tab-content" id="shared">
+      {{-- <div class="profile-tab-content" id="shared">
 <!-- Chia sẻ công khai -->
     <h3 style="margin-bottom: 12px;">Bài viết chia sẻ công khai</h3>
     <div class="profile-card-grid">
@@ -398,7 +398,7 @@
             <p>Bạn chưa chia sẻ bài viết riêng tư nào.</p>
         @endforelse
     </div>
-      </div>
+      </div> --}}
 
       <!-- Nội dung: Người theo dõi -->
 

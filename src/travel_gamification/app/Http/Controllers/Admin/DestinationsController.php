@@ -32,9 +32,9 @@ class DestinationsController extends Controller
 
     public function create()
     {
-        $travel_types = TravelType::all(); // Lấy danh sách các loại hình
-
-        return view('admin.destination.add', compact('travel_types',));
+        $travel_types = TravelType::all();
+        $step = 1;
+        return view('admin.destination.add', compact('travel_types', 'step'));
     }
 
     /**
@@ -139,7 +139,11 @@ class DestinationsController extends Controller
             $destination->id
         );
 
-        return redirect()->route('destinations.index')->with('success', 'Địa điểm đã được thêm thành công.');
+        // Chuyển sang form thêm ảnh cho địa điểm vừa tạo
+        return redirect()->route('destination_images.create', [
+            'destination_id' => $destination->id,
+            'from' => 'create'
+        ]);
     }
     
     /**

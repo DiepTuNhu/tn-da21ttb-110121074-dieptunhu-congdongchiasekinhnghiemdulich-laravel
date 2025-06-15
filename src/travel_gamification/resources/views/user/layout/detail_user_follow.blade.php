@@ -16,18 +16,16 @@
                     @endif"
                 alt="avatar" />
                 <div>
-                <h2>
-                    {{ $user->username }}
-                    <span
-                        style="
-                            font-size: 14px;
-                            background: #ffeb3b;
-                            color: #333;
-                            padding: 2px 8px;
-                            border-radius: 6px;
-                        "
-                    >🥇 Nhà khám phá</span>
-                </h2>
+<h2>
+    {{ $user->username }}
+    {{-- {{ dd($user->main_badge_id, $user->mainBadge) }} --}}
+    @if($user->mainBadge)
+        <span class="profile-badge" title="{{ $user->mainBadge->description }}">
+            <img src="{{ $user->mainBadge->icon_url }}" alt="{{ $user->mainBadge->name }}" style="width:20px;height:20px;vertical-align:middle;margin-right:2px;">
+            {{ $user->mainBadge->name }}
+        </span>
+    @endif
+</h2>
                 <div class="profile-stats">
                     <span><i class="fas fa-file-alt"></i> {{ $user->posts_count ?? 0 }} bài viết</span>
                     <span><i class="fas fa-heart"></i> {{ number_format($user->likes_count ?? 0, 0, ',', '.') }} lượt thích</span>
@@ -55,7 +53,7 @@
     <!-- Tabs -->
     <div class="profile-tabs">
         <div class="profile-tab active" data-tab="posts">📄 Bài viết</div>
-        <div class="profile-tab" data-tab="shared">📢 Đã chia sẻ</div>
+        {{-- <div class="profile-tab" data-tab="shared">📢 Đã chia sẻ</div> --}}
     </div>
 
     <!-- Nội dung: Bài viết -->
@@ -139,7 +137,7 @@
     </div>
 
     <!-- Nội dung: Đã chia sẻ -->
-<div class="profile-tab-content" id="shared">
+{{-- <div class="profile-tab-content" id="shared">
     <div class="profile-card-grid">
         @php
             // Lọc các bài chia sẻ công khai (is_public = 1, status = 0)
@@ -185,8 +183,8 @@
             <p>Chưa có bài viết chia sẻ công khai nào.</p>
         @endforelse
     </div>
-</div>
-</div>
+</div>--}}
+</div> 
 
 
 <script>

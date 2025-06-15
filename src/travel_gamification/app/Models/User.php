@@ -111,4 +111,8 @@ public function earnedBadges()
           });
     })->get();
 }
+public function mainBadge()
+{
+    return $this->belongsTo(\App\Models\Badge::class, 'main_badge_id');
+}
 }

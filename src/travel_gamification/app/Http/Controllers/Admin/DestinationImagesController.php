@@ -42,8 +42,10 @@ class DestinationImagesController extends Controller
         // Lấy ảnh chính nếu có
         $existingMainPhoto = DestinationImage::where('destination_id', $destinationId)->where('status', 2)->first();
 
+        $step = 2;
+
         // Truyền dữ liệu vào view
-        return view('admin.destination_image.add', compact('destinationId', 'destinationName', 'existingMainPhoto'));
+        return view('admin.destination_image.add', compact('destinationId', 'destinationName', 'existingMainPhoto', 'step'));
     }
 
     /**
@@ -100,8 +102,17 @@ class DestinationImagesController extends Controller
         }
 
         // return redirect()->route('destination_images.index')->with('success', 'Ảnh đã được lưu thành công');
-        return redirect()->route('destination_images.index', ['id' => $destinationId])
-                         ->with('success', 'Ảnh đã được lưu thành công');
+        $from = $request->input('from', 'image'); // mặc định là từ trang hình
+
+        if ($from === 'create') {
+            // Quay về trang chi tiết địa điểm
+            return redirect()->route('destinations.index', ['id' => $destinationId])
+                ->with('success', 'Thêm ảnh thành công!');
+        } else {
+            // Quay về trang danh sách hình ảnh
+            return redirect()->route('destination_images.index', ['id' => $destinationId])
+                ->with('success', 'Thêm ảnh thành công!');
+        }
     }
 
     /**
