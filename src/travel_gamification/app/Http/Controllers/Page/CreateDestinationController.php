@@ -14,10 +14,16 @@ use App\Notifications\NewLocationCreated; // Thêm dòng này
 
 class CreateDestinationController extends Controller
 {
-    public function create()
+    public function create(Request $request)
     {
-$step = 1;
-return view('user.layout.create_destination', compact('step'));
+        // Đọc trạng thái từ query hoặc localStorage (bên JS sẽ truyền lên query nếu cần)
+        $stepsType = $request->input('stepsType');
+        if (!$stepsType) {
+            // Nếu không có trên query, thử lấy từ JS (xem bước 3)
+            $stepsType = null;
+        }
+        $step = ($stepsType === 'utility') ? 1 : 1;
+        return view('user.layout.create_destination', compact('step', 'stepsType'));
     }
 
     public function store(Request $request)

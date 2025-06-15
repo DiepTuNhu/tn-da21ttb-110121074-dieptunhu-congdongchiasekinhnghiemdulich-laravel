@@ -7,7 +7,7 @@
 <div class="container-post-share" style="max-width: 600px; margin: 40px auto;">
     {{-- <h2>Đăng bài chia sẻ mới</h2> --}}
     <div class="form-group">
-        <label>Bạn muốn chia sẻ về:</label>
+        <label>Bạn muốn đăng bài về về:</label>
         <select id="shareType" class="form-control" required>
             <option value="">-- Chọn --</option>
             <option value="location">📍 Một địa điểm du lịch</option>
@@ -49,9 +49,12 @@
             </div>
             <div class="form-group">
                 <label for="destinationSelect2">Địa điểm</label>
-                <select id="destinationSelect2" class="form-control"></select>
+                <select id="destinationSelect2" class="form-control">
+                    <option value="" selected disabled>-- Chọn địa điểm --</option>
+                    <option value="create_new">+ Tạo mới</option>
+                </select>
             </div>
-<a href="{{ route('user.destination.create') }}" class="text-primary">+ Địa điểm bạn cần chưa có? Tạo mới</a>
+{{-- <a href="{{ route('user.destination.create') }}" class="text-primary">+ Địa điểm bạn cần chưa có? Tạo mới</a> --}}
 
         </div>
         <div class="select-row" id="utilityOptionsRow" style="margin-top: 10px; display: none;">
@@ -67,7 +70,11 @@
             <div class="form-group" style="min-width:180px;">
                 <label for="utilitySelect">Tiện ích</label>
                 <select id="utilitySelect" class="form-control">
-                    <option value="create_new">+ Tiện ích bạn muốn chia sẻ chưa có? Tạo mới</option>
+                    <option value="" selected disabled>-- Chọn tiện ích --</option>
+                    <option value="create_new">+ Tạo mới</option>
+                    {{-- @foreach($utilities as $utility)
+                        <option value="{{ $utility->id }}">{{ $utility->name }}</option>
+                    @endforeach --}}
                 </select>
             </div>
         </div>
@@ -90,10 +97,20 @@
 $(document).ready(function() {
     // Nếu có new_destination_id trong session (flash), tự động chuyển sang trang đăng bài
     @if(session('new_destination_id'))
+        // Lấy loại bài đăng đã lưu
+        let postType = localStorage.getItem('post_share_type');
         // Xóa tiến trình nếu có
         localStorage.removeItem('post_share_progress');
-        // Chuyển sang trang đăng bài với id địa điểm vừa tạo
-        window.location.href = '{{ route('post_articles', ['id' => session('new_destination_id')]) }}';
+        // Xóa loại bài đăng sau khi dùng
+        localStorage.removeItem('post_share_type');
+        // Chuyển sang trang đăng bài đúng loại
+        if (postType === 'facility') {
+            // Nếu là đăng bài tiện ích: chuyển sang form tạo tiện ích
+            window.location.href = '{{ route('user.utility.create') }}?destination_id={{ session('new_destination_id') }}';
+        } else {
+            // Nếu là đăng bài địa điểm: chuyển sang form đăng bài địa điểm
+            window.location.href = '{{ route('post_articles', ['id' => session('new_destination_id')]) }}';
+        }
     @endif
 
     // Ẩn các phần khi mới vào
@@ -319,7 +336,9 @@ function loadAllDestinationsForDropdown2(province = '') {
         url: '{{ route('ajax.post_share_destinations') }}',
         data: { province: province, all: 1 },
         success: function(res) {
-            let selectHtml = '<option value="">Tìm kiếm địa điểm</option>';
+            // Thêm option mặc định và option tạo mới ở đầu
+            let selectHtml = '<option value="" selected disabled>-- Chọn địa điểm --</option>';
+            selectHtml += '<option value="create_new">+ Tạo mới</option>';
             (res.all_results || []).forEach(function(item) {
                 selectHtml += `<option value="${item.id}">${item.text}</option>`;
             });
@@ -334,6 +353,13 @@ function loadAllDestinationsForDropdown2(province = '') {
 
 
 $('#destinationSelect2').on('change', function() {
+    let val = $(this).val();
+    if (val === 'create_new') {
+        localStorage.setItem('post_share_type', 'facility');
+        // Truyền trạng thái qua query string
+        window.location.href = '{{ route('user.destination.create') }}?stepsType=utility';
+        return;
+    }
     let destinationId = $(this).val();
     if (destinationId) {
         $('#utilityOptionsRow').show();
@@ -364,12 +390,8 @@ function goToPostArticles(id) {
 $('#destinationSelect').on('change', function() {
     let val = $(this).val();
     if (val === 'create_new') {
-        // Lưu tiến trình vào localStorage
-        localStorage.setItem('post_share_progress', JSON.stringify({
-            type: $('#shareType').val(),
-            // Lưu thêm các trường khác nếu cần
-        }));
-        window.location.href = '{{ route('user.destination.create') }}';
+        localStorage.setItem('post_share_type', 'location');
+        window.location.href = '{{ route('user.destination.create') }}?stepsType=destination';
         return;
     }
     if (val) goToPostArticles(val);
@@ -406,11 +428,14 @@ function loadAllUtilitiesForDropdown(destinationId = '', utilityTypeId = '') {
         url: '{{ route('ajax.post_share_utilities') }}',
         data: { destination_id: destinationId, utility_type_id: utilityTypeId, all: 1 },
         success: function(res) {
-            let selectHtml = '<option value="create_new">+ Tiện ích bạn muốn chia sẻ chưa có? Tạo mới</option>';
+            // Thêm option mặc định ở đầu, giống dropdown địa điểm
+            let selectHtml = '<option value="" selected disabled>-- Chọn tiện ích --</option>';
+            selectHtml += '<option value="create_new">+ Tạo mới</option>';
             (res.all_results || []).forEach(function(item) {
                 selectHtml += `<option value="${item.id}">${item.text}</option>`;
             });
             $('#utilitySelect').html(selectHtml);
+            $('#utilitySelect').val('').trigger('change'); // Đảm bảo luôn chọn option mặc định khi load
             $('#utilitySelect').select2({
                 width: '100%',
                 placeholder: 'Tìm kiếm tiện ích'

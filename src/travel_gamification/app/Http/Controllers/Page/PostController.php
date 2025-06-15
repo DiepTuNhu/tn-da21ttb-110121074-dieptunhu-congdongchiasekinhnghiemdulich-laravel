@@ -675,7 +675,8 @@ public function share(Request $request, Post $post)
             'selectedUtility' => $selectedUtility,
             'destinations' => $destinations,
             'selectedDestination' => $selectedDestination,
-            'step' => 2,
+            'step' => $postType === 'utility' ? 3 : 2,
+            'stepsType' => $postType === 'utility' ? 'utility' : 'destination',
         ]);
     }
     public function rate(Request $request, $id)

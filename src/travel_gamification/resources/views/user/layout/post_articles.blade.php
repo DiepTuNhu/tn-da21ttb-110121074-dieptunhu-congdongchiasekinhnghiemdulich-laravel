@@ -1,19 +1,43 @@
 @extends('user.master')
 @section('content')
 <div style="padding-top: 75px">
-    <div class="progress-steps-wrapper" style="margin: 0 auto; max-width: 500px; padding-top: 30px;">
-        <div class="progress-steps">
-            <div class="step {{ isset($step) && $step == 1 ? 'active' : '' }}">
-                <div class="circle">1</div>
-                <div class="label">Tạo địa điểm</div>
-            </div>
-            <div class="line"></div>
-            <div class="step {{ isset($step) && $step == 2 ? 'active' : '' }}">
-                <div class="circle">2</div>
-                <div class="label">Đăng bài</div>
+    @if(isset($stepsType) && $stepsType === 'utility')
+        {{-- 3 bước: Tạo địa điểm -> Tạo tiện ích -> Đăng bài --}}
+        <div class="progress-steps-wrapper" style="margin: 0 auto; max-width: 600px; padding-top: 30px;">
+            <div class="progress-steps">
+                <div class="step {{ $step == 1 ? 'active' : '' }}">
+                    <div class="circle">1</div>
+                    <div class="label">Tạo địa điểm</div>
+                </div>
+                <div class="line"></div>
+                <div class="step {{ $step == 2 ? 'active' : '' }}">
+                    <div class="circle">2</div>
+                    <div class="label">Tạo tiện ích</div>
+                </div>
+                <div class="line"></div>
+                <div class="step {{ $step == 3 ? 'active' : '' }}">
+                    <div class="circle">3</div>
+                    <div class="label">Đăng bài</div>
+                </div>
             </div>
         </div>
-    </div>
+    @else
+        {{-- 2 bước: Tạo địa điểm -> Đăng bài --}}
+        <div class="progress-steps-wrapper" style="margin: 0 auto; max-width: 500px; padding-top: 30px;">
+            <div class="progress-steps">
+                <div class="step {{ $step == 1 ? 'active' : '' }}">
+                    <div class="circle">1</div>
+                    <div class="label">Tạo địa điểm</div>
+                </div>
+                <div class="line"></div>
+                <div class="step {{ $step == 2 ? 'active' : '' }}">
+                    <div class="circle">2</div>
+                    <div class="label">Đăng bài</div>
+                </div>
+            </div>
+        </div>
+    @endif
+
     <style>
     .progress-steps-wrapper {
         display: flex;

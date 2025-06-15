@@ -21,7 +21,9 @@ class CreateUtilityController extends Controller
     {
         $destinations = Destination::where('status', 0)->get();
         $utilityTypes = UtilityType::all();
-        return view('user.layout.create_utility', compact('destinations', 'utilityTypes'));
+        $step = 2; // hoặc 2, 3 tùy vị trí
+        $stepsType = 'utility'; // để blade biết là 3 bước
+        return view('user.layout.create_utility', compact('destinations', 'utilityTypes', 'step', 'stepsType'));
     }
 
     public function store(Request $request)
@@ -78,7 +80,10 @@ class CreateUtilityController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('page.post_share')->with('success', 'Tạo tiện ích thành công!');
+            return redirect()->route('post_articles', [
+                'id' => $utility->id,
+                'postType' => 'utility'
+            ]);
         } catch (\Exception $e) {
             Log::error('Utility store error', [
                 'message' => $e->getMessage(),

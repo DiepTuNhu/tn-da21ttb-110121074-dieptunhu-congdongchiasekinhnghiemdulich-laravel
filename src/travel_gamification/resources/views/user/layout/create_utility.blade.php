@@ -9,6 +9,96 @@
         </ul>
     </div>
 @endif
+<div style="padding-top: 75px">
+@if(isset($stepsType) && $stepsType === 'utility')
+    {{-- 3 bước: Tạo địa điểm -> Tạo tiện ích -> Đăng bài --}}
+    <div class="progress-steps-wrapper" style="margin: 0 auto; max-width: 600px; padding-top: 30px;">
+        <div class="progress-steps">
+            <div class="step {{ $step == 1 ? 'active' : '' }}">
+                <div class="circle">1</div>
+                <div class="label">Tạo địa điểm</div>
+            </div>
+            <div class="line"></div>
+            <div class="step {{ $step == 2 ? 'active' : '' }}">
+                <div class="circle">2</div>
+                <div class="label">Tạo tiện ích</div>
+            </div>
+            <div class="line"></div>
+            <div class="step {{ $step == 3 ? 'active' : '' }}">
+                <div class="circle">3</div>
+                <div class="label">Đăng bài</div>
+            </div>
+        </div>
+    </div>
+@else
+    {{-- 2 bước: Tạo địa điểm -> Đăng bài --}}
+    <div class="progress-steps-wrapper" style="margin: 0 auto; max-width: 500px; padding-top: 30px;">
+        <div class="progress-steps">
+            <div class="step {{ $step == 1 ? 'active' : '' }}">
+                <div class="circle">1</div>
+                <div class="label">Tạo địa điểm</div>
+            </div>
+            <div class="line"></div>
+            <div class="step {{ $step == 2 ? 'active' : '' }}">
+                <div class="circle">2</div>
+                <div class="label">Đăng bài</div>
+            </div>
+        </div>
+    </div>
+@endif
+</div>
+<style>
+.progress-steps-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.progress-steps {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+.progress-steps .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 90px;
+}
+.progress-steps .circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #e0e0e0;
+    color: #888;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 6px;
+    transition: background 0.3s, color 0.3s;
+    border: 2px solid #e0e0e0;
+}
+.progress-steps .step.active .circle {
+    background: #007bff;
+    color: #fff;
+    border: 2px solid #007bff;
+    box-shadow: 0 0 8px #007bff55;
+}
+.progress-steps .label {
+    font-size: 15px;
+    color: #333;
+    font-weight: 500;
+    text-align: center;
+}
+.progress-steps .line {
+    flex: 1;
+    height: 3px;
+    background: linear-gradient(90deg, #e0e0e0 0%, #007bff 100%);
+    min-width: 40px;
+    border-radius: 2px;
+}
+</style>
 @if(session('success'))
     <div class="alert alert-success">{{ session('success') }}</div>
 @endif
@@ -216,6 +306,28 @@ $(function() {
         }
         trySetDestination();
     }
+
+    $('#destinationSelect').on('change', function() {
+        let val = $(this).val();
+        if (val === 'create_new') {
+            // Lưu loại bài đăng là "location"
+            localStorage.setItem('post_share_type', 'location');
+            window.location.href = '{{ route('user.destination.create') }}';
+            return;
+        }
+        if (val) goToPostArticles(val);
+    });
+
+    $('#destinationSelect2').on('change', function() {
+        let val = $(this).val();
+        if (val === 'create_new') {
+            // Lưu loại bài đăng là "facility"
+            localStorage.setItem('post_share_type', 'facility');
+            window.location.href = '{{ route('user.destination.create') }}';
+            return;
+        }
+        // ... phần còn lại giữ nguyên ...
+    });
 });
 </script>
 @endsection
