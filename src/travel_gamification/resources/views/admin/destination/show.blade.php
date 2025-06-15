@@ -46,7 +46,15 @@
         </tr>
         <tr>
             <th>Trạng thái</th>
-            <td>{{ $destination->status }}</td>
+<td>
+    @if($destination->status == '0' || $destination->status == 'active')
+        <span class="badge bg-success">Hiện</span>
+    @elseif($destination->status == 'pending')
+        <span class="badge bg-warning text-dark">Chờ duyệt</span>
+    @else
+        <span class="badge bg-secondary">Ẩn</span>
+    @endif
+</td>
         </tr>
         <tr>
             <th>Người tạo</th>

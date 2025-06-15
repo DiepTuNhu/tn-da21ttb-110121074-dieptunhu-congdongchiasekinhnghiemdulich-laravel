@@ -78,7 +78,7 @@
                 </select>
             </div>
         </div>
-        <a href="{{ route('user.utility.create') }}" class="text-primary" id="createUtilityLink" style="display:none;">+ Tiện ích bạn muốn chia sẻ chưa có? Tạo mới</a>
+        {{-- <a href="{{ route('user.utility.create') }}" class="text-primary" id="createUtilityLink" style="display:none;">+ Tiện ích bạn muốn chia sẻ chưa có? Tạo mới</a> --}}
         <br>
         {{-- <button id="goToPostFacility" class="btn btn-primary mt-3" disabled>Tiếp tục</button> --}}
     </div>

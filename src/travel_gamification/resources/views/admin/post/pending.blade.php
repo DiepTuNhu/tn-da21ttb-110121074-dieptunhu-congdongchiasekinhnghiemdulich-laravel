@@ -10,10 +10,10 @@
             <tr>
                 <th>Tiêu đề</th>
                 <th>Loại bài đăng</th>
-                <th>Nội dung</th>
+                {{-- <th>Nội dung</th> --}}
                 <th>Người đăng</th>
                 <th>Ngày đăng</th>
-                <th>Hành động</th>
+                <th width="105px">Thao tác</th>
             </tr>
         </thead>
         <tbody>
@@ -29,16 +29,24 @@
                         Khác
                     @endif
                 </td>
-                <td style="max-width:300px; white-space:pre-line; word-break:break-word;">
+                {{-- <td style="max-width:300px; white-space:pre-line; word-break:break-word;">
                     {!! Str::limit(strip_tags($post->content), 200) !!}
-                </td>
+                </td> --}}
                 <td>{{ $post->user->username ?? 'Ẩn danh' }}</td>
                 <td>{{ $post->created_at }}</td>
                 <td>
-                    <form method="POST" action="{{ route('admin.posts.approve', $post->id) }}">
-                        @csrf
-                        <button type="submit" class="btn btn-success btn-sm">Duyệt</button>
-                    </form>
+                    <div style="display: flex; gap: 8px; align-items: center;">
+
+                        <form method="POST" action="{{ route('admin.posts.approve', $post->id) }}">
+                            @csrf
+                            <button class="btn btn-success btn-sm" title="Duyệt">
+                                <i class="fas fa-check"></i>
+                            </button>
+                        </form>
+                        <a href="{{ route('admin.posts.show', $post->id) }}" class="btn btn-info btn-sm" title="Xem chi tiết">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                    </div>
                 </td>
             </tr>
             @endforeach
