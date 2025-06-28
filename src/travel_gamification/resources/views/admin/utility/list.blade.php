@@ -43,8 +43,10 @@
                 <td>
                     @if($utility->status == 0)
                         <span class="text-success" title="Hiện"><i class="fas fa-eye"></i></span>
-                    @else
+                    @elseif($utility->status == 1)
                         <span class="text-danger" title="Ẩn"><i class="fas fa-eye-slash"></i></span>
+                    @else
+                        <span class="text-warning" title="Nổi bật"><i class="fas fa-star"></i></span>
                     @endif
                 </td>
                 <td>

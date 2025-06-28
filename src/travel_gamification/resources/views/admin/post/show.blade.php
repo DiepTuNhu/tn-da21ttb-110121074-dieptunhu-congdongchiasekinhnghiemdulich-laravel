@@ -1,6 +1,15 @@
 @extends('admin.index')
 
 @section('content')
+<style>
+    .post-content img {
+        max-width: 100%;
+        height: auto;
+        max-height: 400px;
+        display: block;
+        margin: auto;
+    }
+</style>
 <div class="container mt-4">
     <h2>Chi tiết bài viết</h2>
     <table class="table table-bordered mt-3">
@@ -14,7 +23,9 @@
         </tr>
         <tr>
             <th>Nội dung</th>
-            <td>{!! ($post->content) !!}</td>
+            <td class="post-content">
+                {!! $post->content !!}
+            </td>
         </tr>
         <tr>
             <th>Địa chỉ</th>
@@ -52,7 +63,7 @@
         </tr>
         <tr>
             <th>Người đăng</th>
-            <td>{{ optional($post->user)->name ?? 'Ẩn danh' }}</td>
+            <td>{{ optional($post->user)->username ?? 'Ẩn danh' }}</td>
         </tr>
         <tr>
             <th>Địa điểm liên quan</th>

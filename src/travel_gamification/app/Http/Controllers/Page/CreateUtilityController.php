@@ -57,7 +57,7 @@ class CreateUtilityController extends Controller
                 $utility->image = $imageName;
             }
 
-            $utility->status = '0';
+            $utility->status = 'pending';
             $utility->save();
 
             // Lưu vào bảng phát sinh

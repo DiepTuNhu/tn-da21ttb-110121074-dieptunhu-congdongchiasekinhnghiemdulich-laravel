@@ -183,7 +183,7 @@ text-align: center
                         <div>{{ $reply->content }}</div>
                         <div class="comment-actions">
                             <span class="comment-time">{{ $reply->created_at->format('d/m/Y H:i') }}</span>
-                            <a href="#" class="reply-btn action-btn" data-id="{{ $reply->id }}"><i class="fas fa-reply"></i> Trả lời</a>
+                            {{-- <a href="#" class="reply-btn action-btn" data-id="{{ $reply->id }}"><i class="fas fa-reply"></i> Trả lời</a> --}}
                             <a href="#" class="report-comment action-btn report" data-id="{{ $reply->id }}"><i class="fas fa-flag"></i> Báo cáo</a>
                             <a href="#" class="like-comment-btn action-btn like" data-id="{{ $reply->id }}">
                                 <i class="fas fa-heart"></i> Thích

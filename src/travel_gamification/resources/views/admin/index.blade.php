@@ -26,6 +26,7 @@
       }
       .sidebar {
         height: 100vh;
+        overflow-y: auto; /* Enable vertical scrolling */
         position: fixed;
         width: 250px;
         background-color: oklch(92.3% 0.003 48.717);
@@ -339,5 +340,17 @@ height="80" />
         });
       });
     </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const notificationDropdown = document.getElementById('notificationDropdown');
+        const notificationBadge = notificationDropdown.querySelector('.badge-pending');
+
+        if (notificationBadge && parseInt(notificationBadge.textContent) > 0) {
+            notificationDropdown.style.display = 'inline-block';
+        } else {
+            notificationDropdown.style.display = 'none';
+        }
+    });
+</script>
   </body>
 </html>
