@@ -314,6 +314,29 @@ $(document).on('click', '.travel-type-filter', function() {
     });
 </script>
 
+<script>
+    $(document).ready(function() {
+        $('#travelTypeSelect').on('change', function() {
+            var travelTypeId = $(this).val();
+
+            $.ajax({
+                url: '{{ route("filter.destinations.by.traveltype") }}', // Ensure this route exists in your web.php
+                type: 'GET',
+                data: {
+                    travel_type_id: travelTypeId
+                },
+                success: function(data) {
+                    // Update the destinations section with the filtered data
+                    $('#admin-posts-wrapper').html(data);
+                },
+                error: function() {
+                    alert('Lỗi khi lọc địa điểm.');
+                }
+            });
+        });
+    });
+</script>
+
 @if(request('keyword'))
 <script>
     window.onload = function() {
@@ -322,4 +345,55 @@ $(document).on('click', '.travel-type-filter', function() {
     }
 </script>
 @endif
+<script>
+    document.getElementById('travelTypeSelect').addEventListener('change', function () {
+        const travelTypeId = this.value;
+        const searchKeyword = document.querySelector('input[name="keyword"]').value;
+
+        fetch(`/ajax/filter-destinations?travel_type_id=${travelTypeId}&keyword=${encodeURIComponent(searchKeyword)}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Cập nhật danh sách địa điểm
+                if (data.destinationsHtml) {
+                    document.getElementById('admin-posts-wrapper').innerHTML = data.destinationsHtml;
+                }
+
+                // Cập nhật danh sách bài viết
+                if (data.postsHtml) {
+                    document.getElementById('user-posts-wrapper').innerHTML = data.postsHtml;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Đã xảy ra lỗi khi lọc dữ liệu. Vui lòng thử lại.');
+            });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        // Bắt sự kiện change cho select loại hình du lịch
+        $('#travelTypeSelect').on('change', function() {
+            var selectedTravelTypeId = $(this).val();
+
+            // Gọi AJAX để lọc địa điểm và bài viết
+            $.ajax({
+                url: '/ajax/filter-destinations',
+                type: 'GET',
+                data: { travel_type_id: selectedTravelTypeId },
+                success: function(response) {
+                    $('#admin-posts-wrapper').html(response.destinationsHtml);
+                    $('#user-posts-wrapper').html(response.postsHtml);
+                },
+                error: function() {
+                    console.error('Lỗi khi gọi AJAX');
+                }
+            });
+        });
+    });
+</script>
 @endsection

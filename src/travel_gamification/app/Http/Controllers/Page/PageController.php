@@ -831,4 +831,42 @@ $topPosts = \App\Models\Post::with('user')
         }
         return response()->json(['results' => $results]);
     }
+
+    public function ajaxFilterDestinations(Request $request)
+    {
+        $travelTypeId = $request->get('travel_type_id');
+
+        $destinations = Destination::where('status', 0)
+            ->with(['destinationImages' => function ($query) {
+                $query->where('status', 2);
+            }])
+            ->when($travelTypeId, function ($query) use ($travelTypeId) {
+                $query->where('travel_type_id', $travelTypeId);
+            })
+            ->orderBy('updated_at', 'desc')
+            ->get();
+
+        $posts = Post::where('status', 0)
+            ->with(['user', 'destination', 'destination.destinationImages'])
+            ->when($travelTypeId, function ($query) use ($travelTypeId) {
+                $query->whereHas('destination', function ($query) use ($travelTypeId) {
+                    $query->where('travel_type_id', $travelTypeId);
+                });
+            })
+            ->orderBy('updated_at', 'desc')
+            ->get();
+
+        $htmlDestinations = view('user.layout.partials.admin_posts_list', [
+            'destinations' => $destinations
+        ])->render();
+
+        $htmlPosts = view('user.layout.partials.user_posts_list', [
+            'posts' => $posts
+        ])->render();
+
+        return response()->json([
+            'destinationsHtml' => $htmlDestinations,
+            'postsHtml' => $htmlPosts
+        ]);
+    }
 }

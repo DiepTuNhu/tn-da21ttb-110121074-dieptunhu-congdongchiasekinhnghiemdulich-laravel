@@ -66,6 +66,7 @@ Route::post('/post/{id}/like', [PostController::class, 'like'])->middleware('aut
 Route::post('/post/{id}/comment', [PostController::class, 'comment'])->middleware('auth')->name('post.comment');
 Route::post('/post/{id}/report', [PostController::class, 'reportPost'])->middleware('auth')->name('post.report');
 Route::get('/ajax/filter-posts', [PageController::class, 'ajaxFilterPosts'])->name('filter.posts.by.traveltype');
+Route::get('/ajax/filter-destinations', [PageController::class, 'ajaxFilterDestinations'])->name('filter.destinations.by.traveltype');
 
 
 Route::get('/explore', [PageController::class, 'getExplore'])->name('page.explore');
@@ -98,7 +99,7 @@ Route::post('/comments/report/{id}', [\App\Http\Controllers\Page\PostController:
 
 Route::post('/post/{post}/share', [PostController::class, 'share'])->name('post.share')->middleware('auth');
 Route::post('/user/destination/store', [CreateDestinationController::class, 'store'])->name('user.destination.store');
-Route::get('user/destination/create', [CreateDestinationController::class, 'create'])->name('user.destination.create');
+Route::get('/user/destination/create', [CreateDestinationController::class, 'create'])->name('user.destination.create');
 // Route::get('/user/destination/create', function() {
 //     return view('user.layout.create_destination');
 // })->name('user.destination.create');
