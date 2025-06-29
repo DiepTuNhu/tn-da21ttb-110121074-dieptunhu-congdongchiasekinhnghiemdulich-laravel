@@ -35,8 +35,9 @@
       <div class="profile-info">
             {{-- Nút đổi thưởng nằm góc phải --}}
             <a href="{{ route('user.rewards') }}" class="btn btn-warning profile-reward-btn">
-                🎁 Đổi thưởng
+                Đổi thưởng
             </a>
+
             <img 
                 src="@if($user->avatar)
                         @if(Str::startsWith($user->avatar, ['http://', 'https://']))
@@ -49,7 +50,7 @@
                     @endif"
                 alt="avatar" />
         <div>
-<h2>
+<h2 style="display: flex; align-items: center;">
     {{ $user->username }}
     @php
         // Nếu user chưa chọn, lấy badge mới nhất (theo id lớn nhất hoặc updated_at mới nhất)
@@ -68,6 +69,11 @@
             {{ $mainBadge->name }}
         </span>
     @endif
+
+    {{-- Icon chỉnh sửa thông tin --}}
+    <a href="{{ route('user.edit_profile') }}" style="margin-left: 10px; text-decoration: none; color: inherit;">
+        <i class="fas fa-edit" style="font-size: 1.2rem; color: #007bff; cursor: pointer;" title="Chỉnh sửa thông tin"></i>
+    </a>
 </h2>
 <button id="show-badges-btn" class="btn btn-info" style="margin-left: 12px;">🏅 Xem huy hiệu</button>
 

@@ -140,6 +140,16 @@
           display: none;
         }
       }
+
+      #password-requirements {
+    font-size: 0.9rem;
+    margin-top: 5px;
+    padding-left: 15px;
+}
+
+#password-requirements li {
+    margin-bottom: 5px;
+}
     </style>
   </head>
   <body>
@@ -180,6 +190,15 @@
             <div id="passwordError" class="error"></div>
           </div>
 
+          {{-- Danh sách yêu cầu mật khẩu --}}
+          <ul id="password-requirements" style="margin-top: 10px; list-style: none; padding: 0; display: none;">
+              <li id="require-length" class="text-danger">Ít nhất 8 ký tự</li>
+              <li id="require-lowercase" class="text-danger">Ít nhất một chữ cái viết thường</li>
+              <li id="require-uppercase" class="text-danger">Ít nhất một chữ cái viết hoa</li>
+              <li id="require-number" class="text-danger">Ít nhất một chữ số</li>
+              <li id="require-special" class="text-danger">Ít nhất một ký tự đặc biệt (@, $, !, %, *, ?, &, #)</li>
+          </ul>
+
           <button type="submit" class="register-btn">Tạo tài khoản</button>
         </form>
         <div class="extra-links">
@@ -189,6 +208,73 @@
     </div>
 
     <script>
+      document.addEventListener('DOMContentLoaded', () => {
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+    const passwordError = document.getElementById('passwordError');
+    const passwordRequirements = document.getElementById('password-requirements');
+
+    const lengthRequirement = document.getElementById('require-length');
+    const lowercaseRequirement = document.getElementById('require-lowercase');
+    const uppercaseRequirement = document.getElementById('require-uppercase');
+    const numberRequirement = document.getElementById('require-number');
+    const specialRequirement = document.getElementById('require-special');
+
+    // Hiển thị danh sách yêu cầu khi người dùng bắt đầu nhập
+    passwordInput.addEventListener('input', () => {
+        const password = passwordInput.value;
+
+        if (password.length > 0) {
+            passwordRequirements.style.display = 'block';
+        } else {
+            passwordRequirements.style.display = 'none';
+        }
+
+        // Kiểm tra độ dài
+        if (password.length >= 8) {
+            lengthRequirement.style.display = 'none'; // Ẩn yêu cầu đã đạt
+        } else {
+            lengthRequirement.style.display = 'block';
+        }
+
+        // Kiểm tra chữ cái viết thường
+        if (/[a-z]/.test(password)) {
+            lowercaseRequirement.style.display = 'none'; // Ẩn yêu cầu đã đạt
+        } else {
+            lowercaseRequirement.style.display = 'block';
+        }
+
+        // Kiểm tra chữ cái viết hoa
+        if (/[A-Z]/.test(password)) {
+            uppercaseRequirement.style.display = 'none'; // Ẩn yêu cầu đã đạt
+        } else {
+            uppercaseRequirement.style.display = 'block';
+        }
+
+        // Kiểm tra số
+        if (/[0-9]/.test(password)) {
+            numberRequirement.style.display = 'none'; // Ẩn yêu cầu đã đạt
+        } else {
+            numberRequirement.style.display = 'block';
+        }
+
+        // Kiểm tra ký tự đặc biệt
+        if (/[@$!%*?&#]/.test(password)) {
+            specialRequirement.style.display = 'none'; // Ẩn yêu cầu đã đạt
+        } else {
+            specialRequirement.style.display = 'block';
+        }
+    });
+
+    // Kiểm tra xác nhận mật khẩu
+    confirmPasswordInput.addEventListener('input', () => {
+        if (confirmPasswordInput.value !== passwordInput.value) {
+            passwordError.textContent = 'Mật khẩu không khớp.';
+        } else {
+            passwordError.textContent = '';
+        }
+    });
+});
       // Toggle mật khẩu
       document.querySelectorAll(".toggle-password").forEach((icon) => {
         icon.addEventListener("click", () => {

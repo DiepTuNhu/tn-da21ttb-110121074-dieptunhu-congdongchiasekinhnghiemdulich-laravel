@@ -86,6 +86,10 @@ Route::get('/profile', [ProfileController::class, 'show'])->name('page.profile')
 Route::get('/user/{id}/detail', [ProfileController::class, 'detail'])->name('detail_user_follow');
 Route::post('/user/share/{id}/toggle', [ProfileController::class, 'toggleShareStatus'])->middleware('auth');
 Route::post('/user/share/{id}/delete', [ProfileController::class, 'deleteShare'])->middleware('auth');
+Route::put('/profile/update', [ProfileController::class, 'updateProfile'])->name('user.profile.update');
+Route::get('/edit-profile', [ProfileController::class, 'editProfile'])->name('user.edit_profile');
+Route::post('/profile/change-password', [ProfileController::class, 'changePassword'])->name('user.profile.change_password');
+Route::post('/check-password', [ProfileController::class, 'checkPassword'])->name('check.password');
 
 Route::get('/post/{id}', [PostController::class, 'showDetailPost'])->name('post.detail');
 Route::post('/posts/{id}/like', [PostController::class, 'like'])->name('posts.like');

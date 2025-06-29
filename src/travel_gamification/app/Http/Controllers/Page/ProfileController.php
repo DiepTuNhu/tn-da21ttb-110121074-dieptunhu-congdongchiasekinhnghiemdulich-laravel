@@ -9,6 +9,8 @@ use App\Models\Share;
 use App\Models\Like;
 use App\Models\Mission;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 
 class ProfileController extends Controller
@@ -115,5 +117,88 @@ public function setMainBadge(Request $request)
     $user->main_badge_id = $request->badge_id;
     $user->save();
     return back()->with('success', 'Đã chọn huy hiệu hiển thị!');
+}
+
+public function updateProfile(Request $request)
+{
+    $request->validate([
+        'username' => 'required|string|max:255',
+        'avatar' => 'nullable|image|max:2048',
+    ]);
+
+    $user = Auth::user();
+    $user->username = $request->username;
+
+    if ($request->hasFile('avatar')) {
+        $avatarName = time() . '-' . $request->file('avatar')->getClientOriginalName();
+        $request->file('avatar')->storeAs('avatars', $avatarName, 'public');
+        $user->avatar = $avatarName;
+    }
+
+    $user->save();
+
+    // Chuyển hướng về trang profile
+    return redirect()->route('page.profile')->with('success', 'Thông tin cá nhân đã được cập nhật.');
+}
+
+public function editProfile()
+{
+    $user = Auth::user();
+    return view('user.layout.edit_profile', compact('user'));
+}
+
+public function changePassword(Request $request)
+{
+    try {
+        // Validation mật khẩu
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => [
+                'required',
+                'string',
+                'min:8', // Ít nhất 8 ký tự
+                'regex:/[a-z]/', // Ít nhất một chữ cái viết thường
+                'regex:/[A-Z]/', // Ít nhất một chữ cái viết hoa
+                'regex:/[0-9]/', // Ít nhất một chữ số
+                'regex:/[@$!%*?&#]/', // Ít nhất một ký tự đặc biệt
+                'confirmed', // Xác nhận mật khẩu
+            ],
+        ]);
+
+        $user = Auth::user();
+
+        // Kiểm tra mật khẩu hiện tại
+        if (!Hash::check($request->current_password, $user->password)) {
+            Log::warning('Mật khẩu hiện tại không đúng.', [
+                'user_id' => $user->id,
+                'current_password' => $request->current_password,
+            ]);
+            return redirect()->back()->withErrors(['current_password' => 'Mật khẩu hiện tại không đúng.']);
+        }
+
+        // Cập nhật mật khẩu mới
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        Log::info('Mật khẩu đã được thay đổi thành công.', [
+            'user_id' => $user->id,
+        ]);
+
+        // Chuyển hướng về trang profile
+        return redirect()->route('page.profile')->with('success', 'Mật khẩu đã được thay đổi.');
+    } catch (\Exception $e) {
+        Log::error('Lỗi khi đổi mật khẩu.', [
+            'error_message' => $e->getMessage(),
+            'user_id' => Auth::id(),
+        ]);
+        return redirect()->back()->withErrors(['error' => 'Đã xảy ra lỗi, vui lòng thử lại sau.']);
+    }
+}
+public function checkPassword(Request $request)
+{
+    $user = Auth::user();
+    $isValid = Hash::check($request->current_password, $user->password);
+
+    return response()->json(['valid' => $isValid]);
 }
 }
