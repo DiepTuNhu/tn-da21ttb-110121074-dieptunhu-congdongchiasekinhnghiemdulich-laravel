@@ -36,7 +36,7 @@
     </select>
     
     @if($isLoggedIn)
-        <button id="toggle-form-btn" class="toggle-submit-btn">✍️ Đăng bài chia sẻ</button>
+        <button id="toggle-form-btn" class="toggle-submit-btn">Đăng bài chia sẻ</button>
     @else
         <button type="button" class="toggle-submit-btn" onclick="alert('Bạn cần đăng nhập để đăng bài!')">✍️ Đăng bài chia sẻ</button>
     @endif

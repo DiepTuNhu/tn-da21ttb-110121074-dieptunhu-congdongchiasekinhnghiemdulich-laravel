@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: localhost:3306
--- Thời gian đã tạo: Th6 15, 2025 lúc 04:32 AM
--- Phiên bản máy phục vụ: 8.0.30
--- Phiên bản PHP: 8.1.10
+-- Host: localhost:3306
+-- Generation Time: Jul 02, 2025 at 12:50 AM
+-- Server version: 8.0.30
+-- PHP Version: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `travel_gamification`
+-- Database: `travel_gamification`
 --
 CREATE DATABASE IF NOT EXISTS `travel_gamification` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 USE `travel_gamification`;
@@ -26,7 +26,7 @@ USE `travel_gamification`;
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `badges`
+-- Table structure for table `badges`
 --
 
 CREATE TABLE `badges` (
@@ -40,7 +40,7 @@ CREATE TABLE `badges` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `badges`
+-- Dumping data for table `badges`
 --
 
 INSERT INTO `badges` (`id`, `name`, `description`, `icon_url`, `status`, `created_at`, `updated_at`) VALUES
@@ -58,7 +58,7 @@ INSERT INTO `badges` (`id`, `name`, `description`, `icon_url`, `status`, `create
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `comments`
+-- Table structure for table `comments`
 --
 
 CREATE TABLE `comments` (
@@ -73,7 +73,7 @@ CREATE TABLE `comments` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `comments`
+-- Dumping data for table `comments`
 --
 
 INSERT INTO `comments` (`id`, `content`, `status`, `user_id`, `post_id`, `parent_comment_id`, `created_at`, `updated_at`) VALUES
@@ -96,7 +96,7 @@ INSERT INTO `comments` (`id`, `content`, `status`, `user_id`, `post_id`, `parent
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `destinations`
+-- Table structure for table `destinations`
 --
 
 CREATE TABLE `destinations` (
@@ -118,7 +118,7 @@ CREATE TABLE `destinations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `destinations`
+-- Dumping data for table `destinations`
 --
 
 INSERT INTO `destinations` (`id`, `name`, `price`, `highlights`, `best_time`, `local_cuisine`, `transportation`, `address`, `latitude`, `longitude`, `status`, `user_id`, `travel_type_id`, `created_at`, `updated_at`) VALUES
@@ -198,7 +198,7 @@ INSERT INTO `destinations` (`id`, `name`, `price`, `highlights`, `best_time`, `l
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `destination_images`
+-- Table structure for table `destination_images`
 --
 
 CREATE TABLE `destination_images` (
@@ -212,7 +212,7 @@ CREATE TABLE `destination_images` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `destination_images`
+-- Dumping data for table `destination_images`
 --
 
 INSERT INTO `destination_images` (`id`, `name`, `image_url`, `status`, `destination_id`, `created_at`, `updated_at`) VALUES
@@ -570,7 +570,7 @@ INSERT INTO `destination_images` (`id`, `name`, `image_url`, `status`, `destinat
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `destination_utilities`
+-- Table structure for table `destination_utilities`
 --
 
 CREATE TABLE `destination_utilities` (
@@ -581,7 +581,7 @@ CREATE TABLE `destination_utilities` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `destination_utilities`
+-- Dumping data for table `destination_utilities`
 --
 
 INSERT INTO `destination_utilities` (`destination_id`, `utility_id`, `status`, `distance`) VALUES
@@ -788,7 +788,7 @@ INSERT INTO `destination_utilities` (`destination_id`, `utility_id`, `status`, `
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `failed_jobs`
+-- Table structure for table `failed_jobs`
 --
 
 CREATE TABLE `failed_jobs` (
@@ -804,7 +804,7 @@ CREATE TABLE `failed_jobs` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `follows`
+-- Table structure for table `follows`
 --
 
 CREATE TABLE `follows` (
@@ -816,7 +816,7 @@ CREATE TABLE `follows` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `follows`
+-- Dumping data for table `follows`
 --
 
 INSERT INTO `follows` (`id`, `follower_id`, `following_id`, `created_at`, `updated_at`) VALUES
@@ -829,7 +829,7 @@ INSERT INTO `follows` (`id`, `follower_id`, `following_id`, `created_at`, `updat
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `likes`
+-- Table structure for table `likes`
 --
 
 CREATE TABLE `likes` (
@@ -842,7 +842,7 @@ CREATE TABLE `likes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `likes`
+-- Dumping data for table `likes`
 --
 
 INSERT INTO `likes` (`id`, `user_id`, `post_id`, `comment_id`, `created_at`, `updated_at`) VALUES
@@ -857,12 +857,13 @@ INSERT INTO `likes` (`id`, `user_id`, `post_id`, `comment_id`, `created_at`, `up
 (84, 24, 77, NULL, '2025-06-08 09:00:33', '2025-06-08 09:00:33'),
 (88, 3, 81, NULL, '2025-06-09 02:28:20', '2025-06-09 02:28:20'),
 (89, 22, 77, NULL, '2025-06-09 03:47:38', '2025-06-09 03:47:38'),
-(90, 26, 81, NULL, '2025-06-11 07:53:35', '2025-06-11 07:53:35');
+(90, 26, 81, NULL, '2025-06-11 07:53:35', '2025-06-11 07:53:35'),
+(93, 13, 92, NULL, '2025-06-15 10:19:02', '2025-06-15 10:19:02');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `migrations`
+-- Table structure for table `migrations`
 --
 
 CREATE TABLE `migrations` (
@@ -872,7 +873,7 @@ CREATE TABLE `migrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `migrations`
+-- Dumping data for table `migrations`
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
@@ -913,7 +914,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `missions`
+-- Table structure for table `missions`
 --
 
 CREATE TABLE `missions` (
@@ -933,7 +934,7 @@ CREATE TABLE `missions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `missions`
+-- Dumping data for table `missions`
 --
 
 INSERT INTO `missions` (`id`, `name`, `description`, `points_reward`, `condition_type`, `condition_value`, `frequency`, `start_date`, `end_date`, `badge_id`, `status`, `created_at`, `updated_at`) VALUES
@@ -951,7 +952,7 @@ INSERT INTO `missions` (`id`, `name`, `description`, `points_reward`, `condition
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `notifications`
+-- Table structure for table `notifications`
 --
 
 CREATE TABLE `notifications` (
@@ -966,10 +967,11 @@ CREATE TABLE `notifications` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `notifications`
+-- Dumping data for table `notifications`
 --
 
 INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `data`, `read_at`, `created_at`, `updated_at`) VALUES
+('015505e3-fa97-4ab5-a55a-105da67cb5fa', 'App\\Notifications\\PostCommentedNotification', 'App\\Models\\User', 3, '{\"message\":\"linh nguy\\u1ec5n \\u0111\\u00e3 b\\u00ecnh lu\\u1eadn b\\u00e0i vi\\u1ebft c\\u1ee7a b\\u1ea1n: Ao B\\u00e0 Om \\u2013 Th\\u1eafng c\\u1ea3nh \\u0111\\u1ed9c \\u0111\\u00e1o c\\u1ee7a \\u0111\\u1ea5t Tr\\u00e0 Vinh\",\"post_id\":25,\"commenter_id\":22}', '2025-06-29 13:06:08', '2025-06-28 14:14:41', '2025-06-29 13:06:08'),
 ('0269542f-b3f4-49a4-90c6-4b324e00035e', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 13, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"1\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":75}', '2025-06-03 04:12:47', '2025-06-03 03:38:23', '2025-06-03 04:12:47'),
 ('056e9b70-eada-4421-91e5-56572aad17e3', 'App\\Notifications\\NewUtilityCreated', 'App\\Models\\User', 4, '{\"utility_id\":105,\"name\":\"Kh\\u00e1ch s\\u1ea1n Thanh B\\u00ecnh 1\",\"user_name\":\"linh nguy\\u1ec5n\",\"type\":\"utility\"}', '2025-06-11 00:15:41', '2025-06-11 00:15:31', '2025-06-11 00:15:41'),
 ('088c24d4-976c-4ba3-ae9a-71d5fc2d10f1', 'App\\Notifications\\PostLikedNotification', 'App\\Models\\User', 22, '{\"message\":\"nhudiep \\u0111\\u00e3 th\\u00edch b\\u00e0i vi\\u1ebft c\\u1ee7a b\\u1ea1n: Ch\\u00f9a \\u00c2ng Tr\\u00e0 Vinh, v\\u1ebb \\u0111\\u1eb9p Khmer c\\u1ed5 \\u0111\\u01b0\\u1ee3c l\\u01b0u gi\\u1eef h\\u01a1n 1000 n\\u0103m\",\"post_id\":81,\"liker_id\":3}', '2025-06-10 04:31:46', '2025-06-09 02:28:19', '2025-06-10 04:31:46'),
@@ -989,6 +991,7 @@ INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `
 ('2b42e451-3e6a-4cc0-b939-1efe313c3920', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 26, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"Kh\\u00e1m ph\\u00e1 C\\u00f9 lao An B\\u00ecnh v\\u1edbi kh\\u00f4ng gian mi\\u1ec7t v\\u01b0\\u1eddn \\u0111\\u1eadm ch\\u1ea5t mi\\u1ec1n T\\u00e2y\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":90}', '2025-06-11 07:14:28', '2025-06-11 07:12:32', '2025-06-11 07:14:28'),
 ('2c65ed60-6533-443e-bb9d-1cd1edef3204', 'App\\Notifications\\NewPostSubmitted', 'App\\Models\\User', 4, '{\"name\":\"1\",\"user_name\":\"NhuDiep\",\"type\":\"utility\",\"post_id\":87}', '2025-06-10 14:41:09', '2025-06-10 14:37:05', '2025-06-10 14:41:09'),
 ('3115e867-c441-47fc-9692-cd579dd9853a', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 13, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"1\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":76}', '2025-06-03 04:12:47', '2025-06-03 04:03:16', '2025-06-03 04:12:47'),
+('36e28aab-00f8-4629-ad0c-35187728b9c0', 'App\\Notifications\\NewUtilityCreated', 'App\\Models\\User', 4, '{\"utility_id\":113,\"name\":\"1\",\"user_name\":\"linh nguy\\u1ec5n\",\"type\":\"utility\"}', '2025-06-28 13:08:42', '2025-06-28 13:08:34', '2025-06-28 13:08:42'),
 ('394ec681-b9bf-4948-bb46-f47697e29892', 'App\\Notifications\\NewPostSubmitted', 'App\\Models\\User', 4, '{\"name\":\"1\",\"user_name\":\"nhudiep\",\"type\":\"destination\",\"post_id\":85}', '2025-06-10 12:28:56', '2025-06-10 12:01:42', '2025-06-10 12:28:56'),
 ('39ebf5e5-dc20-47be-a164-d74401aa20a5', 'App\\Notifications\\NewLocationCreated', 'App\\Models\\User', 4, '{\"location_id\":80,\"name\":\"1\",\"user_name\":\"NhuDiep\"}', '2025-06-10 14:03:45', '2025-06-10 14:01:49', '2025-06-10 14:03:45'),
 ('3bb3cb6f-bb62-4fad-b323-a8473c285789', 'App\\Notifications\\ReportSubmitted', 'App\\Models\\User', 4, '{\"type\":\"comment\",\"object_id\":\"119\",\"reason\":\"N\\u1ed9i dung kh\\u00f4ng ph\\u00f9 h\\u1ee3p\",\"user_name\":\"NhuDiep\",\"object_title\":\"1\"}', NULL, '2025-06-10 13:43:45', '2025-06-10 13:43:45'),
@@ -1001,6 +1004,7 @@ INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `
 ('43a7bbd2-b0ce-486a-a130-87985b928315', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 13, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"Kh\\u00e1m ph\\u00e1 Ch\\u1ee3 n\\u1ed5i C\\u00e1i R\\u0103ng v\\u1edbi n\\u00e9t \\u0111\\u1eb7c s\\u1eafc ch\\u1ed1n T\\u00e2y \\u0110\\u00f4\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":59}', '2025-05-28 02:36:47', '2025-05-28 02:36:18', '2025-05-28 02:36:47'),
 ('46d18eef-4241-44fe-bdc1-33ab4738503a', 'App\\Notifications\\UserFollowedNotification', 'App\\Models\\User', 13, '{\"message\":\"linh nguy\\u1ec5n \\u0111\\u00e3 theo d\\u00f5i b\\u1ea1n.\",\"follower_id\":22}', '2025-06-03 04:12:47', '2025-06-03 03:26:35', '2025-06-03 04:12:47'),
 ('4a1e78b7-957e-4161-9cff-c911aa20d955', 'App\\Notifications\\PostLikedNotification', 'App\\Models\\User', 22, '{\"message\":\"nhudiep \\u0111\\u00e3 th\\u00edch b\\u00e0i vi\\u1ebft c\\u1ee7a b\\u1ea1n: Ch\\u00f9a \\u00c2ng Tr\\u00e0 Vinh, v\\u1ebb \\u0111\\u1eb9p Khmer c\\u1ed5 \\u0111\\u01b0\\u1ee3c l\\u01b0u gi\\u1eef h\\u01a1n 1000 n\\u0103m\",\"post_id\":81,\"liker_id\":3}', '2025-06-10 04:31:46', '2025-06-09 02:28:19', '2025-06-10 04:31:46'),
+('538505bf-2240-416d-9fb0-9477136e7ecb', 'App\\Notifications\\ReportSubmitted', 'App\\Models\\User', 4, '{\"type\":\"comment\",\"object_id\":\"101\",\"reason\":\"Th\\u00f4ng tin sai s\\u1ef1 th\\u1eadt\",\"user_name\":\"linh nguy\\u1ec5n\",\"object_title\":\"G\\u1ea7n Ao B\\u00e0 Om c\\u00f3 qu\\u00e1n b\\u00fan n\\u01b0\\u1edbc l\\u00e8o n\\u00e0o kh\\u00f4ng v\\u1eady m\\u1ecdi ng\\u01b0\\u1eddi\"}', NULL, '2025-06-28 14:18:23', '2025-06-28 14:18:23'),
 ('55ea0a8e-4ac4-4926-8851-1b6de72609e8', 'App\\Notifications\\UserFollowedNotification', 'App\\Models\\User', 13, '{\"message\":\"nhudiep \\u0111\\u00e3 theo d\\u00f5i b\\u1ea1n.\",\"follower_id\":3}', NULL, '2025-06-13 09:45:48', '2025-06-13 09:45:48'),
 ('56460f79-d140-4bad-a338-e370e03536bd', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 22, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"Ch\\u00f9a \\u00c2ng Tr\\u00e0 Vinh, v\\u1ebb \\u0111\\u1eb9p Khmer c\\u1ed5 \\u0111\\u01b0\\u1ee3c l\\u01b0u gi\\u1eef h\\u01a1n 1000 n\\u0103m\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":81}', '2025-06-08 08:46:33', '2025-06-08 08:46:22', '2025-06-08 08:46:33'),
 ('5cb9bd98-11c2-4df8-8c93-1fd2956fcb23', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 13, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"Malis Homestay\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":61}', '2025-05-28 03:37:26', '2025-05-28 03:01:35', '2025-05-28 03:37:26'),
@@ -1010,6 +1014,7 @@ INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `
 ('68c10b2b-5b80-457e-887e-25c84bec0e45', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 3, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"1\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":84}', '2025-06-13 09:44:32', '2025-06-10 12:00:57', '2025-06-13 09:44:32'),
 ('6af97297-c728-4a38-ab3f-47d9c5784215', 'App\\Notifications\\PostLikedNotification', 'App\\Models\\User', 3, '{\"message\":\"linh nguy\\u1ec5n \\u0111\\u00e3 th\\u00edch b\\u00e0i vi\\u1ebft c\\u1ee7a b\\u1ea1n: 1\",\"post_id\":74,\"liker_id\":22}', '2025-06-03 02:23:18', '2025-06-03 02:11:45', '2025-06-03 02:23:18'),
 ('6f8cf3fa-8744-481c-b1cc-efb9a8649341', 'App\\Notifications\\NewLocationCreated', 'App\\Models\\User', 4, '{\"location_id\":94,\"name\":\"V\\u01b0\\u1eddn Qu\\u1ed1c gia B\\u00f9 Gia M\\u1eadp\",\"user_name\":\"linh nguy\\u1ec5n\"}', '2025-06-15 04:31:18', '2025-06-15 03:30:27', '2025-06-15 04:31:18'),
+('70d680a2-c51d-4d54-a605-6ce28bc6fa19', 'App\\Notifications\\PostLikedNotification', 'App\\Models\\User', 25, '{\"message\":\"NhuDiep \\u0111\\u00e3 th\\u00edch b\\u00e0i vi\\u1ebft c\\u1ee7a b\\u1ea1n: Mi\\u1ebfu H\\u00f2n B\\u00e0 V\\u0169ng T\\u00e0u - Kh\\u00e1m ph\\u00e1 b\\u00ed \\u1ea9n ng\\u00f4i mi\\u1ebfu tr\\u00ean \\u0111\\u1ea3o H\\u00f2n B\\u00e0\",\"post_id\":92,\"liker_id\":13}', NULL, '2025-06-15 10:19:02', '2025-06-15 10:19:02'),
 ('7a900a55-f266-40a4-83b8-28dc414cf189', 'App\\Notifications\\NewUtilityCreated', 'App\\Models\\User', 4, '{\"utility_id\":103,\"name\":\"4\",\"user_name\":\"linh nguy\\u1ec5n\",\"type\":\"utility\"}', '2025-06-03 14:35:50', '2025-06-03 14:32:31', '2025-06-03 14:35:50'),
 ('7d0b2996-9f61-4328-b239-30d83182e28d', 'App\\Notifications\\NewLocationCreated', 'App\\Models\\User', 4, '{\"location_id\":96,\"name\":\"1\",\"user_name\":\"linh nguy\\u1ec5n\"}', '2025-06-15 04:31:10', '2025-06-15 04:06:00', '2025-06-15 04:31:10'),
 ('7fa1f4dd-69fc-472d-b320-00aacd4162e2', 'App\\Notifications\\NewLocationCreated', 'App\\Models\\User', 4, '{\"location_id\":75,\"name\":\"2\",\"user_name\":\"Ng\\u01b0\\u1eddi d\\u00f9ng\"}', '2025-06-03 14:35:53', '2025-06-03 14:07:36', '2025-06-03 14:35:53'),
@@ -1045,9 +1050,11 @@ INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `
 ('c328ad36-ffd1-4789-ba35-88e22efc5450', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 13, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"B\\u00e1nh x\\u00e8o S\\u00e1u Gi\\u00e0u\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":62}', '2025-05-28 03:37:26', '2025-05-28 03:01:37', '2025-05-28 03:37:26'),
 ('c3f81dd4-4634-415e-8a7b-9daa4e7eaf26', 'App\\Notifications\\NewLocationCreated', 'App\\Models\\User', 4, '{\"location_id\":78,\"name\":\"2\",\"user_name\":\"linh nguy\\u1ec5n\"}', '2025-06-10 04:38:46', '2025-06-10 04:32:34', '2025-06-10 04:38:46'),
 ('c3fddb9b-7dfe-4b3d-bc81-0a595dfb56b9', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 3, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"1\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":74}', '2025-06-02 14:36:48', '2025-06-02 14:36:40', '2025-06-02 14:36:48'),
+('c59484bc-bdf9-4a61-ac85-dd021b55223d', 'App\\Notifications\\NewLocationCreated', 'App\\Models\\User', 4, '{\"location_id\":105,\"name\":\"1\",\"user_name\":\"linh nguy\\u1ec5n\"}', '2025-06-28 13:07:56', '2025-06-28 13:07:35', '2025-06-28 13:07:56'),
 ('cb096f8b-c85b-43ea-8868-42afd8444a2e', 'App\\Notifications\\NewPostSubmitted', 'App\\Models\\User', 4, '{\"name\":\"1\",\"user_name\":\"nhudiep\",\"type\":\"utility\",\"post_id\":84}', '2025-06-10 12:01:03', '2025-06-10 12:00:33', '2025-06-10 12:01:03'),
 ('cfdfb461-f0bb-4d36-a899-f282934680e0', 'App\\Notifications\\PostCommentedNotification', 'App\\Models\\User', 22, '{\"message\":\"T\\u00fa Nga \\u0111\\u00e3 b\\u00ecnh lu\\u1eadn b\\u00e0i vi\\u1ebft c\\u1ee7a b\\u1ea1n: Ch\\u00f9a \\u00c2ng Tr\\u00e0 Vinh, v\\u1ebb \\u0111\\u1eb9p Khmer c\\u1ed5 \\u0111\\u01b0\\u1ee3c l\\u01b0u gi\\u1eef h\\u01a1n 1000 n\\u0103m\",\"post_id\":81,\"commenter_id\":24}', '2025-06-10 04:31:46', '2025-06-08 09:01:48', '2025-06-10 04:31:46'),
 ('d2eb1a5e-f6c3-40c9-8d75-23ec023ae398', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 13, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"Qu\\u00e1n \\u0102n T\\u00e2n K\\u00fd 79\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":56}', '2025-05-28 01:56:08', '2025-05-28 01:55:58', '2025-05-28 01:56:08'),
+('d45ee221-c93e-43c8-8284-1fca93216024', 'App\\Notifications\\PostLikedNotification', 'App\\Models\\User', 25, '{\"message\":\"NhuDiep \\u0111\\u00e3 th\\u00edch b\\u00e0i vi\\u1ebft c\\u1ee7a b\\u1ea1n: Mi\\u1ebfu H\\u00f2n B\\u00e0 V\\u0169ng T\\u00e0u - Kh\\u00e1m ph\\u00e1 b\\u00ed \\u1ea9n ng\\u00f4i mi\\u1ebfu tr\\u00ean \\u0111\\u1ea3o H\\u00f2n B\\u00e0\",\"post_id\":92,\"liker_id\":13}', NULL, '2025-06-15 10:19:02', '2025-06-15 10:19:02'),
 ('d6066e2f-f7a7-4066-a2e6-e4b0be0109c5', 'App\\Notifications\\PostLikedNotification', 'App\\Models\\User', 22, '{\"message\":\"nhudiep \\u0111\\u00e3 th\\u00edch b\\u00e0i vi\\u1ebft c\\u1ee7a b\\u1ea1n: Ch\\u00f9a \\u00c2ng Tr\\u00e0 Vinh, v\\u1ebb \\u0111\\u1eb9p Khmer c\\u1ed5 \\u0111\\u01b0\\u1ee3c l\\u01b0u gi\\u1eef h\\u01a1n 1000 n\\u0103m\",\"post_id\":81,\"liker_id\":3}', '2025-06-10 04:31:46', '2025-06-09 02:28:20', '2025-06-10 04:31:46'),
 ('d762f14e-e3a2-468f-b123-be5a4af440c2', 'App\\Notifications\\PostApprovedNotification', 'App\\Models\\User', 13, '{\"message\":\"B\\u00e0i vi\\u1ebft \\\"Bi\\u1ec3n Ba \\u0110\\u1ed9ng - \\u0110\\u1ecba \\u0111i\\u1ec3m thu h\\u00fat \\u0111\\u00f4ng \\u0111\\u1ea3o kh\\u00e1ch du l\\u1ecbch t\\u1ea1i Tr\\u00e0 Vinh\\\" c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c duy\\u1ec7t!\",\"post_id\":26}', '2025-06-13 09:10:41', '2025-06-11 02:11:51', '2025-06-13 09:10:41'),
 ('d8d9f2cb-d74a-4643-ae2e-9c1ebde85b85', 'App\\Notifications\\NewLocationCreated', 'App\\Models\\User', 4, '{\"location_id\":93,\"name\":\"N\\u00fai B\\u00e0 R\\u00e1\",\"user_name\":\"linh nguy\\u1ec5n\"}', '2025-06-15 04:31:20', '2025-06-15 03:18:02', '2025-06-15 04:31:20'),
@@ -1072,7 +1079,7 @@ INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `password_reset_tokens`
+-- Table structure for table `password_reset_tokens`
 --
 
 CREATE TABLE `password_reset_tokens` (
@@ -1084,7 +1091,7 @@ CREATE TABLE `password_reset_tokens` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `personal_access_tokens`
+-- Table structure for table `personal_access_tokens`
 --
 
 CREATE TABLE `personal_access_tokens` (
@@ -1103,7 +1110,7 @@ CREATE TABLE `personal_access_tokens` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `posts`
+-- Table structure for table `posts`
 --
 
 CREATE TABLE `posts` (
@@ -1125,7 +1132,7 @@ CREATE TABLE `posts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `posts`
+-- Dumping data for table `posts`
 --
 
 INSERT INTO `posts` (`id`, `title`, `content`, `address`, `status`, `average_rating`, `user_id`, `destination_id`, `created_at`, `updated_at`, `price`, `post_type`, `phone`, `opening_hours`, `utility_id`) VALUES
@@ -1148,12 +1155,12 @@ INSERT INTO `posts` (`id`, `title`, `content`, `address`, `status`, `average_rat
 (91, 'Núi Bà Ðen thắng cảnh linh thiêng giữa đất trời', '<p>Khởi hành từ trung tâm Thành phố Hồ Chí Minh về hành hương núi Bà Đen. Mới đến địa phận thị xã Chà Là thuộc huyện Dương Minh Châu, tỉnh Tây Ninh cách núi Bà Đen khoảng hơn mười cây số, tôi đã nhìn thấy dáng hình của ngọn núi nổi tiếng, nom giống như một chiếc mũ khổng lồ sừng sững nổi lên giữa vùng đồng bằng xanh tươi. Tượng Phật Bà Quan Âm bằng đồng màu đen uy nghi trên đỉnh núi.</p><p>Gần chân núi Bà Đen, những vườn mãng cầu nối nhau đang mùa ra quả. Mãng cầu Tây Ninh nổi tiếng khắp xa gần bởi vẻ ngoài bắt mắt, trái nào trái nấy cũng to mọng, thịt quả dai mềm lại ngọt đậm. Nhưng tôi nghe nói rằng, mãng cầu được trồng ở chân núi Bà Đen có vị thơm ngon vượt trội hơn hẳn. Ngoài yếu tố khí hậu và thổ nhưỡng, người ta coi mãng cầu là một món quà được thần linh ở núi Bà Đen ban tặng cho con người.</p><p>Du khách đổ về thưa thớt hơn những ngày đầu năm nên chúng tôi không phải mất nhiều thời gian xếp hang lên cáp treo. Từ trên cáp treo có thể nhìn thấy phía xa xa là hồ Dầu Tiếng – hồ nước ngọt nhân tạo lớn nhất Việt Nam và Đông Nam Á.</p><p>Khoảng 8 phút sau, cabin đã lên đến đỉnh núi ở độ cao 986m. Tượng Phật Bà tay trái cầm bình thanh tịnh đựng nước cam lồ, tay phải kết ấn, vừa uy nghi vừa hiền từ, dường như luôn dõi mắt trông theo tôi trên mọi hành trình. Đây là tượng Phật Bà cao nhất châu Á tọa lạc trên đỉnh núi, với tổng chiều cao 72m, được tạo tác từ 170 tấn đồng đỏ. Công trình tâm linh tượng trưng cho trí tuệ, đức hạnh và lòng từ bi phổ độ chúng sinh của Phật Bà. Xung quanh tượng Phật Bà là tượng Tứ Đại Thiên Vương bằng đồng mang đầy vẻ uy dũng. Tượng Phật Bà tọa trên một đài tháp được sắp xếp bởi những đĩa tròn khổng lồ. Từ mỗi đĩa tròn, thác nước chảy tràn xuống 5 đĩa nước lớn được sắp đặt thấp dần.</p><figure class=\"image\"><img src=\"https://ddk.1cdn.vn/2025/04/29/anh-2_tuong-phat-ba-tay-bo-da-son.jpg\" alt=\"Ảnh 2_Tượng Phật Bà Tây Bổ Đà Sơn\"></figure>', 'Xã Thạnh Tân, Thành phố Tây Ninh, Tỉnh Tây Ninh', '0', 0.00, 25, 87, '2025-06-14 15:50:57', '2025-06-15 03:03:50', 'Vé cáp treo đỉnh Vân Sơn, 400.000 VND, 300.000 VND ; Vé tuyến cáp Tâm An, 400.000 VND, 300.000 ...', 'destination', NULL, NULL, NULL),
 (92, 'Miếu Hòn Bà Vũng Tàu - Khám phá bí ẩn ngôi miếu trên đảo Hòn Bà', '<p>Hòn Bà là một địa danh không còn quá xa lạ với người dân địa phương bởi đây là một điểm tham quan tại Vũng Tàu. Đảo Hòn Bà nằm cách đất liền không quá xa. Miếu Hòn Bà Vũng Tàu nằm nổi lên giữa ốc đảo hoang sơ này. Bởi vì vậy mà bất cứ du khách nào khi đến đây đều không quên ghé thăm để được tận mắt khám phá, chiêm ngưỡng vẻ đẹp của Miếu Hòn Bà Vũng Tàu.</p><p>Đảo Hòn Bà có diện tích khoảng 5000m2, đảo khá gần với khu vực đất liền. Để khám phá Miếu Hòn Bà thì bạn phải đi thuyền khi nước lên và đi bộ khi thủy triều xuống để khám phá vẻ đẹp hoang sơ của nơi đây. Khu vực miếu Hòn Bà là địa điểm tâm linh nổi tiếng tổ chức cúng vào 4 kỳ đó là vào thời điểm tháng giêng, tháng 4, 7, 10 theo âm lịch. Đây là một hòn đảo nổi giữa biển, gần với đất liền và thực sự hấp dẫn với những ai yêu thích mạo hiểm, muốn khám phá Vũng Tàu&nbsp;bởi cảnh quan có phong cảnh đẹp và yên bình.</p><p>Đối với cư dân Vũng Tàu cũng như người dân ở các tỉnh thành lân cận khác thì Miếu Hòn Bà Vũng Tàu là một địa điểm để thờ bái tâm linh, ngưỡng vọng từ nhiều năm nay. Miếu Hòn Bà Vũng Tàu cũng được nhà nước xếp vào danh sách ngôi miếu có vị trí đặc biệt nhất Việt Nam. Ngôi miếu này nằm ở một vị trí đặc biệt lưng chừng giữa một hòn đảo nhỏ và lịch sử khám phá, tên gọi và cả những câu chuyện xoay quanh việc xây dựng và thờ cúng của miếu.&nbsp;</p><figure class=\"image\"><img src=\"https://mia.vn/media/uploads/blog-du-lich/mieu-hon-ba-vung-tau-kham-pha-bi-an-ngoi-mieu-tren-dao-hon-ba-01-1634045557.jpg\" alt=\"Miếu Hòn Bà Vũng Tàu - Khám phá bí ẩn ngôi miếu trên đảo Hòn Bà 2\"></figure><p>Cái tên Miếu Bà, hay còn gọi là Hòn Bà xuất phát vào cuối thế kỉ XVIII từ việc tạo lập ngôi miếu nhỏ thờ Thủy Long thần nữa để giữ vai trò điều hòa khí hậu sao cho mưa thuận gió hòa để ngư dân yên tâm ra khơi đánh bắt. Bà ở đây ý chỉ vị Thủy Long thần nữ. Người dân làng Thắng Tam đã nhiều lần đóng góp tiền để sửa chữa trùng tu nơi này để trở thành nơi thờ phụng khang trang như hiện nay.</p><p>Miếu Bà được dân làng thờ cúng qua nhiều năm tháng. Năm 1939, Archinard -&nbsp; một sĩ quan người Pháp đã ra lệnh nã 3 phát đại pháo vào miếu nhưng chỉ trúng một phát vào góc miếu, khiến miếu bị hư hại một phần. Vài ngày sau người dân lại hay tin tên sĩ quan này mất mạng tại miếu bởi vì bất cẩn trong lúc sử dụng súng. Chính điều này khiến thực dân Pháp tin rằng miếu Bà hiển linh và không phá hoại miếu.</p>', 'Phường Thắng Tam, Thành phố Vũng Tàu, Tỉnh Bà Rịa - Vũng Tàu', '0', 0.00, 25, 85, '2025-06-14 15:52:59', '2025-06-15 03:08:05', 'Ra đảo bằng thuyền với giá 500.000 đồng/chuyến từ 10 - 20 người.', 'destination', NULL, NULL, NULL),
 (93, 'Danh lam thắng cảnh Đá Ba Chồng độc nhất vô nhị tại Đồng Nai', '<p>Khu du lịch Đá Ba Chồng ở Đồng Nai không chỉ là điểm check-in hấp dẫn mà còn là nơi chứa đựng giá trị lịch sử và văn hóa tiềm ẩn. Những tảng đá khổng lồ tưởng chừng chênh vênh nhưng lại vô cùng chắc chắn, minh chứng cho sự kiên cố và bền bỉ của thiên nhiên qua hàng triệu năm. Dân cư xung quanh khu vực này đã khẳng định rằng chưa từng xảy ra bất kỳ sự cố nguy hiểm nào, điều này càng làm tăng thêm sự an tâm cho bạn khi tham quan nơi đây.</p><p>Khi đến Đá Ba Chồng, bạn có thể gửi xe của mình tại Trung tâm Văn Hóa huyện Định Quán. Sau đó bạn đi ra phía sau của tòa nhà này là sẽ có đường mòn khám phá danh lam thắng cảnh này nhé.</p><figure class=\"image\"><img src=\"https://ik.imagekit.io/tvlk/blog/2022/03/dia-diem-du-lich-dong-nai-7.jpg?tr=q-70,c-at_max,w-500,h-300,dpr-2\" alt=\"Đá Ba Chồng tại Đồng Nai\"></figure><h2>Một vài lưu ý khi tham quan Đá Ba Chồng</h2><p>Khi bạn đặt chân đến Đá Ba Chồng thì việc chuẩn bị kỹ lưỡng sẽ giúp cho chuyến hành trình của bạn trở nên hoàn hảo hơn. Đầu tiên, bạn nên ưu tiên lựa chọn các bộ trang phục thoải mái được làm từ các chất liệu mát mẻ. Bạn có thể khoác một chiếc áo tay dài, cổ cao giúp bảo vệ da khỏi cái nắng gắt của mặt trời. Đặc biệt, bạn cũng nên ưu tiên trang bị một đôi giày thế thao chất lượng với đế chống trượt, như vậy sẽ giúp những bước chân của bạn trở nên vững chãi hơn mà không sợ bị té ngã.</p><p>Hơn nữa, bạn đừng quên đem theo một số đồ ăn nhẹ như trái cây, snack, nước khoáng để bổ sung năng lượng cho cơ thể, giúp bạn hăng hái trong suốt hành trình khám phá Đá Ba Chồng của mình.</p><p>Cuối cùng, việc lựa chọn thời gian thích hợp để tham quan sẽ giúp bạn tận hưởng trọn vẹn vẻ đẹp thiên nhiên của danh thắng này. Do đó, trước khi khởi hành bạn hãy kiểm tra dự báo thời tiết để đảm bảo bạn có một chuyến đi thuận lợi nhé.</p>', 'Thị trấn Định Quán, Huyện Định Quán, Tỉnh Đồng Nai', '1', 0.00, 22, 92, '2025-06-15 03:14:36', '2025-06-15 03:14:36', 'Miễn phí', 'destination', NULL, NULL, NULL),
-(94, 'Đắm chìm tại Lạc Glamping với không gian xanh mướt dịu dàng', '<h3><strong>Cách di chuyển đến Lạc Glaping</strong></h3><p>Lạc Glamping là một khu cắm trại thuộc địa phận huyện Vĩnh Cửu và cách trung tâm Thành phố Hồ Chí Minh khoảng 65 km. Để di chuyển từ trung tâm thành phố đến đây, bạn sẽ mất một khoảng thời gian tầm 1 giờ 40 phút nếu cung đường thuận lợi và không có sự kẹt xe.</p><p>Nếu muốn di chuyển tự túc từ trung tâm Thành phố Hồ Chí Minh đi Lạc Glamping, bạn có thể cân nhắc sử dụng sự hướng dẫn của Google Maps hoặc đi theo cung đường mà MIA.vn gợi ý như sau: đường Điện Biên Phủ - ngã tư Hàng Xanh - Cầu Sài Gòn - đường Võ Nguyên Giáp (Xa lộ Hà Nội) - Quốc lộ 1A - rẽ trái vào DT 767 - cầu La Ngà - Vĩnh Cửu - rẽ phải vào ngã ba đầu tiên là sẽ đến Lạc Glamping.</p><p>Lạc Glamping là một trong những địa điểm vui chơi, trải nghiệm ấn tượng với không gian trong lành cùng vẻ đẹp thu hút. Nơi đây hứa hẹn sẽ mang đến bạn nhiều trải nghiệm vui chơi ấn tượng trong không gian đẹp đẽ. Vậy những trải nghiệm thú vị tại Lạc Glamping là gì, hãy cùng Cẩm nang du lịch MIA.vn tìm hiểu bạn nhé!</p><figure class=\"image\"><img src=\"https://mia.vn/media/uploads/blog-du-lich/lac-glamping-3-1728952725.jpg\" alt=\"Đắm chìm tại Lạc Glamping với không gian xanh mướt dịu dàng 4\"></figure><p>Jeep Tour trên con xe UAZ huyền thoại khám phá rừng Mã Đà là một “đặc sản” của Lạc Glamping. Chuyến hành trình dài khoảng 45 phút đến 1 tiếng sẽ đưa bạn đến những địa điểm check-in nổi tiếng trong khu vực này.<img src=\"https://mia.vn/media/uploads/blog-du-lich/lac-glamping-5-1728952725.jpg\" alt=\"Đắm chìm tại Lạc Glamping với không gian xanh mướt dịu dàng 6\"></p>', 'Xã Mã Đà, Huyện Vĩnh Cửu, Tỉnh Đồng Nai', '1', 0.00, 22, NULL, '2025-06-15 03:46:01', '2025-06-15 03:46:01', 'Dao động từ 200.000 đến 7.00.000 VNĐ', 'utility', '0345893003', 'Từ 7:00 đến 21:00 các ngày trong tuần', 108);
+(94, 'Đắm chìm tại Lạc Glamping với không gian xanh mướt dịu dàng', '<h3><strong>Cách di chuyển đến Lạc Glaping</strong></h3><p>Lạc Glamping là một khu cắm trại thuộc địa phận huyện Vĩnh Cửu và cách trung tâm Thành phố Hồ Chí Minh khoảng 65 km. Để di chuyển từ trung tâm thành phố đến đây, bạn sẽ mất một khoảng thời gian tầm 1 giờ 40 phút nếu cung đường thuận lợi và không có sự kẹt xe.</p><p>Nếu muốn di chuyển tự túc từ trung tâm Thành phố Hồ Chí Minh đi Lạc Glamping, bạn có thể cân nhắc sử dụng sự hướng dẫn của Google Maps hoặc đi theo cung đường mà MIA.vn gợi ý như sau: đường Điện Biên Phủ - ngã tư Hàng Xanh - Cầu Sài Gòn - đường Võ Nguyên Giáp (Xa lộ Hà Nội) - Quốc lộ 1A - rẽ trái vào DT 767 - cầu La Ngà - Vĩnh Cửu - rẽ phải vào ngã ba đầu tiên là sẽ đến Lạc Glamping.</p><p>Lạc Glamping là một trong những địa điểm vui chơi, trải nghiệm ấn tượng với không gian trong lành cùng vẻ đẹp thu hút. Nơi đây hứa hẹn sẽ mang đến bạn nhiều trải nghiệm vui chơi ấn tượng trong không gian đẹp đẽ. Vậy những trải nghiệm thú vị tại Lạc Glamping là gì, hãy cùng Cẩm nang du lịch MIA.vn tìm hiểu bạn nhé!</p><figure class=\"image\"><img src=\"https://mia.vn/media/uploads/blog-du-lich/lac-glamping-3-1728952725.jpg\" alt=\"Đắm chìm tại Lạc Glamping với không gian xanh mướt dịu dàng 4\"></figure><p>Jeep Tour trên con xe UAZ huyền thoại khám phá rừng Mã Đà là một “đặc sản” của Lạc Glamping. Chuyến hành trình dài khoảng 45 phút đến 1 tiếng sẽ đưa bạn đến những địa điểm check-in nổi tiếng trong khu vực này.<img src=\"https://mia.vn/media/uploads/blog-du-lich/lac-glamping-5-1728952725.jpg\" alt=\"Đắm chìm tại Lạc Glamping với không gian xanh mướt dịu dàng 6\"></p>', 'Xã Mã Đà, Huyện Vĩnh Cửu, Tỉnh Đồng Nai', '1', 0.00, 22, NULL, '2025-06-15 03:46:01', '2025-06-28 13:15:57', 'Dao động từ 200.000 đến 7.00.000 VNĐ', 'utility', '0345893003', 'Từ 7:00 đến 21:00 các ngày trong tuần', 108);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `ratings`
+-- Table structure for table `ratings`
 --
 
 CREATE TABLE `ratings` (
@@ -1166,7 +1173,7 @@ CREATE TABLE `ratings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `ratings`
+-- Dumping data for table `ratings`
 --
 
 INSERT INTO `ratings` (`id`, `score`, `user_id`, `post_id`, `created_at`, `updated_at`) VALUES
@@ -1183,7 +1190,7 @@ INSERT INTO `ratings` (`id`, `score`, `user_id`, `post_id`, `created_at`, `updat
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `reports`
+-- Table structure for table `reports`
 --
 
 CREATE TABLE `reports` (
@@ -1197,10 +1204,17 @@ CREATE TABLE `reports` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `reports`
+--
+
+INSERT INTO `reports` (`id`, `reason`, `user_id`, `post_id`, `comment_id`, `status`, `created_at`, `updated_at`) VALUES
+(18, 'Thông tin sai sự thật', 22, NULL, 101, 0, '2025-06-28 14:18:23', '2025-06-28 14:18:23');
+
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `rewards`
+-- Table structure for table `rewards`
 --
 
 CREATE TABLE `rewards` (
@@ -1217,7 +1231,7 @@ CREATE TABLE `rewards` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `rewards`
+-- Dumping data for table `rewards`
 --
 
 INSERT INTO `rewards` (`id`, `name`, `description`, `cost_points`, `type`, `stock`, `image`, `active`, `created_at`, `updated_at`) VALUES
@@ -1227,7 +1241,7 @@ INSERT INTO `rewards` (`id`, `name`, `description`, `cost_points`, `type`, `stoc
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `roles`
+-- Table structure for table `roles`
 --
 
 CREATE TABLE `roles` (
@@ -1238,7 +1252,7 @@ CREATE TABLE `roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `roles`
+-- Dumping data for table `roles`
 --
 
 INSERT INTO `roles` (`id`, `name`, `created_at`, `updated_at`) VALUES
@@ -1248,7 +1262,7 @@ INSERT INTO `roles` (`id`, `name`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `shares`
+-- Table structure for table `shares`
 --
 
 CREATE TABLE `shares` (
@@ -1262,7 +1276,7 @@ CREATE TABLE `shares` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `shares`
+-- Dumping data for table `shares`
 --
 
 INSERT INTO `shares` (`id`, `is_public`, `status`, `user_id`, `post_id`, `created_at`, `updated_at`) VALUES
@@ -1276,7 +1290,7 @@ INSERT INTO `shares` (`id`, `is_public`, `status`, `user_id`, `post_id`, `create
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `slides`
+-- Table structure for table `slides`
 --
 
 CREATE TABLE `slides` (
@@ -1288,7 +1302,7 @@ CREATE TABLE `slides` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `slides`
+-- Dumping data for table `slides`
 --
 
 INSERT INTO `slides` (`id`, `image`, `status`, `created_at`, `updated_at`) VALUES
@@ -1301,7 +1315,7 @@ INSERT INTO `slides` (`id`, `image`, `status`, `created_at`, `updated_at`) VALUE
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `travel_types`
+-- Table structure for table `travel_types`
 --
 
 CREATE TABLE `travel_types` (
@@ -1313,7 +1327,7 @@ CREATE TABLE `travel_types` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `travel_types`
+-- Dumping data for table `travel_types`
 --
 
 INSERT INTO `travel_types` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES
@@ -1326,7 +1340,7 @@ INSERT INTO `travel_types` (`id`, `name`, `status`, `created_at`, `updated_at`) 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -1348,22 +1362,23 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `main_badge_id`, `username`, `email`, `password`, `remember_token`, `avatar`, `description`, `user_rank`, `total_points`, `redeemable_points`, `status`, `role_id`, `created_at`, `updated_at`) VALUES
-(3, 10, 'nhudiep', 'nhudiep@gmail.com', '$2y$12$nQMyNPNqN87cY.6aI/jSXuEtVYpAljlpr5wuWJgQVo1qOVhKs0Tne', NULL, '1746716932.jpg', NULL, 0, 212, 112, '0', 3, '2025-05-04 01:41:29', '2025-06-09 03:44:37'),
+(3, 10, 'nhudiep', 'nhudiep@gmail.com', '$2y$12$GPBPXeegDXzrf7EIF.OIFOfOW3Were21o6I2zkVY8Ts6XElJotAx6', NULL, '1751161434-avatar-anh-meo-cute-58.jpg', NULL, 0, 212, 112, '0', 3, '2025-05-04 01:41:29', '2025-06-29 02:36:04'),
 (4, NULL, 'admin', 'admin@gmail.com', '$2y$12$MyKYKCyx9ZJ8tnj4NNQzW.fnCoX1xneuUPPjlob9VN5afgtpkXaCa', NULL, '1746716717.jpg', NULL, 0, 0, 0, '0', 2, '2025-05-04 01:42:35', '2025-05-08 15:05:17'),
-(13, NULL, 'NhuDiep', 'nhinhi@gmail.com', '$2y$12$5YXurp1ympMG/uXy8pQNK.GWO2uOX6ELYg0CwQCnXPWa2AuWaFuve', NULL, NULL, NULL, 0, 0, 0, '0', 3, '2025-05-19 16:17:52', '2025-05-19 16:17:52'),
-(22, NULL, 'linh nguyễn', 'nguyenlinh200409@gmail.com', '$2y$12$Ubfn5RzC0b8Zn6KejQcoTeibvwX.Y5jIMFe/tR5J4Q10nV8gP9F2y', 'c9KpP7wZ6reWHm8P8cTmKDIfRJoaE6c03zXGOrKcB9omi2MNnpUStQJkijBM', 'https://lh3.googleusercontent.com/a/ACg8ocLurUr84nggrd5E_I6-3UBvRJwAH_-awCMB4dd3YBRQA97GyTU=s96-c', NULL, 0, 57, 57, '0', 3, '2025-05-21 13:32:38', '2025-06-09 03:54:43'),
+(13, 9, 'NhuDiep', 'nhinhi@gmail.com', '$2y$12$5YXurp1ympMG/uXy8pQNK.GWO2uOX6ELYg0CwQCnXPWa2AuWaFuve', NULL, NULL, NULL, 0, 5, 5, '0', 3, '2025-05-19 16:17:52', '2025-06-15 10:19:12'),
+(22, 11, 'linh nguyễn', 'nguyenlinh200409@gmail.com', '$2y$12$Ubfn5RzC0b8Zn6KejQcoTeibvwX.Y5jIMFe/tR5J4Q10nV8gP9F2y', 'tys28dX5RiPbCK9wQQgU3lqczZrURGt3WWhHTeQxo6oJTzn8ftbyiEEIH6lz', 'https://lh3.googleusercontent.com/a/ACg8ocLurUr84nggrd5E_I6-3UBvRJwAH_-awCMB4dd3YBRQA97GyTU=s96-c', NULL, 0, 87, 87, '0', 3, '2025-05-21 13:32:38', '2025-06-15 05:18:34'),
 (24, NULL, 'Tú Nga', 'dieptunga25@gmail.com', '$2y$12$xwOUF1F3ok59sK8NwnWgT.3LU4Agk4UU0hmi2vAONpwoVj2b4AyrG', NULL, NULL, NULL, 0, 30, 30, '0', 3, '2025-06-08 08:04:29', '2025-06-08 08:59:07'),
 (25, NULL, 'Như Diệp', 'dieptunhu2003@gmail.com', '$2y$12$osb.58d2RkT07mdWTJMfbORxwZp7bl0fW6sqkL1GRA10MuNtYSU8W', NULL, 'https://lh3.googleusercontent.com/a/ACg8ocJohG4YerNT9DxW5GTiAK8Z8ZbuzRFTx9BTF6vMN8Ym5pLdoVCK=s96-c', NULL, 0, 0, 0, '0', 3, '2025-06-09 02:24:44', '2025-06-09 02:24:44'),
-(26, NULL, 'ngocdanthanhdt', 'ngocdanthanhdt@tvu.edu.vn', '$2y$12$vRplQIVF9WOP8sIEaNX6x.fOU0qgQSPiV6PGBlsAZ/XDwsbpdPIfG', NULL, NULL, NULL, 0, 22, 22, '0', 3, '2025-06-11 06:30:35', '2025-06-11 07:53:42');
+(26, NULL, 'ngocdanthanhdt', 'ngocdanthanhdt@tvu.edu.vn', '$2y$12$vRplQIVF9WOP8sIEaNX6x.fOU0qgQSPiV6PGBlsAZ/XDwsbpdPIfG', NULL, NULL, NULL, 0, 22, 22, '0', 3, '2025-06-11 06:30:35', '2025-06-11 07:53:42'),
+(28, NULL, 'Ngọc Nhi', 'ngocnhi@gmail.com', '$2y$12$FGpZ3kTuqAhnuiNJ3vAfSevbq0sJcq/lzUg4GI.8.lMkxPYvhKJwu', NULL, '1751165571-3db79e59b9052890ea1ffbef0f3970cc.jpg', NULL, 0, 0, 0, '0', 3, '2025-06-29 02:52:29', '2025-06-29 02:52:51');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `user_missions`
+-- Table structure for table `user_missions`
 --
 
 CREATE TABLE `user_missions` (
@@ -1376,15 +1391,17 @@ CREATE TABLE `user_missions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `user_missions`
+-- Dumping data for table `user_missions`
 --
 
 INSERT INTO `user_missions` (`user_id`, `mission_id`, `completion_date`, `claimed`, `created_at`, `updated_at`) VALUES
-(3, 6, NULL, 1, NULL, '2025-06-09 02:28:25'),
-(3, 7, NULL, 1, NULL, '2025-06-09 02:51:03'),
+(3, 6, NULL, 0, NULL, '2025-06-09 02:28:25'),
+(3, 7, NULL, 0, NULL, '2025-06-09 02:51:03'),
+(13, 6, NULL, 1, NULL, '2025-06-15 10:19:08'),
 (22, 6, NULL, 0, NULL, '2025-06-09 03:47:48'),
 (22, 7, NULL, 0, NULL, '2025-06-09 03:47:29'),
-(22, 8, NULL, 0, NULL, '2025-06-09 03:54:43'),
+(22, 8, NULL, 0, NULL, '2025-06-15 04:52:51'),
+(22, 11, NULL, 0, NULL, '2025-06-15 04:56:26'),
 (24, 8, NULL, 1, NULL, '2025-06-08 08:59:02'),
 (24, 11, NULL, 1, NULL, '2025-06-08 08:59:07'),
 (26, 6, NULL, 1, NULL, '2025-06-11 07:53:42'),
@@ -1394,7 +1411,7 @@ INSERT INTO `user_missions` (`user_id`, `mission_id`, `completion_date`, `claime
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `user_reward`
+-- Table structure for table `user_reward`
 --
 
 CREATE TABLE `user_reward` (
@@ -1412,7 +1429,7 @@ CREATE TABLE `user_reward` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `user_reward`
+-- Dumping data for table `user_reward`
 --
 
 INSERT INTO `user_reward` (`id`, `user_id`, `reward_id`, `redeemed_at`, `delivered`, `created_at`, `updated_at`, `receiver_name`, `receiver_phone`, `receiver_address`, `shipping_note`) VALUES
@@ -1426,7 +1443,7 @@ INSERT INTO `user_reward` (`id`, `user_id`, `reward_id`, `redeemed_at`, `deliver
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `utilities`
+-- Table structure for table `utilities`
 --
 
 CREATE TABLE `utilities` (
@@ -1446,7 +1463,7 @@ CREATE TABLE `utilities` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `utilities`
+-- Dumping data for table `utilities`
 --
 
 INSERT INTO `utilities` (`id`, `name`, `price`, `address`, `latitude`, `longitude`, `time`, `image`, `status`, `description`, `utility_type_id`, `created_at`, `updated_at`) VALUES
@@ -1524,7 +1541,7 @@ INSERT INTO `utilities` (`id`, `name`, `price`, `address`, `latitude`, `longitud
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `utility_types`
+-- Table structure for table `utility_types`
 --
 
 CREATE TABLE `utility_types` (
@@ -1536,7 +1553,7 @@ CREATE TABLE `utility_types` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `utility_types`
+-- Dumping data for table `utility_types`
 --
 
 INSERT INTO `utility_types` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES
@@ -1544,17 +1561,17 @@ INSERT INTO `utility_types` (`id`, `name`, `status`, `created_at`, `updated_at`)
 (14, 'Ẩm thực', '0', '2025-05-08 10:55:50', '2025-06-14 05:35:17');
 
 --
--- Chỉ mục cho các bảng đã đổ
+-- Indexes for dumped tables
 --
 
 --
--- Chỉ mục cho bảng `badges`
+-- Indexes for table `badges`
 --
 ALTER TABLE `badges`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `comments`
+-- Indexes for table `comments`
 --
 ALTER TABLE `comments`
   ADD PRIMARY KEY (`id`),
@@ -1563,7 +1580,7 @@ ALTER TABLE `comments`
   ADD KEY `comments_parent_comment_id_foreign` (`parent_comment_id`);
 
 --
--- Chỉ mục cho bảng `destinations`
+-- Indexes for table `destinations`
 --
 ALTER TABLE `destinations`
   ADD PRIMARY KEY (`id`),
@@ -1571,28 +1588,28 @@ ALTER TABLE `destinations`
   ADD KEY `destinations_travel_type_id_foreign` (`travel_type_id`);
 
 --
--- Chỉ mục cho bảng `destination_images`
+-- Indexes for table `destination_images`
 --
 ALTER TABLE `destination_images`
   ADD PRIMARY KEY (`id`),
   ADD KEY `destination_images_destination_id_foreign` (`destination_id`);
 
 --
--- Chỉ mục cho bảng `destination_utilities`
+-- Indexes for table `destination_utilities`
 --
 ALTER TABLE `destination_utilities`
   ADD PRIMARY KEY (`destination_id`,`utility_id`),
   ADD KEY `destination_utilities_utility_id_foreign` (`utility_id`);
 
 --
--- Chỉ mục cho bảng `failed_jobs`
+-- Indexes for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
 
 --
--- Chỉ mục cho bảng `follows`
+-- Indexes for table `follows`
 --
 ALTER TABLE `follows`
   ADD PRIMARY KEY (`id`),
@@ -1600,7 +1617,7 @@ ALTER TABLE `follows`
   ADD KEY `follows_following_id_foreign` (`following_id`);
 
 --
--- Chỉ mục cho bảng `likes`
+-- Indexes for table `likes`
 --
 ALTER TABLE `likes`
   ADD PRIMARY KEY (`id`),
@@ -1609,33 +1626,33 @@ ALTER TABLE `likes`
   ADD KEY `likes_comment_id_foreign` (`comment_id`);
 
 --
--- Chỉ mục cho bảng `migrations`
+-- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `missions`
+-- Indexes for table `missions`
 --
 ALTER TABLE `missions`
   ADD PRIMARY KEY (`id`),
   ADD KEY `missions_badge_id_foreign` (`badge_id`);
 
 --
--- Chỉ mục cho bảng `notifications`
+-- Indexes for table `notifications`
 --
 ALTER TABLE `notifications`
   ADD PRIMARY KEY (`id`),
   ADD KEY `notifications_notifiable_type_notifiable_id_index` (`notifiable_type`,`notifiable_id`);
 
 --
--- Chỉ mục cho bảng `password_reset_tokens`
+-- Indexes for table `password_reset_tokens`
 --
 ALTER TABLE `password_reset_tokens`
   ADD PRIMARY KEY (`email`);
 
 --
--- Chỉ mục cho bảng `personal_access_tokens`
+-- Indexes for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
   ADD PRIMARY KEY (`id`),
@@ -1643,7 +1660,7 @@ ALTER TABLE `personal_access_tokens`
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
 
 --
--- Chỉ mục cho bảng `posts`
+-- Indexes for table `posts`
 --
 ALTER TABLE `posts`
   ADD PRIMARY KEY (`id`),
@@ -1652,7 +1669,7 @@ ALTER TABLE `posts`
   ADD KEY `posts_utility_id_foreign` (`utility_id`);
 
 --
--- Chỉ mục cho bảng `ratings`
+-- Indexes for table `ratings`
 --
 ALTER TABLE `ratings`
   ADD PRIMARY KEY (`id`),
@@ -1660,7 +1677,7 @@ ALTER TABLE `ratings`
   ADD KEY `ratings_post_id_foreign` (`post_id`);
 
 --
--- Chỉ mục cho bảng `reports`
+-- Indexes for table `reports`
 --
 ALTER TABLE `reports`
   ADD PRIMARY KEY (`id`),
@@ -1669,20 +1686,20 @@ ALTER TABLE `reports`
   ADD KEY `reports_comment_id_foreign` (`comment_id`);
 
 --
--- Chỉ mục cho bảng `rewards`
+-- Indexes for table `rewards`
 --
 ALTER TABLE `rewards`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `roles`
+-- Indexes for table `roles`
 --
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `roles_name_unique` (`name`);
 
 --
--- Chỉ mục cho bảng `shares`
+-- Indexes for table `shares`
 --
 ALTER TABLE `shares`
   ADD PRIMARY KEY (`id`),
@@ -1690,33 +1707,33 @@ ALTER TABLE `shares`
   ADD KEY `shares_post_id_foreign` (`post_id`);
 
 --
--- Chỉ mục cho bảng `slides`
+-- Indexes for table `slides`
 --
 ALTER TABLE `slides`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `travel_types`
+-- Indexes for table `travel_types`
 --
 ALTER TABLE `travel_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD KEY `users_role_id_foreign` (`role_id`);
 
 --
--- Chỉ mục cho bảng `user_missions`
+-- Indexes for table `user_missions`
 --
 ALTER TABLE `user_missions`
   ADD PRIMARY KEY (`user_id`,`mission_id`),
   ADD KEY `user_missions_mission_id_foreign` (`mission_id`);
 
 --
--- Chỉ mục cho bảng `user_reward`
+-- Indexes for table `user_reward`
 --
 ALTER TABLE `user_reward`
   ADD PRIMARY KEY (`id`),
@@ -1724,160 +1741,160 @@ ALTER TABLE `user_reward`
   ADD KEY `user_reward_reward_id_foreign` (`reward_id`);
 
 --
--- Chỉ mục cho bảng `utilities`
+-- Indexes for table `utilities`
 --
 ALTER TABLE `utilities`
   ADD PRIMARY KEY (`id`),
   ADD KEY `utilities_utility_type_id_foreign` (`utility_type_id`);
 
 --
--- Chỉ mục cho bảng `utility_types`
+-- Indexes for table `utility_types`
 --
 ALTER TABLE `utility_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT cho các bảng đã đổ
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT cho bảng `badges`
+-- AUTO_INCREMENT for table `badges`
 --
 ALTER TABLE `badges`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
--- AUTO_INCREMENT cho bảng `comments`
+-- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=123;
 
 --
--- AUTO_INCREMENT cho bảng `destinations`
+-- AUTO_INCREMENT for table `destinations`
 --
 ALTER TABLE `destinations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
 
 --
--- AUTO_INCREMENT cho bảng `destination_images`
+-- AUTO_INCREMENT for table `destination_images`
 --
 ALTER TABLE `destination_images`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=425;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=433;
 
 --
--- AUTO_INCREMENT cho bảng `failed_jobs`
+-- AUTO_INCREMENT for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `follows`
+-- AUTO_INCREMENT for table `follows`
 --
 ALTER TABLE `follows`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- AUTO_INCREMENT cho bảng `likes`
+-- AUTO_INCREMENT for table `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
 
 --
--- AUTO_INCREMENT cho bảng `migrations`
+-- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
--- AUTO_INCREMENT cho bảng `missions`
+-- AUTO_INCREMENT for table `missions`
 --
 ALTER TABLE `missions`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
--- AUTO_INCREMENT cho bảng `personal_access_tokens`
+-- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `posts`
+-- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
 
 --
--- AUTO_INCREMENT cho bảng `ratings`
+-- AUTO_INCREMENT for table `ratings`
 --
 ALTER TABLE `ratings`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT cho bảng `reports`
+-- AUTO_INCREMENT for table `reports`
 --
 ALTER TABLE `reports`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
--- AUTO_INCREMENT cho bảng `rewards`
+-- AUTO_INCREMENT for table `rewards`
 --
 ALTER TABLE `rewards`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT cho bảng `roles`
+-- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT cho bảng `shares`
+-- AUTO_INCREMENT for table `shares`
 --
 ALTER TABLE `shares`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- AUTO_INCREMENT cho bảng `slides`
+-- AUTO_INCREMENT for table `slides`
 --
 ALTER TABLE `slides`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT cho bảng `travel_types`
+-- AUTO_INCREMENT for table `travel_types`
 --
 ALTER TABLE `travel_types`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT cho bảng `users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
--- AUTO_INCREMENT cho bảng `user_reward`
+-- AUTO_INCREMENT for table `user_reward`
 --
 ALTER TABLE `user_reward`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT cho bảng `utilities`
+-- AUTO_INCREMENT for table `utilities`
 --
 ALTER TABLE `utilities`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
 
 --
--- AUTO_INCREMENT cho bảng `utility_types`
+-- AUTO_INCREMENT for table `utility_types`
 --
 ALTER TABLE `utility_types`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- Các ràng buộc cho các bảng đã đổ
+-- Constraints for dumped tables
 --
 
 --
--- Các ràng buộc cho bảng `comments`
+-- Constraints for table `comments`
 --
 ALTER TABLE `comments`
   ADD CONSTRAINT `comments_parent_comment_id_foreign` FOREIGN KEY (`parent_comment_id`) REFERENCES `comments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -1885,34 +1902,34 @@ ALTER TABLE `comments`
   ADD CONSTRAINT `comments_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Các ràng buộc cho bảng `destinations`
+-- Constraints for table `destinations`
 --
 ALTER TABLE `destinations`
   ADD CONSTRAINT `destinations_travel_type_id_foreign` FOREIGN KEY (`travel_type_id`) REFERENCES `travel_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `destinations_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Các ràng buộc cho bảng `destination_images`
+-- Constraints for table `destination_images`
 --
 ALTER TABLE `destination_images`
   ADD CONSTRAINT `destination_images_destination_id_foreign` FOREIGN KEY (`destination_id`) REFERENCES `destinations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Các ràng buộc cho bảng `destination_utilities`
+-- Constraints for table `destination_utilities`
 --
 ALTER TABLE `destination_utilities`
   ADD CONSTRAINT `destination_utilities_destination_id_foreign` FOREIGN KEY (`destination_id`) REFERENCES `destinations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `destination_utilities_utility_id_foreign` FOREIGN KEY (`utility_id`) REFERENCES `utilities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Các ràng buộc cho bảng `follows`
+-- Constraints for table `follows`
 --
 ALTER TABLE `follows`
   ADD CONSTRAINT `follows_follower_id_foreign` FOREIGN KEY (`follower_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `follows_following_id_foreign` FOREIGN KEY (`following_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Các ràng buộc cho bảng `likes`
+-- Constraints for table `likes`
 --
 ALTER TABLE `likes`
   ADD CONSTRAINT `likes_comment_id_foreign` FOREIGN KEY (`comment_id`) REFERENCES `comments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -1920,13 +1937,13 @@ ALTER TABLE `likes`
   ADD CONSTRAINT `likes_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Các ràng buộc cho bảng `missions`
+-- Constraints for table `missions`
 --
 ALTER TABLE `missions`
   ADD CONSTRAINT `missions_badge_id_foreign` FOREIGN KEY (`badge_id`) REFERENCES `badges` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Các ràng buộc cho bảng `posts`
+-- Constraints for table `posts`
 --
 ALTER TABLE `posts`
   ADD CONSTRAINT `posts_destination_id_foreign` FOREIGN KEY (`destination_id`) REFERENCES `destinations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -1934,14 +1951,14 @@ ALTER TABLE `posts`
   ADD CONSTRAINT `posts_utility_id_foreign` FOREIGN KEY (`utility_id`) REFERENCES `utilities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Các ràng buộc cho bảng `ratings`
+-- Constraints for table `ratings`
 --
 ALTER TABLE `ratings`
   ADD CONSTRAINT `ratings_post_id_foreign` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `ratings_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Các ràng buộc cho bảng `reports`
+-- Constraints for table `reports`
 --
 ALTER TABLE `reports`
   ADD CONSTRAINT `reports_comment_id_foreign` FOREIGN KEY (`comment_id`) REFERENCES `comments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -1949,34 +1966,34 @@ ALTER TABLE `reports`
   ADD CONSTRAINT `reports_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Các ràng buộc cho bảng `shares`
+-- Constraints for table `shares`
 --
 ALTER TABLE `shares`
   ADD CONSTRAINT `shares_post_id_foreign` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `shares_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Các ràng buộc cho bảng `users`
+-- Constraints for table `users`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `users_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Các ràng buộc cho bảng `user_missions`
+-- Constraints for table `user_missions`
 --
 ALTER TABLE `user_missions`
   ADD CONSTRAINT `user_missions_mission_id_foreign` FOREIGN KEY (`mission_id`) REFERENCES `missions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `user_missions_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Các ràng buộc cho bảng `user_reward`
+-- Constraints for table `user_reward`
 --
 ALTER TABLE `user_reward`
   ADD CONSTRAINT `user_reward_reward_id_foreign` FOREIGN KEY (`reward_id`) REFERENCES `rewards` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `user_reward_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Các ràng buộc cho bảng `utilities`
+-- Constraints for table `utilities`
 --
 ALTER TABLE `utilities`
   ADD CONSTRAINT `utilities_utility_type_id_foreign` FOREIGN KEY (`utility_type_id`) REFERENCES `utility_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;

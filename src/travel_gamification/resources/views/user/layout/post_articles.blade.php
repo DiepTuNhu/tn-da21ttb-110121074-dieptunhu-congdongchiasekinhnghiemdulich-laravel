@@ -93,7 +93,7 @@
     @if($postType === 'utility')
         {{-- FORM ĐĂNG BÀI TIỆN ÍCH --}}
         <section class="submit-section" id="submit-section-utility">
-            <h2>🧰 Đăng bài tiện ích</h2>
+            <h2>Đăng bài tiện ích</h2>
             <form class="submit-form" method="POST" action="{{ route('post_articles.store') }}">
                 @csrf
                 <input type="hidden" name="post_type" value="utility">
@@ -107,7 +107,7 @@
                 </div>
                 <div class="form-group">
                     <label for="utility" class="form-label">Chọn tiện ích</label>
-                    <select id="utility" name="utility_id" class="form-control" required>
+                    <select id="utility" name="utility_id" class="form-control" required disabled>
                         <option value="">Chọn tiện ích</option>
                         @foreach($utilities as $utility)
                             <option value="{{ $utility->id }}" {{ isset($selectedUtility) && $selectedUtility == $utility->id ? 'selected' : '' }}>
@@ -151,7 +151,7 @@
     @else
         {{-- FORM ĐĂNG BÀI ĐỊA ĐIỂM DU LỊCH --}}
         <section class="submit-section" id="submit-section-destination">
-            <h2>📝 Đăng bài chia sẻ của bạn</h2>
+            <h2>Đăng bài chia sẻ của bạn</h2>
             <form class="submit-form" method="POST" action="{{ route('post_articles.store') }}">
                 @csrf
                 <input type="hidden" name="post_type" value="destination">
@@ -167,7 +167,7 @@
 
                 <div class="form-group">
                     <label for="location" class="form-label">Địa điểm</label>
-                    <select id="location" name="location" class="form-control" required>
+                    <select id="location" name="location" class="form-control" required disabled>
                         <option value="">Chọn địa điểm</option>
                         @foreach($destinations as $destination)
                             <option value="{{ $destination->id }}"
@@ -194,10 +194,21 @@
                     uploadUrl: '{{ route('ckeditor.upload') }}?_token={{ csrf_token() }}'
                 },
                 toolbar: [
-                    'heading', '|', 'bold', 'italic', 'link',
-                    'bulletedList', 'numberedList', 'blockQuote', '|',
-                    'insertTable', 'uploadImage', 'undo', 'redo'
-                ]
+                    'heading', '|', 'bold', 'italic', 'underline', 'strikethrough', 'link', '|',
+                    'alignment', '|', 'bulletedList', 'numberedList', '|', 'indent', 'outdent', '|',
+                    'imageUpload', 'blockQuote', 'insertTable', '|', 'mediaEmbed', 'undo', 'redo', '|',
+                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', '|', 'highlight'
+                ],
+                image: {
+                    toolbar: [
+                        'imageTextAlternative', 'imageStyle:full', 'imageStyle:side'
+                    ]
+                },
+                table: {
+                    contentToolbar: [
+                        'tableColumn', 'tableRow', 'mergeTableCells'
+                    ]
+                }
             })
             .catch(error => {
                 console.error('CKEditor error:', error);

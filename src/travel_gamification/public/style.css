@@ -1617,7 +1617,82 @@ img.thumb {
         font-size: 13px;
     }
 }
+/* Responsive cho trang bảng xếp hạng */
+@media (max-width: 768px) {
+    .ranking-header {
+        padding: 40px 20px;
+    }
 
+    .ranking-header h1 {
+        font-size: 24px;
+    }
+
+    .ranking-header p {
+        font-size: 14px;
+    }
+
+    .ranking-section {
+        padding: 0 10px;
+    }
+
+    .ranking-table th,
+    .ranking-table td {
+        font-size: 12px;
+        padding: 10px;
+    }
+
+    .ranking-avatar {
+        width: 28px;
+        height: 28px;
+    }
+
+    .ranking-thumb {
+        width: 40px;
+        height: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .ranking-header {
+        padding: 30px 15px;
+    }
+
+    .ranking-header h1 {
+        font-size: 20px;
+    }
+
+    .ranking-header p {
+        font-size: 12px;
+    }
+
+    .ranking-section {
+        padding: 0 5px;
+    }
+
+    .ranking-table {
+        font-size: 11px;
+    }
+
+    .ranking-table th,
+    .ranking-table td {
+        font-size: 10px;
+        padding: 8px;
+    }
+
+    .ranking-avatar {
+        width: 24px;
+        height: 24px;
+    }
+
+    .ranking-thumb {
+        width: 36px;
+        height: 28px;
+    }
+
+    .ranking-subtitle {
+        font-size: 18px;
+    }
+}
 /* HO SO========================================================================================================= */
 .profile-container {
     max-width: 1000px;
@@ -2810,7 +2885,121 @@ textarea {
     border: 1px solid #ddd;
     padding: 8px;
 }
+/* Responsive cho trang chi tiết bài viết */
+@media (max-width: 768px) {
+    .container-dtp {
+        padding: 15px;
+    }
 
+    .main h1 {
+        font-size: 20px;
+    }
+
+    .meta.user-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .author-avatar {
+        width: 50px;
+        height: 50px;
+    }
+
+    .user-info {
+        margin-left: 0;
+    }
+
+    .post-content {
+        font-size: 14px;
+    }
+
+    .comment-section h3 {
+        font-size: 18px;
+    }
+
+    .comment {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .comment img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .comment-body {
+        font-size: 14px;
+    }
+
+    .comment-actions {
+        font-size: 12px;
+    }
+
+    .related-box {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container-dtp {
+        padding: 10px;
+    }
+
+    .main h1 {
+        font-size: 18px;
+    }
+
+    .meta.user-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .author-avatar {
+        width: 40px;
+        height: 40px;
+    }
+
+    .post-content {
+        font-size: 12px;
+    }
+
+    .comment-section h3 {
+        font-size: 16px;
+    }
+
+    .comment img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .comment-body {
+        font-size: 12px;
+    }
+
+    .comment-actions {
+        font-size: 10px;
+    }
+
+    .related-box {
+        font-size: 12px;
+    }
+
+    .post-actions button {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+
+    .post-rating-input .rating-stars-input i {
+        font-size: 16px;
+    }
+
+    .avg-rating-box {
+        font-size: 12px;
+    }
+}
 /* NGUOI DUNG THEO DOI============================================================= */
 .profile-info-follow img {
     width: 90px;
@@ -3886,3 +4075,153 @@ textarea {
     }
 }
 
+/* Responsive cho trang đăng bài */
+@media (max-width: 768px) {
+    .container-post-share {
+        max-width: 100%;
+        padding: 20px;
+    }
+
+    .form-group label {
+        font-size: 14px;
+    }
+
+    .form-group select {
+        font-size: 14px;
+    }
+
+    .destination-card {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .destination-card img {
+        width: 100%;
+        height: auto;
+    }
+
+    .destination-card .card-title {
+        font-size: 16px;
+    }
+
+    .pagination-nav {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container-post-share {
+        padding: 15px;
+    }
+
+    .form-group label {
+        font-size: 12px;
+    }
+
+    .form-group select {
+        font-size: 12px;
+    }
+
+    .destination-card {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .destination-card img {
+        width: 100%;
+        height: auto;
+    }
+
+    .destination-card .card-title {
+        font-size: 14px;
+    }
+
+    .pagination-nav {
+        font-size: 10px;
+    }
+}
+/* Responsive cho trang đăng bài */
+@media (max-width: 768px) {
+    .container-post-share {
+        max-width: 100%;
+        padding: 20px;
+    }
+
+    .form-group label {
+        font-size: 14px;
+    }
+
+    .form-group select {
+        font-size: 14px;
+    }
+
+    .destination-card {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .destination-card img {
+        width: 100%;
+        height: auto;
+    }
+
+    .destination-card .card-title {
+        font-size: 16px;
+    }
+
+    .pagination-nav {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container-post-share {
+        padding: 10px; /* Giảm padding để phù hợp với màn hình nhỏ */
+    }
+
+    .form-group {
+        width: 100%; /* Đảm bảo các ô chiếm toàn bộ chiều rộng */
+        margin-bottom: 15px; /* Tăng khoảng cách giữa các ô */
+    }
+
+    .form-group label {
+        font-size: 12px; /* Giảm kích thước chữ */
+    }
+
+    .form-group select {
+        font-size: 12px; /* Giảm kích thước chữ */
+        padding: 8px; /* Giảm padding bên trong dropdown */
+    }
+
+    .select-row {
+        flex-direction: column; /* Xếp các ô theo chiều dọc */
+        gap: 10px; /* Tăng khoảng cách giữa các ô */
+    }
+
+    .destination-card {
+        width: 100%; /* Đảm bảo thẻ địa điểm chiếm toàn bộ chiều rộng */
+        margin-bottom: 10px; /* Tăng khoảng cách giữa các thẻ */
+    }
+
+    .destination-card img {
+        width: 100%; /* Đảm bảo hình ảnh chiếm toàn bộ chiều rộng thẻ */
+        height: auto; /* Tự động điều chỉnh chiều cao */
+    }
+
+    .destination-card .card-title {
+        font-size: 14px; /* Giảm kích thước chữ tiêu đề */
+    }
+
+    .pagination-nav {
+        font-size: 10px; /* Giảm kích thước chữ trong phân trang */
+    }
+
+    #utilityOptionsRow {
+        flex-direction: column; /* Xếp các tiện ích theo chiều dọc */
+        gap: 8px; /* Tăng khoảng cách giữa các tiện ích */
+    }
+
+    #utilityTypeSelect {
+        width: 100%; /* Đảm bảo dropdown tiện ích chiếm toàn bộ chiều rộng */
+    }
+}
