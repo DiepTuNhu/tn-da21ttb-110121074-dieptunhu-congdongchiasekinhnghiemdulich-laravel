@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Reward;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class RewardRedeemController extends Controller
 {
@@ -70,7 +71,28 @@ class RewardRedeemController extends Controller
             return back()->with('success', 'Đổi thưởng thành công!');
         } catch (\Exception $e) {
             DB::rollBack();
+            Log::error('Error during reward redemption: ' . $e->getMessage());
             return back()->with('error', 'Có lỗi xảy ra, vui lòng thử lại.');
         }
+    }
+
+    public function confirmReceived($pivotId)
+    {
+        Log::info('Pivot ID: ' . $pivotId);
+
+        $reward = Auth::user()->rewards()->wherePivot('id', $pivotId)->first();
+
+        if (!$reward || !$reward->pivot->delivered) {
+            Log::error('Phần thưởng không tồn tại hoặc chưa được giao.');
+            return response()->json(['error' => 'Phần thưởng chưa được giao hoặc không tồn tại.'], 400);
+        }
+
+        Log::info('Reward found: ' . json_encode($reward->pivot));
+
+        $reward->pivot->user_confirmed = true;
+        $reward->pivot->save();
+
+        Log::info('Xác nhận thành công.');
+        return response()->json(['success' => true]);
     }
 }

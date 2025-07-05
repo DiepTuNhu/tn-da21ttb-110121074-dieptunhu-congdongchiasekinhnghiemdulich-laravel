@@ -111,8 +111,8 @@ Route::get('/user/destination/create', [CreateDestinationController::class, 'cre
 Route::middleware('auth')->group(function () {
     Route::get('/rewards', [RewardRedeemController::class, 'index'])->name('user.rewards');
     Route::post('/rewards/redeem/{id}', [RewardRedeemController::class, 'redeem'])->name('user.redeem_reward');
+    Route::post('/rewards/confirm-received/{pivotId}', [RewardRedeemController::class, 'confirmReceived'])->name('rewards.confirmReceived');
 });
-
 Route::get('/utility/create', [CreateUtilityController::class, 'create'])->name('user.utility.create');
 Route::post('/utility/store', [CreateUtilityController::class, 'store'])->name('user.utility.store');
 Route::get('/utility/{id}', [PageController::class, 'getDetailUtility'])->name('utility.detail');

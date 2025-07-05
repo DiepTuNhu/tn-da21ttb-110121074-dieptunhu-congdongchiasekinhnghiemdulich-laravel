@@ -91,28 +91,30 @@ class User extends Authenticatable
     public function rewards()
     {
         return $this->belongsToMany(Reward::class, 'user_reward')
-            ->withPivot(['redeemed_at', 'delivered'])
+            ->withPivot(['id', 'redeemed_at', 'delivered', 'user_confirmed', 'receiver_name', 'receiver_phone', 'receiver_address', 'shipping_note'])
             ->withTimestamps();
     }
     public function badges()
-{
-    return $this->belongsToMany(\App\Models\Badge::class, 'user_badges', 'user_id', 'badge_id');
-}
-public function earnedBadges()
-{
-    return \App\Models\Badge::whereIn('id', function($q) {
-        $q->select('badge_id')
-          ->from('missions')
-          ->whereIn('id', function($q2) {
-              $q2->select('mission_id')
-                 ->from('user_missions')
-                 ->where('user_id', $this->id)
-                 ->where('claimed', 1);
-          });
-    })->get();
-}
-public function mainBadge()
-{
-    return $this->belongsTo(\App\Models\Badge::class, 'main_badge_id');
-}
+    {
+        return $this->belongsToMany(\App\Models\Badge::class, 'user_badges', 'user_id', 'badge_id');
+    }
+
+    public function earnedBadges()
+    {
+        return \App\Models\Badge::whereIn('id', function($q) {
+            $q->select('badge_id')
+            ->from('missions')
+            ->whereIn('id', function($q2) {
+                $q2->select('mission_id')
+                    ->from('user_missions')
+                    ->where('user_id', $this->id)
+                    ->where('claimed', 1);
+            });
+        })->get();
+    }
+    
+    public function mainBadge()
+    {
+        return $this->belongsTo(\App\Models\Badge::class, 'main_badge_id');
+    }
 }

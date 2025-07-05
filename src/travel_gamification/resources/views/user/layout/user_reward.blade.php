@@ -113,6 +113,73 @@
     }
     .text-success { color: #27ae60 !important; }
     .text-warning { color: #e67e22 !important; }
+    .text-pending {
+        color: #f39c12 !important; /* Màu vàng cho trạng thái chưa xác nhận */
+    }
+
+    .text-confirmed {
+        color: #27ae60 !important; /* Màu xanh cho trạng thái đã xác nhận */
+    }
+
+    .btn-confirm {
+        background: #f39c12; /* Màu vàng cho nút chưa xác nhận */
+        border: none;
+        color: #fff;
+        font-weight: 600;
+        padding: 6px 12px;
+        border-radius: 6px;
+        transition: background 0.2s;
+    }
+
+    .btn-confirm:hover {
+        background: #e67e22; /* Màu cam khi hover */
+    }
+
+    .btn-confirm.disabled {
+        background: #ccc; /* Màu xám khi không khả dụng */
+        color: #fff;
+        cursor: not-allowed;
+    }
+
+    @media (max-width: 768px) {
+    .table-reward-history {
+        width: 100%;
+        font-size: 0.9rem; /* Giảm kích thước chữ */
+    }
+
+    .table-reward-history th, .table-reward-history td {
+        padding: 8px; /* Giảm khoảng cách giữa các ô */
+        text-align: left; /* Căn trái nội dung */
+    }
+
+    .table-reward-history th {
+        font-size: 0.95rem; /* Giảm kích thước chữ tiêu đề */
+    }
+
+    .table-reward-history td {
+        font-size: 0.85rem; /* Giảm kích thước chữ nội dung */
+    }
+}
+
+@media (max-width: 480px) {
+    .table-reward-history {
+        display: block; /* Hiển thị dạng khối */
+        overflow-x: auto; /* Thêm thanh cuộn ngang nếu cần */
+        font-size: 0.85rem; /* Giảm kích thước chữ hơn nữa */
+    }
+
+    .table-reward-history th, .table-reward-history td {
+        padding: 6px; /* Giảm khoảng cách giữa các ô */
+    }
+
+    .table-reward-history th {
+        font-size: 0.9rem; /* Giảm kích thước chữ tiêu đề */
+    }
+
+    .table-reward-history td {
+        font-size: 0.8rem; /* Giảm kích thước chữ nội dung */
+    }
+}
 </style>
 <div class="reward-section">
     <h3>🎁 Đổi thưởng bằng điểm</h3>
@@ -166,7 +233,14 @@
                 <td>{{ $item->pivot->redeemed_at }}</td>
                 <td>
                     @if($item->pivot->delivered)
-                        <span class="text-success">Đã nhận</span>
+                        @if($item->pivot->user_confirmed)
+                            <span class="text-confirmed">Đã nhận</span>
+                        @else
+                            {{-- <span class="text-pending">Chưa xác nhận</span> --}}
+                            <button type="button" class="btn btn-confirm btn-sm" onclick="confirmReceived({{ $item->pivot->id }})">
+                                Xác nhận đã nhận
+                            </button>
+                        @endif
                     @else
                         <span class="text-warning">Chờ xử lý</span>
                     @endif
@@ -218,6 +292,30 @@ function showRedeemModal(rewardId, rewardName) {
 }
 function closeRedeemModal() {
     document.getElementById('redeemModal').style.display = 'none';
+}
+function confirmReceived(pivotId) {
+    if (confirm('Bạn có chắc chắn muốn xác nhận đã nhận phần thưởng này không?')) {
+        fetch(`/rewards/confirm-received/${pivotId}`, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert('Xác nhận thành công!');
+                location.reload(); // Tải lại trang để cập nhật trạng thái
+            } else if (data.error) {
+                alert(data.error); // Hiển thị lỗi từ server
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Có lỗi xảy ra, vui lòng thử lại.');
+        });
+    }
 }
 </script>
 @push('scripts')

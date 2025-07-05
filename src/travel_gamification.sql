@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 02, 2025 at 12:50 AM
+-- Generation Time: Jul 05, 2025 at 03:19 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -909,7 +909,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (68, '2025_06_02_103031_create_user_reward_table', 22),
 (69, '2025_06_03_184943_add_remember_token_to_users_table', 23),
 (70, '2025_06_09_101921_add_main_badge_id_to_users_table', 24),
-(71, '2025_06_10_191756_add_comment_id_to_reports_table', 25);
+(71, '2025_06_10_191756_add_comment_id_to_reports_table', 25),
+(72, '2025_07_05_084141_add_user_confirmed_to_user_reward_table', 26);
 
 -- --------------------------------------------------------
 
@@ -1369,7 +1370,7 @@ INSERT INTO `users` (`id`, `main_badge_id`, `username`, `email`, `password`, `re
 (3, 10, 'nhudiep', 'nhudiep@gmail.com', '$2y$12$GPBPXeegDXzrf7EIF.OIFOfOW3Were21o6I2zkVY8Ts6XElJotAx6', NULL, '1751161434-avatar-anh-meo-cute-58.jpg', NULL, 0, 212, 112, '0', 3, '2025-05-04 01:41:29', '2025-06-29 02:36:04'),
 (4, NULL, 'admin', 'admin@gmail.com', '$2y$12$MyKYKCyx9ZJ8tnj4NNQzW.fnCoX1xneuUPPjlob9VN5afgtpkXaCa', NULL, '1746716717.jpg', NULL, 0, 0, 0, '0', 2, '2025-05-04 01:42:35', '2025-05-08 15:05:17'),
 (13, 9, 'NhuDiep', 'nhinhi@gmail.com', '$2y$12$5YXurp1ympMG/uXy8pQNK.GWO2uOX6ELYg0CwQCnXPWa2AuWaFuve', NULL, NULL, NULL, 0, 5, 5, '0', 3, '2025-05-19 16:17:52', '2025-06-15 10:19:12'),
-(22, 11, 'linh nguyễn', 'nguyenlinh200409@gmail.com', '$2y$12$Ubfn5RzC0b8Zn6KejQcoTeibvwX.Y5jIMFe/tR5J4Q10nV8gP9F2y', 'tys28dX5RiPbCK9wQQgU3lqczZrURGt3WWhHTeQxo6oJTzn8ftbyiEEIH6lz', 'https://lh3.googleusercontent.com/a/ACg8ocLurUr84nggrd5E_I6-3UBvRJwAH_-awCMB4dd3YBRQA97GyTU=s96-c', NULL, 0, 87, 87, '0', 3, '2025-05-21 13:32:38', '2025-06-15 05:18:34'),
+(22, 11, 'linh nguyễn', 'nguyenlinh200409@gmail.com', '$2y$12$Ubfn5RzC0b8Zn6KejQcoTeibvwX.Y5jIMFe/tR5J4Q10nV8gP9F2y', 'iL9O2fqDjNCyzoZPT4SRZnnfE45LSPfTQTHNU9l8dYl2ivFScvih08K8GrqV', 'https://lh3.googleusercontent.com/a/ACg8ocLurUr84nggrd5E_I6-3UBvRJwAH_-awCMB4dd3YBRQA97GyTU=s96-c', NULL, 0, 87, 87, '0', 3, '2025-05-21 13:32:38', '2025-06-15 05:18:34'),
 (24, NULL, 'Tú Nga', 'dieptunga25@gmail.com', '$2y$12$xwOUF1F3ok59sK8NwnWgT.3LU4Agk4UU0hmi2vAONpwoVj2b4AyrG', NULL, NULL, NULL, 0, 30, 30, '0', 3, '2025-06-08 08:04:29', '2025-06-08 08:59:07'),
 (25, NULL, 'Như Diệp', 'dieptunhu2003@gmail.com', '$2y$12$osb.58d2RkT07mdWTJMfbORxwZp7bl0fW6sqkL1GRA10MuNtYSU8W', NULL, 'https://lh3.googleusercontent.com/a/ACg8ocJohG4YerNT9DxW5GTiAK8Z8ZbuzRFTx9BTF6vMN8Ym5pLdoVCK=s96-c', NULL, 0, 0, 0, '0', 3, '2025-06-09 02:24:44', '2025-06-09 02:24:44'),
 (26, NULL, 'ngocdanthanhdt', 'ngocdanthanhdt@tvu.edu.vn', '$2y$12$vRplQIVF9WOP8sIEaNX6x.fOU0qgQSPiV6PGBlsAZ/XDwsbpdPIfG', NULL, NULL, NULL, 0, 22, 22, '0', 3, '2025-06-11 06:30:35', '2025-06-11 07:53:42'),
@@ -1420,6 +1421,7 @@ CREATE TABLE `user_reward` (
   `reward_id` int UNSIGNED NOT NULL,
   `redeemed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `delivered` tinyint(1) NOT NULL DEFAULT '0',
+  `user_confirmed` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `receiver_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -1432,13 +1434,13 @@ CREATE TABLE `user_reward` (
 -- Dumping data for table `user_reward`
 --
 
-INSERT INTO `user_reward` (`id`, `user_id`, `reward_id`, `redeemed_at`, `delivered`, `created_at`, `updated_at`, `receiver_name`, `receiver_phone`, `receiver_address`, `shipping_note`) VALUES
-(1, 3, 1, '2025-06-02 09:43:31', 0, '2025-06-02 09:43:31', '2025-06-02 09:43:31', NULL, NULL, NULL, NULL),
-(2, 3, 1, '2025-06-02 10:46:49', 0, '2025-06-02 10:46:49', '2025-06-02 10:46:49', NULL, NULL, NULL, NULL),
-(3, 3, 1, '2025-06-02 10:48:05', 0, '2025-06-02 10:48:05', '2025-06-02 10:48:05', NULL, NULL, NULL, NULL),
-(4, 3, 3, '2025-06-02 11:45:14', 0, '2025-06-02 11:45:14', '2025-06-02 11:45:14', 'Diệp Tú Như', '0345154491', 'Ấp Ô Đùng, xã Hiếu Tử, huyện Tiểu Cần, tỉnh Trà Vinh', NULL),
-(5, 3, 3, '2025-06-02 11:45:15', 1, '2025-06-02 11:45:15', '2025-06-02 11:45:15', 'Diệp Tú Như', '0345154491', 'Ấp Ô Đùng, xã Hiếu Tử, huyện Tiểu Cần, tỉnh Trà Vinh', NULL),
-(6, 3, 3, '2025-06-02 11:45:16', 1, '2025-06-02 11:45:16', '2025-06-02 11:45:16', 'Diệp Tú Như', '0345154491', 'Ấp Ô Đùng, xã Hiếu Tử, huyện Tiểu Cần, tỉnh Trà Vinh', NULL);
+INSERT INTO `user_reward` (`id`, `user_id`, `reward_id`, `redeemed_at`, `delivered`, `user_confirmed`, `created_at`, `updated_at`, `receiver_name`, `receiver_phone`, `receiver_address`, `shipping_note`) VALUES
+(1, 3, 1, '2025-06-02 09:43:31', 0, 0, '2025-06-02 09:43:31', '2025-06-02 09:43:31', NULL, NULL, NULL, NULL),
+(2, 3, 1, '2025-06-02 10:46:49', 0, 0, '2025-06-02 10:46:49', '2025-06-02 10:46:49', NULL, NULL, NULL, NULL),
+(3, 3, 1, '2025-06-02 10:48:05', 0, 0, '2025-06-02 10:48:05', '2025-06-02 10:48:05', NULL, NULL, NULL, NULL),
+(4, 3, 3, '2025-06-02 11:45:14', 0, 0, '2025-06-02 11:45:14', '2025-06-02 11:45:14', 'Diệp Tú Như', '0345154491', 'Ấp Ô Đùng, xã Hiếu Tử, huyện Tiểu Cần, tỉnh Trà Vinh', NULL),
+(5, 3, 3, '2025-06-02 11:45:15', 1, 1, '2025-06-02 11:45:15', '2025-07-05 02:07:42', 'Diệp Tú Như', '0345154491', 'Ấp Ô Đùng, xã Hiếu Tử, huyện Tiểu Cần, tỉnh Trà Vinh', NULL),
+(6, 3, 3, '2025-06-02 11:45:16', 1, 1, '2025-06-02 11:45:16', '2025-07-05 02:04:30', 'Diệp Tú Như', '0345154491', 'Ấp Ô Đùng, xã Hiếu Tử, huyện Tiểu Cần, tỉnh Trà Vinh', NULL);
 
 -- --------------------------------------------------------
 
@@ -1803,7 +1805,7 @@ ALTER TABLE `likes`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT for table `missions`
