@@ -83,22 +83,22 @@
         color: #e67e22;
         font-size: 1.1rem;
     }
-.table-reward-history {
-    width: 100%;
-    min-width: 700px;
-    max-width: 100%;
-    margin: 0 auto;
-    background: #fff;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 1px 6px rgba(0,0,0,0.04);
-}
-@media (max-width: 900px) {
     .table-reward-history {
-        min-width: 500px;
-        font-size: 0.95rem;
+        width: 100%;
+        min-width: 700px;
+        max-width: 100%;
+        margin: 0 auto;
+        background: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 1px 6px rgba(0,0,0,0.04);
     }
-}
+    @media (max-width: 900px) {
+        .table-reward-history {
+            min-width: 500px;
+            font-size: 0.95rem;
+        }
+    }
     .table-reward-history th, .table-reward-history td {
         vertical-align: middle !important;
         text-align: center;
