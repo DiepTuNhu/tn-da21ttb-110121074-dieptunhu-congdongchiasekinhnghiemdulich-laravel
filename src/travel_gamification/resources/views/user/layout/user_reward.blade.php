@@ -160,7 +160,35 @@
         font-size: 0.85rem; /* Giảm kích thước chữ nội dung */
     }
 }
+.btn-secondary {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: background-color 0.3s, color 0.3s;
+}
 
+.btn-secondary:hover {
+    background-color: #e0e0e0;
+    color: #000;
+}
+
+.btn-success {
+    background: linear-gradient(90deg, #27ae60 60%, #2ecc71 100%);
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+.btn-success:hover {
+    background: linear-gradient(90deg, #2ecc71 60%, #27ae60 100%);
+    box-shadow: 0 2px 8px rgba(39, 174, 96, 0.5);
+}
 @media (max-width: 480px) {
     .table-reward-history {
         display: block; /* Hiển thị dạng khối */
@@ -181,6 +209,27 @@
     }
 }
 </style>
+    @if(session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi!',
+                text: '{{ session('error') }}',
+                confirmButtonText: 'Đóng'
+            });
+        </script>
+    @endif
+
+    @if(session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Thành công!',
+                text: '{{ session('success') }}',
+                confirmButtonText: 'Đóng'
+            });
+        </script>
+    @endif
 <div class="reward-section">
     <h3>🎁 Đổi thưởng bằng điểm</h3>
     <div class="current-point">

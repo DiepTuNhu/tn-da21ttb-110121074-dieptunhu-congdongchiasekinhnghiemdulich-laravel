@@ -28,6 +28,20 @@ class CreateUtilityController extends Controller
 
     public function store(Request $request)
     {
+        $dailyLimit = 1; // Giới hạn số tiện ích mỗi ngày
+        $userId = Auth::id();
+
+        // Kiểm tra số tiện ích đã tạo trong ngày
+        $createdToday = Utility::whereHas('destinations', function ($query) {
+                $query->where('user_id', Auth::id());
+            })
+            ->whereDate('created_at', now()->toDateString())
+            ->count();
+
+        if ($createdToday >= $dailyLimit) {
+            return redirect()->back()->with('error', 'Bạn chỉ được tạo tối đa ' . $dailyLimit . ' tiện ích mỗi ngày.');
+        }
+
         $request->validate([
             'name' => 'required|string|max:100',
             'address' => 'required|string',

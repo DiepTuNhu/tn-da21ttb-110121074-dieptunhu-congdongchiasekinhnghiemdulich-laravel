@@ -114,6 +114,18 @@ public function share(Request $request, Post $post)
     
     public function store(Request $request)
     {
+        $dailyLimit = 5; // Giới hạn số bài viết mỗi ngày
+        $userId = Auth::id();
+
+        // Kiểm tra số bài viết đã đăng trong ngày
+        $postsToday = Post::where('user_id', $userId)
+            ->whereDate('created_at', now()->toDateString())
+            ->count();
+
+        if ($postsToday >= $dailyLimit) {
+            return redirect()->back()->with('error', 'Bạn chỉ được đăng tối đa ' . $dailyLimit . ' bài viết mỗi ngày.');
+        }
+
         $postType = $request->input('post_type', 'destination');
 
         if ($postType === 'utility') {
@@ -127,7 +139,6 @@ public function share(Request $request, Post $post)
                 'phone'         => 'nullable|string|max:20',
             ]);
 
-            // Lấy tiện ích để lấy địa chỉ
             $utility = \App\Models\Utility::find($validatedData['utility_id']);
 
             $post = new Post();
@@ -140,7 +151,7 @@ public function share(Request $request, Post $post)
             $post->opening_hours = $validatedData['opening_hours'] ?? null;
             $post->phone         = $validatedData['phone'] ?? null;
             $post->post_type     = 'utility';
-            $post->address       = $utility ? $utility->address : null; // <-- Lưu địa chỉ tiện ích
+            $post->address       = $utility ? $utility->address : null;
             $post->save();
 
         } else {

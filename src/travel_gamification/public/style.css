@@ -569,6 +569,8 @@ html {
     text-overflow: ellipsis;
     line-height: 1.5; /* Đảm bảo khoảng cách giữa các dòng */
     height: calc(1.5em * 2); /* Chiều cao đúng 2 dòng */
+        text-align: left;
+
 }
 .info-divider {
     border: none;

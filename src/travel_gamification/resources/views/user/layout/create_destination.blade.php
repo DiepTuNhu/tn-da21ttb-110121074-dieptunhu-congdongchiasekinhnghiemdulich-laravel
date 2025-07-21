@@ -1,7 +1,27 @@
 @extends('user.master')
 @section('content')
 {{-- <link rel="stylesheet" href="{{ asset('style.css') }}"> --}}
+    @if(session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi!',
+                text: '{{ session('error') }}',
+                confirmButtonText: 'Đóng'
+            });
+        </script>
+    @endif
 
+    @if(session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Thành công!',
+                text: '{{ session('success') }}',
+                confirmButtonText: 'Đóng'
+            });
+        </script>
+    @endif
 <div style="padding-top: 75px">
     @if(isset($stepsType) && $stepsType === 'utility')
         {{-- 3 bước: Tạo địa điểm -> Tạo tiện ích -> Đăng bài --}}

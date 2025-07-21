@@ -9,6 +9,27 @@
         </ul>
     </div>
 @endif
+    @if(session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi!',
+                text: '{{ session('error') }}',
+                confirmButtonText: 'Đóng'
+            });
+        </script>
+    @endif
+
+    @if(session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Thành công!',
+                text: '{{ session('success') }}',
+                confirmButtonText: 'Đóng'
+            });
+        </script>
+    @endif
 <div style="padding-top: 75px">
 @if(isset($stepsType) && $stepsType === 'utility')
     {{-- 3 bước: Tạo địa điểm -> Tạo tiện ích -> Đăng bài --}}
@@ -102,9 +123,9 @@
 @if(session('success'))
     <div class="alert alert-success">{{ session('success') }}</div>
 @endif
-@if(session('error'))
+{{-- @if(session('error'))
     <div class="alert alert-danger">{{ session('error') }}</div>
-@endif
+@endif --}}
 <div class="submit-section" style="max-width: 700px; margin-top: 100px;">
     <h2>Thêm tiện ích mới</h2>
     <form action="{{ route('user.utility.store') }}" method="POST" enctype="multipart/form-data">

@@ -44,6 +44,24 @@ class RewardRedeemController extends Controller
             ]);
         }
 
+        $dailyLimit = 3; // Giới hạn số lần đổi thưởng mỗi ngày
+        $redeemedToday = DB::table('user_reward')
+            ->where('user_id', $user->id)
+            ->whereDate('redeemed_at', now()->toDateString())
+            ->count();
+
+        if ($redeemedToday >= $dailyLimit) {
+            return back()->with('error', 'Bạn chỉ được đổi tối đa ' . $dailyLimit . ' phần thưởng mỗi ngày.');
+        }
+
+        // $currentTime = now();
+        // $startTime = now()->setTime(9, 0); // 9:00 sáng
+        // $endTime = now()->setTime(18, 0); // 6:00 chiều
+
+        // if ($currentTime->lt($startTime) || $currentTime->gt($endTime)) {
+        //     return back()->with('error', 'Bạn chỉ được đổi thưởng từ 9h sáng đến 6h chiều.');
+        // }
+
         DB::beginTransaction();
         try {
             // Trừ điểm

@@ -28,10 +28,22 @@ class CreateDestinationController extends Controller
 
     public function store(Request $request)
     {
+        $dailyLimit = 5; // Giới hạn số địa điểm mỗi ngày
+        $userId = Auth::id();
+
+        // Kiểm tra số địa điểm đã tạo trong ngày
+        $createdToday = Destination::where('user_id', $userId)
+            ->whereDate('created_at', now()->toDateString())
+            ->count();
+
+        if ($createdToday >= $dailyLimit) {
+            return redirect()->back()->with('error', 'Bạn chỉ được tạo tối đa ' . $dailyLimit . ' địa điểm mỗi ngày.');
+        }
+
         DB::beginTransaction();
         try {
             // Tạo địa điểm mới
-            $destination = new \App\Models\Destination();
+            $destination = new Destination();
             $destination->name = $request->name;
             $destination->address = $request->address;
             $destination->highlights = $request->highlights;
@@ -54,7 +66,7 @@ class CreateDestinationController extends Controller
                 }
             }
 
-            // Gửi thông báo cho admin khi có địa điểm mới (chỉ khi user không phải quản trị)
+            // Gửi thông báo cho admin khi có địa điểm mới
             $userRole = mb_strtolower(Auth::user()->role->name ?? '');
             if ($userRole !== 'quản trị') {
                 $admins = User::whereHas('role', function($q) {

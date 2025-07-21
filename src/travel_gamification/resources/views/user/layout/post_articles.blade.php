@@ -1,5 +1,27 @@
 @extends('user.master')
 @section('content')
+
+    @if(session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi!',
+                text: '{{ session('error') }}',
+                confirmButtonText: 'Đóng'
+            });
+        </script>
+    @endif
+
+    @if(session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Thành công!',
+                text: '{{ session('success') }}',
+                confirmButtonText: 'Đóng'
+            });
+        </script>
+    @endif
 <div style="padding-top: 75px">
     @if(isset($stepsType) && $stepsType === 'utility')
         {{-- 3 bước: Tạo địa điểm -> Tạo tiện ích -> Đăng bài --}}
@@ -107,7 +129,7 @@
                 </div>
                 <div class="form-group">
                     <label for="utility" class="form-label">Chọn tiện ích</label>
-                    <select id="utility" name="utility_id" class="form-control" required disabled>
+                    <select id="utility" name="utility_id" class="form-control" required>
                         <option value="">Chọn tiện ích</option>
                         @foreach($utilities as $utility)
                             <option value="{{ $utility->id }}" {{ isset($selectedUtility) && $selectedUtility == $utility->id ? 'selected' : '' }}>
@@ -167,7 +189,7 @@
 
                 <div class="form-group">
                     <label for="location" class="form-label">Địa điểm</label>
-                    <select id="location" name="location" class="form-control" required disabled>
+                    <select id="location" name="location" class="form-control" required>
                         <option value="">Chọn địa điểm</option>
                         @foreach($destinations as $destination)
                             <option value="{{ $destination->id }}"
@@ -224,5 +246,6 @@
             });
         </script>
     @endif
+
 </div>
 @endsection

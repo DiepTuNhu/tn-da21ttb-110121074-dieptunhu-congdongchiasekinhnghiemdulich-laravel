@@ -19,24 +19,22 @@
                     <th>ID</th>
                     <th>Tên đăng nhập</th>
                     <th>Email</th>
-                    {{-- <th>Địa chỉ</th> --}}
-                    {{-- <th>Mật khẩu</th> --}}
                     <th>Hình ảnh</th>
                     <th>Phân quyền</th>
                     <th>Trạng thái</th>
+                    <th>Điểm tích lũy</th> <!-- Thêm cột -->
+                    <th>Điểm đổi thưởng</th> <!-- Thêm cột -->
                     <th width="150px">Thao tác</th>
                 </tr>
                 </thead>
-                <a href = "{{route('users.create')}}" class="btn btn-primary mb-3"><i class="fas fa-plus"></i> Thêm mới</a><br>
+                <a href="{{ route('users.create') }}" class="btn btn-primary mb-3"><i class="fas fa-plus"></i> Thêm mới</a><br>
                 <tbody>
                     @foreach ($users as $user)
                     <tr>   
-                        <td>{{$user->id}}</td>
-                        <td>{{$user->username}}</td>
-                        <td>{{$user->email}}</td>
-                        {{-- <td>{{$user->address}}</td> --}}
-                        {{-- <td>{{$user->password}}</td> --}}
-                          <td>    
+                        <td>{{ $user->id }}</td>
+                        <td>{{ $user->username }}</td>
+                        <td>{{ $user->email }}</td>
+                        <td>    
                             @if($user->avatar)
                                 @if(Str::startsWith($user->avatar, ['http://', 'https://']))
                                     <img src="{{ $user->avatar }}" alt="User Image" width="100">
@@ -46,7 +44,7 @@
                             @else
                                 <span>Chưa có ảnh</span>
                             @endif
-                          </td>
+                        </td>
                         <td>{{ $user->role->name }}</td>
                         <td>
                           @if($user->status == 0)
@@ -55,6 +53,8 @@
                               <span class="text-danger" title="Ẩn"><i class="fas fa-eye-slash"></i></span>
                           @endif
                         </td>
+                        <td>{{ $user->total_points }}</td> <!-- Hiển thị điểm tích lũy -->
+                        <td>{{ $user->redeemable_points }}</td> <!-- Hiển thị điểm đổi thưởng -->
                         <td>
                             <a class="btn btn-primary" title="Sửa" href="{{ route('users.edit', ['id' => $user->id]) }}">
                                 <i class="fas fa-edit"></i>
